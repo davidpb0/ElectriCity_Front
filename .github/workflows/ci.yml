@@ -25,7 +25,7 @@ steps:
 - run: flutter --version
 
 with:
-flutter-version: ‘2.5.3’ #You can define the flutter version.
+flutter-version: ‘3.3.2’ #You can define the flutter version.
 - run: flutter pub get #installing the plugins for the flutter project
 - run: flutter test #running flutter test
 - run: flutter build apk #building flutter apk
