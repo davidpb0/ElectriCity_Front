@@ -2,31 +2,25 @@ name: learn-github-actions
 on: [push]
 
 jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.3.2'
+          channel: 'stable'
+      - run: flutter --version
 
-check-bats-version:
-runs-on: ubuntu-latest
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
 
-steps:
-- uses: actions/checkout@v3
-- uses: subosito/flutter-action@v2
-  with:
-    flutter-version: '3.0.5'
-    channel: 'stable'
-- run: flutter --version
+      - run: flutter --version
 
-- uses: actions/checkout@v3
-- uses: subosito/flutter-action@v2
-  with:
-    channel: 'stable'
-    cache: true
-    cache-key: 'flutter-:os:-:channel:-:version:-:arch:-:hash:' # optional, change this to force refresh cache
-    cache-path: ${{ runner.tool_cache }}/flutter/:channel:-:version:-:arch:
-    architecture: arm64 # optional, x64 or arm64
-- run: flutter --version
-
-with:
-flutter-version: ‘3.3.2’ #You can define the flutter version.
-- run: flutter pub get #installing the plugins for the flutter project
-- run: flutter test #running flutter test
-- run: flutter build apk #building flutter apk
-- run: flutter build appbundle #building flutter bundle
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ‘3.3.2’ #You can define the flutter version.
+      - run: flutter pub get
+      - run: flutter test #running flutter test
+      - run: flutter build apk #building flutter apk
+      - run: flutter build appbundle #building flutter bundle
