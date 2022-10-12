@@ -17,5 +17,8 @@ pipeline {
                 sh "dartanalyzer --options analysis_options.yaml ."
             }
         }
+        environment {
+            PATH = "/Usarios/david/development/flutter/bin"
+        }
     }
 }
