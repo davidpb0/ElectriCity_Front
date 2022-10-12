@@ -1,5 +1,12 @@
+def appname = "Runner" //DON'T CHANGE THIS. This refers to the flutter 'Runner' target.
+def xcarchive = "${appname}.xcarchive"
+
 pipeline {
     agent any
+    
+    environment {
+        PATH = "/Usarios/david/development/flutter/bin"
+    }
     stages {
         stage ('Checkout') {
             steps {
@@ -17,8 +24,6 @@ pipeline {
                 sh "dartanalyzer --options analysis_options.yaml ."
             }
         }
-        environment {
-            PATH = "/Usarios/david/development/flutter/bin"
-        }
+
     }
 }
