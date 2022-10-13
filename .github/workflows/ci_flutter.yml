@@ -21,10 +21,14 @@ jobs:
         run: flutter pub get
       - name: Build runner
         run: flutter pub run build_runner build
+      - name: Analyze dart code
+        run: flutter analyze .
       - name: Run unit tests
         run: flutter test --coverage
-      - name: Publish coverage to codecov
-        uses: codecov/codecov-action@v1.0.12
+      - name: Build apk
+        run: flutter build apk
+      - name: Apk to artifacts
+      - uses: actions/upload-artifact@v1
         with:
-          token: ${{secrets.CODECOV_TOKEN}}
-          file: ./coverage/lcov.info
+          name: release-apk
+          path: build/app/outputs/apk/release/app-release.apk
