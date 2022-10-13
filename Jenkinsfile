@@ -1,14 +1,16 @@
+def appname = "Runner" //DON'T CHANGE THIS. This refers to the flutter 'Runner' target.
+
+
 pipeline {
     agent any
+    
+    environment {
+        PATH = "/Usarios/david/development/flutter/bin"
+    }
     stages {
         stage ('Checkout') {
             steps {
                 checkout scm
-            }
-        }
-        stage ('Download lcov converter') {
-            steps {
-                sh "curl -O https://raw.githubusercontent.com/eriwen/lcov-to-cobertura-xml/master/lcov_cobertura/lcov_cobertura.py"
             }
         }
 
@@ -16,17 +18,12 @@ pipeline {
             steps {
                 sh "flutter test --coverage"
             }
-            post {
-                always {
-                    sh "python3 lcov_cobertura.py coverage/lcov.info --output coverage/coverage.xml"
-                    step([$class: 'CoberturaPublisher', coberturaReportFile: 'coverage/coverage.xml'])
-                }
-            }
         }
         stage('Run Analyzer') {
             steps {
                 sh "dartanalyzer --options analysis_options.yaml ."
             }
         }
+
     }
 }
