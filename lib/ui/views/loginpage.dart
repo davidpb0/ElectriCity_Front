@@ -1,3 +1,4 @@
+import 'package:electricity_front/core/controllers/loginController.dart';
 import 'package:flutter/material.dart';
 
 import '../components/header_login_component.dart';
@@ -27,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
 class Body extends StatelessWidget{
   TextEditingController emailTextController = TextEditingController();
   TextEditingController _passwdTextController = TextEditingController();
+  LoginController loginCtrl = LoginController();
 
   @override
   Widget build(BuildContext context){
@@ -125,10 +127,9 @@ class Body extends StatelessWidget{
           child: TextButton(
             onPressed: () {
               //Navigator.of(context).pushReplacementNamed('/home');
-              var _email = emailTextController.text;
-              var _passwd = _passwdTextController.text;
-              print("Email: " + _email);
-              print("Password: " + _passwd);
+              loginCtrl.setEmail( emailTextController.text);
+              loginCtrl.setPasswd(_passwdTextController.text);
+              loginCtrl.printData();
             },
 
             child: Padding(
@@ -170,7 +171,7 @@ class Body extends StatelessWidget{
           height: 100,
           child: TextButton(
               onPressed: (){
-                Navigator.of(context).pushReplacementNamed('/home');
+                //Navigator.of(context).pushReplacementNamed('/home');
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0.0),
