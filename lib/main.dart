@@ -1,3 +1,4 @@
+import 'package:electricity_front/routes/routes.dart';
 import 'package:electricity_front/ui/views/splashscreen.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const SplashScreen()
+      home: const SplashScreen(),
+      routes: getApplicationRoutes(),
     );
   }
 }

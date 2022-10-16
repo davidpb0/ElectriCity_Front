@@ -90,7 +90,7 @@ class Body extends StatelessWidget{
               child: TextField(
                 controller: _passwdTextController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.lock),
                   border: InputBorder.none,
                   hintText: 'Password',
@@ -201,13 +201,21 @@ class Body extends StatelessWidget{
         //SignUp
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text('Not a member?'),
-            Text(
-              ' Sign Up',
-              style: TextStyle(
-                color: Colors.indigoAccent,
-                fontWeight: FontWeight.bold
+          children: [
+            const Text('Not a member?'),
+            SizedBox(
+              child: TextButton(
+                onPressed:(){
+                  Navigator.of(context).pushReplacementNamed('/signup');
+                },
+                child: Container(
+                  child: const Text('Sign up',
+                    style: TextStyle(
+                    color: Colors.indigoAccent,
+                    fontWeight: FontWeight.bold
+                    )
+                  ),
+                ),
               ),
             )
           ],
