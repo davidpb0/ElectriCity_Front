@@ -1,4 +1,5 @@
 import 'package:electricity_front/ui/views/loginpage.dart';
+import 'package:electricity_front/ui/views/signuppage.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -16,7 +17,7 @@ class SplashScreen extends StatelessWidget{
       backgroundColor: const Color(0xFFEEEEEE),
       splashTransition: SplashTransition.fadeTransition,
       pageTransitionType: PageTransitionType.rightToLeft ,
-      nextScreen: const LoginPage(),
+      nextScreen: const SignupPage(),
     );
   }
 
