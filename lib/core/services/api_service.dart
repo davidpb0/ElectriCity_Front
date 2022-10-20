@@ -51,13 +51,12 @@ class ApiService {
           }
       );
       if(response.statusCode == 200){
-
         var data = jsonDecode(response.body.toString());
         print(data);
         print('Ok');
       }
       else{
-        print('Error');
+        throw ('Error con el usuario');
       }
 
     }
