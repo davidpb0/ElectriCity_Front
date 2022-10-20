@@ -1,4 +1,4 @@
-name: ElectriCity-FrontEnd CI - Unit Tests
+name: ElectriCity-FrontEnd CD - Unit Tests
 
 on:
   push:
