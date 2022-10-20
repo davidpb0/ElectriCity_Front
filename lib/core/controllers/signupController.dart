@@ -1,4 +1,11 @@
+import 'dart:convert';
+
+import 'package:electricity_front/core/services/api_service.dart';
+import 'package:http/http.dart';
+
 class SignupController {
+
+  final ApiService _apiService = ApiService();
 
   var _username = "";
   var _email = "";
@@ -10,7 +17,6 @@ class SignupController {
   }
 
   static SignupController _this = SignupController._();
-
   SignupController._();
 
   void setUsername(String _un) {
@@ -29,6 +35,10 @@ class SignupController {
     }
     print("Password not matching");
 
+  }
+
+  void signUp(String mail, String pwd) async{
+    _apiService.signUpApi(mail, pwd);
   }
 
   void printData() {

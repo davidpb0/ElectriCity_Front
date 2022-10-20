@@ -127,8 +127,9 @@ class Body extends StatelessWidget{
           child: TextButton(
             onPressed: () {
               //Navigator.of(context).pushReplacementNamed('/home');
-              loginCtrl.setEmail( emailTextController.text);
-              loginCtrl.setPasswd(_passwdTextController.text);
+              //loginCtrl.setEmail( emailTextController.text);
+              //loginCtrl.setPasswd(_passwdTextController.text);
+              loginCtrl.logIn(emailTextController.text, _passwdTextController.text);
               loginCtrl.printData();
             },
 
