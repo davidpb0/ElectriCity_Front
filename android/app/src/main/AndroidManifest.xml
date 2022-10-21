@@ -4,6 +4,8 @@
         android:label="electricity_front"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyB4OEbG_kVJrlxbpDESN1EDr8N4SxYf_Bw"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -18,7 +20,7 @@
                  to determine the Window background behind the Flutter UI. -->
             <meta-data
               android:name="io.flutter.embedding.android.NormalTheme"
-              android:resource="@style/NormalTheme"
+              android:resource="style/NormalTheme"
               />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
