@@ -25,8 +25,6 @@ class LoginController{
   Future<bool> logIn(String mail, String pwd) async {
    int code = await _apiService.logInApi(mail, pwd);
    _loginResponseModel = new LoginResponseModel();
-   print("Entro en loginController y el codigo es: ");
-   print(code);
    _loginResponseModel.setStatus(code);
    return _loginResponseModel.success;
   }
