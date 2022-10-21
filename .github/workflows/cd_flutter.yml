@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - feature06_map
   pull_request:
 
 jobs:
