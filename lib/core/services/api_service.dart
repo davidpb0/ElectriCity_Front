@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:electricity_front/core/models/login_model.dart';
 import 'package:http/http.dart';
 
 
@@ -41,7 +42,7 @@ class ApiService {
     }
   }
 
-  void logInApi(String mail, String pwd) async{
+  Future<int> logInApi(String mail, String pwd) async{
     try{
       Response response = await post(
           Uri.parse('https://reqres.in/api/login'),
@@ -54,6 +55,8 @@ class ApiService {
         var data = jsonDecode(response.body.toString());
         print(data);
         print('Ok');
+        return response.statusCode;
+
       }
       else{
         throw ('Error con el usuario');
@@ -64,5 +67,6 @@ class ApiService {
       print(e.toString());
 
     }
+    return 0;
   }
 }

@@ -4,12 +4,12 @@
 
 import 'dart:convert';
 
-List<Welcome> welcomeFromJson(String str) => List<Welcome>.from(json.decode(str).map((x) => Welcome.fromJson(x)));
+List<UserModel> userModelFromJson(String str) => List<UserModel>.from(json.decode(str).map((x) => UserModel.fromJson(x)));
 
-String welcomeToJson(List<Welcome> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String userModelToJson(List<UserModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Welcome {
-  Welcome({
+class UserModel {
+  UserModel({
     required this.id,
     required this.name,
     required this.username,
@@ -29,7 +29,7 @@ class Welcome {
   String website;
   Company company;
 
-  factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     id: json["id"],
     name: json["name"],
     username: json["username"],
