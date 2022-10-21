@@ -129,15 +129,10 @@ class Body extends StatelessWidget{
               //Navigator.of(context).pushReplacementNamed('/home');
               //loginCtrl.setEmail( emailTextController.text);
               //loginCtrl.setPasswd(_passwdTextController.text);
-              print(loginCtrl.status());
               await loginCtrl.logIn(emailTextController.text, _passwdTextController.text);
-              print(loginCtrl.status());
               if(loginCtrl.status()){
                 Navigator.of(context).pushReplacementNamed('/home');
               }
-
-
-              loginCtrl.printData();
             },
 
             child: Padding(
