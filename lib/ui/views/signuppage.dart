@@ -174,10 +174,11 @@ class Body extends StatelessWidget{
           child: TextButton(
             onPressed: () {
               //Navigator.of(context).pushReplacementNamed('/home');
-              signupCtrl.setUsername( usernameTextController.text);
-              signupCtrl.setEmail( emailTextController.text);
-              signupCtrl.setPasswd(_passwdTextController.text, _passwdValidTextController.text);
-              signupCtrl.printData();
+              //signupCtrl.setUsername( usernameTextController.text);
+              //signupCtrl.setEmail( emailTextController.text);
+              //signupCtrl.setPasswd(_passwdTextController.text, _passwdValidTextController.text);
+              //signupCtrl.printData();
+              signupCtrl.signUp(emailTextController.text, _passwdTextController.text);
             },
 
             child: Padding(
