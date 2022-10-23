@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/models/BicingStation.dart';
+import '../../fonts/test_icons_icons.dart';
 
 class ListItemComponent extends StatelessWidget {
   const ListItemComponent({
@@ -82,12 +83,16 @@ class ListItemComponent extends StatelessWidget {
                           ),
                         )
                       ),
-                    child: Row(
+                    child: Column(
                       children: [
-                        Column(
+                        Row(
                             children: [
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 6),
+                                child: const Icon(TestIcons.bike, size:20),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(6),
                                 child:Text(
                                   bicingStation.manbikes.toString(),
                                   textAlign: TextAlign.center,
@@ -98,8 +103,16 @@ class ListItemComponent extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                            ],
+                        ),
+                        Row(
+                            children: [
                               Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 6),
+                                child: const Icon(TestIcons.ebike, size:20),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(6),
                                 child:Text(
                                   bicingStation.elebikes.toString(),
                                   textAlign: TextAlign.center,
@@ -110,51 +123,16 @@ class ListItemComponent extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 6),
-                                child:Text(
-                                  bicingStation.freedocks.toString(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ),
-                            ]
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 6),
-                        ),
-                        Column(      // TEXT
+                              ]
+                      ),
+                        Row(      // TEXT
                           children: [
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 6),
-                                child:Text(
-                                  bicingStation.manbikes.toString(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
+                              child: const Icon(TestIcons.parking, size:20),
                             ),
                             Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 6),
-                              child:Text(
-                                bicingStation.elebikes.toString(),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 6),
+                                padding: const EdgeInsets.all(6),
                                 child:Text(
                                   bicingStation.freedocks.toString(),
                                   textAlign: TextAlign.center,
