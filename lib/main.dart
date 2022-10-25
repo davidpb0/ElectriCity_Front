@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:electricity_front/routes/routes.dart';
 import 'package:electricity_front/ui/views/splashscreen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(const MyApp());
+  HttpOverrides.global = MyHttpOverrides();
 }
 
 class MyApp extends StatelessWidget {
@@ -39,5 +42,13 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
     );
+  }
+}
+
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }
