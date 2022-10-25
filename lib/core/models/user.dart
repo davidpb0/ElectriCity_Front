@@ -1,5 +1,5 @@
 class User{
-  String username = "notlogged";
+  String? username;
   //String token = "notlogged";
 
   User();

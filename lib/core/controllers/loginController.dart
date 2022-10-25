@@ -12,7 +12,7 @@ class LoginController{
 
   final ApiService _apiService = ApiService();
   LoginResponseModel _loginResponseModel = LoginResponseModel();
-  User _loggedUser = User();
+  User? _loggedUser;
 
   var _email = "";
   var _passwd = "";
@@ -41,14 +41,15 @@ class LoginController{
       _loggedUser = User.frJson(body['user']['email']);
       Navigator.of(ctext).pushReplacementNamed('/home');
     };
-
     print(res.statusCode);
     print(res.body.toString());
-    print(body['user']['email']);;
-    _loggedUser.printData();
+   // print(_loggedUser?.username);
 
-  // User user = await _apiService.logInApi(mail, pwd);
+  }
 
+  void logOut(BuildContext ctxt){
+    _loggedUser = null;
+    Navigator.of(ctxt).pushReplacementNamed('/login');
   }
 
   void printData(){
