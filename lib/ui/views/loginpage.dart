@@ -174,7 +174,7 @@ class Body extends StatelessWidget{
           height: 100,
           child: TextButton(
               onPressed: (){
-                //Navigator.of(context).pushReplacementNamed('/home');
+                Navigator.of(context).pushReplacementNamed('/list');
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0.0),
