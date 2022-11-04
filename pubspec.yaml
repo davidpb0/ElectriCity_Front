@@ -39,6 +39,8 @@ dependencies:
   http:
   mocktail: ^0.3.0    #to mock classes
   network_image_mock: ^2.1.1   #to mock image network
+  google_maps_flutter: ^2.2.1
+  google_maps_flutter_web: ^0.4.0+3
 
 dev_dependencies:
   flutter_test:
@@ -68,9 +70,10 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-     - assets/animations/splashscreenanimation.json
-     - assets/images/googleIcon.png
-     - assets/images/title_logo_car.png
+
+     - assets/animations/
+     - assets/images/
+     - assets/icons/
 
   #  - images/a_dot_ham.jpeg
 

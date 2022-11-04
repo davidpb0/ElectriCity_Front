@@ -125,14 +125,8 @@ class Body extends StatelessWidget{
           height: 80,
           width: 200,
           child: TextButton(
-            onPressed: () async {
-              //Navigator.of(context).pushReplacementNamed('/home');
-              //loginCtrl.setEmail( emailTextController.text);
-              //loginCtrl.setPasswd(_passwdTextController.text);
-              await loginCtrl.logIn(emailTextController.text, _passwdTextController.text);
-              if(loginCtrl.status()){
-                Navigator.of(context).pushReplacementNamed('/home');
-              }
+            onPressed: (){
+              loginCtrl.logIn(emailTextController.text, _passwdTextController.text, context);
             },
 
             child: Padding(

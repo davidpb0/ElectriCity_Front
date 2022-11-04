@@ -1,5 +1,7 @@
-import 'package:electricity_front/ui/views/homepage.dart';
+import 'package:electricity_front/ui/views/profilepage.dart';
 import 'package:flutter/material.dart';
+
+import '../views/mapa.dart';
 
 
 class BottomBar extends StatefulWidget{
@@ -13,11 +15,10 @@ class BottomBar extends StatefulWidget{
 
 class _BottomBarState extends State<BottomBar>{
   static final List<Widget> _widgetOptions = <Widget>[
-    //Google_Mapa(),
-    HomePage(),
+    Google_Mapa(),
     const Text("Mobility"),
     const Text("Prizes"),
-    const Text("Profile"),
+    ProfilePage(),
     //ProfilePage()
 
   ];

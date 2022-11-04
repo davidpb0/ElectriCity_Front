@@ -3,7 +3,10 @@
    <application
         android:label="electricity_front"
         android:name="${applicationName}"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyB4OEbG_kVJrlxbpDESN1EDr8N4SxYf_Bw"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

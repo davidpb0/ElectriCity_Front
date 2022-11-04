@@ -1,11 +1,18 @@
 
+import 'dart:convert';
+
+import 'package:electricity_front/core/models/user.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart';
+
 import '../models/login_model.dart';
 import '../services/api_service.dart';
 
 class LoginController{
 
+
   final ApiService _apiService = ApiService();
-  LoginResponseModel _loginResponseModel = LoginResponseModel();
+  User? _loggedUser;
 
   var _email = "";
   var _passwd = "";
@@ -22,21 +29,38 @@ class LoginController{
 
   void setPasswd(String _pwd){_passwd = _pwd;}
 
-  Future<bool> logIn(String mail, String pwd) async {
-   int code = await _apiService.logInApi(mail, pwd);
-   _loginResponseModel = new LoginResponseModel();
-   _loginResponseModel.setStatus(code);
-   return _loginResponseModel.success;
+  logIn(String mail, String pwd, BuildContext ctext) async {
+    var data={
+      "username":mail,
+      "password":pwd,
+    };
+
+    Response res = await _apiService.postData(data, 'login');
+    var body = json.decode(res.body);
+    if (body['message'] == 'Successfull login'){
+      _loggedUser = User.fromJson(body);
+      Navigator.of(ctext).pushReplacementNamed('/home');
+    };
+    print(res.statusCode);
+    print(res.body.toString());
+    //print(body['user']['tokens'].first);
+    //print(_loggedUser?.username);
+
   }
+
+  void logOut(BuildContext ctxt){
+    _loggedUser = null;
+    Navigator.of(ctxt).pushReplacementNamed('/login');
+  }
+
 
   void printData(){
     print("Email: " + _email);
     print("Password: " + _passwd);
   }
 
-  bool status(){
-    return _loginResponseModel.success;
-  }
+
+
 
 
 
