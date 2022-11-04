@@ -23,7 +23,7 @@ class _Google_MapaState extends State<Google_Mapa>{
   void initState() {
     super.initState();
     setCustomMarker();
-    _mapaController.bicingAPi();
+    //_mapaController.bicingAPi();
   }
 
   void setCustomMarker() async{
