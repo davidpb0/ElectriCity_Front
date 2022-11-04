@@ -1,14 +1,20 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-import 'package:electricity_front/core/models/login_model.dart';
 import 'package:http/http.dart';
-
-import '../models/user.dart';
 
 
 class ApiService {
   final String _url = "https://localhost/";
+
+  factory ApiService(){
+    if (_this == null) _this = ApiService._();
+    return _this;
+  }
+
+  static ApiService _this = ApiService._();
+  ApiService._();
+
 
   postData(data, apiUrl) async {
     var fullUrl=_url+apiUrl;
@@ -25,15 +31,12 @@ class ApiService {
     "Accept":"application/json",
   };
 
-
-  factory ApiService(){
-    if (_this == null) _this = ApiService._();
-    return _this;
+  getData(apiUrl) async {
+    var fullUrl=_url+apiUrl;
+    return await http.get(
+      Uri.parse(fullUrl),
+    );
   }
-
-  static ApiService _this = ApiService._();
-  ApiService._();
-
 
 
   void signUpApi(String mail, String pwd) async{

@@ -10,8 +10,8 @@ import '../services/api_service.dart';
 
 class LoginController{
 
+
   final ApiService _apiService = ApiService();
-  LoginResponseModel _loginResponseModel = LoginResponseModel();
   User? _loggedUser;
 
   var _email = "";
@@ -38,12 +38,13 @@ class LoginController{
     Response res = await _apiService.postData(data, 'login');
     var body = json.decode(res.body);
     if (body['message'] == 'Successfull login'){
-      _loggedUser = User.frJson(body['user']['email']);
+      _loggedUser = User.fromJson(body);
       Navigator.of(ctext).pushReplacementNamed('/home');
     };
     print(res.statusCode);
     print(res.body.toString());
-   // print(_loggedUser?.username);
+    //print(body['user']['tokens'].first);
+    //print(_loggedUser?.username);
 
   }
 
@@ -52,14 +53,14 @@ class LoginController{
     Navigator.of(ctxt).pushReplacementNamed('/login');
   }
 
+
   void printData(){
     print("Email: " + _email);
     print("Password: " + _passwd);
   }
 
-  bool status(){
-    return _loginResponseModel.success;
-  }
+
+
 
 
 

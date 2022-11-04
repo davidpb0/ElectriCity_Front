@@ -1,3 +1,4 @@
+import 'package:electricity_front/core/controllers/mapaController.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -16,11 +17,13 @@ class Google_Mapa extends StatefulWidget {
 class _Google_MapaState extends State<Google_Mapa>{
   late BitmapDescriptor mapMarker;
   final Set<Marker> _markers = {};
+  MapaController _mapaController = MapaController();
 
   @override
   void initState() {
     super.initState();
     setCustomMarker();
+    _mapaController.bicingAPi();
   }
 
   void setCustomMarker() async{
@@ -28,36 +31,38 @@ class _Google_MapaState extends State<Google_Mapa>{
   }
 
   void _onMapCreated(GoogleMapController controller) {
+    List<LatLng> lista = [
+      LatLng(41.3870154, 2.1700471),
+      LatLng(41.3880154, 2.1700471),    ];
+
+
+
     setState((){
-     _markers.add(
-        Marker(
-          markerId: MarkerId("id-1"),
-          position: LatLng(41.3870154, 2.1700471),
-          icon: mapMarker,
-          infoWindow: InfoWindow(
-              title: "Estació bicing Pz Catalunya",
-              snippet: "Estació bicing de Plaça Catalunya"
+      for(int i = 0; i < lista.length; ++i){
+        _markers.add(
+          Marker(
+            markerId: MarkerId("id-" + i.toString()),
+            position: lista[i],
+            icon: mapMarker,
+            infoWindow: InfoWindow(
+                title: "Estació bicing Pz Catalunya",
+                snippet: "Estació bicing de Plaça Catalunya"
+            ),
           ),
-        ),
-      );
-
-     _markers.add(
-       Marker(
-         markerId: MarkerId("id-2"),
-         position: LatLng(41.3880154, 2.1700471),
-         icon: mapMarker,
-         infoWindow: InfoWindow(
-             title: "Estació bicing Pz Catalunya",
-             snippet: "Estació bicing de Plaça Catalunya"
-         ),
-       ),
-     );
-
+        );
+      }
     });
 
     setState(() {
     });
   }
+
+
+   List<LatLng>? bicingStations(){
+    return _mapaController.markersBicing();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {

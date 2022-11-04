@@ -1,21 +1,16 @@
 class User{
   String? username;
-  //String token = "notlogged";
+  String? token;
 
   User();
 
-  User.frJson(String usrnm){
-    username = usrnm;
-    //oken = tkn;
-
+  User.fromJson(dynamic json){
+      username = json['user']['email'];
+      //token = json['user']['tokens'].first;
   }
 
-  /*User.fromJson(Map json)
-      : username = json[0],
-        token = json[1];
-*/
 Map toJson(){
-  return{'email': username, /*'token': token*/};
+  return{'email': username, 'token': token};
 }
 
   printData(){
