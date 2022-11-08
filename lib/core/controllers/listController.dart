@@ -1,43 +1,37 @@
 import 'dart:convert';
 
-import 'package:electricity_front/core/models/StationList.dart';
 import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
+import '../models/StationList.dart';
 import 'package:http/http.dart';
 
 import '../services/api_service.dart';
 
-class MapaController {
+class ListController {
 
   final ApiService _apiService = ApiService();
-  late List<LatLng> Lista;
+  late StationList _list;
 
-  factory MapaController(){
-    if (_this == null) _this = MapaController._();
+  factory ListController(){
+    if (_this == null) _this = ListController._();
     return _this;
   }
 
-  static MapaController _this = MapaController._();
+  static ListController _this = ListController._();
 
-  MapaController._();
+  ListController._();
 
-  List<LatLng> markersBicing() {
-    return Lista;
-  }
-
-  bicingApi() async {
+  getstations() async {
     Response res = await _apiService.getData('bicing_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
-      StationList estaciones = StationList.fromJson(jsonDecode(res.body));
-      Lista = estaciones.getCoords();
+      _list = StationList.fromJson(jsonDecode(res.body));
     } else {
       throw Exception('Algo falló');
     }
     print(res.statusCode);
   }
+  Station getStation(int index){
+    return _list.listMember.elementAt(index);
+  }
 
-
-
-
-
-}
+  }

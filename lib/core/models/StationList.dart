@@ -2,16 +2,12 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class StationList {
-  List<Station>? listMember;
-  int? totalItems;
+  late List<Station> listMember;
+  late int totalItems;
   HydraView? hydraView;
   HydraSearch? hydraSearch;
 
-  StationList(
-      {this.listMember,
-        this.totalItems,
-        this.hydraView,
-        this.hydraSearch});
+  StationList();
 
   StationList.fromJson(Map<String, dynamic> json) {
     if (json['hydra:member'] != null) {
@@ -43,31 +39,30 @@ class StationList {
     }
     return data;
   }
+
+  List<LatLng> getCoords() {
+    List<LatLng>listcoords = <LatLng>[];
+    this.listMember.forEach((e) {
+      listcoords.add(e.coords);
+    });
+    return listcoords;
+  }
 }
 
 class Station {
-  int? capacity;
-  int? mechanical;
-  int? electrical;
-  int? availableSlots;
-  int? id;
-  double? latitude;
-  double? longitude;
-  LatLng? coords;
-  bool? status;
-  String? address;
+  late int capacity;
+  late int mechanical;
+  late int electrical;
+  late int availableSlots;
+  late int id;
+  late double latitude;
+  late double longitude;
+  late LatLng coords;
+  late bool status;
+  late String address;
 
-  Station(
-      {this.capacity,
-        this.mechanical,
-        this.electrical,
-        this.availableSlots,
-        this.id,
-        this.latitude,
-        this.longitude,
-        this.coords,
-        this.status,
-        this.address});
+  Station();
+
 
   Station.fromJson(Map<String, dynamic> json) {
     capacity = json['capacity'];
