@@ -65,6 +65,7 @@ class Body extends StatelessWidget{
                   prefixIcon: Icon(Icons.account_circle),
                   border: InputBorder.none,
                   hintText: 'Username',
+                  errorText: signupCtrl.usernameError(),
 
                 ),
               ),
@@ -96,6 +97,7 @@ class Body extends StatelessWidget{
                   prefixIcon: Icon(Icons.email),
                   border: InputBorder.none,
                   hintText: 'Email',
+                  errorText: signupCtrl.emailError(),
 
                 ),
               ),
@@ -159,6 +161,7 @@ class Body extends StatelessWidget{
                   prefixIcon: Icon(Icons.lock),
                   border: InputBorder.none,
                   hintText: 'Repeat password',
+                  errorText: signupCtrl.pwdError(),
                 ),
               ),
             ),
@@ -174,11 +177,11 @@ class Body extends StatelessWidget{
           child: TextButton(
             onPressed: () {
               //Navigator.of(context).pushReplacementNamed('/home');
-              //signupCtrl.setUsername( usernameTextController.text);
-              //signupCtrl.setEmail( emailTextController.text);
-              //signupCtrl.setPasswd(_passwdTextController.text, _passwdValidTextController.text);
+              signupCtrl.setUsername( usernameTextController.text);
+              signupCtrl.setEmail( emailTextController.text);
+              signupCtrl.setPasswd(_passwdTextController.text, _passwdValidTextController.text);
               //signupCtrl.printData();
-              signupCtrl.signUp(emailTextController.text, _passwdTextController.text);
+              //signupCtrl.signUp(context);
             },
 
             child: Padding(
