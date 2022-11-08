@@ -30,6 +30,11 @@ class ListController {
     }
     print(res.statusCode);
   }
+
+  int getTotalStations(){
+    return _list.totalItems;
+  }
+
   Station getStation(int index){
     return _list.listMember.elementAt(index);
   }

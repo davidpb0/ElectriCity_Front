@@ -13,7 +13,7 @@ class StationList {
     if (json['hydra:member'] != null) {
       listMember = <Station>[];
       json['hydra:member'].forEach((v) {
-        listMember!.add(new Station.fromJson(v));
+        listMember.add(new Station.fromJson(v));
       });
     }
     totalItems = json['hydra:totalItems'];
@@ -28,7 +28,7 @@ class StationList {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.listMember != null) {
-      data['hydra:member'] = this.listMember!.map((v) => v.toJson()).toList();
+      data['hydra:member'] = this.listMember.map((v) => v.toJson()).toList();
     }
     data['hydra:totalItems'] = this.totalItems;
     if (this.hydraView != null) {
@@ -72,7 +72,7 @@ class Station {
     id = json['id'];
     latitude = json['latitude'];
     longitude = json['longitude'];
-    coords = LatLng(latitude!, longitude!);
+    coords = LatLng(latitude, longitude);
     status = json['status'];
     address = json['address'];
   }
