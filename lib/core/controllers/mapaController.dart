@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:electricity_front/core/models/StationList.dart';
 import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 import 'package:http/http.dart';
 
@@ -8,6 +9,7 @@ import '../services/api_service.dart';
 class MapaController {
 
   final ApiService _apiService = ApiService();
+  late List<LatLng> Lista = <LatLng>[];
 
   factory MapaController(){
     if (_this == null) _this = MapaController._();
@@ -18,22 +20,27 @@ class MapaController {
 
   MapaController._();
 
-  List<LatLng>? markersBicing() {
-    List<LatLng>? lista;
-    return lista;
+  Future <List<LatLng>> markersBicing() async{
+    print(Lista.length);
+    return Lista;
   }
 
-  bicingAPi() async {
+  bicingApi() async {
     Response res = await _apiService.getData('bicing_stations');
     var body = json.decode(res.body);
-    if (body['message'] == 'Successfull login'){
-
-    };
+    if (res.statusCode == 200) {
+      StationList estaciones = StationList.fromJson(body);
+      Lista = estaciones.getCoords();
+      print(Lista.length);
+      print(Lista.getRange(0, 10));
+    } else {
+      throw Exception('Algo falló');
+    }
     print(res.statusCode);
-    print(res.body.toString());
-    // print(_loggedUser?.username);
-
+    print(body);
   }
+
+
 
 
 

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../core/models/BicingStation.dart';
+import '../../core/models/StationList.dart';
 import '../../fonts/test_icons_icons.dart';
 
 class ListItemComponent extends StatelessWidget {
+  final Station info;
+
   const ListItemComponent({
     Key? key,
+    required this.info,
   }) : super(key: key);
 
 
   @override
   Widget build(BuildContext context) {
-    BicingStation bicingStation = new BicingStation(2, "Sardenya 280", 400, 300, 9, 1, 6, 16);
     return Container(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
@@ -48,7 +50,7 @@ class ListItemComponent extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded( child: Text(
-                            bicingStation.name,
+                            info.address,
                             textAlign: TextAlign.left,
                             style: TextStyle(
                               color: Colors.white,
@@ -57,7 +59,7 @@ class ListItemComponent extends StatelessWidget {
                           ),
                           ),
                           Expanded( child: Text(
-                            bicingStation.code.toString(),
+                            info.id.toString(),
                             textAlign: TextAlign.right,
                             style: TextStyle(
                               color: Colors.white,
@@ -94,7 +96,7 @@ class ListItemComponent extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(6),
                                 child:Text(
-                                  bicingStation.manbikes.toString(),
+                                  info.mechanical.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black,
@@ -114,7 +116,7 @@ class ListItemComponent extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(6),
                                 child:Text(
-                                  bicingStation.elebikes.toString(),
+                                  info.electrical.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black,
@@ -134,7 +136,7 @@ class ListItemComponent extends StatelessWidget {
                             Padding(
                                 padding: const EdgeInsets.all(6),
                                 child:Text(
-                                  bicingStation.freedocks.toString(),
+                                  info.availableSlots.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black,
