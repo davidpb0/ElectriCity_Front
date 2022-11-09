@@ -12,28 +12,28 @@ class Google_Mapa extends StatefulWidget {
   late GoogleMapController mapController;
 
   final LatLng _center = const LatLng(41.3870154, 2.1700471);
+  final LatLng _aux = const LatLng(41.3979779, 2.1801069);
 }
 
 class _Google_MapaState extends State<Google_Mapa>{
   late BitmapDescriptor mapMarker;
   final Set<Marker> _markers = {};
   MapaController _mapaController = MapaController();
+  late List<LatLng> lista;
 
   @override
   void initState() {
     super.initState();
     setCustomMarker();
-    //_mapaController.bicingAPi();
   }
 
   void setCustomMarker() async{
     mapMarker =  await BitmapDescriptor.fromAssetImage(const ImageConfiguration(),'assets/images/blue_bike.png');
   }
 
-  void _onMapCreated(GoogleMapController controller) {
-    List<LatLng> lista = [
-      LatLng(41.3870154, 2.1700471),
-      LatLng(41.3880154, 2.1700471),    ];
+  void _onMapCreated(GoogleMapController controller) async{
+    await _mapaController.bicingApi();
+    lista = _mapaController.Lista;
 
 
 
@@ -58,9 +58,7 @@ class _Google_MapaState extends State<Google_Mapa>{
   }
 
 
-   List<LatLng>? bicingStations(){
-    return _mapaController.markersBicing();
-  }
+
 
 
 
@@ -98,7 +96,7 @@ class _Google_MapaState extends State<Google_Mapa>{
         child: GoogleMap(
           onMapCreated:_onMapCreated ,
           initialCameraPosition: CameraPosition(
-            target: widget._center,
+            target: widget. _aux,
             zoom: 16,
           ),
           markers: _markers,

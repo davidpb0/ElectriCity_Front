@@ -9,7 +9,7 @@ import '../services/api_service.dart';
 class MapaController {
 
   final ApiService _apiService = ApiService();
-  late List<LatLng> Lista;
+  late List<LatLng> Lista = <LatLng>[];
 
   factory MapaController(){
     if (_this == null) _this = MapaController._();
@@ -20,7 +20,8 @@ class MapaController {
 
   MapaController._();
 
-  List<LatLng> markersBicing() {
+  Future <List<LatLng>> markersBicing() async{
+    print(Lista.length);
     return Lista;
   }
 
@@ -28,12 +29,15 @@ class MapaController {
     Response res = await _apiService.getData('bicing_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
-      StationList estaciones = StationList.fromJson(jsonDecode(res.body));
+      StationList estaciones = StationList.fromJson(body);
       Lista = estaciones.getCoords();
+      print(Lista.length);
+      print(Lista.getRange(0, 10));
     } else {
       throw Exception('Algo falló');
     }
     print(res.statusCode);
+    print(body);
   }
 
 

@@ -126,7 +126,10 @@ class Body extends StatelessWidget{
           width: 200,
           child: TextButton(
             onPressed: (){
-              loginCtrl.logIn(emailTextController.text, _passwdTextController.text, context);
+              //CAMBIO A MAPA FAST (SIN API)
+              //loginCtrl.logIn(emailTextController.text, _passwdTextController.text, context);
+              Navigator.of(context).pushReplacementNamed('/home');
+
             },
 
             child: Padding(
