@@ -19,7 +19,8 @@ class _Google_MapaState extends State<Google_Mapa>{
   late BitmapDescriptor mapMarker;
   final Set<Marker> _markers = {};
   MapaController _mapaController = MapaController();
-  late List<LatLng> lista;
+  late List<LatLng> bicingList;
+  late List<LatLng> rcList;
 
   @override
   void initState() {
@@ -33,20 +34,33 @@ class _Google_MapaState extends State<Google_Mapa>{
 
   void _onMapCreated(GoogleMapController controller) async{
     await _mapaController.bicingApi();
-    lista = _mapaController.Lista;
+    await _mapaController.rechargeApi();
 
-
+    bicingList = _mapaController.BicingList;
+    rcList = _mapaController.CargaList;
 
     setState((){
-      for(int i = 0; i < lista.length; ++i){
+      for(int i = 0; i < bicingList.length; ++i){
         _markers.add(
           Marker(
             markerId: MarkerId("id-" + i.toString()),
-            position: lista[i],
+            position: bicingList[i],
             icon: mapMarker,
             infoWindow: InfoWindow(
                 title: "Estació bicing Pz Catalunya",
                 snippet: "Estació bicing de Plaça Catalunya"
+            ),
+          ),
+        );
+
+        _markers.add(
+          Marker(
+            markerId: MarkerId("id-" + (i+30).toString()),
+            position: rcList[i],
+            icon: mapMarker,
+            infoWindow: InfoWindow(
+                title: "Estació rc Pz Catalunya",
+                snippet: "Estació rc de Plaça Catalunya"
             ),
           ),
         );
