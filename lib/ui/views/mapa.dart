@@ -16,37 +16,53 @@ class Google_Mapa extends StatefulWidget {
 }
 
 class _Google_MapaState extends State<Google_Mapa>{
-  late BitmapDescriptor mapMarker;
+  late BitmapDescriptor bicingMarker;
+  late BitmapDescriptor chargerMarker;
   final Set<Marker> _markers = {};
   MapaController _mapaController = MapaController();
-  late List<LatLng> lista;
+  late List<LatLng> bicingList;
+  late List<LatLng> rcList;
 
   @override
   void initState() {
     super.initState();
-    setCustomMarker();
   }
 
   void setCustomMarker() async{
-    mapMarker =  await BitmapDescriptor.fromAssetImage(const ImageConfiguration(),'assets/images/blue_bike.png');
+    bicingMarker =  await BitmapDescriptor.fromAssetImage(const ImageConfiguration(),'assets/images/blue_bike.png');
+    chargerMarker =  await BitmapDescriptor.fromAssetImage(const ImageConfiguration(),'assets/images/green_charger.png');
   }
 
   void _onMapCreated(GoogleMapController controller) async{
+    setCustomMarker();
     await _mapaController.bicingApi();
-    lista = _mapaController.Lista;
+    await _mapaController.rechargeApi();
 
-
+    bicingList = _mapaController.BicingList;
+    rcList = _mapaController.CargaList;
 
     setState((){
-      for(int i = 0; i < lista.length; ++i){
+      for(int i = 0; i < bicingList.length; ++i){
         _markers.add(
           Marker(
             markerId: MarkerId("id-" + i.toString()),
-            position: lista[i],
-            icon: mapMarker,
+            position: bicingList[i],
+            icon: bicingMarker,
             infoWindow: InfoWindow(
                 title: "Estació bicing Pz Catalunya",
                 snippet: "Estació bicing de Plaça Catalunya"
+            ),
+          ),
+        );
+
+        _markers.add(
+          Marker(
+            markerId: MarkerId("id-" + (i+30).toString()),
+            position: rcList[i],
+            icon: chargerMarker,
+            infoWindow: InfoWindow(
+                title: "Estació rc Pz Catalunya",
+                snippet: "Estació rc de Plaça Catalunya"
             ),
           ),
         );
