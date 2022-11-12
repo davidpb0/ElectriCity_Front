@@ -41,6 +41,7 @@ dependencies:
   network_image_mock: ^2.1.1   #to mock image network
   google_maps_flutter: ^2.2.1
   google_maps_flutter_web: ^0.4.0+3
+  custom_info_window:
 
 dev_dependencies:
   flutter_test:

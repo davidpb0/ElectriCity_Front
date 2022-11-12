@@ -1,4 +1,5 @@
 import 'package:electricity_front/core/controllers/mapaController.dart';
+import 'package:electricity_front/ui/components/info_station_window.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -22,6 +23,7 @@ class _Google_MapaState extends State<Google_Mapa>{
   MapaController _mapaController = MapaController();
   late List<LatLng> bicingList;
   late List<LatLng> rcList;
+  Widget info = Container();
 
   @override
   void initState() {
@@ -48,10 +50,12 @@ class _Google_MapaState extends State<Google_Mapa>{
             markerId: MarkerId("id-" + i.toString()),
             position: bicingList[i],
             icon: bicingMarker,
-            infoWindow: InfoWindow(
-                title: "Estació bicing Pz Catalunya",
-                snippet: "Estació bicing de Plaça Catalunya"
-            ),
+            onTap: (){
+              setState(() {
+                info = InfoStationWindow();
+
+              });
+            }
           ),
         );
 
@@ -108,16 +112,26 @@ class _Google_MapaState extends State<Google_Mapa>{
 
       ),
 
-      body: Container(
-        child: GoogleMap(
-          onMapCreated:_onMapCreated ,
-          initialCameraPosition: CameraPosition(
-            target: widget. _aux,
-            zoom: 16,
+      body: Stack(
+        children:[
+          Container(
+          child: GoogleMap(
+            onMapCreated:_onMapCreated ,
+            initialCameraPosition: CameraPosition(
+              target: widget. _aux,
+              zoom: 16,
+            ),
+            markers: _markers,
+           ),
           ),
-          markers: _markers,
-        ),
+          Container(
+              height:200,
+              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.6485),
+              child:info
+          )
+        ]
       ),
+
     );
   }
 
