@@ -16,7 +16,8 @@ class Google_Mapa extends StatefulWidget {
 }
 
 class _Google_MapaState extends State<Google_Mapa>{
-  late BitmapDescriptor mapMarker;
+  late BitmapDescriptor bicingMarker;
+  late BitmapDescriptor chargerMarker;
   final Set<Marker> _markers = {};
   MapaController _mapaController = MapaController();
   late List<LatLng> bicingList;
@@ -25,14 +26,15 @@ class _Google_MapaState extends State<Google_Mapa>{
   @override
   void initState() {
     super.initState();
-    setCustomMarker();
   }
 
   void setCustomMarker() async{
-    mapMarker =  await BitmapDescriptor.fromAssetImage(const ImageConfiguration(),'assets/images/blue_bike.png');
+    bicingMarker =  await BitmapDescriptor.fromAssetImage(const ImageConfiguration(),'assets/images/blue_bike.png');
+    chargerMarker =  await BitmapDescriptor.fromAssetImage(const ImageConfiguration(),'assets/images/green_charger.png');
   }
 
   void _onMapCreated(GoogleMapController controller) async{
+    setCustomMarker();
     await _mapaController.bicingApi();
     await _mapaController.rechargeApi();
 
@@ -45,7 +47,7 @@ class _Google_MapaState extends State<Google_Mapa>{
           Marker(
             markerId: MarkerId("id-" + i.toString()),
             position: bicingList[i],
-            icon: mapMarker,
+            icon: bicingMarker,
             infoWindow: InfoWindow(
                 title: "Estació bicing Pz Catalunya",
                 snippet: "Estació bicing de Plaça Catalunya"
@@ -57,7 +59,7 @@ class _Google_MapaState extends State<Google_Mapa>{
           Marker(
             markerId: MarkerId("id-" + (i+30).toString()),
             position: rcList[i],
-            icon: mapMarker,
+            icon: chargerMarker,
             infoWindow: InfoWindow(
                 title: "Estació rc Pz Catalunya",
                 snippet: "Estació rc de Plaça Catalunya"
