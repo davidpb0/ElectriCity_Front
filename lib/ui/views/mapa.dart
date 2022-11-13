@@ -19,9 +19,10 @@ class Google_Mapa extends StatefulWidget {
   final LatLng _aux = const LatLng(41.3979779, 2.1801069);
 }
 
-class _Google_MapaState extends State<Google_Mapa>{
+class _Google_MapaState extends State<Google_Mapa> {
   late BitmapDescriptor bicingMarker;
   late BitmapDescriptor chargerMarker;
+  late BitmapDescriptor personalMarker;
   final Set<Marker> _markers = {};
   MapaController _mapaController = MapaController();
   late List<LatLng> bicingList;
@@ -35,12 +36,16 @@ class _Google_MapaState extends State<Google_Mapa>{
     super.initState();
   }
 
-  void setCustomMarker() async{
-    bicingMarker =  await BitmapDescriptor.fromAssetImage(const ImageConfiguration(),'assets/images/blue_bike.png');
-    chargerMarker =  await BitmapDescriptor.fromAssetImage(const ImageConfiguration(),'assets/images/green_charger.png');
+  void setCustomMarker() async {
+    bicingMarker = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), 'assets/images/blue_bike.png');
+    chargerMarker = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), 'assets/images/green_charger.png');
+    personalMarker = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(), 'assets/images/personal_pin.png');
   }
 
-  void _onMapCreated(GoogleMapController controller) async{
+  void _onMapCreated(GoogleMapController controller) async {
     setCustomMarker();
     await _mapaController.bicingApi();
     await _mapaController.rechargeApi();
@@ -50,30 +55,30 @@ class _Google_MapaState extends State<Google_Mapa>{
     bicingStationList = _mapaController.BicingStationList;
     chargerStationList = _mapaController.ChargerStationList;
 
-    setState((){
-      for(int i = 0; i < bicingList.length; ++i){
+    setState(() {
+      for (int i = 0; i < bicingList.length; ++i) {
         _markers.add(
           Marker(
-            markerId: MarkerId("id-" + i.toString()),
-            position: bicingStationList[i].coords,
-            icon: bicingMarker,
-            onTap: (){
-              setState(() {
-                info =  InfoBicingStationWindow(
-                    belec: bicingStationList[i].electrical,
-                    bmech: bicingStationList[i].mechanical,
-                    slots: bicingStationList[i].availableSlots,
-                    addres: bicingStationList[i].address
-                );
-
-              });
-            }
+              markerId: MarkerId("id-" + i.toString()),
+              position: bicingStationList[i].coords,
+              icon: bicingMarker,
+              onTap: () {
+                setState(() {
+                  info = InfoBicingStationWindow(
+                      belec: bicingStationList[i].electrical,
+                      bmech: bicingStationList[i].mechanical,
+                      slots: bicingStationList[i].availableSlots,
+                      addres: bicingStationList[i].address
+                  );
+                });
+              }
           ),
         );
 
         _markers.add(
           Marker(
-            markerId: MarkerId("id-" + (i+bicingStationList.length).toString()),
+            markerId: MarkerId(
+                "id-" + (i + bicingStationList.length).toString()),
             position: chargerStationList[i].coords,
             icon: chargerMarker,
             onTap: () {
@@ -90,13 +95,8 @@ class _Google_MapaState extends State<Google_Mapa>{
       }
     });
 
-    setState(() {
-    });
+    setState(() {});
   }
-
-
-
-
 
 
   @override
@@ -118,7 +118,8 @@ class _Google_MapaState extends State<Google_Mapa>{
             ]
         ),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(40), bottomRight: Radius.circular(40)),
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(40),
+              bottomRight: Radius.circular(40)),
         ),
         backgroundColor: Colors.green,
         elevation: 20,
@@ -130,28 +131,53 @@ class _Google_MapaState extends State<Google_Mapa>{
       ),
 
       body: Stack(
-        children:[
-          Container(
-          child: GoogleMap(
-            onMapCreated:_onMapCreated ,
-            initialCameraPosition: CameraPosition(
-              target: widget. _aux,
-              zoom: 16,
+          children: [
+            Container(
+              child: GoogleMap(
+                onMapCreated: _onMapCreated,
+                initialCameraPosition: CameraPosition(
+                  target: widget._aux,
+                  zoom: 16,
+                ),
+                onLongPress: (latlang) {
+                  _addMarkerLongPressed(
+                      latlang); //we will call this function when pressed on the map
+                },
+                markers: _markers,
+              ),
             ),
-            markers: _markers,
-           ),
-          ),
-          Container(
-              height:130,
-              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.595),
-              child:info
-          )
-        ]
+            Container(
+                height: 130,
+                margin: EdgeInsets.only(top: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.595),
+                child: info
+            )
+          ]
       ),
 
     );
   }
 
+  Future _addMarkerLongPressed(LatLng latlang) async {
+    setState(() {
+      final MarkerId markerId = MarkerId((_markers.length+1).toString());
+      Marker marker = Marker(
+        markerId: markerId,
+        draggable: true,
+        position: latlang,
+        //With this parameter you automatically obtain latitude and longitude
+        infoWindow: InfoWindow(
+          title: "Personal Ubi",
+          snippet: 'Casa',
+        ),
+        icon: personalMarker,
+      );
+
+      _markers.add(marker);
+    });
+  }
 }
 
 

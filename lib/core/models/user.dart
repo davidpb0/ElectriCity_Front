@@ -1,6 +1,9 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 class User{
   String? username;
   String? token;
+  List<Marker> personal_ubi = [];
 
   User();
 
