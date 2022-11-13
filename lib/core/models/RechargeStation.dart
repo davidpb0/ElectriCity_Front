@@ -47,6 +47,10 @@ class RechargeStationList {
     });
     return listcoords;
   }
+
+  List<RechargeStation> getChargerStations(){
+    return ChargeStation;
+  }
 }
 
 class RechargeStation {

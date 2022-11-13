@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:electricity_front/core/services/api_service.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -36,7 +35,7 @@ void main(){
     when(() => response.body).thenReturn('"error": "Wrong password"');
     when(() => httpClient.post(any())).thenAnswer((_) async => response);
     try {
-      apiService.logInApi("peter@klaven", " ");
+      apiService.postData("peter@klaven", " ");
     } catch (error) {
       expect(error, 'Error con el usuario');
     }

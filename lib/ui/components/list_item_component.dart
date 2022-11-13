@@ -131,7 +131,7 @@ class ListItemComponent extends StatelessWidget {
                           children: [
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 6),
-                              child: const Icon(TestIcons.parking, size:20),
+                              child: const Icon(TestIcons.bicing_parking, size:20),
                             ),
                             Padding(
                                 padding: const EdgeInsets.all(6),

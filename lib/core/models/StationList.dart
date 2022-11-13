@@ -47,6 +47,10 @@ class StationList {
     });
     return listcoords;
   }
+
+  List<Station> getBicingStations(){
+    return listMember;
+  }
 }
 
 class Station {

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 import '../../fonts/test_icons_icons.dart';
 
-class InfoStationWindow extends StatelessWidget{
-  const InfoStationWindow({required this.belec, required this.bmech, required this.slots, required this.addres});
+class InfoBicingStationWindow extends StatelessWidget{
+  const InfoBicingStationWindow({required this.belec, required this.bmech, required this.slots, required this.addres});
 
-  final int belec, bmech, slots;
+  final int ?belec, bmech, slots;
   final String addres;
 
 
@@ -70,7 +70,7 @@ class InfoStationWindow extends StatelessWidget{
                         Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 10, vertical: 6),
-                            child: Icon(TestIcons.parking, size: 20)),
+                            child: Icon(TestIcons.bicing_parking, size: 20)),
                         Text("Espais disponibles: "),
                         Text(slots.toString())
                       ],

@@ -1,9 +1,9 @@
-import 'package:electricity_front/ui/components/info_station_window.dart';
 import 'package:electricity_front/ui/views/listpage.dart';
 import 'package:electricity_front/ui/views/profilepage.dart';
 import 'package:flutter/material.dart';
 
 import '../views/mapa.dart';
+import 'info_charge_station_window.dart';
 
 
 class BottomBar extends StatefulWidget{
@@ -19,11 +19,10 @@ class _BottomBarState extends State<BottomBar>{
   static final List<Widget> _widgetOptions = <Widget>[
     Google_Mapa(),
     ListPage(),
-    const InfoStationWindow(
-        belec: 2,
-        bmech: 2,
+    const InfoChargeStationWindow(
         slots: 45,
-        addres: "Pz Cat"
+        addres: "Pz Cat",
+        connectionType: "Fast",
     ),
     ProfilePage(),
     //ProfilePage()

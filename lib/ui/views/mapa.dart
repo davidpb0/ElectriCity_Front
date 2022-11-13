@@ -1,5 +1,8 @@
 import 'package:electricity_front/core/controllers/mapaController.dart';
-import 'package:electricity_front/ui/components/info_station_window.dart';
+import 'package:electricity_front/core/models/RechargeStation.dart';
+import 'package:electricity_front/core/models/StationList.dart';
+import 'package:electricity_front/ui/components/info_bicing_station_window.dart';
+import 'package:electricity_front/ui/components/info_charge_station_window.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -22,6 +25,8 @@ class _Google_MapaState extends State<Google_Mapa>{
   final Set<Marker> _markers = {};
   MapaController _mapaController = MapaController();
   late List<LatLng> bicingList;
+  late List<Station> bicingStationList;
+  late List<RechargeStation> chargerStationList;
   late List<LatLng> rcList;
   Widget info = Container();
 
@@ -42,21 +47,23 @@ class _Google_MapaState extends State<Google_Mapa>{
 
     bicingList = _mapaController.BicingList;
     rcList = _mapaController.CargaList;
+    bicingStationList = _mapaController.BicingStationList;
+    chargerStationList = _mapaController.ChargerStationList;
 
     setState((){
       for(int i = 0; i < bicingList.length; ++i){
         _markers.add(
           Marker(
             markerId: MarkerId("id-" + i.toString()),
-            position: bicingList[i],
+            position: bicingStationList[i].coords,
             icon: bicingMarker,
             onTap: (){
               setState(() {
-                info = const InfoStationWindow(
-                    belec: 1,
-                    bmech: 2,
-                    slots: 45,
-                    addres: "Plaza Cataluña"
+                info =  InfoBicingStationWindow(
+                    belec: bicingStationList[i].electrical,
+                    bmech: bicingStationList[i].mechanical,
+                    slots: bicingStationList[i].availableSlots,
+                    addres: bicingStationList[i].address
                 );
 
               });
@@ -66,13 +73,18 @@ class _Google_MapaState extends State<Google_Mapa>{
 
         _markers.add(
           Marker(
-            markerId: MarkerId("id-" + (i+30).toString()),
-            position: rcList[i],
+            markerId: MarkerId("id-" + (i+bicingStationList.length).toString()),
+            position: chargerStationList[i].coords,
             icon: chargerMarker,
-            infoWindow: InfoWindow(
-                title: "Estació rc Pz Catalunya",
-                snippet: "Estació rc de Plaça Catalunya"
-            ),
+            onTap: () {
+              setState(() {
+                info = InfoChargeStationWindow(
+                  slots: chargerStationList[i].slots,
+                  addres: chargerStationList[i].address,
+                  connectionType: chargerStationList[i].connectionType,
+                );
+              });
+            },
           ),
         );
       }

@@ -11,6 +11,8 @@ class MapaController {
 
   final ApiService _apiService = ApiService();
   late List<LatLng> BicingList = <LatLng>[];
+  late List<Station> BicingStationList = <Station>[];
+  late List<RechargeStation> ChargerStationList = <RechargeStation>[];
   late List<LatLng> CargaList = <LatLng>[];
 
   factory MapaController(){
@@ -33,6 +35,7 @@ class MapaController {
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
       BicingList = estaciones.getCoords();
+      BicingStationList = estaciones.getBicingStations();
       print("Estacions Bicing");
       print(BicingList.length);
       print(BicingList.getRange(0, 10));
@@ -49,6 +52,7 @@ class MapaController {
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       CargaList = rcSt.getCoordsRcSt();
+      ChargerStationList = rcSt.getChargerStations();
       print("Estacions carga");
       print(CargaList.length);
       print(CargaList.getRange(0, 10));
