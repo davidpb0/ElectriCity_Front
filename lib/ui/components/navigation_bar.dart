@@ -19,7 +19,12 @@ class _BottomBarState extends State<BottomBar>{
   static final List<Widget> _widgetOptions = <Widget>[
     Google_Mapa(),
     ListPage(),
-    InfoStationWindow(),
+    const InfoStationWindow(
+        belec: 2,
+        bmech: 2,
+        slots: 45,
+        addres: "Pz Cat"
+    ),
     ProfilePage(),
     //ProfilePage()
 

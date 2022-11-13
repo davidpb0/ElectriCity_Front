@@ -52,7 +52,12 @@ class _Google_MapaState extends State<Google_Mapa>{
             icon: bicingMarker,
             onTap: (){
               setState(() {
-                info = InfoStationWindow();
+                info = const InfoStationWindow(
+                    belec: 1,
+                    bmech: 2,
+                    slots: 45,
+                    addres: "Plaza Cataluña"
+                );
 
               });
             }
@@ -125,8 +130,8 @@ class _Google_MapaState extends State<Google_Mapa>{
            ),
           ),
           Container(
-              height:200,
-              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.6485),
+              height:130,
+              margin: EdgeInsets.only(top: MediaQuery.of(context).size.height*0.59),
               child:info
           )
         ]
