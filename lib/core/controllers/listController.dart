@@ -27,6 +27,7 @@ class ListController {
     Response res = await _apiService.getData('bicing_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
+    _bicinglist = StationList.fromJson(jsonDecode(res.body));
      return StationList.fromJson(jsonDecode(res.body));
     } else {
       throw Exception('Algo falló');
@@ -38,6 +39,7 @@ class ListController {
     Response res = await _apiService.getData('recharge_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
+      _rechargelist = RechargeStationList.fromJson(jsonDecode(res.body));
       return RechargeStationList.fromJson(jsonDecode(res.body));
     } else {
       throw Exception('Algo falló');
