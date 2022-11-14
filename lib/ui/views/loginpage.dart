@@ -1,6 +1,5 @@
-import 'package:electricity_front/core/controllers/loginController.dart';
 import 'package:flutter/material.dart';
-
+import '../../core/controllers/userController.dart';
 import '../components/header_login_component.dart';
 
 class LoginPage extends StatefulWidget{
@@ -29,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
 class Body extends StatelessWidget{
   TextEditingController emailTextController = TextEditingController();
   TextEditingController _passwdTextController = TextEditingController();
-  LoginController loginCtrl = LoginController();
+  UserController userCtrl = UserController();
 
   @override
   Widget build(BuildContext context){
@@ -128,8 +127,8 @@ class Body extends StatelessWidget{
           child: TextButton(
             onPressed: (){
               //CAMBIO A MAPA FAST (SIN API)
-              //loginCtrl.logIn(emailTextController.text, _passwdTextController.text, context);
-              Navigator.of(context).pushReplacementNamed('/home');
+              userCtrl.startSession(emailTextController.text, _passwdTextController.text, context);
+              //Navigator.of(context).pushReplacementNamed('/home');
 
             },
 

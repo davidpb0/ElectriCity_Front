@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:electricity_front/core/models/RechargeStation.dart';
 import 'package:electricity_front/core/models/StationList.dart';
 import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 import 'package:http/http.dart';
-
 import '../services/api_service.dart';
 
 class MapaController {
@@ -14,6 +12,7 @@ class MapaController {
   late List<Station> BicingStationList = <Station>[];
   late List<RechargeStation> ChargerStationList = <RechargeStation>[];
   late List<LatLng> CargaList = <LatLng>[];
+
 
   factory MapaController(){
     if (_this == null) _this = MapaController._();
