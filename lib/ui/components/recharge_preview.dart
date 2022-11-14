@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../core/models/StationList.dart';
+import '../../core/models/RechargeStation.dart';
 import '../../fonts/test_icons_icons.dart';
 
-class ListItemComponent extends StatelessWidget {
-  final Station info;
+class RechargePreview extends StatelessWidget {
+  final RechargeStation info;
 
-  const ListItemComponent({
+  const RechargePreview({
     Key? key,
     required this.info,
   }) : super(key: key);
@@ -96,7 +96,7 @@ class ListItemComponent extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(6),
                                 child:Text(
-                                  info.mechanical.toString(),
+                                  info.speedType.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black,
@@ -116,7 +116,7 @@ class ListItemComponent extends StatelessWidget {
                               Padding(
                                 padding: const EdgeInsets.all(6),
                                 child:Text(
-                                  info.electrical.toString(),
+                                  info.connectionType.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black,
@@ -136,7 +136,7 @@ class ListItemComponent extends StatelessWidget {
                             Padding(
                                 padding: const EdgeInsets.all(6),
                                 child:Text(
-                                  info.availableSlots.toString(),
+                                  info.slots.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     color: Colors.black,

@@ -1,4 +1,7 @@
-import 'package:electricity_front/ui/components/list_item_component.dart';
+import 'package:electricity_front/core/models/RechargeStation.dart';
+import 'package:electricity_front/core/models/StationList.dart';
+import 'package:electricity_front/ui/components/bicing_preview.dart';
+import 'package:electricity_front/ui/components/recharge_preview.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/controllers/listController.dart';
@@ -14,40 +17,77 @@ class ListPage extends StatefulWidget{
 }
 
 class _ListPageState extends State<ListPage> {
-  @override
-  Widget build(BuildContext context){
-    return Scaffold(
-        backgroundColor: Colors.grey[300],
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.green,
-        ),
-        body: Body()
-    );
-  }
-}
+  late Future<StationList> futureBicing;
+  late Future<RechargeStationList> futureRecharge;
+  late ListController listCtrl;
+  bool bicing = true;
 
-class Body extends StatelessWidget{
-  ListController listCtrl = ListController();
+  @override
+  void initState() {
+    super.initState();
+    listCtrl = ListController();
+    futureBicing = listCtrl.fetchBicingStations();
+    futureRecharge= listCtrl.fetchRechargeStations();
+  }
 
   @override
   Widget build(BuildContext context){
     //Da la altura y el ancho total de la pantalla
     Size size = MediaQuery.of(context).size;
-    listCtrl.getstations();
     return  Scaffold(
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
         title: const Text("ElectriCity"),
         ),
-      body: ListView.builder(
-          itemCount: listCtrl.getTotalStations(),
-          itemBuilder: (context, index){
-            return ListItemComponent(info: listCtrl.getStation(index));
-          },
+      body: Column(
+        children: [
+          Switch(
+          // This bool value toggles the switch.
+          value: bicing,
+          activeColor: Colors.green,
+          inactiveThumbColor: Colors.blue,
+          inactiveTrackColor: Colors.blue,
+          onChanged: (bool value) {
+            // This is called when the user toggles the switch.
+            setState(() {
+              bicing = value;
+            });
 
-        )
-      );
+          },
+          ),
+          FutureBuilder(
+            future: futureBicing,
+            builder: (context, snapshot) {
+              // WHILE THE CALL IS BEING MADE AKA LOADING
+              if (ConnectionState.active != null && !snapshot.hasData) {
+                return Center(child: Text('Loading'));
+              }
+
+              // WHEN THE CALL IS DONE BUT HAPPENS TO HAVE AN ERROR
+              if (ConnectionState.done != null && snapshot.hasError) {
+                return Center(child: Text("Error"));
+              }
+
+              // IF IT WORKS IT GOES HERE!
+              if (bicing) {
+                return ListView.builder(
+                  itemCount: listCtrl.getTotalBicingStations(),
+                  itemBuilder: (context, index) {
+                    return BicingPreview(info: listCtrl.getBicingStation(index));
+                  },
+                );
+              }
+              return ListView.builder(
+                itemCount: listCtrl.getTotalRechargeStations(),
+                itemBuilder: (context, index) {
+                  return RechargePreview(info: listCtrl.getRechargeStation(index));
+                },
+              );
+            }
+          )
+        ]
+      )
+    );
   }
 }
 
