@@ -71,13 +71,15 @@ class _ListPageState extends State<ListPage> {
               // IF IT WORKS IT GOES HERE!
               if (bicing) {
                 return ListView.builder(
+                  shrinkWrap = true,
                   itemCount: listCtrl.getTotalBicingStations(),
                   itemBuilder: (context, index) {
                     return BicingPreview(info: listCtrl.getBicingStation(index));
                   },
                 );
               }
-              return ListView.builder(
+              else return ListView.builder(
+                shrinkWrap = true,
                 itemCount: listCtrl.getTotalRechargeStations(),
                 itemBuilder: (context, index) {
                   return RechargePreview(info: listCtrl.getRechargeStation(index));
