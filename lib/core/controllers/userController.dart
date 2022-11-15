@@ -29,4 +29,5 @@ class UserController{
    ApiService().setToken("");
    Navigator.of(ctxt).pushReplacementNamed('/login');
   }
+
 }

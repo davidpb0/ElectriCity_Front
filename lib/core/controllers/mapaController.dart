@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'package:electricity_front/core/controllers/userController.dart';
 import 'package:electricity_front/core/models/RechargeStation.dart';
 import 'package:electricity_front/core/models/StationList.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 import 'package:http/http.dart';
 import '../services/api_service.dart';
@@ -13,6 +16,8 @@ class MapaController {
   late List<RechargeStation> ChargerStationList = <RechargeStation>[];
   late List<LatLng> CargaList = <LatLng>[];
 
+  late LatLng coords;
+  late BitmapDescriptor personalMarker;
 
   factory MapaController(){
     if (_this == null) _this = MapaController._();
@@ -27,6 +32,7 @@ class MapaController {
     print(BicingList.length);
     return BicingList;
   }
+
 
   bicingApi() async {
     Response res = await _apiService.getData('bicing_stations');
@@ -62,7 +68,19 @@ class MapaController {
     print(body);
   }
 
-
+  personalUbi(String tit, String ?desc, BuildContext context){
+    Marker marker = Marker(
+      markerId: MarkerId((3000+ UserController().current_user.personal_ubi.length).toString()),
+      position: coords,
+      icon: personalMarker,
+      infoWindow: InfoWindow(
+        title: tit,
+        snippet: desc,
+      ),
+    );
+    UserController().current_user.personal_ubi.add(marker);
+    Navigator.of(context).pushReplacementNamed('/home');
+  }
 
 
 

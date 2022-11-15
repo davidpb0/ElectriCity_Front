@@ -1,4 +1,5 @@
 import 'package:electricity_front/core/controllers/mapaController.dart';
+import 'package:electricity_front/core/controllers/userController.dart';
 import 'package:electricity_front/core/models/RechargeStation.dart';
 import 'package:electricity_front/core/models/StationList.dart';
 import 'package:electricity_front/ui/components/info_bicing_station_window.dart';
@@ -17,6 +18,8 @@ class Google_Mapa extends StatefulWidget {
 
   final LatLng _center = const LatLng(41.3870154, 2.1700471);
   final LatLng _aux = const LatLng(41.3979779, 2.1801069);
+
+
 }
 
 class _Google_MapaState extends State<Google_Mapa> {
@@ -25,11 +28,19 @@ class _Google_MapaState extends State<Google_Mapa> {
   late BitmapDescriptor personalMarker;
   final Set<Marker> _markers = {};
   MapaController _mapaController = MapaController();
+  UserController _userController = UserController();
   late List<LatLng> bicingList;
   late List<Station> bicingStationList;
+  late List<Marker> personalMarkers;
   late List<RechargeStation> chargerStationList;
   late List<LatLng> rcList;
   Widget info = Container();
+  late String title;
+  String ?address;
+  String ?telfn;
+
+
+  Widget form = Container();
 
   @override
   void initState() {
@@ -52,6 +63,7 @@ class _Google_MapaState extends State<Google_Mapa> {
 
     bicingList = _mapaController.BicingList;
     rcList = _mapaController.CargaList;
+    personalMarkers = _userController.current_user.personal_ubi;
     bicingStationList = _mapaController.BicingStationList;
     chargerStationList = _mapaController.ChargerStationList;
 
@@ -92,6 +104,10 @@ class _Google_MapaState extends State<Google_Mapa> {
             },
           ),
         );
+
+        for(int j = 0; j < personalMarkers.length; ++j){
+          _markers.add(personalMarkers[j]);
+        }
       }
     });
 
@@ -139,9 +155,16 @@ class _Google_MapaState extends State<Google_Mapa> {
                   target: widget._aux,
                   zoom: 16,
                 ),
-                onLongPress: (latlang) {
-                  _addMarkerLongPressed(
-                      latlang); //we will call this function when pressed on the map
+                onLongPress: (latlang) async {
+                  _mapaController.coords = latlang;
+                  _mapaController.personalMarker = await personalMarker;
+                  Navigator.of(context).pushReplacementNamed('/form_ubi');
+                },
+                onTap: (latlang){
+                  setState(() {
+                    info = Container();
+                    form = Container();
+                  });
                 },
                 markers: _markers,
               ),
@@ -153,31 +176,22 @@ class _Google_MapaState extends State<Google_Mapa> {
                     .size
                     .height * 0.595),
                 child: info
-            )
+            ),
+            Container(
+                height: 130,
+                margin: EdgeInsets.only(top: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.5),
+                child: form
+            ),
           ]
       ),
 
     );
   }
 
-  Future _addMarkerLongPressed(LatLng latlang) async {
-    setState(() {
-      final MarkerId markerId = MarkerId((_markers.length+1).toString());
-      Marker marker = Marker(
-        markerId: markerId,
-        draggable: true,
-        position: latlang,
-        //With this parameter you automatically obtain latitude and longitude
-        infoWindow: InfoWindow(
-          title: "Personal Ubi",
-          snippet: 'Casa',
-        ),
-        icon: personalMarker,
-      );
 
-      _markers.add(marker);
-    });
-  }
 }
 
 
