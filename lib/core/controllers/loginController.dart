@@ -1,18 +1,13 @@
-
 import 'dart:convert';
-
 import 'package:electricity_front/core/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
-
-import '../models/login_model.dart';
 import '../services/api_service.dart';
 
 class LoginController{
 
 
   final ApiService _apiService = ApiService();
-  User? _loggedUser;
 
   var _email = "";
   var _passwd = "";
@@ -35,24 +30,19 @@ class LoginController{
       "password":pwd,
     };
 
-    Response res = await _apiService.postData(data, 'login');
+    Response res = await _apiService.login(data, 'login');
     var body = json.decode(res.body);
     if (body['message'] == 'Successfull login'){
-      _loggedUser = User.fromJson(body);
-      Navigator.of(ctext).pushReplacementNamed('/home');
+      return User.fromJson(body);
     };
+
     print(res.statusCode);
     print(res.body.toString());
+    //print(_userController.current_user.username);
     //print(body['user']['tokens'].first);
     //print(_loggedUser?.username);
 
   }
-
-  void logOut(BuildContext ctxt){
-    _loggedUser = null;
-    Navigator.of(ctxt).pushReplacementNamed('/login');
-  }
-
 
   void printData(){
     print("Email: " + _email);

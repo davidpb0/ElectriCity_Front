@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../core/controllers/loginController.dart';
+import '../../core/controllers/userController.dart';
 
 class ProfilePage extends StatelessWidget{
-  LoginController loginCtrl = LoginController();
+  UserController userCtrl = UserController();
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class ProfilePage extends StatelessWidget{
               child: Container(
                 child: ElevatedButton(
                   onPressed: () {
-                    loginCtrl.logOut(context);
+                    userCtrl.logOut(context);
                   },
                   child: Text(
                     "Log out"
