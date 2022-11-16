@@ -7,19 +7,16 @@ import 'package:electricity_front/ui/components/info_charge_station_window.dart'
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 class Google_Mapa extends StatefulWidget {
   @override
   _Google_MapaState createState() => _Google_MapaState();
 
-  Google_Mapa({Key? key}) :super(key: key);
+  Google_Mapa({Key? key}) : super(key: key);
 
   late GoogleMapController mapController;
 
   final LatLng _center = const LatLng(41.3870154, 2.1700471);
   final LatLng _aux = const LatLng(41.3979779, 2.1801069);
-
-
 }
 
 class _Google_MapaState extends State<Google_Mapa> {
@@ -36,9 +33,8 @@ class _Google_MapaState extends State<Google_Mapa> {
   late List<LatLng> rcList;
   Widget info = Container();
   late String title;
-  String ?address;
-  String ?telfn;
-
+  String? address;
+  String? telfn;
 
   Widget form = Container();
 
@@ -80,17 +76,15 @@ class _Google_MapaState extends State<Google_Mapa> {
                       belec: bicingStationList[i].electrical,
                       bmech: bicingStationList[i].mechanical,
                       slots: bicingStationList[i].availableSlots,
-                      addres: bicingStationList[i].address
-                  );
+                      addres: bicingStationList[i].address);
                 });
-              }
-          ),
+              }),
         );
 
         _markers.add(
           Marker(
-            markerId: MarkerId(
-                "id-" + (i + bicingStationList.length).toString()),
+            markerId:
+                MarkerId("id-" + (i + bicingStationList.length).toString()),
             position: chargerStationList[i].coords,
             icon: chargerMarker,
             onTap: () {
@@ -105,7 +99,7 @@ class _Google_MapaState extends State<Google_Mapa> {
           ),
         );
 
-        for(int j = 0; j < personalMarkers.length; ++j){
+        for (int j = 0; j < personalMarkers.length; ++j) {
           _markers.add(personalMarkers[j]);
         }
       }
@@ -114,27 +108,23 @@ class _Google_MapaState extends State<Google_Mapa> {
     setState(() {});
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Text('ElectriCity')),
-              Image.asset(
-                'assets/images/title_logo_car.png',
-                fit: BoxFit.contain,
-                height: 32,
-              ),
-            ]
-        ),
+        title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Container(
+              padding: const EdgeInsets.all(2.0), child: Text('ElectriCity')),
+          Image.asset(
+            'assets/images/title_logo_car.png',
+            fit: BoxFit.contain,
+            height: 32,
+          ),
+        ]),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(40),
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(40),
               bottomRight: Radius.circular(40)),
         ),
         backgroundColor: Colors.green,
@@ -143,56 +133,40 @@ class _Google_MapaState extends State<Google_Mapa> {
           preferredSize: Size.fromHeight(20),
           child: SizedBox(),
         ),
-
       ),
-
-      body: Stack(
-          children: [
-            Container(
-              child: GoogleMap(
-                onMapCreated: _onMapCreated,
-                initialCameraPosition: CameraPosition(
-                  target: widget._aux,
-                  zoom: 16,
-                ),
-                onLongPress: (latlang) async {
-                  _mapaController.coords = latlang;
-                  _mapaController.personalMarker = await personalMarker;
-                  Navigator.of(context).pushReplacementNamed('/form_ubi');
-                },
-                onTap: (latlang){
-                  setState(() {
-                    info = Container();
-                    form = Container();
-                  });
-                },
-                markers: _markers,
-              ),
+      body: Stack(children: [
+        Container(
+          child: GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: widget._aux,
+              zoom: 16,
             ),
-            Container(
-                height: 130,
-                margin: EdgeInsets.only(top: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.595),
-                child: info
-            ),
-            Container(
-                height: 130,
-                margin: EdgeInsets.only(top: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.5),
-                child: form
-            ),
-          ]
-      ),
-
+            onLongPress: (latlang) async {
+              _mapaController.coords = latlang;
+              _mapaController.personalMarker = await personalMarker;
+              Navigator.of(context).pushReplacementNamed('/form_ubi');
+            },
+            onTap: (latlang) {
+              setState(() {
+                info = Container();
+                form = Container();
+              });
+            },
+            markers: _markers,
+          ),
+        ),
+        Container(
+            height: 130,
+            margin: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.595),
+            child: info),
+        Container(
+            height: 130,
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
+            child: form),
+      ]),
     );
   }
-
-
 }
-
-
-
