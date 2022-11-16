@@ -1,1 +1,27 @@
+name: ElectriCity-FrontEnd CI - Unit Tests
 
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+
+jobs:
+  unit_tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the branch
+        uses: actions/checkout@v2
+      - name: Install flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - name: Get packages
+        run: flutter pub get
+      - name: Build runner
+        run: flutter pub run build_runner build
+      - name: Analyze dart code
+        run: flutter analyze .
+      - name: Run unit tests
+        run: flutter test --coverage
