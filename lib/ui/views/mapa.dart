@@ -1,4 +1,4 @@
-import 'package:electricity_front/core/controllers/mapaController.dart';
+import 'package:electricity_front/core/controllers/mapa_controller.dart';
 import 'package:electricity_front/core/controllers/userController.dart';
 import 'package:electricity_front/core/models/RechargeStation.dart';
 import 'package:electricity_front/core/models/StationList.dart';
@@ -57,11 +57,11 @@ class _Google_MapaState extends State<Google_Mapa> {
     await _mapaController.bicingApi();
     await _mapaController.rechargeApi();
 
-    bicingList = _mapaController.BicingList;
-    rcList = _mapaController.CargaList;
+    bicingList = _mapaController.bicingList;
+    rcList = _mapaController.cargaList;
     personalMarkers = _userController.current_user.personal_ubi;
-    bicingStationList = _mapaController.BicingStationList;
-    chargerStationList = _mapaController.ChargerStationList;
+    bicingStationList = _mapaController.bicingStationList;
+    chargerStationList = _mapaController.chargerStationList;
 
     setState(() {
       for (int i = 0; i < bicingList.length; ++i) {

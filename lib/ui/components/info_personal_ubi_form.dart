@@ -1,5 +1,5 @@
 import 'dart:core';
-import 'package:electricity_front/core/controllers/mapaController.dart';
+import 'package:electricity_front/core/controllers/mapa_controller.dart';
 import 'package:flutter/material.dart';
 
 class InfoPersonalUbiForm extends StatelessWidget {

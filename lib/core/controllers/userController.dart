@@ -1,4 +1,4 @@
-import 'package:electricity_front/core/controllers/loginController.dart';
+import 'package:electricity_front/core/controllers/login_controller.dart';
 import 'package:electricity_front/core/services/api_service.dart';
 import 'package:flutter/cupertino.dart';
 import '../models/user.dart';

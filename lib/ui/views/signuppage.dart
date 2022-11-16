@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../core/controllers/signupController.dart';
+import '../../core/controllers/signup_controller.dart';
 import '../components/header_login_component.dart';
 
 class SignupPage extends StatefulWidget{
