@@ -7,7 +7,6 @@ import 'package:http/http.dart';
 import '../models/user.dart';
 
 class SignupController {
-
   final ApiService _apiService = ApiService();
   User? _loggedUser;
 
@@ -20,59 +19,53 @@ class SignupController {
   var _passwd = "";
   String? _passwdError;
 
-  factory SignupController(){
-    if (_this == null) _this = SignupController._();
+  factory SignupController() {
     return _this;
   }
 
-  static SignupController _this = SignupController._();
+  static final SignupController _this = SignupController._();
+
   SignupController._();
 
-  void setUsername(String _un) {
-    _username = _un;
+  void setUsername(String un) {
+    _username = un;
   }
 
-  void setEmail(String _mail) {
-    _email = _mail;
+  void setEmail(String mail) {
+    _email = mail;
   }
 
-  void setPasswd(String _pwd1, String _pwd2) {
-    if (_pwd1 == _pwd2) {
-      print("Password matching");
-      _passwd = _pwd1;
+  void setPasswd(String pwd1, String pwd2) {
+    if (pwd1 == pwd2) {
+      //print("Password matching");
+      _passwd = pwd1;
       return;
     }
-    print("Password not matching");
+    //print("Password not matching");
     _passwdError = "Password not matching";
-
   }
 
-
   signUp(BuildContext ctext) async {
-    var data={
-      "username":this._username,
-      "email":this._email,
-      "password":this._passwd,
+    var data = {
+      "username": _username,
+      "email": _email,
+      "password": _passwd,
     };
 
     Response res = await _apiService.postData(data, 'signup');
     var body = json.decode(res.body);
-    if (body['message'] == 'Successfull login'){
+    if (body['message'] == 'Successfull login') {
       _loggedUser = User.fromJson(body);
       Navigator.of(ctext).pushReplacementNamed('/home');
-    };
-    print(res.statusCode);
-    print(res.body.toString());
+
+    }
+    //print(res.statusCode);
+    //print(res.body.toString());
     //print(body['user']['tokens'].first);
     //print(_loggedUser?.username);
-
   }
 
-  void printData() {
-    print("Username: " + _username);
-    print("Email: " + _email);
-    print("Password: " + _passwd);
-  }
+
 
   String? usernameError() {
     return _usernameError;
@@ -86,4 +79,3 @@ class SignupController {
     return _passwdError;
   }
 }
-

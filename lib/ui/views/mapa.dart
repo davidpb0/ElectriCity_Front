@@ -1,4 +1,5 @@
-import 'package:electricity_front/core/controllers/mapaController.dart';
+import 'package:electricity_front/core/controllers/mapa_controller.dart';
+import 'package:electricity_front/core/controllers/userController.dart';
 import 'package:electricity_front/core/models/RechargeStation.dart';
 import 'package:electricity_front/core/models/StationList.dart';
 import 'package:electricity_front/ui/components/info_bicing_station_window.dart';
@@ -6,12 +7,11 @@ import 'package:electricity_front/ui/components/info_charge_station_window.dart'
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 class Google_Mapa extends StatefulWidget {
   @override
   _Google_MapaState createState() => _Google_MapaState();
 
-  Google_Mapa({Key? key}) :super(key: key);
+  Google_Mapa({Key? key}) : super(key: key);
 
   late GoogleMapController mapController;
 
@@ -25,11 +25,18 @@ class _Google_MapaState extends State<Google_Mapa> {
   late BitmapDescriptor personalMarker;
   final Set<Marker> _markers = {};
   MapaController _mapaController = MapaController();
+  UserController _userController = UserController();
   late List<LatLng> bicingList;
   late List<Station> bicingStationList;
+  late List<Marker> personalMarkers;
   late List<RechargeStation> chargerStationList;
   late List<LatLng> rcList;
   Widget info = Container();
+  late String title;
+  String? address;
+  String? telfn;
+
+  Widget form = Container();
 
   @override
   void initState() {
@@ -50,10 +57,11 @@ class _Google_MapaState extends State<Google_Mapa> {
     await _mapaController.bicingApi();
     await _mapaController.rechargeApi();
 
-    bicingList = _mapaController.BicingList;
-    rcList = _mapaController.CargaList;
-    bicingStationList = _mapaController.BicingStationList;
-    chargerStationList = _mapaController.ChargerStationList;
+    bicingList = _mapaController.bicingList;
+    rcList = _mapaController.cargaList;
+    personalMarkers = _userController.current_user.personal_ubi;
+    bicingStationList = _mapaController.bicingStationList;
+    chargerStationList = _mapaController.chargerStationList;
 
     setState(() {
       for (int i = 0; i < bicingList.length; ++i) {
@@ -68,17 +76,15 @@ class _Google_MapaState extends State<Google_Mapa> {
                       belec: bicingStationList[i].electrical,
                       bmech: bicingStationList[i].mechanical,
                       slots: bicingStationList[i].availableSlots,
-                      addres: bicingStationList[i].address
-                  );
+                      addres: bicingStationList[i].address);
                 });
-              }
-          ),
+              }),
         );
 
         _markers.add(
           Marker(
-            markerId: MarkerId(
-                "id-" + (i + bicingStationList.length).toString()),
+            markerId:
+                MarkerId("id-" + (i + bicingStationList.length).toString()),
             position: chargerStationList[i].coords,
             icon: chargerMarker,
             onTap: () {
@@ -92,33 +98,33 @@ class _Google_MapaState extends State<Google_Mapa> {
             },
           ),
         );
+
+        for (int j = 0; j < personalMarkers.length; ++j) {
+          _markers.add(personalMarkers[j]);
+        }
       }
     });
 
     setState(() {});
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Text('ElectriCity')),
-              Image.asset(
-                'assets/images/title_logo_car.png',
-                fit: BoxFit.contain,
-                height: 32,
-              ),
-            ]
-        ),
+        title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+          Container(
+              padding: const EdgeInsets.all(2.0), child: Text('ElectriCity')),
+          Image.asset(
+            'assets/images/title_logo_car.png',
+            fit: BoxFit.contain,
+            height: 32,
+          ),
+        ]),
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(40),
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(40),
               bottomRight: Radius.circular(40)),
         ),
         backgroundColor: Colors.green,
@@ -127,58 +133,40 @@ class _Google_MapaState extends State<Google_Mapa> {
           preferredSize: Size.fromHeight(20),
           child: SizedBox(),
         ),
-
       ),
-
-      body: Stack(
-          children: [
-            Container(
-              child: GoogleMap(
-                onMapCreated: _onMapCreated,
-                initialCameraPosition: CameraPosition(
-                  target: widget._aux,
-                  zoom: 16,
-                ),
-                onLongPress: (latlang) {
-                  _addMarkerLongPressed(
-                      latlang); //we will call this function when pressed on the map
-                },
-                markers: _markers,
-              ),
+      body: Stack(children: [
+        Container(
+          child: GoogleMap(
+            onMapCreated: _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: widget._aux,
+              zoom: 16,
             ),
-            Container(
-                height: 130,
-                margin: EdgeInsets.only(top: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.595),
-                child: info
-            )
-          ]
-      ),
-
+            onLongPress: (latlang) async {
+              _mapaController.coords = latlang;
+              _mapaController.personalMarker = await personalMarker;
+              Navigator.of(context).pushReplacementNamed('/form_ubi');
+            },
+            onTap: (latlang) {
+              setState(() {
+                info = Container();
+                form = Container();
+              });
+            },
+            markers: _markers,
+          ),
+        ),
+        Container(
+            height: 130,
+            margin: EdgeInsets.only(
+                top: MediaQuery.of(context).size.height * 0.595),
+            child: info),
+        Container(
+            height: 130,
+            margin:
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
+            child: form),
+      ]),
     );
   }
-
-  Future _addMarkerLongPressed(LatLng latlang) async {
-    setState(() {
-      final MarkerId markerId = MarkerId((_markers.length+1).toString());
-      Marker marker = Marker(
-        markerId: markerId,
-        draggable: true,
-        position: latlang,
-        //With this parameter you automatically obtain latitude and longitude
-        infoWindow: InfoWindow(
-          title: "Personal Ubi",
-          snippet: 'Casa',
-        ),
-        icon: personalMarker,
-      );
-
-      _markers.add(marker);
-    });
-  }
 }
-
-
-
