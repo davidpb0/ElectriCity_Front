@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:electricity_front/core/controllers/userController.dart';
-import 'package:electricity_front/core/models/RechargeStation.dart';
+import 'package:electricity_front/core/controllers/user_controller.dart';
+import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/StationList.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -30,9 +30,15 @@ class MapaController {
     return bicingList;
   }
 
+  initBD() async{
+    await _apiService.getData('station_bicing');
+
+  }
+
   bicingApi() async {
     Response res = await _apiService.getData('bicing_stations');
     var body = json.decode(res.body);
+    print(res.statusCode.toString());
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
       bicingList = estaciones.getCoords();
@@ -67,7 +73,7 @@ class MapaController {
   personalUbi(String tit, String? desc, BuildContext context) {
     Marker marker = Marker(
       markerId: MarkerId(
-          (3000 + UserController().current_user.personal_ubi.length)
+          (3000 + UserController().currentUser.personalUbi.length)
               .toString()),
       position: coords,
       icon: personalMarker,
@@ -76,7 +82,7 @@ class MapaController {
         snippet: desc,
       ),
     );
-    UserController().current_user.personal_ubi.add(marker);
+    UserController().currentUser.personalUbi.add(marker);
     Navigator.of(context).pushReplacementNamed('/home');
   }
 }

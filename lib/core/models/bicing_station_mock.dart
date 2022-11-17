@@ -8,6 +8,5 @@ class BicingStation{
   final int freedocks;
   final int totaldocks;
 
-  BicingStation(this.code, this.name, this.xCoord, this.yCoord, this.manbikes,this.elebikes, this.freedocks, this.totaldocks) {
-  }
+  BicingStation(this.code, this.name, this.xCoord, this.yCoord, this.manbikes,this.elebikes, this.freedocks, this.totaldocks);
 }

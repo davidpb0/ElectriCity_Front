@@ -51,21 +51,17 @@ class SignupController {
       "email": _email,
       "password": _passwd,
     };
-
+    _loggedUser;
     Response res = await _apiService.postData(data, 'signup');
     var body = json.decode(res.body);
     if (body['message'] == 'Successfull login') {
       _loggedUser = User.fromJson(body);
-      Navigator.of(ctext).pushReplacementNamed('/home');
-
     }
     //print(res.statusCode);
     //print(res.body.toString());
     //print(body['user']['tokens'].first);
     //print(_loggedUser?.username);
   }
-
-
 
   String? usernameError() {
     return _usernameError;

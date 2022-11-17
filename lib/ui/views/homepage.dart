@@ -16,6 +16,6 @@ class _HomePageState extends State<HomePage> {
           elevation: 0,
           backgroundColor: Colors.green,
         ),
-        body: Text('Home'));
+        body: const Text('Home'));
   }
 }

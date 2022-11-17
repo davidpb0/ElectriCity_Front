@@ -27,6 +27,7 @@ class LoginController {
     Response res = await _apiService.login(data, 'login');
     var body = json.decode(res.body);
     if (body['message'] == 'Successfull login') {
+      Navigator.of(ctext).pushReplacementNamed('/home');
       return User.fromJson(body);
     }
 

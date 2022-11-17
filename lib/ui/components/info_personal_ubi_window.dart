@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 
 import '../../fonts/test_icons_icons.dart';
 
-class InfoPersonalUbiWindow extends StatelessWidget{
-
+class InfoPersonalUbiWindow extends StatelessWidget {
   final String title;
-  final String ?ubi ;
-  final String ?telf;
+  final String? ubi;
 
-  const InfoPersonalUbiWindow({required this.title, required this.ubi, required this.telf});
+  final String? telf;
+
+  const InfoPersonalUbiWindow(
+      {super.key, required this.title, required this.ubi, required this.telf});
 
   @override
   Widget build(BuildContext context) {
@@ -17,25 +18,27 @@ class InfoPersonalUbiWindow extends StatelessWidget{
       child: Container(
         height: 150,
         decoration: BoxDecoration(
-            boxShadow: [BoxShadow(
-              offset: Offset(0, 2),
-              blurRadius: 1,
-
-            )],
+            boxShadow: const [
+              BoxShadow(
+                offset: Offset(0, 2),
+                blurRadius: 1,
+              )
+            ],
             border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(12),
-            color: Colors.white
-        ),
+            color: Colors.white),
         child: Column(children: [
           Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-                color: Colors.yellow
-            ),
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12)),
+                color: Colors.yellow),
             width: MediaQuery.of(context).size.width,
-            child: Text(title,
+            child: Text(
+              title,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20,
               ),
@@ -48,9 +51,9 @@ class InfoPersonalUbiWindow extends StatelessWidget{
                 children: [
                   Row(
                     children: [
-                      Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 6),
+                      const Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.eCar, size: 20)),
                       const Text("Direcció: "),
                       Text(ubi.toString())
@@ -58,11 +61,11 @@ class InfoPersonalUbiWindow extends StatelessWidget{
                   ),
                   Row(
                     children: [
-                      Padding(
-                          padding: const EdgeInsets.symmetric(
+                      const Padding(
+                          padding: EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
                           child: Icon(TestIcons.eCharger, size: 20)),
-                      Text("Telèfon: "),
+                      const Text("Telèfon: "),
                       Text(telf.toString())
                     ],
                   )
@@ -72,6 +75,4 @@ class InfoPersonalUbiWindow extends StatelessWidget{
       ),
     );
   }
-
 }
-

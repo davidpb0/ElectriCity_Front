@@ -6,26 +6,25 @@ import '../models/user.dart';
 class UserController{
 
 
-  late User current_user = User();
+  late User currentUser = User();
 
   factory UserController(){
-    if (_this == null) _this = UserController._();
     return _this;
   }
 
-  static UserController _this = UserController._();
+  static final UserController _this = UserController._();
   UserController._();
 
 
 
  startSession(String mail, String pwd, BuildContext ctext) async{
-   current_user = await LoginController().logIn(mail, pwd, ctext);
-   ApiService().setToken(current_user.token);
-   Navigator.of(ctext).pushReplacementNamed('/home');
+   currentUser = await LoginController().logIn(mail, pwd, ctext);
+   ApiService().setToken(currentUser.token);
+
  }
 
   void logOut(BuildContext ctxt){
-   current_user = User();
+   currentUser = User();
    ApiService().setToken("");
    Navigator.of(ctxt).pushReplacementNamed('/login');
   }

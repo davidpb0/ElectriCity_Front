@@ -24,12 +24,15 @@ class _ListPageState extends State<ListPage> {
 }
 
 class Body extends StatelessWidget {
-  ListController listCtrl = ListController();
+  final ListController listCtrl = ListController();
+
+  Body({super.key});
 
   @override
   Widget build(BuildContext context) {
     //Da la altura y el ancho total de la pantalla
     Size size = MediaQuery.of(context).size;
+    size;
     listCtrl.getstations();
     return Scaffold(
         backgroundColor: Colors.grey[300],

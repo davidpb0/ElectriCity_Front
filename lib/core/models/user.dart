@@ -1,7 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class User {
-  List<Marker> personal_ubi = [];
+  List<Marker> personalUbi = [];
   String username = "";
   String token = "";
 
@@ -23,7 +23,4 @@ class User {
     return token;
   }
 
-  printData() {
-    print(username);
-  }
 }
