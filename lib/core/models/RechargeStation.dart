@@ -73,7 +73,12 @@ class RechargeStation {
     connectionType = json['connectionType'];
     slots = json['slots'];
     id = json['id'];
-    latitude = json['latitude'];
+    String obj = json['latitude'].toString();
+    if (obj[2] != '.') {
+      obj = obj.substring(0, 2) + '.' + obj.substring(2, obj.length);
+    }
+    latitude = double.parse(obj);
+    print(latitude);
     longitude = json['longitude'];
     coords = LatLng(latitude.toDouble(), longitude);
     status = json['status'];
