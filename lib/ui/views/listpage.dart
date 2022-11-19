@@ -44,6 +44,7 @@ class Body extends StatelessWidget {
           itemBuilder: (context, index) {
             return ListItemComponent(info: listCtrl.getStation(index));
           },
-        ));
+        )
+    );
   }
 }
