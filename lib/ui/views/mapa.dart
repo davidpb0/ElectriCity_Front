@@ -5,6 +5,7 @@ import 'package:electricity_front/core/models/StationList.dart';
 import 'package:electricity_front/ui/components/info_bicing_station_window.dart';
 import 'package:electricity_front/ui/components/info_charge_station_window.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 // ignore: must_be_immutable
@@ -37,11 +38,16 @@ class GoogleMapaState extends State<GoogleMapa> {
   String? address;
   String? telfn;
 
+  final Set<Polyline> _polylines = <Polyline>{};
+  List<LatLng> polylineCoordinates = [];
+  late PolylinePoints polylinePoints;
+
   Widget form = Container();
 
   @override
   void initState() {
     super.initState();
+    polylinePoints = PolylinePoints();
   }
 
   void setCustomMarker() async {
@@ -84,8 +90,7 @@ class GoogleMapaState extends State<GoogleMapa> {
 
         _markers.add(
           Marker(
-            markerId:
-                MarkerId("id-${i + bicingStationList.length}"),
+            markerId: MarkerId("id-${i + bicingStationList.length}"),
             position: chargerStationList[i].coords,
             icon: chargerMarker,
             onTap: () {
@@ -106,7 +111,7 @@ class GoogleMapaState extends State<GoogleMapa> {
       }
     });
 
-    setState(() {});
+    setPolylines();
   }
 
   @override
@@ -116,7 +121,8 @@ class GoogleMapaState extends State<GoogleMapa> {
         centerTitle: true,
         title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Container(
-              padding: const EdgeInsets.all(2.0), child: const Text('ElectriCity')),
+              padding: const EdgeInsets.all(2.0),
+              child: const Text('ElectriCity')),
           Image.asset(
             'assets/images/title_logo_car.png',
             fit: BoxFit.contain,
@@ -142,6 +148,8 @@ class GoogleMapaState extends State<GoogleMapa> {
             target: widget._aux,
             zoom: 16,
           ),
+          myLocationEnabled: true,
+          polylines: _polylines,
           onLongPress: (latlang) async {
             _mapaController.coords = latlang;
             _mapaController.personalMarker = await personalMarker;
@@ -167,5 +175,29 @@ class GoogleMapaState extends State<GoogleMapa> {
             child: form),
       ]),
     );
+  }
+
+  void setPolylines() async {
+    print("entro en la funcion");
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        "AIzaSyB4OEbG_kVJrlxbpDESN1EDr8N4SxYf_Bw",
+        PointLatLng(41.3979779, 2.1801069),
+        PointLatLng(41.3954877, 2.1771985));
+    print(result.status.toString());
+
+    if (result.status == 'OK') {
+      print("He entrado en el if");
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
+
+      setState(() {
+        _polylines.add(Polyline(
+            width: 10,
+            polylineId: PolylineId('polyLine'),
+            color: Color(0xFF08A5CB),
+            points: polylineCoordinates));
+      });
+    }
   }
 }
