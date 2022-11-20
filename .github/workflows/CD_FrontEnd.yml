@@ -1,1 +1,61 @@
+name: ElectriCity-FrontEnd CD - Deployment
 
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+
+jobs:
+  unit_tests:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the branch
+        uses: actions/checkout@v2
+      - name: Install flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - name: Get packages
+        run: flutter pub get
+      - name: Build runner
+        run: flutter pub run build_runner build
+      - name: Run unit tests
+        run: flutter test --coverage
+   analyze_code:
+    name: Code Analyzer
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the branch
+        uses: actions/checkout@v2
+      - name: Install flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - name: Get packages
+        run: flutter pub get
+      - name: Build runner
+        run: flutter pub run build_runner build
+      - name: Analyze dart code
+        run: flutter analyze .
+   analyze_code:
+    name: Build apk
+    steps:
+      - name: Checkout the branch
+        uses: actions/checkout@v2
+      - name: Install flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - name: Get packages
+        run: flutter pub get
+      - name: Build runner
+        run: flutter pub run build_runner build  
+      - name: Build apk
+        run: flutter build apk
+      - name: Apk to artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: release-apk
+          path: build/app/outputs/apk/release/app-release.apk
