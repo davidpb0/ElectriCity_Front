@@ -10,22 +10,20 @@ class RoutePage extends StatefulWidget {
 
 class _RoutePageState extends State<RoutePage> {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-        appBar: PreferredSize( //wrap with PreferredSize
+        appBar: PreferredSize(
+            //wrap with PreferredSize
             preferredSize: Size.fromHeight(7), //height of appbar
             child: AppBar(
               elevation: 0,
               backgroundColor: Colors.green,
-            )
-        ),
-        body: Body()
-    );
+            )),
+        body: Body());
   }
 }
 
 class Body extends StatelessWidget {
-
   String googleApikey = "GOOGLE_MAP_API_KAY";
   GoogleMapController? mapController; //contrller for Google map
   CameraPosition? cameraPosition;
@@ -42,48 +40,49 @@ class Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// Username field
     return SizedBox(
-      child: Container (
-          padding: const EdgeInsets.only(
-            left: 50,
-            right: 50
-          ),
-          height: MediaQuery.of(context).size.height*0.2,
-          decoration: const BoxDecoration(
-              color: Colors.green,
-              borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(36),
-                  bottomLeft: Radius.circular(36)
-              ),
-              boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 1),
-                  blurRadius: 10,
-                ),
-              ]
-          ),
-        child: Column(
-          children: <Widget> [
-
-            Row(
+        child: Container(
+      padding: const EdgeInsets.only(left: 50, right: 50),
+      height: MediaQuery.of(context).size.height * 0.205,
+      decoration: const BoxDecoration(
+          color: Colors.green,
+          borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(36),
+              bottomLeft: Radius.circular(36)),
+          boxShadow: [
+            BoxShadow(
+              offset: Offset(0, 1),
+              blurRadius: 10,
+            ),
+          ]),
+      child: Stack(
+        children: <Widget>[
+          Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Container(
+                padding: const EdgeInsets.all(2.0),
+                child: const Text('ElectriCity', style: TextStyle(color: Colors.white),)),
+            Image.asset(
+              'assets/images/title_logo_car.png',
+              fit: BoxFit.contain,
+              height: 20,
+            ),
+          ]),
+          Positioned(
+            top: 15,
+            child: Row(
               children: const [
-                SizedBox(
-                    width: 7
-                ),
-
-                Text(
-                    "Origin",
+                SizedBox(width: 7),
+                Text("Origin",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
-                    )
-                ),
+                    )),
               ],
             ),
-
-            Positioned(  //search input bar
-              top:10,
+          ),
+          Positioned(
+              //search input bar
+              top: 25,
               child: InkWell(
                   onTap: () async {
                     /*var place = await PlacesAutocomplete.show(
@@ -121,44 +120,41 @@ class Body extends StatelessWidget {
                       mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom: 17)));
                     }*/
                   },
-                  child:Padding(
+                  child: Padding(
                     padding: EdgeInsets.all(4),
                     child: Card(
                       child: Container(
                           padding: EdgeInsets.all(0),
                           width: MediaQuery.of(context).size.width - 40,
                           child: ListTile(
-                            title:Text(origin, style: TextStyle(fontSize: 14),),
+                            title: Text(
+                              origin,
+                              style: TextStyle(fontSize: 14),
+                            ),
                             trailing: Icon(Icons.search),
                             dense: true,
-                          )
-                      ),
+                          )),
                     ),
-                  )
-              )
-            ),
-
-            Row(
+                  ))),
+          Positioned(
+            top: 90,
+            child: Row(
               children: const [
-                SizedBox(
-                    width: 8
-                ),
-
-                Text(
-                    "Destination",
+                SizedBox(width: 7),
+                Text("Destination",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
-                    )
-                ),
+                    )),
               ],
             ),
-
-            Positioned(  //search input bar
-                top:10,
-                child: InkWell(
-                    onTap: () async {
-                      /*var place = await PlacesAutocomplete.show(
+          ),
+          Positioned(
+              //search input bar
+              top: 105,
+              child: InkWell(
+                  onTap: () async {
+                    /*var place = await PlacesAutocomplete.show(
                         context: context,
                         apiKey: googleApikey,
                         mode: Mode.overlay,
@@ -192,31 +188,26 @@ class Body extends StatelessWidget {
                       //move map camera to selected place with animation
                       mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom: 17)));
                     }*/
-                    },
-                    child:Padding(
-                      padding: const EdgeInsets.only(
-                          left: 0.0,
-                          right: 0.0,
-                          top: 0.0,
-                          bottom: 0.0
-                      ),
-                      child: Card(
-                        child: Container(
-                            padding: EdgeInsets.all(0),
-                            width: MediaQuery.of(context).size.width - 40,
-                            child: ListTile(
-                              title:Text(destination, style: TextStyle(fontSize: 14),),
-                              trailing: Icon(Icons.search),
-                              dense: true,
-                            )
-                        ),
-                      ),
-                    )
-                )
-            ),
-          ],
-        ),
-      )
-    );
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 0.0, right: 0.0, top: 0.0, bottom: 0.0),
+                    child: Card(
+                      child: Container(
+                          padding: EdgeInsets.all(0),
+                          width: MediaQuery.of(context).size.width - 40,
+                          child: ListTile(
+                            title: Text(
+                              destination,
+                              style: TextStyle(fontSize: 14),
+                            ),
+                            trailing: Icon(Icons.search),
+                            dense: true,
+                          )),
+                    ),
+                  ))),
+        ],
+      ),
+    ));
   }
 }
