@@ -20,7 +20,7 @@ class RechargePreview extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: Colors.white60,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
+              borderRadius: const BorderRadius.all( Radius.circular(8)),
               boxShadow: const [
                 BoxShadow(
                   offset: Offset(0, 2),
@@ -38,7 +38,7 @@ class RechargePreview extends StatelessWidget {
                       decoration: ShapeDecoration(
                           color: Colors.blueGrey,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.only(
+                            borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.zero,
                                 topLeft:   Radius.circular(8),
                                 bottomRight: Radius.zero,
@@ -77,7 +77,7 @@ class RechargePreview extends StatelessWidget {
                       decoration: ShapeDecoration(
                         color: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
+                          borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(8),
                               topLeft:   Radius.zero,
                               bottomRight: Radius.circular(8),

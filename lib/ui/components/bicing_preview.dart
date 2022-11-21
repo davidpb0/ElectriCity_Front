@@ -18,9 +18,9 @@ class BicingPreview extends StatelessWidget {
         alignment: Alignment.center,
         decoration: const BoxDecoration(
           color: Colors.white60,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
           boxShadow: [
-            BoxShadow(
+            const BoxShadow(
               offset: Offset(0, 2),
               blurRadius: 1,
             ),
@@ -36,7 +36,7 @@ class BicingPreview extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                 decoration: const ShapeDecoration(
                   color: Colors.blueGrey,
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.zero,
                         topLeft: Radius.circular(8),
@@ -75,7 +75,7 @@ class BicingPreview extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                 decoration: const ShapeDecoration(
                     color: Colors.white,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(8),
                           topLeft: Radius.zero,

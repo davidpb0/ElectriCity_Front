@@ -33,7 +33,6 @@ class ListController {
     } else {
       throw Exception('Algo falló');
     }
-    print(res.statusCode);
   }
 
   Future<List<RechargeStation>> fetchRechargeStations() async {
@@ -46,7 +45,6 @@ class ListController {
     } else {
       throw Exception('Algo falló');
     }
-    print(res.statusCode);
   }
 
   int getTotalBicingStations(){
