@@ -58,6 +58,13 @@ class ApiService {
     );
   }
 
+  deleteData(apiUrl) async {
+    var fullUrl=_url+apiUrl;
+    return await http.delete(
+        Uri.parse(fullUrl),
+        headers: {"X-AUTH-TOKEN": token,}
+  }
+
 
   void signUpApi(String mail, String pwd) async{
     try{

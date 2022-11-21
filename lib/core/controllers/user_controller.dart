@@ -29,4 +29,17 @@ class UserController{
    Navigator.of(ctxt).pushReplacementNamed('/login');
   }
 
+  bool deleteUser() async{
+    String endpoint = 'users/' + currentUser.getUserId();
+    response res = await ApiService().deleteData(endpoint);
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+    return true;
+    } else {
+    throw Exception('Algo falló');
+    return false;
+    }
+
+  }
+
 }

@@ -2,6 +2,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class User {
   List<Marker> personalUbi = [];
+  int userId = -1;
   String username = "";
   String token = "";
 
@@ -12,6 +13,7 @@ class User {
 
   User.fromJson(dynamic json) {
     username = json['user']['email'];
+    userId = json['user']['id'];
     token = json['user']['tokens'].first;
   }
 
@@ -21,6 +23,10 @@ class User {
 
   getUserTkn() {
     return token;
+  }
+
+  getUserId() {
+    return userId;
   }
 
 }
