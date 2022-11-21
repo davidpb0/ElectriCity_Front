@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import 'package:http/http.dart';
 
-
 class ApiService {
-  final String _url = "https://localhost/";
+  final String _url = "https://google.electricityupcfib.es/";
+  String token = "";
+
+  setToken(String tkn) {
+    token = tkn;
+  }
 
   factory ApiService(){
     if (_this == null) _this = ApiService._();
@@ -23,18 +26,35 @@ class ApiService {
     return await http.post(
       Uri.parse(fullUrl),
       body: jsonEncode(data),
-      headers: _setHeaders(),
+      headers:{"Content-type":"application/json",
+               "Accept":"application/json",
+               "X-AUTH-TOKEN": token},
     );
   }
+
   _setHeaders()=>{
     "Content-type":"application/json",
     "Accept":"application/json",
   };
 
+
+  login(data, apiUrl) async {
+    var fullUrl=_url+apiUrl;
+    print(fullUrl);
+
+    return await http.post(
+      Uri.parse(fullUrl),
+      body: jsonEncode(data),
+      headers: _setHeaders()
+    );
+  }
+
   getData(apiUrl) async {
+    print(token);
     var fullUrl=_url+apiUrl;
     return await http.get(
       Uri.parse(fullUrl),
+      headers: {"X-AUTH-TOKEN": token,}
     );
   }
 

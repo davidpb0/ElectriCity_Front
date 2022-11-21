@@ -4,9 +4,12 @@ import 'package:electricity_front/routes/routes.dart';
 import 'package:electricity_front/ui/views/splashscreen.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+import 'core/controllers/mapa_controller.dart';
+
+void main() async{
   runApp(const MyApp());
   HttpOverrides.global = MyHttpOverrides();
+  await MapaController().initBD();
 }
 
 class MyApp extends StatelessWidget {

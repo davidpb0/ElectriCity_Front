@@ -3,30 +3,26 @@ import 'package:electricity_front/ui/views/profilepage.dart';
 import 'package:flutter/material.dart';
 
 import '../views/mapa.dart';
+import 'info_personal_ubi_form.dart';
 
-
-class BottomBar extends StatefulWidget{
+class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
 
-
   @override
-  _BottomBarState createState() => _BottomBarState();
-
+  BottomBarState createState() => BottomBarState();
 }
 
-class _BottomBarState extends State<BottomBar>{
+class BottomBarState extends State<BottomBar> {
   static final List<Widget> _widgetOptions = <Widget>[
-    Google_Mapa(),
-    ListPage(),
-    //const Text("Mobility"),
-    const Text("Prizes"),
+    GoogleMapa(),
+    const ListPage(),
+    InfoPersonalUbiForm(),
     ProfilePage(),
     //ProfilePage()
-
   ];
   var _selectedIndex = 0;
 
-  void _onItemTapped(int index){
+  void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
@@ -37,7 +33,6 @@ class _BottomBarState extends State<BottomBar>{
     return Scaffold(
       body: Center(
         child: _widgetOptions[_selectedIndex],
-
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _onItemTapped,
@@ -47,17 +42,13 @@ class _BottomBarState extends State<BottomBar>{
         currentIndex: _selectedIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.map), label: "Map"),
-          BottomNavigationBarItem(icon: Icon(Icons.electric_car), label: "Mobility"),
-          BottomNavigationBarItem(icon: Icon(Icons.military_tech), label: "Prizes"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.electric_car), label: "Mobility"),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.military_tech), label: "Prizes"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile")
         ],
-
       ),
-
-
     );
-
   }
-
-
 }

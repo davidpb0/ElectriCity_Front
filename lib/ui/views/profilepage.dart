@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../core/controllers/user_controller.dart';
 
-import '../../core/controllers/loginController.dart';
-
+// ignore: must_be_immutable
 class ProfilePage extends StatelessWidget{
-  LoginController loginCtrl = LoginController();
+  UserController userCtrl = UserController();
+
+  ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,21 +13,16 @@ class ProfilePage extends StatelessWidget{
       title: "Profile",
       home: Scaffold(
         appBar: AppBar(
-          title: Text("Profile"),
+          title: const Text("Profile"),
         ),
         body: Center(
-          child: Container(
-              child: Container(
-                child: ElevatedButton(
-                  onPressed: () {
-                    loginCtrl.logOut(context);
-                  },
-                  child: Text(
-                    "Log out"
-                  ),
-
-                ),
-              ),
+          child: ElevatedButton(
+            onPressed: () {
+              userCtrl.logOut(context);
+            },
+            child: const Text(
+              "Log out"
+            ),
 
           ),
         ),

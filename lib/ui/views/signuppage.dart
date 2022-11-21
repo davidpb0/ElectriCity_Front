@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../core/controllers/signupController.dart';
+import '../../core/controllers/signup_controller.dart';
 import '../components/header_login_component.dart';
 
 class SignupPage extends StatefulWidget{
@@ -26,12 +26,15 @@ class _SignupPageState extends State<SignupPage> {
   }
 }
 
+// ignore: must_be_immutable
 class Body extends StatelessWidget{
   TextEditingController usernameTextController = TextEditingController();
   TextEditingController emailTextController = TextEditingController();
-  TextEditingController _passwdTextController = TextEditingController();
-  TextEditingController _passwdValidTextController = TextEditingController();
+  final TextEditingController _passwdTextController = TextEditingController();
+  final TextEditingController _passwdValidTextController = TextEditingController();
   SignupController signupCtrl = SignupController();
+
+  Body({super.key});
 
   @override
   Widget build(BuildContext context){
@@ -41,7 +44,7 @@ class Body extends StatelessWidget{
       children: <Widget>[
         HeaderLoginComponent(size: size),
 
-        SizedBox(height: 40),
+        const SizedBox(height: 40),
         //Username textfield
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -58,11 +61,11 @@ class Body extends StatelessWidget{
               borderRadius: BorderRadius.circular(12),
             ),
             child: Padding(
-              padding: EdgeInsets.only(left: 5.0),
+              padding: const EdgeInsets.only(left: 5.0),
               child: TextField(
                 controller: usernameTextController,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.account_circle),
+                  prefixIcon: const Icon(Icons.account_circle),
                   border: InputBorder.none,
                   hintText: 'Username',
                   errorText: signupCtrl.usernameError(),
@@ -73,7 +76,7 @@ class Body extends StatelessWidget{
           ),
         ),
 
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         //Email textfield
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -90,11 +93,11 @@ class Body extends StatelessWidget{
               borderRadius: BorderRadius.circular(12),
             ),
             child: Padding(
-              padding: EdgeInsets.only(left: 5.0),
+              padding: const EdgeInsets.only(left: 5.0),
               child: TextField(
                 controller: emailTextController,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.email),
+                  prefixIcon: const Icon(Icons.email),
                   border: InputBorder.none,
                   hintText: 'Email',
                   errorText: signupCtrl.emailError(),
@@ -106,7 +109,7 @@ class Body extends StatelessWidget{
         ),
 
         //Password textfield
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Container(
@@ -122,11 +125,11 @@ class Body extends StatelessWidget{
               borderRadius: BorderRadius.circular(12),
             ),
             child: Padding(
-              padding: EdgeInsets.only(left: 5.0),
+              padding: const EdgeInsets.only(left: 5.0),
               child: TextField(
                 controller: _passwdTextController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.lock),
                   border: InputBorder.none,
                   hintText: 'Password',
@@ -137,7 +140,7 @@ class Body extends StatelessWidget{
         ),
 
         //Repeat password textfield
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Container(
@@ -153,12 +156,12 @@ class Body extends StatelessWidget{
               borderRadius: BorderRadius.circular(12),
             ),
             child: Padding(
-              padding: EdgeInsets.only(left: 5.0),
+              padding: const EdgeInsets.only(left: 5.0),
               child: TextField(
                 controller: _passwdValidTextController,
                 obscureText: true,
                 decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.lock),
+                  prefixIcon: const Icon(Icons.lock),
                   border: InputBorder.none,
                   hintText: 'Repeat password',
                   errorText: signupCtrl.pwdError(),
@@ -168,7 +171,7 @@ class Body extends StatelessWidget{
           ),
         ),
 
-        SizedBox(height: 40),
+        const SizedBox(height: 40),
 
         //Create account Button
         SizedBox(
@@ -180,6 +183,7 @@ class Body extends StatelessWidget{
               signupCtrl.setUsername( usernameTextController.text);
               signupCtrl.setEmail( emailTextController.text);
               signupCtrl.setPasswd(_passwdTextController.text, _passwdValidTextController.text);
+              Navigator.of(context).pushReplacementNamed('/home');
               //signupCtrl.printData();
               //signupCtrl.signUp(context);
             },
@@ -187,7 +191,7 @@ class Body extends StatelessWidget{
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 0.0),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration:  BoxDecoration(
                   boxShadow: const [
                     BoxShadow(

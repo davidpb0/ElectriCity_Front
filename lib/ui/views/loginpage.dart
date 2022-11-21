@@ -1,6 +1,5 @@
-import 'package:electricity_front/core/controllers/loginController.dart';
 import 'package:flutter/material.dart';
-
+import '../../core/controllers/user_controller.dart';
 import '../components/header_login_component.dart';
 
 class LoginPage extends StatefulWidget{
@@ -15,6 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.grey[300],
       appBar: AppBar(
         elevation: 0,
@@ -26,9 +26,11 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class Body extends StatelessWidget{
-  TextEditingController emailTextController = TextEditingController();
-  TextEditingController _passwdTextController = TextEditingController();
-  LoginController loginCtrl = LoginController();
+  final TextEditingController emailTextController = TextEditingController();
+  final TextEditingController _passwdTextController = TextEditingController();
+  final UserController userCtrl = UserController();
+
+  Body({super.key});
 
   @override
   Widget build(BuildContext context){
@@ -38,7 +40,7 @@ class Body extends StatelessWidget{
       children: <Widget>[
         HeaderLoginComponent(size: size),
 
-        SizedBox(height: 40),
+        const SizedBox(height: 40),
         //Username textfield
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -55,10 +57,10 @@ class Body extends StatelessWidget{
               borderRadius: BorderRadius.circular(12),
             ),
             child: Padding(
-              padding: EdgeInsets.only(left: 5.0),
+              padding: const EdgeInsets.only(left: 5.0),
               child: TextField(
                 controller: emailTextController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email),
                   border: InputBorder.none,
                   hintText: 'Email',
@@ -70,7 +72,7 @@ class Body extends StatelessWidget{
         ),
 
         //Password textfield
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Container(
@@ -86,7 +88,7 @@ class Body extends StatelessWidget{
               borderRadius: BorderRadius.circular(12),
             ),
             child: Padding(
-              padding: EdgeInsets.only(left: 5.0),
+              padding: const EdgeInsets.only(left: 5.0),
               child: TextField(
                 controller: _passwdTextController,
                 obscureText: true,
@@ -99,7 +101,7 @@ class Body extends StatelessWidget{
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
 
         //Forget password
         Row(
@@ -127,15 +129,13 @@ class Body extends StatelessWidget{
           child: TextButton(
             onPressed: (){
               //CAMBIO A MAPA FAST (SIN API)
-              //loginCtrl.logIn(emailTextController.text, _passwdTextController.text, context);
-              Navigator.of(context).pushReplacementNamed('/home');
-
+              userCtrl.startSession(emailTextController.text, _passwdTextController.text, context);
             },
 
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 0.0),
               child: Container(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 decoration:  BoxDecoration(
                   boxShadow: const [
                     BoxShadow(
@@ -163,7 +163,7 @@ class Body extends StatelessWidget{
         const SizedBox(height: 30),
 
         //Sign with
-        Text('Sign with:'),
+        const Text('Sign with:'),
 
         //Google botton
         SizedBox(
@@ -176,7 +176,7 @@ class Body extends StatelessWidget{
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0.0),
                 child: Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   decoration: const BoxDecoration(
                     boxShadow: [
                       BoxShadow(
@@ -187,9 +187,7 @@ class Body extends StatelessWidget{
                     color: Color(0xFFEEEEEE),
                   ),
                   child: Center(
-                      child: Container(
-                        child: Image.asset('assets/images/googleIcon.png'),
-                      )
+                      child: Image.asset('assets/images/googleIcon.png')
                   ),
 
                 ),
@@ -208,13 +206,11 @@ class Body extends StatelessWidget{
                 onPressed:(){
                   Navigator.of(context).pushReplacementNamed('/signup');
                 },
-                child: Container(
-                  child: const Text('Sign up',
-                    style: TextStyle(
-                    color: Colors.indigoAccent,
-                    fontWeight: FontWeight.bold
-                    )
-                  ),
+                child: const Text('Sign up',
+                  style: TextStyle(
+                  color: Colors.indigoAccent,
+                  fontWeight: FontWeight.bold
+                  )
                 ),
               ),
             )

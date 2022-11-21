@@ -1,19 +1,19 @@
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class StationList {
-  late List<Station> listMember;
+class RechargeStationList {
+  late List<RechargeStation> chargeStation;
   late int totalItems;
   HydraView? hydraView;
   HydraSearch? hydraSearch;
 
-  StationList();
+  RechargeStationList();
 
-  StationList.fromJson(Map<String, dynamic> json) {
+  RechargeStationList.fromJson(Map<String, dynamic> json) {
     if (json['hydra:member'] != null) {
-      listMember = <Station>[];
+      chargeStation = <RechargeStation>[];
       json['hydra:member'].forEach((v) {
-        listMember.add(Station.fromJson(v));
+        chargeStation.add(RechargeStation.fromJson(v));
       });
     }
     totalItems = json['hydra:totalItems'];
@@ -27,7 +27,7 @@ class StationList {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['hydra:member'] = listMember.map((v) => v.toJson()).toList();
+    data['hydra:member'] = chargeStation.map((v) => v.toJson()).toList();
     data['hydra:totalItems'] = totalItems;
     if (hydraView != null) {
       data['hydra:view'] = hydraView!.toJson();
@@ -38,24 +38,23 @@ class StationList {
     return data;
   }
 
-  List<LatLng> getCoords() {
+  List<LatLng> getCoordsRcSt() {
     List<LatLng>listcoords = <LatLng>[];
-    for (var e in listMember) {
+    for (var e in chargeStation) {
       listcoords.add(e.coords);
     }
     return listcoords;
   }
 
-  List<Station> getBicingStations(){
-    return listMember;
+  List<RechargeStation> getChargerStations(){
+    return chargeStation;
   }
 }
 
-class Station {
-  late int capacity;
-  late int mechanical;
-  late int electrical;
-  late int availableSlots;
+class RechargeStation {
+  late String ?speedType;
+  late String connectionType;
+  late int ?slots;
   late int id;
   late double latitude;
   late double longitude;
@@ -63,28 +62,31 @@ class Station {
   late bool status;
   late String address;
 
-  Station();
+
+  RechargeStation();
 
 
-  Station.fromJson(Map<String, dynamic> json) {
-    capacity = json['capacity'];
-    mechanical = json['mechanical'];
-    electrical = json['electrical'];
-    availableSlots = json['availableSlots'];
+  RechargeStation.fromJson(Map<String, dynamic> json) {
+    speedType = json['speedType'];
+    connectionType = json['connectionType'];
+    slots = json['slots'];
     id = json['id'];
-    latitude = json['latitude'];
+    String obj = json['latitude'].toString();
+    if (obj[2] != '.') {
+      obj = '${obj.substring(0, 2)}.${obj.substring(2, obj.length)}';
+    }
+    latitude = double.parse(obj);
     longitude = json['longitude'];
-    coords = LatLng(latitude, longitude);
+    coords = LatLng(latitude.toDouble(), longitude);
     status = json['status'];
     address = json['address'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['capacity'] = capacity;
-    data['mechanical'] = mechanical;
-    data['electrical'] = electrical;
-    data['availableSlots'] = availableSlots;
+    data['speedType'] = speedType;
+    data['connectionType'] = connectionType;
+    data['slots'] = slots;
     data['id'] = id;
     data['latitude'] = latitude;
     data['longitude'] = longitude;
