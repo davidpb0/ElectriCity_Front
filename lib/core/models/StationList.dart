@@ -13,38 +13,36 @@ class StationList {
     if (json['hydra:member'] != null) {
       listMember = <Station>[];
       json['hydra:member'].forEach((v) {
-        listMember.add(new Station.fromJson(v));
+        listMember.add(Station.fromJson(v));
       });
     }
     totalItems = json['hydra:totalItems'];
     hydraView = json['hydra:view'] != null
-        ? new HydraView.fromJson(json['hydra:view'])
+        ? HydraView.fromJson(json['hydra:view'])
         : null;
     hydraSearch = json['hydra:search'] != null
-        ? new HydraSearch.fromJson(json['hydra:search'])
+        ? HydraSearch.fromJson(json['hydra:search'])
         : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.listMember != null) {
-      data['hydra:member'] = this.listMember.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['hydra:member'] = listMember.map((v) => v.toJson()).toList();
+    data['hydra:totalItems'] = totalItems;
+    if (hydraView != null) {
+      data['hydra:view'] = hydraView!.toJson();
     }
-    data['hydra:totalItems'] = this.totalItems;
-    if (this.hydraView != null) {
-      data['hydra:view'] = this.hydraView!.toJson();
-    }
-    if (this.hydraSearch != null) {
-      data['hydra:search'] = this.hydraSearch!.toJson();
+    if (hydraSearch != null) {
+      data['hydra:search'] = hydraSearch!.toJson();
     }
     return data;
   }
 
   List<LatLng> getCoords() {
     List<LatLng>listcoords = <LatLng>[];
-    this.listMember.forEach((e) {
+    for (var e in listMember) {
       listcoords.add(e.coords);
-    });
+    }
     return listcoords;
   }
 
@@ -82,16 +80,16 @@ class Station {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['capacity'] = this.capacity;
-    data['mechanical'] = this.mechanical;
-    data['electrical'] = this.electrical;
-    data['availableSlots'] = this.availableSlots;
-    data['id'] = this.id;
-    data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
-    data['status'] = this.status;
-    data['address'] = this.address;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['capacity'] = capacity;
+    data['mechanical'] = mechanical;
+    data['electrical'] = electrical;
+    data['availableSlots'] = availableSlots;
+    data['id'] = id;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['status'] = status;
+    data['address'] = address;
     return data;
   }
 }
@@ -122,13 +120,13 @@ class HydraView {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['@id'] = this.id;
-    data['type'] = this.type;
-    data['hydra:first'] = this.hydraFirst;
-    data['hydra:last'] = this.hydraLast;
-    data['hydra:previous'] = this.hydraPrevious;
-    data['hydra:next'] = this.hydraNext;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['@id'] = id;
+    data['type'] = type;
+    data['hydra:first'] = hydraFirst;
+    data['hydra:last'] = hydraLast;
+    data['hydra:previous'] = hydraPrevious;
+    data['hydra:next'] = hydraNext;
     return data;
   }
 }
@@ -152,19 +150,19 @@ class HydraSearch {
     if (json['hydra:mapping'] != null) {
       hydraMapping = <HydraMapping>[];
       json['hydra:mapping'].forEach((v) {
-        hydraMapping!.add(new HydraMapping.fromJson(v));
+        hydraMapping!.add(HydraMapping.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['@type'] = this.type;
-    data['hydra:template'] = this.hydraTemplate;
-    data['hydra:variableRepresentation'] = this.hydraVariableRepresentation;
-    if (this.hydraMapping != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['@type'] = type;
+    data['hydra:template'] = hydraTemplate;
+    data['hydra:variableRepresentation'] = hydraVariableRepresentation;
+    if (hydraMapping != null) {
       data['hydra:mapping'] =
-          this.hydraMapping!.map((v) => v.toJson()).toList();
+          hydraMapping!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -186,11 +184,11 @@ class HydraMapping {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['@type'] = this.type;
-    data['variable'] = this.variable;
-    data['property'] = this.property;
-    data['required'] = this.required;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['@type'] = type;
+    data['variable'] = variable;
+    data['property'] = property;
+    data['required'] = required;
     return data;
   }
 }

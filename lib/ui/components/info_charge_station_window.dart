@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 
 import '../../fonts/test_icons_icons.dart';
 
-class InfoChargeStationWindow extends StatelessWidget{
-  const InfoChargeStationWindow({required this.slots, required this.addres, required this.connectionType});
+class InfoChargeStationWindow extends StatelessWidget {
+  const InfoChargeStationWindow(
+      {super.key,
+      required this.slots,
+      required this.addres,
+      required this.connectionType});
 
-  final int  ?slots;
+  final int? slots;
   final String addres, connectionType;
-
 
   @override
   Widget build(BuildContext context) {
@@ -16,26 +19,27 @@ class InfoChargeStationWindow extends StatelessWidget{
       child: Container(
         height: 150,
         decoration: BoxDecoration(
-            boxShadow: [BoxShadow(
-              offset: Offset(0, 2),
-              blurRadius: 1,
-
-            )],
+            boxShadow: const [
+              BoxShadow(
+                offset: Offset(0, 2),
+                blurRadius: 1,
+              )
+            ],
             border: Border.all(color: Colors.white),
             borderRadius: BorderRadius.circular(12),
-            color: Colors.white
-        ),
+            color: Colors.white),
         child: Column(children: [
           Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
-                color: Colors.green
-            ),
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12)),
+                color: Colors.green),
             width: MediaQuery.of(context).size.width,
             child: Text(
               addres,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 20,
               ),
@@ -48,9 +52,9 @@ class InfoChargeStationWindow extends StatelessWidget{
                 children: [
                   Row(
                     children: [
-                      Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 6),
+                      const Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.eCar, size: 20)),
                       const Text("Tipus de connexió: "),
                       Text(connectionType)
@@ -58,11 +62,11 @@ class InfoChargeStationWindow extends StatelessWidget{
                   ),
                   Row(
                     children: [
-                      Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 6),
+                      const Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.eCharger, size: 20)),
-                      Text("Espais disponibles: "),
+                      const Text("Espais disponibles: "),
                       Text(slots.toString())
                     ],
                   )
@@ -72,6 +76,4 @@ class InfoChargeStationWindow extends StatelessWidget{
       ),
     );
   }
-
 }
-

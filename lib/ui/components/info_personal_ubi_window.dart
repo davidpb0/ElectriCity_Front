@@ -3,22 +3,20 @@ import 'package:flutter/material.dart';
 
 import '../../fonts/test_icons_icons.dart';
 
-class InfoBicingStationWindow extends StatelessWidget {
-  const InfoBicingStationWindow(
-      {super.key,
-      required this.belec,
-      required this.bmech,
-      required this.slots,
-      required this.addres});
+class InfoPersonalUbiWindow extends StatelessWidget {
+  final String title;
+  final String? ubi;
 
-  final int? belec, bmech, slots;
-  final String addres;
+  final String? telf;
+
+  const InfoPersonalUbiWindow(
+      {super.key, required this.title, required this.ubi, required this.telf});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        height: 500,
+        height: 150,
         decoration: BoxDecoration(
             boxShadow: const [
               BoxShadow(
@@ -35,13 +33,13 @@ class InfoBicingStationWindow extends StatelessWidget {
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(12),
                     topRight: Radius.circular(12)),
-                color: Colors.blue),
+                color: Colors.yellow),
             width: MediaQuery.of(context).size.width,
             child: Text(
-              addres,
+              title,
               textAlign: TextAlign.center,
               style: const TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontSize: 20,
               ),
             ),
@@ -56,29 +54,19 @@ class InfoBicingStationWindow extends StatelessWidget {
                       const Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          child: Icon(TestIcons.ebike, size: 20)),
-                      const Text("Bicicletes elèctriques disponibles: "),
-                      Text(belec.toString())
+                          child: Icon(TestIcons.eCar, size: 20)),
+                      const Text("Direcció: "),
+                      Text(ubi.toString())
                     ],
                   ),
                   Row(
                     children: [
                       const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          child: Icon(TestIcons.bike, size: 20)),
-                      const Text("Bicicletes mecàniques disponibles: "),
-                      Text(bmech.toString())
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          child: Icon(TestIcons.bicingParking, size: 20)),
-                      const Text("Espais disponibles: "),
-                      Text(slots.toString())
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 10),
+                          child: Icon(TestIcons.eCharger, size: 20)),
+                      const Text("Telèfon: "),
+                      Text(telf.toString())
                     ],
                   )
                 ],

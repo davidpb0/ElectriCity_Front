@@ -1,7 +1,10 @@
 import 'package:electricity_front/ui/views/loginpage.dart';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:lottie/lottie.dart';
-import 'package:animated_splash_screen/animated_splash_screen.dart';
+// ignore: depend_on_referenced_packages
+import 'package:animated_splash_screen/animated_splash_screen.dart' show AnimatedSplashScreen, SplashTransition;
+// ignore: depend_on_referenced_packages
 import 'package:page_transition/page_transition.dart';
 
 
