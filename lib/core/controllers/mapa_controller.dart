@@ -83,6 +83,7 @@ class MapaController {
       ),
     );
     UserController().currentUser.personalUbi.add(marker);
+    UserController().currentUser.personalUbiBD.add(coords);
     Navigator.of(context).pushReplacementNamed('/home');
   }
 }
