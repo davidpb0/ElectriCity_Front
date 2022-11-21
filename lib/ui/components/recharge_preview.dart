@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/models/RechargeStation.dart';
+import '../../core/models/recharge_station.dart';
 import '../../fonts/test_icons_icons.dart';
 
 class RechargePreview extends StatelessWidget {
@@ -131,7 +131,7 @@ class RechargePreview extends StatelessWidget {
                           children: [
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 6),
-                              child: const Icon(TestIcons.parking, size:20),
+                              child: const Icon(TestIcons.bicingParking, size:20),
                             ),
                             Padding(
                                 padding: const EdgeInsets.all(6),

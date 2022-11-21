@@ -1,11 +1,11 @@
-import 'package:electricity_front/core/models/RechargeStation.dart';
+import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/StationList.dart';
 import 'package:electricity_front/ui/components/bicing_preview.dart';
 import 'package:electricity_front/ui/components/recharge_preview.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/controllers/listController.dart';
-import '../../core/controllers/signupController.dart';
+import '../../core/controllers/list_controller.dart';
+import '../../core/controllers/signup_controller.dart';
 import '../components/header_login_component.dart';
 
 class ListPage extends StatefulWidget{
@@ -28,6 +28,7 @@ class _ListPageState extends State<ListPage> {
     listCtrl = ListController();
     futureBicing = listCtrl.fetchBicingStations();
     futureRecharge= listCtrl.fetchRechargeStations();
+    print('hello');
   }
 
   @override
@@ -60,18 +61,22 @@ class _ListPageState extends State<ListPage> {
             builder: (context, snapshot) {
               // WHILE THE CALL IS BEING MADE AKA LOADING
               if (ConnectionState.active != null && !snapshot.hasData) {
+                print(ConnectionState.active != null);
+                print(snapshot.hasData);
+                print(snapshot);
                 return Center(child: Text('Loading'));
               }
 
               // WHEN THE CALL IS DONE BUT HAPPENS TO HAVE AN ERROR
-              if (ConnectionState.done != null && snapshot.hasError) {
+              else if (ConnectionState.done != null && snapshot.hasError) {
                 return Center(child: Text("Error"));
               }
 
               // IF IT WORKS IT GOES HERE!
-              if (bicing) {
+              else if (bicing) {
+                print('hastaaqui');
                 return ListView.builder(
-                  shrinkWrap = true,
+                  shrinkWrap : true,
                   itemCount: listCtrl.getTotalBicingStations(),
                   itemBuilder: (context, index) {
                     return BicingPreview(info: listCtrl.getBicingStation(index));
@@ -79,7 +84,7 @@ class _ListPageState extends State<ListPage> {
                 );
               }
               else return ListView.builder(
-                shrinkWrap = true,
+                shrinkWrap : true,
                 itemCount: listCtrl.getTotalRechargeStations(),
                 itemBuilder: (context, index) {
                   return RechargePreview(info: listCtrl.getRechargeStation(index));
