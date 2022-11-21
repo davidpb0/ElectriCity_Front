@@ -89,11 +89,12 @@ class RechargePreview extends StatelessWidget {
                       children: [
                         Row(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 6),
-                                child: const Icon(TestIcons.bike, size:20),
-                              ),
-                              Padding(
+                                Expanded( child:Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 6),
+                                  child: const Icon(TestIcons.bike, size:20),
+                                ),
+                                ),
+                                Expanded( child:Padding(
                                 padding: const EdgeInsets.all(6),
                                 child:Text(
                                   info.speedType.toString(),
@@ -105,15 +106,17 @@ class RechargePreview extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              ),
                             ],
                         ),
                         Row(
                             children: [
-                              Padding(
+                              Expanded( child:Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 6),
                                 child: const Icon(TestIcons.ebike, size:20),
                               ),
-                              Padding(
+                              ),
+                              Expanded( child: Padding(
                                 padding: const EdgeInsets.all(6),
                                 child:Text(
                                   info.connectionType.toString(),
@@ -125,15 +128,17 @@ class RechargePreview extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              ),
                               ]
                       ),
                         Row(      // TEXT
                           children: [
-                            Padding(
+                            Expanded( child: Padding(
                               padding: const EdgeInsets.symmetric(vertical: 6),
                               child: const Icon(TestIcons.bicingParking, size:20),
                             ),
-                            Padding(
+                            ),
+                            Expanded( child: Padding(
                                 padding: const EdgeInsets.all(6),
                                 child:Text(
                                   info.slots.toString(),
@@ -144,6 +149,7 @@ class RechargePreview extends StatelessWidget {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                            ),
                             ),
                           ]
                         ) //TEXT

@@ -40,8 +40,7 @@ class _ListPageState extends State<ListPage> {
         appBar: AppBar(
         title: const Text("ElectriCity"),
         ),
-      body: SingleChildScrollView(
-        child: Column(
+      body: Column(
           children: [
             Switch(
             // This bool value toggles the switch.
@@ -57,7 +56,8 @@ class _ListPageState extends State<ListPage> {
 
             },
             ),
-            FutureBuilder(
+            Expanded(
+                child: FutureBuilder(
               future: futureBicing,
               builder: (context, snapshot) {
                 // WHILE THE CALL IS BEING MADE AKA LOADING
@@ -93,10 +93,10 @@ class _ListPageState extends State<ListPage> {
                 );
               }
             )
+            )
           ]
         ),
-      )
-    );
+      );
   }
 }
 
