@@ -43,6 +43,9 @@ dependencies:
   google_maps_flutter_web: ^0.4.0+3
   custom_info_window:
   flutter_polyline_points:
+  flutter_google_places_hoc081098: ^1.0.0-nullsafety.5
+  google_api_headers: ^1.1.1
+  google_maps_webservice: ^0.0.20-nullsafety.5
 
 
 dev_dependencies:

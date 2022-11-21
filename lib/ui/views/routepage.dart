@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
+import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_webservice/places.dart';
 
 class RoutePage extends StatefulWidget {
   const RoutePage({Key? key}) : super(key: key);
@@ -14,7 +17,7 @@ class _RoutePageState extends State<RoutePage> {
     return Scaffold(
         appBar: PreferredSize(
             //wrap with PreferredSize
-            preferredSize: Size.fromHeight(7), //height of appbar
+            preferredSize: const Size.fromHeight(7), //height of appbar
             child: AppBar(
               elevation: 0,
               backgroundColor: Colors.green,
@@ -23,18 +26,24 @@ class _RoutePageState extends State<RoutePage> {
   }
 }
 
-class Body extends StatelessWidget {
-  String googleApikey = "GOOGLE_MAP_API_KAY";
-  GoogleMapController? mapController; //contrller for Google map
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
+  String googleApikey = "AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM";
+  GoogleMapController? mapController; //controller for Google map
   CameraPosition? cameraPosition;
-  LatLng startLocation = LatLng(27.6602292, 85.308027);
+  LatLng startLocation = const LatLng(27.6602292, 85.308027);
   String origin = "Search Origin";
   String destination = "Search Destination";
 
   TextStyle style = const TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   OutlineInputBorder textFieldBorder = OutlineInputBorder(
       borderRadius: BorderRadius.circular(32.0),
-      borderSide: const BorderSide(color: Color(0xff01d277)));
+      borderSide: const BorderSide(color: Color(0xff01d277))
+  );
 
   final formKey = GlobalKey<FormState>();
 
@@ -54,7 +63,8 @@ class Body extends StatelessWidget {
               offset: Offset(0, 1),
               blurRadius: 10,
             ),
-          ]),
+          ]
+      ),
       child: Stack(
         children: <Widget>[
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -76,7 +86,8 @@ class Body extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
-                    )),
+                    )
+                ),
               ],
             ),
           ),
@@ -85,29 +96,30 @@ class Body extends StatelessWidget {
               top: 25,
               child: InkWell(
                   onTap: () async {
-                    /*var place = await PlacesAutocomplete.show(
+                    var place = await PlacesAutocomplete.show(
                         context: context,
                         apiKey: googleApikey,
                         mode: Mode.overlay,
                         types: [],
                         strictbounds: false,
-                        components: [Component(Component.country, 'np')],
+                        components: [Component(Component.country, 'es')],
                         //google_map_webservice package
-                        onError: (err){
+                        onError: (err) {
                           print(err);
                         }
                     );
 
-                    if(place != null){
+                    if(place != null) {
                       setState(() {
-                        location = place.description.toString();
+                        origin = place.description.toString();
                       });
 
                       //form google_maps_webservice package
                       final plist = GoogleMapsPlaces(apiKey:googleApikey,
-                        apiHeaders: await GoogleApiHeaders().getHeaders(),
+                        apiHeaders: await const GoogleApiHeaders().getHeaders(),
                         //from google_api_headers package
                       );
+
                       String placeid = place.placeId ?? "0";
                       final detail = await plist.getDetailsByPlaceId(placeid);
                       final geometry = detail.result.geometry!;
@@ -115,27 +127,29 @@ class Body extends StatelessWidget {
                       final lang = geometry.location.lng;
                       var newlatlang = LatLng(lat, lang);
 
-
                       //move map camera to selected place with animation
                       mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom: 17)));
-                    }*/
+                    }
                   },
                   child: Padding(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4),
                     child: Card(
                       child: Container(
-                          padding: EdgeInsets.all(0),
+                          padding: const EdgeInsets.all(0),
                           width: MediaQuery.of(context).size.width - 40,
                           child: ListTile(
                             title: Text(
                               origin,
-                              style: TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 14),
                             ),
-                            trailing: Icon(Icons.search),
+                            trailing: const Icon(Icons.search),
                             dense: true,
-                          )),
+                          )
+                      ),
                     ),
-                  ))),
+                  )
+              )
+          ),
           Positioned(
             top: 90,
             child: Row(
@@ -145,7 +159,8 @@ class Body extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
-                    )),
+                    )
+                ),
               ],
             ),
           ),
@@ -154,13 +169,13 @@ class Body extends StatelessWidget {
               top: 105,
               child: InkWell(
                   onTap: () async {
-                    /*var place = await PlacesAutocomplete.show(
+                    var place = await PlacesAutocomplete.show(
                         context: context,
                         apiKey: googleApikey,
                         mode: Mode.overlay,
                         types: [],
                         strictbounds: false,
-                        components: [Component(Component.country, 'np')],
+                        components: [Component(Component.country, 'es')],
                         //google_map_webservice package
                         onError: (err){
                           print(err);
@@ -169,12 +184,12 @@ class Body extends StatelessWidget {
 
                     if(place != null){
                       setState(() {
-                        location = place.description.toString();
+                        destination = place.description.toString();
                       });
 
                       //form google_maps_webservice package
                       final plist = GoogleMapsPlaces(apiKey:googleApikey,
-                        apiHeaders: await GoogleApiHeaders().getHeaders(),
+                        apiHeaders: await const GoogleApiHeaders().getHeaders(),
                         //from google_api_headers package
                       );
                       String placeid = place.placeId ?? "0";
@@ -184,28 +199,30 @@ class Body extends StatelessWidget {
                       final lang = geometry.location.lng;
                       var newlatlang = LatLng(lat, lang);
 
-
                       //move map camera to selected place with animation
                       mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom: 17)));
-                    }*/
+                    }
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: 0.0, right: 0.0, top: 0.0, bottom: 0.0),
                     child: Card(
                       child: Container(
-                          padding: EdgeInsets.all(0),
+                          padding: const EdgeInsets.all(0),
                           width: MediaQuery.of(context).size.width - 40,
                           child: ListTile(
                             title: Text(
                               destination,
-                              style: TextStyle(fontSize: 14),
+                              style: const TextStyle(fontSize: 14),
                             ),
-                            trailing: Icon(Icons.search),
+                            trailing: const Icon(Icons.search),
                             dense: true,
-                          )),
+                          )
+                      ),
                     ),
-                  ))),
+                  )
+              )
+          ),
         ],
       ),
     ));
