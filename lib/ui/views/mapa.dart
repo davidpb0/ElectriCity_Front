@@ -37,6 +37,8 @@ class GoogleMapaState extends State<GoogleMapa> {
   String? address;
   String? telfn;
 
+  static const int bicingPages = 18;
+
   Widget form = Container();
 
   @override
@@ -55,58 +57,70 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   void _onMapCreated(GoogleMapController controller) async {
     setCustomMarker();
-    await _mapaController.bicingApi();
-    await _mapaController.rechargeApi();
+    int o = 1;
+    int j = 0;
+    int q = 0;
 
-    bicingList = _mapaController.bicingList;
-    rcList = _mapaController.cargaList;
-    personalMarkers = _userController.currentUser.personalUbi;
-    bicingStationList = _mapaController.bicingStationList;
-    chargerStationList = _mapaController.chargerStationList;
+    while(o < bicingPages) {
+      await _mapaController.bicingApi(o);
+      await _mapaController.rechargeApi();
 
-    setState(() {
-      for (int i = 0; i < bicingList.length; ++i) {
-        _markers.add(
-          Marker(
-              markerId: MarkerId("id-$i"),
-              position: bicingStationList[i].coords,
-              icon: bicingMarker,
+      bicingList = _mapaController.bicingList;
+      rcList = _mapaController.cargaList;
+      personalMarkers = _userController.currentUser.personalUbi;
+      bicingStationList = _mapaController.bicingStationList;
+      chargerStationList = _mapaController.chargerStationList;
+
+      setState(() {
+        for (int i = q; i < bicingList.length; ++i) {
+          print("Entro en el for");
+          _markers.add(
+            Marker(
+                markerId: MarkerId("id-${i+1}"),
+                position: bicingStationList[i].coords,
+                icon: bicingMarker,
+                onTap: () {
+                  setState(() {
+                    print("La i es " + i.toString());
+                    info = InfoBicingStationWindow(
+                        belec: bicingStationList[i].electrical,
+                        bmech: bicingStationList[i].mechanical,
+                        slots: bicingStationList[i].availableSlots,
+                        addres: bicingStationList[i].address);
+                  });
+                }),
+          );
+        }
+        for (int k = q; k < chargerStationList.length; ++k) {
+          _markers.add(
+            Marker(
+              markerId:
+              MarkerId("id-${k + 502}"),
+              position: chargerStationList[k].coords,
+              icon: chargerMarker,
               onTap: () {
                 setState(() {
-                  info = InfoBicingStationWindow(
-                      belec: bicingStationList[i].electrical,
-                      bmech: bicingStationList[i].mechanical,
-                      slots: bicingStationList[i].availableSlots,
-                      addres: bicingStationList[i].address);
+                  print(k.toString());
+                  info = InfoChargeStationWindow(
+                    slots: chargerStationList[k].slots,
+                    addres: chargerStationList[k].address,
+                    connectionType: chargerStationList[k].connectionType,
+                  );
                 });
-              }),
-        );
+              },
+            ),
+          );
+        }
 
-        _markers.add(
-          Marker(
-            markerId:
-                MarkerId("id-${i + bicingStationList.length}"),
-            position: chargerStationList[i].coords,
-            icon: chargerMarker,
-            onTap: () {
-              setState(() {
-                info = InfoChargeStationWindow(
-                  slots: chargerStationList[i].slots,
-                  addres: chargerStationList[i].address,
-                  connectionType: chargerStationList[i].connectionType,
-                );
-              });
-            },
-          ),
-        );
-
-        for (int j = 0; j < personalMarkers.length; ++j) {
+        for (j; j < personalMarkers.length; ++j) {
           _markers.add(personalMarkers[j]);
         }
-      }
-    });
+      });
 
-    setState(() {});
+      setState(() {});
+      ++o;
+      q+=30;
+    }
   }
 
   @override

@@ -35,22 +35,29 @@ class MapaController {
 
   }
 
-  bicingApi() async {
-    Response res = await _apiService.getData('bicing_stations');
-    var body = json.decode(res.body);
-    print(res.statusCode.toString());
-    if (res.statusCode == 200) {
-      StationList estaciones = StationList.fromJson(body);
-      bicingList = estaciones.getCoords();
-      bicingStationList = estaciones.getBicingStations();
-      //print("Estacions Bicing");
-      //print(bicingList.length);
-      //print(bicingList.getRange(0, 10));
-    } else {
-      throw Exception('Algo falló');
+  bicingApi(int i) async {
+    if(i == 1){
+      bicingStationList.clear();
+      bicingList.clear();
     }
-    //print(res.statusCode);
-    //print(body);
+        Response res = await _apiService.getData(
+            'bicing_stations?page=$i');
+        var body = json.decode(res.body);
+        print(res.statusCode.toString());
+        if (res.statusCode == 200) {
+          StationList estaciones = StationList.fromJson(body);
+            bicingList.addAll(estaciones.getCoords());
+            bicingStationList.addAll(estaciones.getBicingStations());
+            //print("Estacions Bicing");
+            print(bicingList.length);
+            //print(bicingList.getRange(0, 10));
+
+        } else {
+          throw Exception('Algo falló');
+        }
+        //print(res.statusCode);
+        //print(body);
+
   }
 
   rechargeApi() async {
