@@ -17,8 +17,8 @@ class ListPage extends StatefulWidget{
 }
 
 class _ListPageState extends State<ListPage> {
-  late Future<StationList> futureBicing;
-  late Future<RechargeStationList> futureRecharge;
+  late Future<List<Station>> futureBicing;
+  late Future<List<RechargeStation>> futureRecharge;
   late ListController listCtrl;
   bool bicing = true;
 
@@ -40,59 +40,61 @@ class _ListPageState extends State<ListPage> {
         appBar: AppBar(
         title: const Text("ElectriCity"),
         ),
-      body: Column(
-        children: [
-          Switch(
-          // This bool value toggles the switch.
-          value: bicing,
-          activeColor: Colors.green,
-          inactiveThumbColor: Colors.blue,
-          inactiveTrackColor: Colors.blue,
-          onChanged: (bool value) {
-            // This is called when the user toggles the switch.
-            setState(() {
-              bicing = value;
-            });
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Switch(
+            // This bool value toggles the switch.
+            value: bicing,
+            activeColor: Colors.green,
+            inactiveThumbColor: Colors.blue,
+            inactiveTrackColor: Colors.blue,
+            onChanged: (bool value) {
+              // This is called when the user toggles the switch.
+              setState(() {
+                bicing = value;
+              });
 
-          },
-          ),
-          FutureBuilder(
-            future: futureBicing,
-            builder: (context, snapshot) {
-              // WHILE THE CALL IS BEING MADE AKA LOADING
-              if (ConnectionState.active != null && !snapshot.hasData) {
-                print(ConnectionState.active != null);
-                print(snapshot.hasData);
-                print(snapshot);
-                return Center(child: Text('Loading'));
-              }
+            },
+            ),
+            FutureBuilder(
+              future: futureBicing,
+              builder: (context, snapshot) {
+                // WHILE THE CALL IS BEING MADE AKA LOADING
+                if (ConnectionState.active != null && !snapshot.hasData) {
+                  print(ConnectionState.active != null);
+                  print(snapshot.hasData);
+                  print(snapshot);
+                  return Center(child: Text('Loading'));
+                }
 
-              // WHEN THE CALL IS DONE BUT HAPPENS TO HAVE AN ERROR
-              else if (ConnectionState.done != null && snapshot.hasError) {
-                return Center(child: Text("Error"));
-              }
+                // WHEN THE CALL IS DONE BUT HAPPENS TO HAVE AN ERROR
+                else if (ConnectionState.done != null && snapshot.hasError) {
+                  return Center(child: Text("Error"));
+                }
 
-              // IF IT WORKS IT GOES HERE!
-              else if (bicing) {
-                print('hastaaqui');
-                return ListView.builder(
+                // IF IT WORKS IT GOES HERE!
+                else if (bicing) {
+                  print('hastaaqui');
+                  return ListView.builder(
+                    shrinkWrap : true,
+                    itemCount: listCtrl.getTotalBicingStations(),
+                    itemBuilder: (context, index) {
+                      return BicingPreview(info: listCtrl.getBicingStation(index));
+                    },
+                  );
+                }
+                else return ListView.builder(
                   shrinkWrap : true,
-                  itemCount: listCtrl.getTotalBicingStations(),
+                  itemCount: listCtrl.getTotalRechargeStations(),
                   itemBuilder: (context, index) {
-                    return BicingPreview(info: listCtrl.getBicingStation(index));
+                    return RechargePreview(info: listCtrl.getRechargeStation(index));
                   },
                 );
               }
-              else return ListView.builder(
-                shrinkWrap : true,
-                itemCount: listCtrl.getTotalRechargeStations(),
-                itemBuilder: (context, index) {
-                  return RechargePreview(info: listCtrl.getRechargeStation(index));
-                },
-              );
-            }
-          )
-        ]
+            )
+          ]
+        ),
       )
     );
   }
