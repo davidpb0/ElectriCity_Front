@@ -27,8 +27,8 @@ class ApiService {
       Uri.parse(fullUrl),
       body: jsonEncode(data),
       headers:{"Content-type":"application/json",
-               "Accept":"application/json",
-               "X-AUTH-TOKEN": token},
+        "Accept":"application/json",
+        "X-AUTH-TOKEN": token},
     );
   }
 
