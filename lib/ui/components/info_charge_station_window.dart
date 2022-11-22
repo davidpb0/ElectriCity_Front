@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import '../../fonts/test_icons_icons.dart';
 
 class InfoChargeStationWindow extends StatelessWidget {
-  const InfoChargeStationWindow(
+  InfoChargeStationWindow(
       {super.key,
       required this.slots,
       required this.addres,
       required this.connectionType});
 
   final int? slots;
-  final String addres, connectionType;
+  final String addres;
+  String ?connectionType;
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +58,7 @@ class InfoChargeStationWindow extends StatelessWidget {
                               EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.eCar, size: 20)),
                       const Text("Tipus de connexió: "),
-                      Text(connectionType)
+                      Text(connectionType.toString())
                     ],
                   ),
                   Row(
