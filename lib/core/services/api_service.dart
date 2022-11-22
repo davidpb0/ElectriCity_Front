@@ -22,13 +22,15 @@ class ApiService {
   postData(data, apiUrl) async {
     var fullUrl=_url+apiUrl;
     print(fullUrl);
+    print(data);
 
     return await http.post(
       Uri.parse(fullUrl),
       body: jsonEncode(data),
-      headers:{"Content-type":"application/json",
-               "Accept":"application/json",
-               "X-AUTH-TOKEN": token},
+      headers: {
+        "Content-type":"application/json",
+        "Accept":"application/json",
+        "X-AUTH-TOKEN": token,}
     );
   }
 

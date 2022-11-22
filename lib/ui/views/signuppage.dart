@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../../core/controllers/signupController.dart';
-import '../../core/controllers/userController.dart';
+import '../../core/controllers/signup_controller.dart';
+import '../../core/controllers/user_controller.dart';
 import '../components/header_login_component.dart';
 
 class SignupPage extends StatefulWidget{
@@ -37,9 +37,11 @@ class _SignupPageState extends State<SignupPage> {
       body: Column(
           children: <Widget>[
             HeaderLoginComponent(size: size),
-            Form(
+            Expanded (
+                child: Form(
                 key: _formKey,
-                child: Column(
+                child: ListView(
+                  shrinkWrap: true,
                   children: <Widget>[
 
                     SizedBox(height: 40),
@@ -212,8 +214,7 @@ class _SignupPageState extends State<SignupPage> {
                           signupCtrl.setPasswd(_passwdTextController.text);
                           signupCtrl.setPasswdRepeat(_passwdValidTextController.text);
                           if (signupCtrl.validatePassword()){
-                            signupCtrl.signUp(context);
-                            userCtrl.startSession(emailTextController.text, _passwdTextController.text, context);
+                            signupCtrl.signUp(emailTextController.text, _passwdTextController.text, context);
 
                           }
 
@@ -254,6 +255,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ],
                 )
+            ),
             ),
           ]
       ),
