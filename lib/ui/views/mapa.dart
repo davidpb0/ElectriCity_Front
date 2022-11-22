@@ -43,6 +43,7 @@ class GoogleMapaState extends State<GoogleMapa> {
   late PolylinePoints polylinePoints;
 
   Widget form = Container();
+  Widget top = Container();
 
   @override
   void initState() {
@@ -111,16 +112,13 @@ class GoogleMapaState extends State<GoogleMapa> {
         }
       }
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
     _mapaController.setGoogleMapaState(this);
-    return Stack(
-      alignment: Alignment.topCenter,
-      children: [
-        Stack(children: [
+    return Stack(alignment: Alignment.topCenter, children: [
+      Stack(children: [
         GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
@@ -138,6 +136,11 @@ class GoogleMapaState extends State<GoogleMapa> {
             setState(() {
               info = Container();
               form = Container();
+              top = Container();
+              _polylines.clear();
+              polylineCoordinates.clear();
+              deleteMarker('origin');
+              deleteMarker('destination');
             });
           },
           markers: _markers,
@@ -150,22 +153,32 @@ class GoogleMapaState extends State<GoogleMapa> {
         Container(
             height: 130,
             margin:
-            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
             child: form),
-        ]
+      ]),
+      top,
+      Container(
+        margin: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.72,
+            left: MediaQuery.of(context).size.width * 0.8),
+        child: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              top =
+                  RoutePage(height: MediaQuery.of(context).size.height * 0.25);
+            });
+          },
+          child: Icon(Icons.turn_right_outlined),
+        ),
       ),
-        RoutePage(height: MediaQuery.of(context).size.height * 0.25)
-      ]
-    );
+    ]);
   }
 
   void setPolylines(final PointLatLng punto1, final PointLatLng punto2) async {
     polylinePoints = PolylinePoints();
     polylineCoordinates.clear();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        "AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM",
-        punto1,
-        punto2);
+        "AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM", punto1, punto2);
 
     if (result.status == 'OK') {
       for (var point in result.points) {
@@ -184,14 +197,19 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   void setMarker(LatLng location, String id) {
     setState(() {
-      _markers.add(
-          Marker(
-            markerId: MarkerId(id),
-            position: location,
-            icon: personalMarker,
-          )
-      );
+      _markers.add(Marker(
+        markerId: MarkerId(id),
+        position: location,
+        icon: personalMarker,
+      ));
     });
   }
 
+  void deleteMarker(String id) {
+    Marker marker =
+        _markers.firstWhere((marker) => marker.markerId.value == id);
+    setState(() {
+      _markers.remove(marker);
+    });
+  }
 }
