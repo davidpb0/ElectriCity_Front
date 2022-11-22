@@ -17,6 +17,7 @@ class MapaController {
   late LatLng coords;
   late BitmapDescriptor personalMarker;
 
+
   factory MapaController() {
     return _this;
   }
@@ -35,31 +36,42 @@ class MapaController {
 
   }
 
-  bicingApi() async {
-    Response res = await _apiService.getData('bicing_stations');
-    var body = json.decode(res.body);
-    print(res.statusCode.toString());
-    if (res.statusCode == 200) {
-      StationList estaciones = StationList.fromJson(body);
-      bicingList = estaciones.getCoords();
-      bicingStationList = estaciones.getBicingStations();
-      //print("Estacions Bicing");
-      //print(bicingList.length);
-      //print(bicingList.getRange(0, 10));
-    } else {
-      throw Exception('Algo falló');
+  bicingApi(int numPage) async {
+    if(numPage == 1){
+      bicingStationList.clear();
+      bicingList.clear();
     }
-    //print(res.statusCode);
-    //print(body);
+        Response res = await _apiService.getData(
+            'bicing_stations?page=$numPage');
+        var body = json.decode(res.body);
+        print(res.statusCode.toString());
+        if (res.statusCode == 200) {
+          StationList estaciones = StationList.fromJson(body);
+            bicingList.addAll(estaciones.getCoords());
+            bicingStationList.addAll(estaciones.getBicingStations());
+            //print("Estacions Bicing");
+            print(bicingList.length);
+            //print(bicingList.getRange(0, 10));
+
+        } else {
+          throw Exception('Algo falló');
+        }
+        //print(res.statusCode);
+        //print(body);
+
   }
 
-  rechargeApi() async {
-    Response res = await _apiService.getData('recharge_stations');
+  rechargeApi(int numPage) async {
+    if(numPage == 1){
+      chargerStationList.clear();
+      cargaList.clear();
+    }
+    Response res = await _apiService.getData('recharge_stations?page=$numPage');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
-      cargaList = rcSt.getCoordsRcSt();
-      chargerStationList = rcSt.getChargerStations();
+      cargaList.addAll(rcSt.getCoordsRcSt());
+      chargerStationList.addAll(rcSt.getChargerStations());
       //print("Estacions carga");
       //print(cargaList.length);
       //print(cargaList.getRange(0, 10));

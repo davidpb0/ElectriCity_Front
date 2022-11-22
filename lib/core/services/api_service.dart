@@ -27,8 +27,8 @@ class ApiService {
       Uri.parse(fullUrl),
       body: jsonEncode(data),
       headers:{"Content-type":"application/json",
-               "Accept":"application/json",
-               "X-AUTH-TOKEN": token},
+        "Accept":"application/json",
+        "X-AUTH-TOKEN": token},
     );
   }
 
@@ -50,7 +50,6 @@ class ApiService {
   }
 
   getData(apiUrl) async {
-    print(token);
     var fullUrl=_url+apiUrl;
     return await http.get(
       Uri.parse(fullUrl),

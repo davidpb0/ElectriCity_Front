@@ -53,7 +53,7 @@ class RechargeStationList {
 
 class RechargeStation {
   late String ?speedType;
-  late String connectionType;
+  late String ?connectionType;
   late int ?slots;
   late int id;
   late double latitude;
