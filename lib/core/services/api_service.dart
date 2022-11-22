@@ -50,7 +50,6 @@ class ApiService {
   }
 
   getData(apiUrl) async {
-    print(token);
     var fullUrl=_url+apiUrl;
     return await http.get(
       Uri.parse(fullUrl),

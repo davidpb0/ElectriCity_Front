@@ -73,7 +73,6 @@ class GoogleMapaState extends State<GoogleMapa> {
 
       setState(() {
         for (int i = q; i < bicingList.length; ++i) {
-          print("Entro en el for");
           _markers.add(
             Marker(
                 markerId: MarkerId("id-${i+1}"),
@@ -81,7 +80,6 @@ class GoogleMapaState extends State<GoogleMapa> {
                 icon: bicingMarker,
                 onTap: () {
                   setState(() {
-                    print("La i es " + i.toString());
                     info = InfoBicingStationWindow(
                         belec: bicingStationList[i].electrical,
                         bmech: bicingStationList[i].mechanical,

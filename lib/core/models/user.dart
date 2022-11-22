@@ -12,7 +12,7 @@ class User {
 
   User.fromJson(dynamic json) {
     username = json['user']['email'];
-    token = json['user']['tokens'].first;
+    token = json['user']['tokens'].last;
   }
 
   Map toJson() {
