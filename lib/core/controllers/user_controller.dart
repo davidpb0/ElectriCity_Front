@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:electricity_front/core/controllers/login_controller.dart';
 import 'package:electricity_front/core/services/api_service.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:http/http.dart';
 import '../models/user.dart';
 
 class UserController{
@@ -29,13 +32,14 @@ class UserController{
    Navigator.of(ctxt).pushReplacementNamed('/login');
   }
 
-  bool deleteUser() async{
+  Future<bool> deleteUser() async{
     String endpoint = 'users/' + currentUser.getUserId();
-    response res = await ApiService().deleteData(endpoint);
+    Response res = await ApiService().deleteData(endpoint);
     var body = json.decode(res.body);
-    if (res.statusCode == 200) {
+    if (res.statusCode == 204) {
     return true;
-    } else {
+    }
+    else {
     throw Exception('Algo falló');
     return false;
     }

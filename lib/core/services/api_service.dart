@@ -62,6 +62,7 @@ class ApiService {
     return await http.delete(
         Uri.parse(fullUrl),
         headers: {"X-AUTH-TOKEN": token,}
+    );
   }
 
 

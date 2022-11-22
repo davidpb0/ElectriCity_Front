@@ -51,6 +51,7 @@ class ProfilePage extends StatelessWidget{
                 },
                 child: const Text('Delete account'),
           ),
+        ]
         ),
       ),
 
