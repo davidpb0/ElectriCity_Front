@@ -48,11 +48,17 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   void setCustomMarker() async {
     bicingMarker = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'assets/images/blue_bike.png');
+        ImageConfiguration(
+          size: Size(0.1, 0.1), devicePixelRatio: 0.1
+        ), 'assets/images/bikepin.png');
     chargerMarker = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'assets/images/green_charger.png');
+        ImageConfiguration(
+            size: Size(0.1, 0.1), devicePixelRatio: 0.1
+        ),'assets/images/chargerpin.png');
     personalMarker = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'assets/images/personal_pin.png');
+        ImageConfiguration(
+          size: Size(0.1, 0.1), devicePixelRatio: 0.1
+        ), 'assets/images/homepin.png');
   }
 
   void _onMapCreated(GoogleMapController controller) async {
