@@ -1,9 +1,10 @@
 import 'package:electricity_front/core/controllers/mapa_controller.dart';
 import 'package:electricity_front/core/controllers/user_controller.dart';
-import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/StationList.dart';
+import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/ui/components/info_bicing_station_window.dart';
 import 'package:electricity_front/ui/components/info_charge_station_window.dart';
+import 'package:electricity_front/ui/views/routepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -116,32 +117,10 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Container(
-              padding: const EdgeInsets.all(2.0),
-              child: const Text('ElectriCity')),
-          Image.asset(
-            'assets/images/title_logo_car.png',
-            fit: BoxFit.contain,
-            height: 32,
-          ),
-        ]),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-              bottomRight: Radius.circular(40)),
-        ),
-        backgroundColor: Colors.green,
-        elevation: 20,
-        bottom: const PreferredSize(
-          preferredSize: Size.fromHeight(20),
-          child: SizedBox(),
-        ),
-      ),
-      body: Stack(children: [
+    return Stack(
+      alignment: Alignment.topCenter,
+      children: [
+        Stack(children: [
         GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
@@ -171,9 +150,12 @@ class GoogleMapaState extends State<GoogleMapa> {
         Container(
             height: 130,
             margin:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
+            EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
             child: form),
-      ]),
+        ]
+      ),
+        RoutePage(height:MediaQuery.of(context).size.height * 0.25)
+      ]
     );
   }
 

@@ -1,7 +1,7 @@
 import 'package:electricity_front/ui/views/profilepage.dart';
-import 'package:electricity_front/ui/views/routepage.dart';
 import 'package:flutter/material.dart';
 
+import '../views/listpage.dart';
 import '../views/mapa.dart';
 import 'info_personal_ubi_form.dart';
 
@@ -15,8 +15,7 @@ class BottomBar extends StatefulWidget {
 class BottomBarState extends State<BottomBar> {
   static final List<Widget> _widgetOptions = <Widget>[
     GoogleMapa(),
-    ///TO DO: volver a ListPage()
-    const RoutePage(),
+    const ListPage(),
     InfoPersonalUbiForm(),
     ProfilePage(),
     //ProfilePage()
