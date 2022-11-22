@@ -14,15 +14,14 @@ class GoogleMapa extends StatefulWidget {
   @override
   GoogleMapaState createState() => GoogleMapaState();
 
-  GoogleMapa({Key? key}) : super(key: key);
-
-  late GoogleMapController mapController;
+  const GoogleMapa({Key? key}) : super(key: key);
 
   //final LatLng _center = const LatLng(41.3870154, 2.1700471);
   final LatLng _aux = const LatLng(41.3979779, 2.1801069);
 }
 
 class GoogleMapaState extends State<GoogleMapa> {
+  late GoogleMapController mc;
   late BitmapDescriptor bicingMarker;
   late BitmapDescriptor chargerMarker;
   late BitmapDescriptor personalMarker;
@@ -48,7 +47,6 @@ class GoogleMapaState extends State<GoogleMapa> {
   @override
   void initState() {
     super.initState();
-    polylinePoints = PolylinePoints();
   }
 
   void setCustomMarker() async {
@@ -62,6 +60,8 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   void _onMapCreated(GoogleMapController controller) async {
     setCustomMarker();
+    mc = controller;
+
     await _mapaController.bicingApi();
     await _mapaController.rechargeApi();
 
@@ -112,11 +112,11 @@ class GoogleMapaState extends State<GoogleMapa> {
       }
     });
 
-    setPolylines();
   }
 
   @override
   Widget build(BuildContext context) {
+    _mapaController.setGoogleMapaState(this);
     return Stack(
       alignment: Alignment.topCenter,
       children: [
@@ -154,32 +154,44 @@ class GoogleMapaState extends State<GoogleMapa> {
             child: form),
         ]
       ),
-        RoutePage(height:MediaQuery.of(context).size.height * 0.25)
+        RoutePage(height: MediaQuery.of(context).size.height * 0.25)
       ]
     );
   }
 
-  void setPolylines() async {
-    print("entro en la funcion");
+  void setPolylines(final PointLatLng punto1, final PointLatLng punto2) async {
+    polylinePoints = PolylinePoints();
+    polylineCoordinates.clear();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         "AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM",
-        PointLatLng(41.3979779, 2.1801069),
-        PointLatLng(41.3954877, 2.1771985));
-    print(result.status.toString());
+        punto1,
+        punto2);
 
     if (result.status == 'OK') {
-      print("He entrado en el if");
-      result.points.forEach((PointLatLng point) {
+      for (var point in result.points) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
-      });
-
+      }
+      //WidgetsBinding.instance.addPostFrameCallback((_)
       setState(() {
         _polylines.add(Polyline(
             width: 10,
-            polylineId: PolylineId('polyLine'),
-            color: Color(0xFF08A5CB),
+            polylineId: const PolylineId('polyLine'),
+            color: const Color(0xFF08A5CB),
             points: polylineCoordinates));
       });
     }
   }
+
+  void setMarker(LatLng location, String id) {
+    setState(() {
+      _markers.add(
+          Marker(
+            markerId: MarkerId(id),
+            position: location,
+            icon: personalMarker,
+          )
+      );
+    });
+  }
+
 }

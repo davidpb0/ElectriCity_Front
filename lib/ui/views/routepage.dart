@@ -1,8 +1,12 @@
+import 'package:electricity_front/core/controllers/mapa_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
+
+import 'mapa.dart';
 
 class RoutePage extends StatefulWidget implements PreferredSizeWidget {
 
@@ -14,16 +18,18 @@ class RoutePage extends StatefulWidget implements PreferredSizeWidget {
   @override
   final Size preferredSize;
   final double height;
+
 }
 
 class _RoutePageState extends State<RoutePage> {
-  @override
+
   String googleApikey = "AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM";
   GoogleMapController? mapController; //controller for Google map
   CameraPosition? cameraPosition;
-  LatLng startLocation = const LatLng(27.6602292, 85.308027);
   String origin = "Search Origin";
   String destination = "Search Destination";
+  late var originToCoordinates;
+  late var destinationToCoordinates;
 
   TextStyle style = const TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   OutlineInputBorder textFieldBorder = OutlineInputBorder(
@@ -112,9 +118,16 @@ class _RoutePageState extends State<RoutePage> {
                           final lat = geometry.location.lat;
                           final lang = geometry.location.lng;
                           var newlatlang = LatLng(lat, lang);
+                          originToCoordinates = PointLatLng(lat, lang);
 
-                          //move map camera to selected place with animation
-                          mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom: 17)));
+                          MapaController().getGoogleMapa().mc.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom:16)));
+                          MapaController().getGoogleMapa().setMarker(newlatlang, "origin");
+
+                          if (destination.isNotEmpty) {
+                            GoogleMapaState googleMapa = MapaController().getGoogleMapa();
+                            googleMapa.setPolylines(originToCoordinates, destinationToCoordinates);
+                          }
+
                         }
                       },
                       child: Padding(
@@ -184,9 +197,15 @@ class _RoutePageState extends State<RoutePage> {
                           final lat = geometry.location.lat;
                           final lang = geometry.location.lng;
                           var newlatlang = LatLng(lat, lang);
+                          destinationToCoordinates = PointLatLng(lat, lang);
 
-                          //move map camera to selected place with animation
-                          mapController?.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom: 17)));
+                          MapaController().getGoogleMapa().mc.moveCamera(CameraUpdate.newCameraPosition(CameraPosition(target: newlatlang, zoom:16)));
+                          MapaController().getGoogleMapa().setMarker(newlatlang, "destination");
+
+                          if (origin.isNotEmpty) {
+                            GoogleMapaState googleMapa = MapaController().getGoogleMapa();
+                            googleMapa.setPolylines(originToCoordinates, destinationToCoordinates);
+                          }
                         }
                       },
                       child: Padding(
