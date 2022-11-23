@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 import '../../core/controllers/list_controller.dart';
 import '../../fonts/test_icons_icons.dart';
+import '../components/default_header.dart';
 
 class ListPage extends StatefulWidget {
   const ListPage({Key? key}) : super(key: key);
@@ -31,12 +32,10 @@ class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
     //Da la altura y el ancho total de la pantalla
-    Size size = MediaQuery.of(context).size;
+    Size screensize = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        title: const Text("ElectriCity"),
-      ),
+      appBar: DefaultHeader(size: Size(screensize.width, (screensize.height * 0.1))),
       body: Column(children: [
         Container(
           padding: const EdgeInsets.all(8),
