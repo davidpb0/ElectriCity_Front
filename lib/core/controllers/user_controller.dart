@@ -18,12 +18,14 @@ class UserController {
 
 
   startSession(String mail, String pwd, BuildContext ctext) async {
-    try {
+    //try {
       currentUser = await LoginController().logIn(mail, pwd, ctext);
       ApiService().setToken(currentUser.token);
-    } catch (e) {
-      Container();
-    }
+      print("El token es:" + currentUser.token);
+    //} catch (e) {
+      //Container();
+      //print("Ta mal");
+    //}
   }
 
 
