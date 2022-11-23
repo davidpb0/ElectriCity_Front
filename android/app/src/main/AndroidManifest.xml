@@ -6,7 +6,7 @@
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
        <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyB4OEbG_kVJrlxbpDESN1EDr8N4SxYf_Bw"/>
+           android:value="AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
