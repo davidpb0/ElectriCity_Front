@@ -1,7 +1,7 @@
-import 'package:electricity_front/ui/views/listpage.dart';
 import 'package:electricity_front/ui/views/profilepage.dart';
 import 'package:flutter/material.dart';
 
+import '../views/listpage.dart';
 import '../views/mapa.dart';
 import 'info_personal_ubi_form.dart';
 

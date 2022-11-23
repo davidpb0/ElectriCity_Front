@@ -6,7 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 import '../models/user.dart';
 
-class UserController{
+class UserController {
 
 
   late User currentUser = User();
@@ -16,21 +16,27 @@ class UserController{
   }
 
   static final UserController _this = UserController._();
+
   UserController._();
 
 
-
- startSession(String mail, String pwd, BuildContext ctext) async{
-   currentUser = await LoginController().logIn(mail, pwd, ctext);
-   ApiService().setToken(currentUser.token);
-
- }
-
-  void logOut(BuildContext ctxt){
-   currentUser = User();
-   ApiService().setToken("");
-   Navigator.of(ctxt).pushReplacementNamed('/login');
+  startSession(String mail, String pwd, BuildContext ctext) async {
+    try {
+      currentUser = await LoginController().logIn(mail, pwd, ctext);
+      ApiService().setToken(currentUser.token);
+      print("El token es:" + currentUser.token);
+    } catch (e) {
+      Container();
+    }
   }
+
+
+
+void logOut(BuildContext ctxt) {
+  currentUser = User();
+  ApiService().setToken("");
+  Navigator.of(ctxt).pushReplacementNamed('/login');
+}
 
   Future<bool> deleteUser() async{
     String endpoint = 'users/' + currentUser.getUserId();

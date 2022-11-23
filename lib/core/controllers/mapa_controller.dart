@@ -1,10 +1,13 @@
 import 'dart:convert';
+
 import 'package:electricity_front/core/controllers/user_controller.dart';
-import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/StationList.dart';
+import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
+
+import '../../ui/views/mapa.dart';
 import '../services/api_service.dart';
 
 class MapaController {
@@ -16,6 +19,9 @@ class MapaController {
 
   late LatLng coords;
   late BitmapDescriptor personalMarker;
+
+
+  late GoogleMapaState googleMapaState;
 
 
   factory MapaController() {
@@ -31,9 +37,8 @@ class MapaController {
     return bicingList;
   }
 
-  initBD() async{
+  initBD() async {
     await _apiService.getData('station_bicing');
-
   }
 
   bicingApi(int numPage) async {
@@ -95,6 +100,16 @@ class MapaController {
       ),
     );
     UserController().currentUser.personalUbi.add(marker);
+    UserController().currentUser.personalUbiBD.add(coords);
     Navigator.of(context).pushReplacementNamed('/home');
   }
+
+  void setGoogleMapaState(GoogleMapaState googleMapaState) {
+    this.googleMapaState = googleMapaState;
+  }
+
+  GoogleMapaState getGoogleMapa() {
+    return googleMapaState;
+  }
+
 }

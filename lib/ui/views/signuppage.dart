@@ -36,7 +36,22 @@ class _SignupPageState extends State<SignupPage> {
       ),
       body: Column(
           children: <Widget>[
-            HeaderLoginComponent(size: size),
+            Stack(
+              alignment: AlignmentDirectional.topStart,
+              children: <Widget>[
+                HeaderLoginComponent(size: size),
+                IconButton(
+                    onPressed:() {
+                      Navigator.of(context).pushReplacementNamed('/login');
+                    },
+                    icon: Icon(
+                        Icons.arrow_back,
+                        size: 24,
+                        color: Colors.white,
+                    )
+                )
+              ]
+            ),
             Expanded (
                 child: Form(
                 key: _formKey,

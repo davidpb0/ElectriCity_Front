@@ -1,26 +1,29 @@
 import 'package:electricity_front/core/controllers/mapa_controller.dart';
 import 'package:electricity_front/core/controllers/user_controller.dart';
-import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/StationList.dart';
+import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/ui/components/info_bicing_station_window.dart';
 import 'package:electricity_front/ui/components/info_charge_station_window.dart';
+import 'package:electricity_front/ui/views/routepage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import '../components/default_header.dart';
 
 // ignore: must_be_immutable
 class GoogleMapa extends StatefulWidget {
   @override
   GoogleMapaState createState() => GoogleMapaState();
 
-  GoogleMapa({Key? key}) : super(key: key);
-
-  late GoogleMapController mapController;
+  const GoogleMapa({Key? key}) : super(key: key);
 
   //final LatLng _center = const LatLng(41.3870154, 2.1700471);
   final LatLng _aux = const LatLng(41.3979779, 2.1801069);
 }
 
 class GoogleMapaState extends State<GoogleMapa> {
+  late GoogleMapController mc;
   late BitmapDescriptor bicingMarker;
   late BitmapDescriptor chargerMarker;
   late BitmapDescriptor personalMarker;
@@ -37,9 +40,15 @@ class GoogleMapaState extends State<GoogleMapa> {
   String? address;
   String? telfn;
 
+  final Set<Polyline> _polylines = <Polyline>{};
+  List<LatLng> polylineCoordinates = [];
+  late PolylinePoints polylinePoints;
+
   static const int bicingPages = 18;
 
+
   Widget form = Container();
+  Widget top = DefaultHeader(size: Size(100.0, 100.0));
 
   @override
   void initState() {
@@ -48,15 +57,24 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   void setCustomMarker() async {
     bicingMarker = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'assets/images/blue_bike.png');
+        ImageConfiguration(
+          size: Size(0.1, 0.1), devicePixelRatio: 0.1
+        ), 'assets/images/bikepin.png');
     chargerMarker = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'assets/images/green_charger.png');
+        ImageConfiguration(
+            size: Size(0.1, 0.1), devicePixelRatio: 0.1
+        ),'assets/images/chargerpin.png');
     personalMarker = await BitmapDescriptor.fromAssetImage(
-        const ImageConfiguration(), 'assets/images/personal_pin.png');
+        ImageConfiguration(
+          size: Size(0.1, 0.1), devicePixelRatio: 0.1
+        ), 'assets/images/homepin.png');
   }
 
   void _onMapCreated(GoogleMapController controller) async {
     setCustomMarker();
+
+    mc = controller;
+    
     int o = 1;
     int j = 0;
     int q = 0;
@@ -123,37 +141,17 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Container(
-              padding: const EdgeInsets.all(2.0), child: const Text('ElectriCity')),
-          Image.asset(
-            'assets/images/title_logo_car.png',
-            fit: BoxFit.contain,
-            height: 32,
-          ),
-        ]),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(40),
-              bottomRight: Radius.circular(40)),
-        ),
-        backgroundColor: Colors.green,
-        elevation: 20,
-        bottom: const PreferredSize(
-          preferredSize: Size.fromHeight(20),
-          child: SizedBox(),
-        ),
-      ),
-      body: Stack(children: [
+    _mapaController.setGoogleMapaState(this);
+    return Stack(alignment: Alignment.topCenter, children: [
+      Stack(children: [
         GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: widget._aux,
             zoom: 16,
           ),
+          myLocationEnabled: true,
+          polylines: _polylines,
           onLongPress: (latlang) async {
             _mapaController.coords = latlang;
             _mapaController.personalMarker = await personalMarker;
@@ -163,6 +161,11 @@ class GoogleMapaState extends State<GoogleMapa> {
             setState(() {
               info = Container();
               form = Container();
+              top = DefaultHeader(size:Size(100.0, 100.0));
+              _polylines.clear();
+              polylineCoordinates.clear();
+              deleteMarker('origin');
+              deleteMarker('destination');
             });
           },
           markers: _markers,
@@ -170,7 +173,7 @@ class GoogleMapaState extends State<GoogleMapa> {
         Container(
             height: 130,
             margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.595),
+                top: MediaQuery.of(context).size.height * 0.75),
             child: info),
         Container(
             height: 130,
@@ -178,6 +181,60 @@ class GoogleMapaState extends State<GoogleMapa> {
                 EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
             child: form),
       ]),
-    );
+      top,
+      Container(
+        margin: EdgeInsets.only(
+            top: MediaQuery.of(context).size.height * 0.72,
+            left: MediaQuery.of(context).size.width * 0.8),
+        child: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              top =
+                  RoutePage(height: MediaQuery.of(context).size.height * 0.25);
+            });
+          },
+          child: Icon(Icons.turn_right_outlined),
+        ),
+      ),
+    ]);
+  }
+
+  void setPolylines(final PointLatLng punto1, final PointLatLng punto2) async {
+    polylinePoints = PolylinePoints();
+    polylineCoordinates.clear();
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+        "AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM", punto1, punto2);
+
+    if (result.status == 'OK') {
+      for (var point in result.points) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      }
+      //WidgetsBinding.instance.addPostFrameCallback((_)
+      setState(() {
+        _polylines.add(Polyline(
+            width: 10,
+            polylineId: const PolylineId('polyLine'),
+            color: const Color(0xFF08A5CB),
+            points: polylineCoordinates));
+      });
+    }
+  }
+
+  void setMarker(LatLng location, String id) {
+    setState(() {
+      _markers.add(Marker(
+        markerId: MarkerId(id),
+        position: location,
+        icon: personalMarker,
+      ));
+    });
+  }
+
+  void deleteMarker(String id) {
+    Marker marker =
+        _markers.firstWhere((marker) => marker.markerId.value == id);
+    setState(() {
+      _markers.remove(marker);
+    });
   }
 }
