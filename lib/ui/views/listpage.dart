@@ -1,7 +1,12 @@
-import 'package:electricity_front/ui/components/list_item_component.dart';
+import 'package:electricity_front/core/models/recharge_station.dart';
+import 'package:electricity_front/core/models/StationList.dart';
+import 'package:electricity_front/ui/components/bicing_preview.dart';
+import 'package:electricity_front/ui/components/recharge_preview.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/controllers/list_controller.dart';
+import '../../fonts/test_icons_icons.dart';
+import '../components/default_header.dart';
 
 class ListPage extends StatefulWidget {
   const ListPage({Key? key}) : super(key: key);
@@ -11,40 +16,97 @@ class ListPage extends StatefulWidget {
 }
 
 class _ListPageState extends State<ListPage> {
+  late Future<List<Station>> futureBicing;
+  late Future<List<RechargeStation>> futureRecharge;
+  late ListController listCtrl;
+  bool bicing = true;
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.grey[300],
-        appBar: AppBar(
-          elevation: 0,
-          backgroundColor: Colors.green,
-        ),
-        body: Body());
+  void initState() {
+    super.initState();
+    listCtrl = ListController();
+    futureBicing = listCtrl.fetchBicingStations();
+    futureRecharge = listCtrl.fetchRechargeStations();
   }
-}
-
-class Body extends StatelessWidget {
-  final ListController listCtrl = ListController();
-
-  Body({super.key});
 
   @override
   Widget build(BuildContext context) {
     //Da la altura y el ancho total de la pantalla
-    Size size = MediaQuery.of(context).size;
-    size;
-    listCtrl.getstations();
+    Size screensize = MediaQuery.of(context).size;
     return Scaffold(
-        backgroundColor: Colors.grey[300],
-        appBar: AppBar(
-          title: const Text("ElectriCity"),
+      backgroundColor: Colors.grey[300],
+      appBar: DefaultHeader(size: Size(screensize.width, (screensize.height * 0.1))),
+      body: Column(children: [
+        Container(
+          padding: const EdgeInsets.all(8),
+          child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            //icon eCar
+            Builder(
+              builder: (context) {
+                if (bicing){
+                  return Icon(TestIcons.eCar, size: 20, color: Colors.grey);
+                }
+                return Icon(TestIcons.eCar, size: 20, color: Colors.blue);
+              }
+            ),
+            Switch(
+              // This bool value toggles the switch.
+              value: bicing,
+              activeColor: Colors.green,
+              inactiveThumbColor: Colors.blue,
+              inactiveTrackColor: Colors.blue,
+              onChanged: (bool value) {
+                // This is called when the user toggles the switch.
+                setState(() {
+                  bicing = value;
+                });
+              },
+            ),
+            Builder(
+                builder: (context) {
+                  if (bicing){
+                    return Icon(TestIcons.bike, size: 20, color: Colors.green);
+                  }
+                  return Icon(TestIcons.bike, size: 20, color: Colors.grey);
+                }
+            ),
+          ]),
         ),
-        body: ListView.builder(
-          itemCount: listCtrl.getTotalStations(),
-          itemBuilder: (context, index) {
-            return ListItemComponent(info: listCtrl.getStation(index));
-          },
-        )
+        Expanded(
+            child: FutureBuilder(
+                future: futureBicing,
+                builder: (context, snapshot) {
+                  // WHILE THE CALL IS BEING MADE AKA LOADING
+                  if (ConnectionState.active != null && !snapshot.hasData) {
+                    return Center(child: Text('Loading'));
+                  }
+
+                  // WHEN THE CALL IS DONE BUT HAPPENS TO HAVE AN ERROR
+                  else if (ConnectionState.done != null && snapshot.hasError) {
+                    return Center(child: Text("Error"));
+                  }
+
+                  // IF IT WORKS IT GOES HERE!
+                  else if (bicing) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: listCtrl.getTotalBicingStations(),
+                      itemBuilder: (context, index) {
+                        return BicingPreview(
+                            info: listCtrl.getBicingStation(index));
+                      },
+                    );
+                  } else
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: listCtrl.getTotalRechargeStations(),
+                      itemBuilder: (context, index) {
+                        return RechargePreview(
+                            info: listCtrl.getRechargeStation(index));
+                      },
+                    );
+                }))
+      ]),
     );
   }
 }

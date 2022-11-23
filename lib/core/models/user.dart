@@ -18,7 +18,6 @@ class User {
     token = json['apiTokensValues'].last;
     id = json['id'];
     email = json['email'];
-
   }
 
   Map toJson() {
