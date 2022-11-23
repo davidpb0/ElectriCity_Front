@@ -148,7 +148,7 @@ class GoogleMapaState extends State<GoogleMapa> {
         Container(
             height: 130,
             margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.595),
+                top: MediaQuery.of(context).size.height * 0.75),
             child: info),
         Container(
             height: 130,
