@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../components/default_header.dart';
+
 // ignore: must_be_immutable
 class GoogleMapa extends StatefulWidget {
   @override
@@ -46,7 +48,7 @@ class GoogleMapaState extends State<GoogleMapa> {
 
 
   Widget form = Container();
-  Widget top = Container();
+  Widget top = DefaultHeader(size: Size(100.0, 100.0));
 
   @override
   void initState() {
@@ -159,7 +161,7 @@ class GoogleMapaState extends State<GoogleMapa> {
             setState(() {
               info = Container();
               form = Container();
-              top = Container();
+              top = DefaultHeader(size:Size(100.0, 100.0));
               _polylines.clear();
               polylineCoordinates.clear();
               deleteMarker('origin');

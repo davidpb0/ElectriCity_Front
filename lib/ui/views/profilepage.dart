@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
 
 // ignore: must_be_immutable
-class ProfilePage extends StatelessWidget{
-  UserController userCtrl = UserController();
+class ProfilePage extends StatefulWidget {
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
 
-  ProfilePage({super.key});
+class _ProfilePageState extends State<ProfilePage> {
+  UserController userCtrl = UserController();
+  bool visiblePersonalList = false;
+  bool visibleFavouriteList = false;
+  String aux = "List";
 
   @override
   Widget build(BuildContext context) {
@@ -14,23 +20,56 @@ class ProfilePage extends StatelessWidget{
     return MaterialApp(
       title: "Profile",
       home: Scaffold(
-        appBar: DefaultHeader(size: Size(screensize.width, (screensize.height * 0.15))),
+        appBar: DefaultHeader(
+            size: Size(screensize.width, (screensize.height * 0.15))),
         body: Center(
-          child: ElevatedButton(
-            onPressed: () {
-              userCtrl.logOut(context);
-            },
-            child: const Text(
-              "Log out"
-            ),
+          child: Column(
+            children: [
+              SizedBox(height: 200),
+              ElevatedButton(
+                onPressed: () {
+                  userCtrl.logOut(context);
+                },
+                child: const Text("Log out"),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    if(visiblePersonalList) {
+                      visiblePersonalList = false;
+                      aux = "List";
+                    }
+                    else{
+                      visiblePersonalList = true;
+                      aux = "Hide";
+                    }
+                  });
+                },
+                child: Text(aux),
 
+              ),
+          Expanded(
+            child: Visibility(
+              visible: visiblePersonalList,
+                  child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: userCtrl.currentUser.personalUbiBD.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(height: 100, width: 200, color: Colors.black,),
+                        );
+                      }
+              ),
+            ),
+          ),
+
+            ],
           ),
         ),
       ),
-
     );
-
-
   }
-
+  
 }

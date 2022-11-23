@@ -18,7 +18,7 @@ class InfoBicingStationWindow extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        height: 500,
+        height: 150,
         decoration: BoxDecoration(
             boxShadow: const [
               BoxShadow(
