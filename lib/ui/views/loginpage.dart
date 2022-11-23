@@ -118,7 +118,7 @@ class Body extends StatelessWidget{
 
           ],
         ),
-        const SizedBox(height: 50),
+        //const SizedBox(height: 50),
 
 
 
@@ -160,7 +160,7 @@ class Body extends StatelessWidget{
             ),
           ),
         ),
-        const SizedBox(height: 30),
+        //const SizedBox(height: 30),
 
         //Sign with
         const Text('Sign with:'),
@@ -171,7 +171,7 @@ class Body extends StatelessWidget{
           height: 100,
           child: TextButton(
               onPressed: (){
-                Navigator.of(context).pushReplacementNamed('/list');
+                Navigator.of(context).pushReplacementNamed('/home');
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0.0),
