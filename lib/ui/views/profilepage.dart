@@ -36,40 +36,43 @@ class _ProfilePageState extends State<ProfilePage> {
               ElevatedButton(
                 onPressed: () {
                   setState(() {
-                    if(visiblePersonalList) {
+                    if (visiblePersonalList) {
                       visiblePersonalList = false;
                       aux = "List";
-                    }
-                    else{
+                    } else {
                       visiblePersonalList = true;
                       aux = "Hide";
                     }
                   });
                 },
                 child: Text(aux),
-
               ),
-          Expanded(
-            child: Visibility(
-              visible: visiblePersonalList,
+              Expanded(
+                child: Visibility(
+                  visible: visiblePersonalList,
                   child: ListView.builder(
                       shrinkWrap: true,
                       itemCount: userCtrl.currentUser.personalUbiBD.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Container(height: 100, width: 200, color: Colors.black,),
+                          child: Container(
+                            height: 100,
+                            width: 200,
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                              ],
+                            ),
+                          ),
                         );
-                      }
+                      }),
+                ),
               ),
-            ),
-          ),
-
             ],
           ),
         ),
       ),
     );
   }
-  
 }
