@@ -226,33 +226,37 @@ class GoogleMapaState extends State<GoogleMapa> {
           child: const Icon(Icons.turn_right_outlined),
         ),
       ),
-      Container(
-        margin: EdgeInsets.only(
-            top: MediaQuery
-                .of(context)
-                .size
-                .height * 0.81,
-            left: MediaQuery
-                .of(context)
-                .size
-                .width * 0.8),
-        child: FloatingActionButton.extended(
-          onPressed: () async {
-            Position position = await _determinePosition();
-            mc.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-                target: LatLng(position.latitude, position.longitude),
-                zoom: 14)));
 
-            _markers.add(Marker(markerId: const MarkerId("currentLocation"),
-                position: LatLng(position.latitude, position.longitude)));
 
-            setState(() {
+      Visibility(
+          visible: Theme.of(context).platform != TargetPlatform.iOS,
+          child: Container(
+            margin: EdgeInsets.only(
+                top: MediaQuery
+                    .of(context)
+                    .size
+                    .height * 0.81,
+                left: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.8),
+            child: FloatingActionButton(
+              onPressed: () async {
+                Position position = await _determinePosition();
+                mc.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+                    target: LatLng(position.latitude, position.longitude),
+                    zoom: 14)));
 
-            });
-          },
-          label: const Text("Current Location"),
-          icon: const Icon(Icons.location_history),
-        ),
+                _markers.add(Marker(markerId: const MarkerId("currentLocation"),
+                    position: LatLng(position.latitude, position.longitude)));
+
+                setState(() {
+
+                });
+              },
+              child: const Icon(Icons.location_history),
+            ),
+          )
       )
     ]);
   }
