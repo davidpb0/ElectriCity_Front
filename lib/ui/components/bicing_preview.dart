@@ -34,8 +34,8 @@ class BicingPreview extends StatelessWidget {
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-                decoration: const ShapeDecoration(
-                  color: Colors.blueGrey,
+                decoration: ShapeDecoration(
+                  color: Colors.blue.shade800,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.zero,

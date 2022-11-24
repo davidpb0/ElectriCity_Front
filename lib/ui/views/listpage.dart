@@ -53,15 +53,15 @@ class _ListPageState extends State<ListPage> {
                 if (bicing){
                   return Icon(TestIcons.eCar, size: 20, color: Colors.grey);
                 }
-                return Icon(TestIcons.eCar, size: 20, color: Colors.blue);
+                return Icon(TestIcons.eCar, size: 20, color: Colors.green);
               }
             ),
             Switch(
               // This bool value toggles the switch.
               value: bicing,
-              activeColor: Colors.green,
-              inactiveThumbColor: Colors.blue,
-              inactiveTrackColor: Colors.blue,
+              activeColor: Colors.blue,
+              inactiveThumbColor: Colors.green,
+              inactiveTrackColor: Colors.green.shade400,
               onChanged: (bool value) {
                 // This is called when the user toggles the switch.
                 setState(() {
@@ -72,7 +72,7 @@ class _ListPageState extends State<ListPage> {
             Builder(
                 builder: (context) {
                   if (bicing){
-                    return Icon(TestIcons.bike, size: 20, color: Colors.green);
+                    return Icon(TestIcons.bike, size: 20, color: Colors.blue);
                   }
                   return Icon(TestIcons.bike, size: 20, color: Colors.grey);
                 }
