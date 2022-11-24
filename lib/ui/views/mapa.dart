@@ -7,6 +7,7 @@ import 'package:electricity_front/ui/components/info_charge_station_window.dart'
 import 'package:electricity_front/ui/views/routepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../components/default_header.dart';
@@ -46,44 +47,39 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   static const int bicingPages = 18;
 
-
   Widget form = Container();
-  Widget top = DefaultHeader(size: Size(100.0, 100.0));
+  Widget top = const DefaultHeader(size: Size(100.0, 100.0));
 
   @override
   void initState() {
+    //getCurrentLocation();
     super.initState();
   }
 
   void setCustomMarker() async {
-    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+    bool isIOS = Theme
+        .of(context)
+        .platform == TargetPlatform.iOS;
     if (isIOS) {
       bicingMarker = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(
-              size: Size(0.1, 0.1), devicePixelRatio: 0.1
-          ), 'assets/images/bikepin_ios.png');
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/bikepin_ios.png');
       chargerMarker = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(
-              size: Size(0.1, 0.1), devicePixelRatio: 0.1
-          ), 'assets/images/chargerpin_ios.png');
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/chargerpin_ios.png');
       personalMarker = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(
-              size: Size(0.1, 0.1), devicePixelRatio: 0.1
-          ), 'assets/images/homepin_ios.png');
-    }
-    else{
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/homepin_ios.png');
+    } else {
       bicingMarker = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(
-              size: Size(0.1, 0.1), devicePixelRatio: 0.1
-          ), 'assets/images/bikepin.png');
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/bikepin.png');
       chargerMarker = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(
-              size: Size(0.1, 0.1), devicePixelRatio: 0.1
-          ), 'assets/images/chargerpin.png');
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/chargerpin.png');
       personalMarker = await BitmapDescriptor.fromAssetImage(
-          ImageConfiguration(
-              size: Size(0.1, 0.1), devicePixelRatio: 0.1
-          ), 'assets/images/homepin.png');
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/homepin.png');
     }
   }
 
@@ -91,12 +87,12 @@ class GoogleMapaState extends State<GoogleMapa> {
     setCustomMarker();
 
     mc = controller;
-    
+
     int o = 1;
     int j = 0;
     int q = 0;
 
-    while(o < bicingPages) {
+    while (o < bicingPages) {
       await _mapaController.bicingApi(o);
       await _mapaController.rechargeApi(o);
 
@@ -110,7 +106,7 @@ class GoogleMapaState extends State<GoogleMapa> {
         for (int i = q; i < bicingList.length; ++i) {
           _markers.add(
             Marker(
-                markerId: MarkerId("id-${i+1}"),
+                markerId: MarkerId("id-${i + 1}"),
                 position: bicingStationList[i].coords,
                 icon: bicingMarker,
                 onTap: () {
@@ -127,8 +123,7 @@ class GoogleMapaState extends State<GoogleMapa> {
         for (int k = q; k < chargerStationList.length; ++k) {
           _markers.add(
             Marker(
-              markerId:
-              MarkerId("id-${k + 502}"),
+              markerId: MarkerId("id-${k + 502}"),
               position: chargerStationList[k].coords,
               icon: chargerMarker,
               onTap: () {
@@ -152,7 +147,7 @@ class GoogleMapaState extends State<GoogleMapa> {
 
       setState(() {});
       ++o;
-      q+=30;
+      q += 30;
     }
   }
 
@@ -161,10 +156,13 @@ class GoogleMapaState extends State<GoogleMapa> {
     _mapaController.setGoogleMapaState(this);
     return Stack(alignment: Alignment.topCenter, children: [
       Stack(children: [
+        /*currentLocation == null
+            ? const Center(child: Text("Loading"),)*/
         GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: widget._aux,
+            //LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
             zoom: 16,
           ),
           myLocationEnabled: true,
@@ -178,7 +176,7 @@ class GoogleMapaState extends State<GoogleMapa> {
             setState(() {
               info = Container();
               form = Container();
-              top = DefaultHeader(size:Size(100.0, 100.0));
+              top = const DefaultHeader(size: Size(100.0, 100.0));
               _polylines.clear();
               polylineCoordinates.clear();
               deleteMarker('origin');
@@ -189,30 +187,73 @@ class GoogleMapaState extends State<GoogleMapa> {
         ),
         Container(
             height: 130,
-            margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.75),
+            margin:
+            EdgeInsets.only(top: MediaQuery
+                .of(context)
+                .size
+                .height * 0.75),
             child: info),
         Container(
             height: 130,
             margin:
-                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
+            EdgeInsets.only(top: MediaQuery
+                .of(context)
+                .size
+                .height * 0.5),
             child: form),
       ]),
       top,
       Container(
         margin: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.72,
-            left: MediaQuery.of(context).size.width * 0.8),
+            top: MediaQuery
+                .of(context)
+                .size
+                .height * 0.72,
+            left: MediaQuery
+                .of(context)
+                .size
+                .width * 0.8),
         child: FloatingActionButton(
           onPressed: () {
             setState(() {
               top =
-                  RoutePage(height: MediaQuery.of(context).size.height * 0.25);
+                  RoutePage(height: MediaQuery
+                      .of(context)
+                      .size
+                      .height * 0.25);
             });
           },
-          child: Icon(Icons.turn_right_outlined),
+          child: const Icon(Icons.turn_right_outlined),
         ),
       ),
+      Container(
+        margin: EdgeInsets.only(
+            top: MediaQuery
+                .of(context)
+                .size
+                .height * 0.81,
+            left: MediaQuery
+                .of(context)
+                .size
+                .width * 0.8),
+        child: FloatingActionButton.extended(
+          onPressed: () async {
+            Position position = await _determinePosition();
+            mc.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
+                target: LatLng(position.latitude, position.longitude),
+                zoom: 14)));
+
+            _markers.add(Marker(markerId: const MarkerId("currentLocation"),
+                position: LatLng(position.latitude, position.longitude)));
+
+            setState(() {
+
+            });
+          },
+          label: const Text("Current Location"),
+          icon: const Icon(Icons.location_history),
+        ),
+      )
     ]);
   }
 
@@ -249,9 +290,35 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   void deleteMarker(String id) {
     Marker marker =
-        _markers.firstWhere((marker) => marker.markerId.value == id);
+    _markers.firstWhere((marker) => marker.markerId.value == id);
     setState(() {
       _markers.remove(marker);
     });
   }
+
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      return Future.error('Location services are disabled');
+    }
+
+    permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+
+      if (permission == LocationPermission.denied) {
+        return Future.error("Location permission denied");
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      return Future.error("Location permission are permanently denied");
+    }
+    Position position = await Geolocator.getCurrentPosition();
+    return position;
+  }
+
+
 }
