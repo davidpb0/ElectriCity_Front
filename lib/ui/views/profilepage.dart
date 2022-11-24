@@ -117,7 +117,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       child: Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child:  Builder(builder: (context) {
-                                            return ListaPersonalUbi2();
+                                            return ListaPersonalUbi();
                                           }),
                                       )
 
@@ -332,6 +332,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget ListaPersonalUbi() {
     return ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: userCtrl.currentUser.personalUbiBD.length,
         itemBuilder: (context, index) {
@@ -372,21 +373,32 @@ class _ProfilePageState extends State<ProfilePage> {
     return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: 30, //userCtrl.currentUser.personalUbiBD.length,
+        itemCount: userCtrl.currentUser.testlist.length, //userCtrl.currentUser.personalUbiBD.length,
         itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.all(8),
-            child: Text(
-              //userCtrl.currentUser.personalUbi.elementAt(index).infoWindow.title.toString(),
-              'hello',
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-          )
-          );
+            return Padding(
+                key: UniqueKey(),
+                padding: EdgeInsets.all(8),
+                child: Row(
+                  children: [
+                    Text(
+                      //userCtrl.currentUser.personalUbi.elementAt(index).infoWindow.title.toString(),
+                      'Personal location ${index+1} = ${userCtrl.currentUser.testlist.elementAt(index)}',
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                      ),
+                    ),
+                    Expanded( child: SizedBox()),
+                    IconButton(onPressed: (){
+                      userCtrl.currentUser.testlist.removeAt(index);
+                      Navigator.of(context).build(context);
+
+                    }, icon: const Icon(Icons.delete, size: 24, color: Colors.black ))
+                  ],
+                )
+
+            );
         });
   }
 }
