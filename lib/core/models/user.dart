@@ -29,7 +29,12 @@ class User {
   }
 
   getUserId() {
-    return userId;
+    return id;
+  }
+
+  deletePersonalUbi(int index){
+    personalUbi.removeAt(index);
+    personalUbiBD.removeAt(index);
   }
 
 }

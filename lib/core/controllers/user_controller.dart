@@ -39,9 +39,10 @@ void logOut(BuildContext ctxt) {
 }
 
   Future<bool> deleteUser() async{
-    String endpoint = 'users/' + currentUser.getUserId();
+    String endpoint = 'users/' + currentUser.getUserId().toString();
     Response res = await ApiService().deleteData(endpoint);
-    var body = json.decode(res.body);
+    print(res.statusCode);
+    //var body = json.decode(res.body);
     if (res.statusCode == 204) {
     return true;
     }
