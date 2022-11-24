@@ -16,6 +16,8 @@ class ListController {
   bool bici = true;
   bool bicisStarted = false;
   bool chargersStarted = false;
+  bool bicisComplete = false;
+  bool chargersComplete = false;
 
   StreamController<List<RechargeStation>> rechargeStationStreamController = StreamController<List<RechargeStation>>.broadcast();
   StreamController<List<Station>> bicingStationStreamController = StreamController<List<Station>>.broadcast();
@@ -76,6 +78,7 @@ class ListController {
       if (res.statusCode == 200) {
         StationList estaciones = StationList.fromJson(body);
         if(estaciones.listMember.length == 0){
+          bicisComplete = true;
           done = true;
         }
         else {
@@ -100,6 +103,7 @@ class ListController {
       if (res.statusCode == 200) {
         RechargeStationList estaciones = RechargeStationList.fromJson(body);
         if(estaciones.chargeStation.length == 0){
+          chargersComplete = true;
           done = true;
         }
         else {
@@ -136,15 +140,18 @@ class ListController {
 
   int getTotalBicingStations(){
     print("bicis:" + _bicinglist.length.toString());
+    if (!bicisStarted) return 0;
     return _bicinglist.length;
   }
 
   int getTotalRechargeStations(){
     print("eCar:" + _rechargelist.length.toString());
+    if (!chargersComplete) return 0;
     return _rechargelist.length;
   }
 
   Station getBicingStation(int index){
+
     return _bicinglist.elementAt(index);
   }
 
