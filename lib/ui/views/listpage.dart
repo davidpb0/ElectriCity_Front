@@ -13,6 +13,7 @@ class ListPage extends StatefulWidget {
 
   @override
   State<ListPage> createState() => _ListPageState();
+
 }
 
 class _ListPageState extends State<ListPage> {
@@ -25,8 +26,14 @@ class _ListPageState extends State<ListPage> {
   void initState() {
     super.initState();
     listCtrl = ListController();
-    futureBicing = listCtrl.fetchBicingStations();
-    futureRecharge = listCtrl.fetchRechargeStations();
+    if(!listCtrl.bicisStarted){
+      listCtrl.fetchFirstBicingStations();
+      listCtrl.streamBicingStations();
+    }
+    if(!listCtrl.chargersStarted){
+      listCtrl.fetchFirstRechargeStations();
+      listCtrl.streamRechargeStations();
+    }
   }
 
   @override
@@ -46,15 +53,15 @@ class _ListPageState extends State<ListPage> {
                 if (bicing){
                   return Icon(TestIcons.eCar, size: 20, color: Colors.grey);
                 }
-                return Icon(TestIcons.eCar, size: 20, color: Colors.blue);
+                return Icon(TestIcons.eCar, size: 20, color: Colors.green);
               }
             ),
             Switch(
               // This bool value toggles the switch.
               value: bicing,
-              activeColor: Colors.green,
-              inactiveThumbColor: Colors.blue,
-              inactiveTrackColor: Colors.blue,
+              activeColor: Colors.blue,
+              inactiveThumbColor: Colors.green,
+              inactiveTrackColor: Colors.green.shade400,
               onChanged: (bool value) {
                 // This is called when the user toggles the switch.
                 setState(() {
@@ -65,14 +72,77 @@ class _ListPageState extends State<ListPage> {
             Builder(
                 builder: (context) {
                   if (bicing){
-                    return Icon(TestIcons.bike, size: 20, color: Colors.green);
+                    return Icon(TestIcons.bike, size: 20, color: Colors.blue);
                   }
                   return Icon(TestIcons.bike, size: 20, color: Colors.grey);
                 }
             ),
           ]),
         ),
-        Expanded(
+        Visibility(
+          visible: bicing,
+            child: Expanded(
+              child: StreamBuilder(
+                  stream: listCtrl.getBicingStationsStream(),
+                  builder: (context, snapshot) {
+                    print('bicing connection:' + snapshot.connectionState.toString());
+                    if (snapshot.hasError) {
+                      return Center(child: Text("Error"));
+                    }
+                    else if(snapshot.connectionState == ConnectionState.none && !listCtrl.bicisStarted){
+                      return Center(child: Text('Loading'));
+                    }
+                    else if(snapshot.connectionState == ConnectionState.waiting && !listCtrl.bicisStarted){
+                      return Center(child: Text('Loading'));
+                    }
+                    else{
+                          return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: listCtrl.getTotalBicingStations(),
+                            itemBuilder: (context, index) {
+                              return BicingPreview(
+                                  info: listCtrl.getBicingStation(index));
+                            },
+                          );
+                    }
+                  }
+
+              )
+            )
+        ),
+        Visibility(
+            visible: !bicing,
+            child: Expanded(
+              child: StreamBuilder(
+                stream: listCtrl.getRechargeStationsStream(),
+                builder: (context, snapshot) {
+                  print('eCar connection:' + snapshot.connectionState.toString());
+                  if (snapshot.hasError) {
+                    return Center(child: Text("Error"));
+                  }
+                  else if(snapshot.connectionState == ConnectionState.none && !listCtrl.chargersStarted){
+                    return Center(child: Text('Loading'));
+                  }
+                  else if(snapshot.connectionState == ConnectionState.waiting && !listCtrl.chargersStarted){
+                    return Center(child: Text('Loading'));
+                  }
+                  else{
+                // WHILE THE CALL IS BEING MADE AKA LOADING
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: listCtrl.getTotalRechargeStations(),
+                      itemBuilder: (context, index) {
+                        return RechargePreview(
+                            info: listCtrl.getRechargeStation(index));
+                      },
+                    );
+                  }
+                }
+            )
+        ),
+        )
+
+        /*Expanded(
             child: FutureBuilder(
                 future: futureBicing,
                 builder: (context, snapshot) {
@@ -106,7 +176,11 @@ class _ListPageState extends State<ListPage> {
                       },
                     );
                 }))
+
+         */
+
       ]),
     );
   }
 }
+

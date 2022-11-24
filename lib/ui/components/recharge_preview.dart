@@ -36,7 +36,7 @@ class RechargePreview extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 8, horizontal:24),
                       decoration: ShapeDecoration(
-                          color: Colors.blueGrey,
+                          color: Colors.green.shade800,
                           shape: RoundedRectangleBorder(
                             borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.zero,
@@ -89,10 +89,9 @@ class RechargePreview extends StatelessWidget {
                       children: [
                         Row(
                             children: [
-                                Expanded( child:Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 6),
-                                  child: const Icon(TestIcons.bike, size:20),
-                                ),
+                               const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 6),
+                                  child: Icon(TestIcons.speedType, size:20),
                                 ),
                                 Expanded( child:Padding(
                                 padding: const EdgeInsets.all(6),
@@ -111,10 +110,10 @@ class RechargePreview extends StatelessWidget {
                         ),
                         Row(
                             children: [
-                              Expanded( child:Padding(
+                              Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 6),
-                                child: const Icon(TestIcons.ebike, size:20),
-                              ),
+                                child: const Icon(TestIcons.eCharger, size:20),
+
                               ),
                               Expanded( child: Padding(
                                 padding: const EdgeInsets.all(6),
@@ -133,10 +132,10 @@ class RechargePreview extends StatelessWidget {
                       ),
                         Row(      // TEXT
                           children: [
-                            Expanded( child: Padding(
+                            Padding(
                               padding: const EdgeInsets.symmetric(vertical: 6),
-                              child: const Icon(TestIcons.bicingParking, size:20),
-                            ),
+                              child: const Icon(TestIcons.eCar, size:20),
+
                             ),
                             Expanded( child: Padding(
                                 padding: const EdgeInsets.all(6),

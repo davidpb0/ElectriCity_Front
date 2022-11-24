@@ -139,7 +139,7 @@ class InfoPersonalUbiForm extends StatelessWidget {
                 ),
               ),
             ]),
-            const SizedBox(height: 80),
+            const SizedBox(height: 40),
             Row(
               children: [
                 SizedBox(width: (MediaQuery.of(context).size.width / 2) - 65),

@@ -56,18 +56,35 @@ class GoogleMapaState extends State<GoogleMapa> {
   }
 
   void setCustomMarker() async {
-    bicingMarker = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(
-          size: Size(0.1, 0.1), devicePixelRatio: 0.1
-        ), 'assets/images/bikepin.png');
-    chargerMarker = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(
-            size: Size(0.1, 0.1), devicePixelRatio: 0.1
-        ),'assets/images/chargerpin.png');
-    personalMarker = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(
-          size: Size(0.1, 0.1), devicePixelRatio: 0.1
-        ), 'assets/images/homepin.png');
+    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+    if (isIOS) {
+      bicingMarker = await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(
+              size: Size(0.1, 0.1), devicePixelRatio: 0.1
+          ), 'assets/images/bikepin_ios.png');
+      chargerMarker = await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(
+              size: Size(0.1, 0.1), devicePixelRatio: 0.1
+          ), 'assets/images/chargerpin_ios.png');
+      personalMarker = await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(
+              size: Size(0.1, 0.1), devicePixelRatio: 0.1
+          ), 'assets/images/homepin_ios.png');
+    }
+    else{
+      bicingMarker = await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(
+              size: Size(0.1, 0.1), devicePixelRatio: 0.1
+          ), 'assets/images/bikepin.png');
+      chargerMarker = await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(
+              size: Size(0.1, 0.1), devicePixelRatio: 0.1
+          ), 'assets/images/chargerpin.png');
+      personalMarker = await BitmapDescriptor.fromAssetImage(
+          ImageConfiguration(
+              size: Size(0.1, 0.1), devicePixelRatio: 0.1
+          ), 'assets/images/homepin.png');
+    }
   }
 
   void _onMapCreated(GoogleMapController controller) async {

@@ -1,11 +1,12 @@
+
 import 'package:flutter/material.dart';
-import '../../core/models/StationList.dart';
-import '../../fonts/test_icons_icons.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class BicingPreview extends StatelessWidget {
-  final Station info;
 
-  const BicingPreview({
+class PersonalUbiPreview extends StatelessWidget {
+  final Marker info;
+
+  const PersonalUbiPreview({
     Key? key,
     required this.info,
   }) : super(key: key);
@@ -13,7 +14,7 @@ class BicingPreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 0),
       child: Container(
         alignment: Alignment.center,
         decoration: const BoxDecoration(
@@ -33,9 +34,9 @@ class BicingPreview extends StatelessWidget {
             children: <Widget>[
               Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-                decoration: ShapeDecoration(
-                  color: Colors.blue.shade800,
+                const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                decoration: const ShapeDecoration(
+                  color: Colors.yellow,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.zero,
@@ -48,20 +49,10 @@ class BicingPreview extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        info.address,
+                        info.infoWindow.title.toString(),
                         textAlign: TextAlign.left,
                         style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        info.id.toString(),
-                        textAlign: TextAlign.right,
-                        style: const TextStyle(
-                          color: Colors.white,
+                          color: Colors.black,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -72,7 +63,7 @@ class BicingPreview extends StatelessWidget {
               ),
               Container(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                 decoration: const ShapeDecoration(
                     color: Colors.white,
                     shape: const RoundedRectangleBorder(
@@ -88,59 +79,21 @@ class BicingPreview extends StatelessWidget {
                       children: [
                         const Padding(
                           padding: EdgeInsets.symmetric(vertical: 6),
-                          child: Icon(TestIcons.bike, size: 20),
+                          child: Icon(Icons.home_work, size: 20),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(6),
                           child: Text(
-                            info.mechanical.toString(),
+                            info.infoWindow.snippet.toString(),
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.black,
                               fontSize: 16,
-                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
                       ],
-                    ),
-                    Row(children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6),
-                        child: Icon(TestIcons.ebike, size: 20),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: Text(
-                          info.electrical.toString(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ]),
-                    Row(// TEXT
-                        children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6),
-                        child: Icon(TestIcons.bicingParking, size: 20),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: Text(
-                          info.availableSlots.toString(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ]) //TEXT
+                    ), //TEXT
                   ],
                 ),
               ),
