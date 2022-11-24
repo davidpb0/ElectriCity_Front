@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -65,6 +66,15 @@ class ApiService {
     );
   }
 
+  routePainting(data, apiURl) async {
+    return await http.post(
+        Uri.parse(apiURl),
+        body: jsonEncode(data),
+        headers:{"Content-type":"application/json",
+        "Accept":"application/json",
+        "X-AUTH-TOKEN": token},
+    );
+  }
 
   void signUpApi(String mail, String pwd) async{
     try{
