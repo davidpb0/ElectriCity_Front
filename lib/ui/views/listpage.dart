@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/StationList.dart';
 import 'package:electricity_front/ui/components/bicing_preview.dart';
@@ -13,7 +15,6 @@ class ListPage extends StatefulWidget {
 
   @override
   State<ListPage> createState() => _ListPageState();
-
 }
 
 class _ListPageState extends State<ListPage> {
@@ -26,36 +27,34 @@ class _ListPageState extends State<ListPage> {
   void initState() {
     super.initState();
     listCtrl = ListController();
-    if(!listCtrl.bicisStarted){
-      listCtrl.fetchFirstBicingStations();
-      listCtrl.streamBicingStations();
-    }
-    if(!listCtrl.chargersStarted){
-      listCtrl.fetchFirstRechargeStations();
-      listCtrl.streamRechargeStations();
-    }
+    if (!listCtrl.bicisStarted) listCtrl.fetchFirstBicingStations();
+    if (!listCtrl.bicisComplete) listCtrl.streamBicingStations();
+    if (!listCtrl.chargersStarted) listCtrl.fetchFirstRechargeStations();
+    if (!listCtrl.chargersComplete) listCtrl.streamRechargeStations();
+
+    Timer(Duration(seconds: 1), () => build(context));
   }
 
   @override
   Widget build(BuildContext context) {
     //Da la altura y el ancho total de la pantalla
     Size screensize = MediaQuery.of(context).size;
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      appBar: DefaultHeader(size: Size(screensize.width, (screensize.height * 0.1))),
+      appBar: DefaultHeader(
+          size: Size(screensize.width, (screensize.height * 0.1))),
       body: Column(children: [
         Container(
           padding: const EdgeInsets.all(8),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             //icon eCar
-            Builder(
-              builder: (context) {
-                if (bicing){
-                  return Icon(TestIcons.eCar, size: 20, color: Colors.grey);
-                }
-                return Icon(TestIcons.eCar, size: 20, color: Colors.green);
+            Builder(builder: (context) {
+              if (bicing) {
+                return Icon(TestIcons.eCar, size: 20, color: Colors.grey);
               }
-            ),
+              return Icon(TestIcons.eCar, size: 20, color: Colors.green);
+            }),
             Switch(
               // This bool value toggles the switch.
               value: bicing,
@@ -69,77 +68,119 @@ class _ListPageState extends State<ListPage> {
                 });
               },
             ),
-            Builder(
-                builder: (context) {
-                  if (bicing){
-                    return Icon(TestIcons.bike, size: 20, color: Colors.blue);
-                  }
-                  return Icon(TestIcons.bike, size: 20, color: Colors.grey);
-                }
-            ),
+            Builder(builder: (context) {
+              if (bicing) {
+                return Icon(TestIcons.bike, size: 20, color: Colors.blue);
+              }
+              return Icon(TestIcons.bike, size: 20, color: Colors.grey);
+            }),
           ]),
         ),
         Visibility(
-          visible: bicing,
+            visible: bicing,
             child: Expanded(
+                child: StreamBuilder(
+                    stream: listCtrl.getBicingStationsStream(),
+                    builder: (context, snapshot) {
+                      print('bicing connection:' +
+                          snapshot.connectionState.toString());
+                      if (snapshot.hasError) {
+                        return Center(child: Text("Error"));
+                      } else if (snapshot.connectionState ==
+                              ConnectionState.none &&
+                          !listCtrl.bicisStarted) {
+                        return Center(child: Text('Loading'));
+                      } else if (snapshot.connectionState ==
+                              ConnectionState.waiting &&
+                          !listCtrl.bicisStarted) {
+                        return Center(child: Text('Loading'));
+                      } else if (snapshot.connectionState ==
+                              ConnectionState.active &&
+                          !listCtrl.bicisStarted) {
+                        return Center(child: Text('Loading'));
+                      } else {
+                        return ShaderMask(
+                            shaderCallback: (Rect bounds) {
+                          return LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: <Color>[
+                                Colors.grey.shade300,
+                                Colors.transparent,
+                                Colors.transparent,
+                                Colors.grey.shade300
+                              ],
+                              stops: [
+                                0.0,
+                                0.05,
+                                0.95,
+                                1.0
+                              ]).createShader(bounds);
+                        },
+                      blendMode: BlendMode.dstOut,
+                      child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: listCtrl.getTotalBicingStations(),
+                          itemBuilder: (context, index) {
+                            return BicingPreview(
+                                info: listCtrl.getBicingStation(index));
+                          },
+                        ));
+                      }
+                    }))),
+        Visibility(
+          visible: !bicing,
+          child: Expanded(
               child: StreamBuilder(
-                  stream: listCtrl.getBicingStationsStream(),
+                  stream: listCtrl.getRechargeStationsStream(),
                   builder: (context, snapshot) {
-                    print('bicing connection:' + snapshot.connectionState.toString());
+                    print('eCar connection:' +
+                        snapshot.connectionState.toString());
                     if (snapshot.hasError) {
                       return Center(child: Text("Error"));
-                    }
-                    else if(snapshot.connectionState == ConnectionState.none && !listCtrl.bicisStarted){
+                    } else if (snapshot.connectionState ==
+                            ConnectionState.none &&
+                        !listCtrl.chargersStarted) {
                       return Center(child: Text('Loading'));
-                    }
-                    else if(snapshot.connectionState == ConnectionState.waiting && !listCtrl.bicisStarted){
+                    } else if (snapshot.connectionState ==
+                            ConnectionState.waiting &&
+                        !listCtrl.chargersStarted) {
                       return Center(child: Text('Loading'));
-                    }
-                    else{
-                          return ListView.builder(
+                    } else if (snapshot.connectionState ==
+                            ConnectionState.active &&
+                        !listCtrl.chargersStarted) {
+                      return Center(child: Text('Loading'));
+                    } else {
+                      // WHILE THE CALL IS BEING MADE AKA LOADING
+                      return ShaderMask(
+                          shaderCallback: (Rect bounds) {
+                            return LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: <Color>[
+                                  Colors.grey.shade300,
+                                  Colors.transparent,
+                                  Colors.transparent,
+                                  Colors.grey.shade300
+                                ],
+                                stops: [
+                                  0.0,
+                                  0.05,
+                                  0.95,
+                                  1.0
+                                ]).createShader(bounds);
+                          },
+                          blendMode: BlendMode.dstOut,
+                          child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: listCtrl.getTotalBicingStations(),
+                            itemCount: listCtrl.getTotalRechargeStations(),
                             itemBuilder: (context, index) {
-                              return BicingPreview(
-                                  info: listCtrl.getBicingStation(index));
+                              return RechargePreview(
+                                  info: listCtrl.getRechargeStation(index));
                             },
-                          );
+                          ));
                     }
-                  }
-
-              )
-            )
-        ),
-        Visibility(
-            visible: !bicing,
-            child: Expanded(
-              child: StreamBuilder(
-                stream: listCtrl.getRechargeStationsStream(),
-                builder: (context, snapshot) {
-                  print('eCar connection:' + snapshot.connectionState.toString());
-                  if (snapshot.hasError) {
-                    return Center(child: Text("Error"));
-                  }
-                  else if(snapshot.connectionState == ConnectionState.none && !listCtrl.chargersStarted){
-                    return Center(child: Text('Loading'));
-                  }
-                  else if(snapshot.connectionState == ConnectionState.waiting && !listCtrl.chargersStarted){
-                    return Center(child: Text('Loading'));
-                  }
-                  else{
-                // WHILE THE CALL IS BEING MADE AKA LOADING
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: listCtrl.getTotalRechargeStations(),
-                      itemBuilder: (context, index) {
-                        return RechargePreview(
-                            info: listCtrl.getRechargeStation(index));
-                      },
-                    );
-                  }
-                }
-            )
-        ),
+                  })),
         )
 
         /*Expanded(
@@ -178,9 +219,7 @@ class _ListPageState extends State<ListPage> {
                 }))
 
          */
-
       ]),
     );
   }
 }
-

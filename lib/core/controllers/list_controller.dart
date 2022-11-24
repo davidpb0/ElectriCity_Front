@@ -18,6 +18,8 @@ class ListController {
   bool chargersStarted = false;
   bool bicisComplete = false;
   bool chargersComplete = false;
+  int bicisIterator = 2;
+  int chargersIterator = 2;
 
   StreamController<List<RechargeStation>> rechargeStationStreamController = StreamController<List<RechargeStation>>.broadcast();
   StreamController<List<Station>> bicingStationStreamController = StreamController<List<Station>>.broadcast();
@@ -69,22 +71,19 @@ class ListController {
   }
 
   void streamBicingStations() async {
-    int i = 2;
-    bool done = false;
-    while(!done) {
-      Response res = await _apiService.getData('bicing_stations?page=$i');
+    while(!bicisComplete) {
+      Response res = await _apiService.getData('bicing_stations?page=$bicisIterator');
       var body = json.decode(res.body);
-      print('bicing iteration ' + i.toString() + res.statusCode.toString());
+      print('bicing iteration ' + bicisIterator.toString() + res.statusCode.toString());
       if (res.statusCode == 200) {
         StationList estaciones = StationList.fromJson(body);
         if(estaciones.listMember.length == 0){
           bicisComplete = true;
-          done = true;
         }
         else {
           bicingStationStreamController.add(estaciones.listMember);
           _bicinglist.addAll(estaciones.listMember);
-          i++;
+          bicisIterator++;
         }
       } else {
         throw Exception('Algo falló');
@@ -94,22 +93,19 @@ class ListController {
   }
 
   void streamRechargeStations() async {
-    int i = 2;
-    bool done = false;
-    while(!done) {
-      Response res = await _apiService.getData('recharge_stations?page=$i');
+    while(!chargersComplete) {
+      Response res = await _apiService.getData('recharge_stations?page=$chargersIterator');
       var body = json.decode(res.body);
-      print('recharge iteration ' + i.toString() + res.statusCode.toString());
+      print('recharge iteration ' + chargersIterator.toString() + res.statusCode.toString());
       if (res.statusCode == 200) {
         RechargeStationList estaciones = RechargeStationList.fromJson(body);
         if(estaciones.chargeStation.length == 0){
           chargersComplete = true;
-          done = true;
         }
         else {
           rechargeStationStreamController.add(estaciones.chargeStation);
           _rechargelist.addAll(estaciones.chargeStation);
-          i++;
+          chargersIterator++;
         }
       } else {
         throw Exception('Algo falló');
@@ -146,7 +142,7 @@ class ListController {
 
   int getTotalRechargeStations(){
     print("eCar:" + _rechargelist.length.toString());
-    if (!chargersComplete) return 0;
+    if (!chargersStarted) return 0;
     return _rechargelist.length;
   }
 
