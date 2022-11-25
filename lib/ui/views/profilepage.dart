@@ -401,6 +401,7 @@ class _ProfilePageState extends State<ProfilePage> {
         });
   }
 
+  /*
   Widget listaPersonalUbi2() {
     return ListView.builder(
         shrinkWrap: true,
@@ -433,6 +434,7 @@ class _ProfilePageState extends State<ProfilePage> {
             );
         });
   }
+*/
 
   void logout(BuildContext context) async {
     await userCtrl.deleteUser();
