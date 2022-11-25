@@ -20,9 +20,7 @@ class MapaController {
   late LatLng coords;
   late BitmapDescriptor personalMarker;
 
-
   late GoogleMapaState googleMapaState;
-
 
   factory MapaController() {
     return _this;
@@ -42,32 +40,30 @@ class MapaController {
   }
 
   bicingApi(int numPage) async {
-    if(numPage == 1){
+    if (numPage == 1) {
       bicingStationList.clear();
       bicingList.clear();
     }
-        Response res = await _apiService.getData(
-            'bicing_stations?page=$numPage');
-        var body = json.decode(res.body);
-        //print(res.statusCode.toString());
-        if (res.statusCode == 200) {
-          StationList estaciones = StationList.fromJson(body);
-            bicingList.addAll(estaciones.getCoords());
-            bicingStationList.addAll(estaciones.getBicingStations());
-            //print("Estacions Bicing");
-            //print(bicingList.length);
-            //print(bicingList.getRange(0, 10));
+    Response res = await _apiService.getData('bicing_stations?page=$numPage');
+    var body = json.decode(res.body);
+    //print(res.statusCode.toString());
+    if (res.statusCode == 200) {
+      StationList estaciones = StationList.fromJson(body);
+      bicingList.addAll(estaciones.getCoords());
+      bicingStationList.addAll(estaciones.getBicingStations());
+      //print("Estacions Bicing");
+      //print(bicingList.length);
+      //print(bicingList.getRange(0, 10));
 
-        } else {
-          throw Exception('Algo falló');
-        }
-        //print(res.statusCode);
-        //print(body);
-
+    } else {
+      throw Exception('Algo falló');
+    }
+    //print(res.statusCode);
+    //print(body);
   }
 
   rechargeApi(int numPage) async {
-    if(numPage == 1){
+    if (numPage == 1) {
       chargerStationList.clear();
       cargaList.clear();
     }
@@ -87,21 +83,37 @@ class MapaController {
     //print(body);
   }
 
-  personalUbi(String tit, String? desc, BuildContext context) {
-    Marker marker = Marker(
-      markerId: MarkerId(
-          (3000 + UserController().currentUser.personalUbi.length)
-              .toString()),
-      position: coords,
-      icon: personalMarker,
-      infoWindow: InfoWindow(
-        title: tit,
-        snippet: desc,
-      ),
-    );
-    UserController().currentUser.personalUbi.add(marker);
-    UserController().currentUser.personalUbiBD.add(coords);
-    Navigator.of(context).pushReplacementNamed('/home');
+  personalUbi(String tit, String? desc, BuildContext context) async {
+    String urlPrueba = "https://localhost/users/" +
+        UserController().currentUser.getUserId().toString() +
+        "/locations";
+    var data = {
+      "id": 3000 + UserController().currentUser.personalUbi.length,
+      "latitude": coords.latitude,
+      "longitude": coords.longitude,
+      "title": tit,
+      "description": desc
+    };
+    Response res = await ApiService().postPersonalUbi(data, urlPrueba);
+    print(UserController().currentUser.getUserId().toString());
+    var body = jsonDecode(res.body);
+    if (res.statusCode == 201) {
+      Marker marker = Marker(
+        markerId:
+            MarkerId((body['favouriteLocations'].last['id'] + 3000).toString()),
+        position: coords,
+        icon: personalMarker,
+        infoWindow: InfoWindow(
+          title: tit,
+          snippet: desc,
+        ),
+      );
+      UserController().currentUser.personalUbi.add(marker);
+      UserController().currentUser.personalUbiBD.add(coords);
+      print(res.statusCode.toString());
+      Navigator.of(context).pushReplacementNamed('/home');
+    }
+
   }
 
   void setGoogleMapaState(GoogleMapaState googleMapaState) {
@@ -111,5 +123,4 @@ class MapaController {
   GoogleMapaState getGoogleMapa() {
     return googleMapaState;
   }
-
 }

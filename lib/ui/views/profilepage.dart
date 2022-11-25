@@ -1,6 +1,5 @@
 import 'package:electricity_front/ui/components/default_header.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../core/controllers/user_controller.dart';
 import '../components/personal_ubi_preview.dart';
 
@@ -344,7 +343,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
   Widget listaPersonalUbi() {
-    if (userCtrl.currentUser.personalUbiBD.isEmpty){ return
+    if (userCtrl.currentUser.personalUbi.isEmpty){ return
       const Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
         child: Material (
@@ -360,7 +359,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: userCtrl.currentUser.personalUbiBD.length,
+        itemCount: userCtrl.currentUser.personalUbi.length,
         itemBuilder: (context, index) {
           return Dismissible(
             background: Container(
@@ -387,10 +386,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
             ),
-            key: ValueKey<Marker>(userCtrl.currentUser.personalUbi[index]),
-            onDismissed: (DismissDirection direction) {
+            key: UniqueKey(),
+            onDismissed: (DismissDirection direction) async {
+              await userCtrl.deletePersonalUbiEveryWhere(index);
               setState(() {
-                userCtrl.currentUser.deletePersonalUbi(index);
               });
             },
             child: Padding(
@@ -440,5 +439,9 @@ class _ProfilePageState extends State<ProfilePage> {
     await userCtrl.deleteUser();
     if (!mounted) return;
     userCtrl.logOut(context);
+  }
+
+  void delete(int index) async{
+    await userCtrl.deletePersonalUbiEveryWhere(index);
   }
 }
