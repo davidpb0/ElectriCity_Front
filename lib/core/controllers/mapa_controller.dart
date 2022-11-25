@@ -121,6 +121,7 @@ class MapaController {
         PointLatLng pointLatLng = PointLatLng(double.parse(res.body[i][0]), double.parse(res.body[i][1]));
         pointsList.add(pointLatLng);
       }
+      return pointsList;
     }
     else {
       throw Exception("Error in API request of creation of route painting");

@@ -6,6 +6,8 @@ import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 
+import 'mapa.dart';
+
 class RoutePage extends StatefulWidget implements PreferredSizeWidget {
   RoutePage({Key? key, required this.height})
       : preferredSize = Size.fromHeight(height),
@@ -125,10 +127,15 @@ class _RoutePageState extends State<RoutePage> {
                           .setMarker(newlatlang, "origin");
 
                       if (destination.isNotEmpty) {
-                        MapaController().routePainting(originToCoordinates, destinationToCoordinates);
-
-                        //GoogleMapaState googleMapa = MapaController().getGoogleMapa();
-                        //googleMapa.setPolylines(originToCoordinates, destinationToCoordinates);
+                        List<PointLatLng> points = MapaController().routePainting(originToCoordinates, destinationToCoordinates);
+                        GoogleMapaState googleMapa = MapaController().getGoogleMapa();
+                        googleMapa.setPolylines(originToCoordinates, PointLatLng(points[0].longitude, points[0].latitude), true);
+                        for (int i = 1; i < points.length; ++i) {
+                          googleMapa.setPolylines(PointLatLng(points[i-1].longitude, points[i-1].latitude),
+                              PointLatLng(points[i].longitude, points[i].latitude), false);
+                        }
+                        googleMapa.setPolylines(PointLatLng(points[points.length-1].longitude, points[points.length-1].latitude),
+                            destinationToCoordinates, false);
                       }
                     }
                   },
@@ -205,10 +212,15 @@ class _RoutePageState extends State<RoutePage> {
                           .setMarker(newlatlang, "destination");
 
                       if (origin.isNotEmpty) {
-                        MapaController().routePainting(originToCoordinates, destinationToCoordinates);
-
-                        //GoogleMapaState googleMapa = MapaController().getGoogleMapa();
-                        //googleMapa.setPolylines(originToCoordinates, destinationToCoordinates);
+                        List<PointLatLng> points = MapaController().routePainting(originToCoordinates, destinationToCoordinates);
+                        GoogleMapaState googleMapa = MapaController().getGoogleMapa();
+                        googleMapa.setPolylines(originToCoordinates, PointLatLng(points[0].longitude, points[0].latitude), true);
+                        for (int i = 1; i < points.length; ++i) {
+                          googleMapa.setPolylines(PointLatLng(points[i-1].longitude, points[i-1].latitude),
+                              PointLatLng(points[i].longitude, points[i].latitude), false);
+                        }
+                        googleMapa.setPolylines(PointLatLng(points[points.length-1].longitude, points[points.length-1].latitude),
+                            destinationToCoordinates, false);
                       }
                     }
                   },
