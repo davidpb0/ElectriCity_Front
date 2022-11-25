@@ -49,13 +49,13 @@ class MapaController {
         Response res = await _apiService.getData(
             'bicing_stations?page=$numPage');
         var body = json.decode(res.body);
-        print(res.statusCode.toString());
+        //print(res.statusCode.toString());
         if (res.statusCode == 200) {
           StationList estaciones = StationList.fromJson(body);
             bicingList.addAll(estaciones.getCoords());
             bicingStationList.addAll(estaciones.getBicingStations());
             //print("Estacions Bicing");
-            print(bicingList.length);
+            //print(bicingList.length);
             //print(bicingList.getRange(0, 10));
 
         } else {

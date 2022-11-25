@@ -13,15 +13,14 @@ class RechargePreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Padding(
+    return Padding(
         padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
           child: Container(
             alignment: Alignment.center,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white60,
-              borderRadius: const BorderRadius.all( Radius.circular(8)),
-              boxShadow: const [
+              borderRadius:  BorderRadius.all( Radius.circular(8)),
+              boxShadow:  [
                 BoxShadow(
                   offset: Offset(0, 2),
                   blurRadius: 1,
@@ -37,8 +36,8 @@ class RechargePreview extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(vertical: 8, horizontal:24),
                       decoration: ShapeDecoration(
                           color: Colors.green.shade800,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: const BorderRadius.only(
+                          shape: const RoundedRectangleBorder(
+                            borderRadius:  BorderRadius.only(
                                 bottomLeft: Radius.zero,
                                 topLeft:   Radius.circular(8),
                                 bottomRight: Radius.zero,
@@ -52,7 +51,7 @@ class RechargePreview extends StatelessWidget {
                           Expanded( child: Text(
                             info.address,
                             textAlign: TextAlign.left,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                             ),
@@ -61,7 +60,7 @@ class RechargePreview extends StatelessWidget {
                           Expanded( child: Text(
                             info.id.toString(),
                             textAlign: TextAlign.right,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -74,10 +73,10 @@ class RechargePreview extends StatelessWidget {
                     ),
                     Container(
                       padding: const EdgeInsets.symmetric(vertical: 8, horizontal:24),
-                      decoration: ShapeDecoration(
+                      decoration: const ShapeDecoration(
                         color: Colors.white,
                         shape: RoundedRectangleBorder(
-                          borderRadius: const BorderRadius.only(
+                          borderRadius:  BorderRadius.only(
                               bottomLeft: Radius.circular(8),
                               topLeft:   Radius.zero,
                               bottomRight: Radius.circular(8),
@@ -98,7 +97,7 @@ class RechargePreview extends StatelessWidget {
                                 child:Text(
                                   info.speedType.toString(),
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -110,9 +109,9 @@ class RechargePreview extends StatelessWidget {
                         ),
                         Row(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 6),
-                                child: const Icon(TestIcons.eCharger, size:20),
+                              const Padding(
+                                padding:  EdgeInsets.symmetric(vertical: 6),
+                                child:  Icon(TestIcons.eCharger, size:20),
 
                               ),
                               Expanded( child: Padding(
@@ -120,7 +119,7 @@ class RechargePreview extends StatelessWidget {
                                 child:Text(
                                   info.connectionType.toString(),
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -132,9 +131,9 @@ class RechargePreview extends StatelessWidget {
                       ),
                         Row(      // TEXT
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 6),
-                              child: const Icon(TestIcons.eCar, size:20),
+                            const Padding(
+                              padding:  EdgeInsets.symmetric(vertical: 6),
+                              child:  Icon(TestIcons.eCar, size:20),
 
                             ),
                             Expanded( child: Padding(
@@ -142,7 +141,7 @@ class RechargePreview extends StatelessWidget {
                                 child:Text(
                                   info.slots.toString(),
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
@@ -159,7 +158,7 @@ class RechargePreview extends StatelessWidget {
                 ),
             ),
           ),
-        ),
+
       );
   }
 }

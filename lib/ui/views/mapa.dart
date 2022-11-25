@@ -128,7 +128,7 @@ class GoogleMapaState extends State<GoogleMapa> {
               icon: chargerMarker,
               onTap: () {
                 setState(() {
-                  print(k.toString());
+                  //print(k.toString());
                   info = InfoChargeStationWindow(
                     slots: chargerStationList[k].slots,
                     addres: chargerStationList[k].address,

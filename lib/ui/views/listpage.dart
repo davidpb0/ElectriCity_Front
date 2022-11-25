@@ -32,7 +32,7 @@ class _ListPageState extends State<ListPage> {
     if (!listCtrl.chargersStarted) listCtrl.fetchFirstRechargeStations();
     if (!listCtrl.chargersComplete) listCtrl.streamRechargeStations();
 
-    Timer(Duration(seconds: 1), () => build(context));
+    Timer(const Duration(seconds: 1), () => build(context));
   }
 
   @override
@@ -51,9 +51,9 @@ class _ListPageState extends State<ListPage> {
             //icon eCar
             Builder(builder: (context) {
               if (bicing) {
-                return Icon(TestIcons.eCar, size: 20, color: Colors.grey);
+                return const Icon(TestIcons.eCar, size: 20, color: Colors.grey);
               }
-              return Icon(TestIcons.eCar, size: 20, color: Colors.green);
+              return const Icon(TestIcons.eCar, size: 20, color: Colors.green);
             }),
             Switch(
               // This bool value toggles the switch.
@@ -70,9 +70,9 @@ class _ListPageState extends State<ListPage> {
             ),
             Builder(builder: (context) {
               if (bicing) {
-                return Icon(TestIcons.bike, size: 20, color: Colors.blue);
+                return const Icon(TestIcons.bike, size: 20, color: Colors.blue);
               }
-              return Icon(TestIcons.bike, size: 20, color: Colors.grey);
+              return const Icon(TestIcons.bike, size: 20, color: Colors.grey);
             }),
           ]),
         ),
@@ -82,22 +82,21 @@ class _ListPageState extends State<ListPage> {
                 child: StreamBuilder(
                     stream: listCtrl.getBicingStationsStream(),
                     builder: (context, snapshot) {
-                      print('bicing connection:' +
-                          snapshot.connectionState.toString());
+                      //print('bicing connection:' + snapshot.connectionState.toString());
                       if (snapshot.hasError) {
-                        return Center(child: Text("Error"));
+                        return const Center(child: Text("Error"));
                       } else if (snapshot.connectionState ==
                               ConnectionState.none &&
                           !listCtrl.bicisStarted) {
-                        return Center(child: Text('Loading'));
+                        return const Center(child: Text('Loading'));
                       } else if (snapshot.connectionState ==
                               ConnectionState.waiting &&
                           !listCtrl.bicisStarted) {
-                        return Center(child: Text('Loading'));
+                        return const Center(child: Text('Loading'));
                       } else if (snapshot.connectionState ==
                               ConnectionState.active &&
                           !listCtrl.bicisStarted) {
-                        return Center(child: Text('Loading'));
+                        return const Center(child: Text('Loading'));
                       } else {
                         return ShaderMask(
                             shaderCallback: (Rect bounds) {
@@ -110,7 +109,7 @@ class _ListPageState extends State<ListPage> {
                                 Colors.transparent,
                                 Colors.grey.shade300
                               ],
-                              stops: [
+                              stops: const [
                                 0.0,
                                 0.05,
                                 0.95,
@@ -134,22 +133,21 @@ class _ListPageState extends State<ListPage> {
               child: StreamBuilder(
                   stream: listCtrl.getRechargeStationsStream(),
                   builder: (context, snapshot) {
-                    print('eCar connection:' +
-                        snapshot.connectionState.toString());
+                    // print('eCar connection:' + snapshot.connectionState.toString());
                     if (snapshot.hasError) {
-                      return Center(child: Text("Error"));
+                      return const Center(child: Text("Error"));
                     } else if (snapshot.connectionState ==
                             ConnectionState.none &&
                         !listCtrl.chargersStarted) {
-                      return Center(child: Text('Loading'));
+                      return const Center(child: Text('Loading'));
                     } else if (snapshot.connectionState ==
                             ConnectionState.waiting &&
                         !listCtrl.chargersStarted) {
-                      return Center(child: Text('Loading'));
+                      return const Center(child: Text('Loading'));
                     } else if (snapshot.connectionState ==
                             ConnectionState.active &&
                         !listCtrl.chargersStarted) {
-                      return Center(child: Text('Loading'));
+                      return const Center(child: Text('Loading'));
                     } else {
                       // WHILE THE CALL IS BEING MADE AKA LOADING
                       return ShaderMask(
@@ -163,7 +161,7 @@ class _ListPageState extends State<ListPage> {
                                   Colors.transparent,
                                   Colors.grey.shade300
                                 ],
-                                stops: [
+                                stops: const [
                                   0.0,
                                   0.05,
                                   0.95,

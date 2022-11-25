@@ -16,8 +16,8 @@ class SignupPage extends StatefulWidget{
 class _SignupPageState extends State<SignupPage> {
   TextEditingController usernameTextController = TextEditingController();
   TextEditingController emailTextController = TextEditingController();
-  TextEditingController _passwdTextController = TextEditingController();
-  TextEditingController _passwdValidTextController = TextEditingController();
+  final TextEditingController _passwdTextController = TextEditingController();
+  final TextEditingController _passwdValidTextController = TextEditingController();
   SignupController signupCtrl = SignupController();
   UserController userCtrl = UserController();
   final _formKey = GlobalKey<FormState>();
@@ -44,7 +44,7 @@ class _SignupPageState extends State<SignupPage> {
                     onPressed:() {
                       Navigator.of(context).pushReplacementNamed('/login');
                     },
-                    icon: Icon(
+                    icon: const Icon(
                         Icons.arrow_back,
                         size: 24,
                         color: Colors.white,
@@ -59,7 +59,7 @@ class _SignupPageState extends State<SignupPage> {
                   shrinkWrap: true,
                   children: <Widget>[
 
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     //Username textfield
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -76,10 +76,10 @@ class _SignupPageState extends State<SignupPage> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.only(left: 5.0),
+                          padding: const EdgeInsets.only(left: 5.0),
                           child: TextFormField(
                             controller: usernameTextController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               prefixIcon: Icon(Icons.account_circle),
                               border: InputBorder.none,
                               hintText: 'Username',
@@ -88,8 +88,9 @@ class _SignupPageState extends State<SignupPage> {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter some text';
                               }
-                              if (signupCtrl.usernameError() != '')
+                              if (signupCtrl.usernameError() != '') {
                                 return signupCtrl.usernameError();
+                              }
                               return null;
                             },
                           ),
@@ -97,7 +98,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
 
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     //Email textfield
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -114,10 +115,10 @@ class _SignupPageState extends State<SignupPage> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.only(left: 5.0),
+                          padding: const EdgeInsets.only(left: 5.0),
                           child: TextFormField(
                             controller: emailTextController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               prefixIcon: Icon(Icons.email),
                               border: InputBorder.none,
                               hintText: 'Email',
@@ -126,8 +127,9 @@ class _SignupPageState extends State<SignupPage> {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter some text';
                               }
-                              if (signupCtrl.emailError() != '')
+                              if (signupCtrl.emailError() != '') {
                                 return signupCtrl.emailError();
+                              }
                               return null;
                             },
                           ),
@@ -136,7 +138,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
 
                     //Password textfield
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Container(
@@ -152,11 +154,11 @@ class _SignupPageState extends State<SignupPage> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.only(left: 5.0),
+                          padding: const EdgeInsets.only(left: 5.0),
                           child: TextFormField(
                             controller: _passwdTextController,
                             obscureText: true,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               prefixIcon: Icon(Icons.lock),
                               border: InputBorder.none,
                               hintText: 'Password',
@@ -166,8 +168,9 @@ class _SignupPageState extends State<SignupPage> {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter some text';
                               }
-                              if (signupCtrl.pwdError() != '') return signupCtrl
-                                  .pwdError();
+                              if (signupCtrl.pwdError() != '') {
+                                return signupCtrl.pwdError();
+                              }
                               return null;
                             },
                           ),
@@ -176,7 +179,7 @@ class _SignupPageState extends State<SignupPage> {
                     ),
 
                     //Repeat password textfield
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 25.0),
                       child: Container(
@@ -192,7 +195,7 @@ class _SignupPageState extends State<SignupPage> {
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.only(left: 5.0),
+                          padding: const EdgeInsets.only(left: 5.0),
                           child: TextFormField(
                             controller: _passwdValidTextController,
                             obscureText: true,
@@ -206,8 +209,9 @@ class _SignupPageState extends State<SignupPage> {
                               if (value == null || value.isEmpty) {
                                 return 'Please enter some text';
                               }
-                              if (signupCtrl.pwdError() != '') return signupCtrl
-                                  .pwdError();
+                              if (signupCtrl.pwdError() != '') {
+                                return signupCtrl.pwdError();
+                              }
                               return null;
                             },
                           ),
@@ -215,7 +219,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
 
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
 
                     //Create account Button
                     SizedBox(
@@ -243,7 +247,7 @@ class _SignupPageState extends State<SignupPage> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 0.0),
                           child: Container(
-                            padding: EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             decoration: BoxDecoration(
                               boxShadow: const [
                                 BoxShadow(
