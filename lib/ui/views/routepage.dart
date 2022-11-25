@@ -27,7 +27,9 @@ class _RoutePageState extends State<RoutePage> {
   CameraPosition? cameraPosition;
   String origin = "Search Origin";
   String destination = "Search Destination";
+  // ignore: prefer_typing_uninitialized_variables
   late var originToCoordinates;
+  // ignore: prefer_typing_uninitialized_variables
   late var destinationToCoordinates;
 
   TextStyle style = const TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
@@ -96,7 +98,7 @@ class _RoutePageState extends State<RoutePage> {
                         components: [Component(Component.country, 'es')],
                         //google_map_webservice package
                         onError: (err) {
-                          print(err);
+                          Text(err.toString());
                         });
 
                     if (place != null) {
@@ -127,14 +129,14 @@ class _RoutePageState extends State<RoutePage> {
                           .setMarker(newlatlang, "origin");
 
                       if (destination.isNotEmpty) {
-                        List<PointLatLng> points = MapaController().routePainting(originToCoordinates, destinationToCoordinates);
+                        List<PointLatLng> points = await MapaController().routePainting(originToCoordinates, destinationToCoordinates);
                         GoogleMapaState googleMapa = MapaController().getGoogleMapa();
-                        googleMapa.setPolylines(originToCoordinates, PointLatLng(points[0].longitude, points[0].latitude), true);
+                        googleMapa.setPolylines(originToCoordinates, PointLatLng(points[0].latitude, points[0].longitude), true);
                         for (int i = 1; i < points.length; ++i) {
-                          googleMapa.setPolylines(PointLatLng(points[i-1].longitude, points[i-1].latitude),
-                              PointLatLng(points[i].longitude, points[i].latitude), false);
+                          googleMapa.setPolylines(PointLatLng(points[i-1].latitude, points[i-1].longitude),
+                              PointLatLng(points[i].latitude, points[i].longitude), false);
                         }
-                        googleMapa.setPolylines(PointLatLng(points[points.length-1].longitude, points[points.length-1].latitude),
+                        googleMapa.setPolylines(PointLatLng(points[points.length-1].latitude, points[points.length-1].longitude),
                             destinationToCoordinates, false);
                       }
                     }
@@ -182,7 +184,7 @@ class _RoutePageState extends State<RoutePage> {
                         components: [Component(Component.country, 'es')],
                         //google_map_webservice package
                         onError: (err) {
-                          print(err);
+                          Text(err.toString());
                         });
 
                     if (place != null) {
@@ -212,14 +214,19 @@ class _RoutePageState extends State<RoutePage> {
                           .setMarker(newlatlang, "destination");
 
                       if (origin.isNotEmpty) {
-                        List<PointLatLng> points = MapaController().routePainting(originToCoordinates, destinationToCoordinates);
+                        List<PointLatLng> points = await MapaController().routePainting(originToCoordinates, destinationToCoordinates);
+
                         GoogleMapaState googleMapa = MapaController().getGoogleMapa();
-                        googleMapa.setPolylines(originToCoordinates, PointLatLng(points[0].longitude, points[0].latitude), true);
+
+
+                        googleMapa.setPolylines(originToCoordinates, PointLatLng(points[0].latitude, points[0].longitude), true);
+
                         for (int i = 1; i < points.length; ++i) {
-                          googleMapa.setPolylines(PointLatLng(points[i-1].longitude, points[i-1].latitude),
-                              PointLatLng(points[i].longitude, points[i].latitude), false);
+
+                          googleMapa.setPolylines(PointLatLng(points[i-1].latitude, points[i-1].longitude),
+                              PointLatLng(points[i].latitude, points[i].longitude), false);
                         }
-                        googleMapa.setPolylines(PointLatLng(points[points.length-1].longitude, points[points.length-1].latitude),
+                        googleMapa.setPolylines(PointLatLng(points[points.length-1].latitude, points[points.length-1].longitude),
                             destinationToCoordinates, false);
                       }
                     }

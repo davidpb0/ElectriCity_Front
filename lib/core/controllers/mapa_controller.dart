@@ -114,17 +114,20 @@ class MapaController {
       "numStations": 1
     };
     
-    Response res = await _apiService.routePainting(data, 'http://localhost/route/station');
+    Response res = await _apiService.routePainting(data, 'https://localhost/route/station');
     if (res.statusCode == 200) {
+      print(res.body.length.toString());
+      var body = jsonDecode(res.body);
+      print(body.length.toString());
       List<PointLatLng> pointsList = <PointLatLng>[];
-      for (int i = 0; i < res.body.length; ++i) {
-        PointLatLng pointLatLng = PointLatLng(double.parse(res.body[i][0]), double.parse(res.body[i][1]));
+      for (int i = 0; i < body.length; ++i) {
+        PointLatLng pointLatLng = PointLatLng(body[i]['latitude'], body[i]['longitude']);
         pointsList.add(pointLatLng);
       }
       return pointsList;
     }
     else {
-      throw Exception("Error in API request of creation of route painting");
+      throw Exception("Error in API request of creation of route painting, StatudCode: ${res.statusCode}");
     }
 
   }
