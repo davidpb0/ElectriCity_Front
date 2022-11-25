@@ -11,17 +11,16 @@ class ApiService {
   }
 
   factory ApiService(){
-    if (_this == null) _this = ApiService._();
     return _this;
   }
 
-  static ApiService _this = ApiService._();
+  static final ApiService _this = ApiService._();
   ApiService._();
 
 
   postData(data, apiUrl) async {
     var fullUrl=_url+apiUrl;
-    print(fullUrl);
+    //print(fullUrl);
 
     return await http.post(
       Uri.parse(fullUrl),
@@ -40,7 +39,7 @@ class ApiService {
 
   login(data, apiUrl) async {
     var fullUrl=_url+apiUrl;
-    print(fullUrl);
+    //print(fullUrl);
 
     return await http.post(
       Uri.parse(fullUrl),
@@ -77,17 +76,17 @@ class ApiService {
       );
       if(response.statusCode == 200){
 
-        var data = jsonDecode(response.body.toString());
-        print(data);
-        print('Ok');
+        //var data = jsonDecode(response.body.toString());
+        //print(data);
+        //print('Ok');
       }
       else{
-        print('Error');
+        //print('Error');
       }
 
     }
     catch(e){
-      print(e.toString());
+      //print(e.toString());
 
     }
   }

@@ -49,11 +49,15 @@ class _ProfilePageState extends State<ProfilePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Text(userCtrl.currentUser.username,
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold)),
+                          Material(
+                            color: Colors.transparent,
+                            child:Text(userCtrl.currentUser.username,
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold)),
+
+                          ),
                           const SizedBox(width: 20),
                           const Icon(Icons.account_circle, size: 60, color: Colors.white)
                         ],
@@ -314,22 +318,28 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         ),
-        DefaultHeader(
-        size: Size(screensize.width, (screensize.height * 0.15))),
+          Material(
+            color: Colors.transparent,
+            child:DefaultHeader(
+                size: Size(screensize.width, (screensize.height * 0.15))),
+          )
+
       ]
       ),
     );
   }
 
   Widget listaFavStations() {
-    return
-      const Padding(
+    return const Material (
+        color: Colors.transparent,
+        child:Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Text(
             "No favourite stations found",
             style: TextStyle(fontSize: 20, ),
             textAlign: TextAlign.center,
           )
+        )
       );
     }
 
@@ -337,10 +347,13 @@ class _ProfilePageState extends State<ProfilePage> {
     if (userCtrl.currentUser.personalUbiBD.isEmpty){ return
       const Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
-        child: Text(
-          "No personal locations found",
-          style: TextStyle(fontSize: 20, ),
-          textAlign: TextAlign.center,
+        child: Material (
+          color: Colors.transparent,
+          child:Text(
+            "No personal locations found",
+            style: TextStyle(fontSize: 20),
+            textAlign: TextAlign.center,
+          )
         )
       );
     }
