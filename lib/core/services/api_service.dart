@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
 class ApiService {
-  final String _url = "https://localhost/";
+  final String _url = "https://google.electricityupcfib.es/";
   String token = "";
 
   setToken(String tkn) {

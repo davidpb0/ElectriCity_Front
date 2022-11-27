@@ -84,7 +84,7 @@ class MapaController {
   }
 
   personalUbi(String tit, String? desc, BuildContext context) async {
-    String urlPrueba = "https://localhost/users/" +
+    String urlPrueba = "https://google.electricityupcfib.es/users/" +
         UserController().currentUser.getUserId().toString() +
         "/locations";
     var data = {

@@ -70,7 +70,7 @@ void logOut(BuildContext ctxt) {
     print(currentUser.getUserId());
     Marker location = currentUser.personalUbi.elementAt(index);
 
-    String urlTemp = "https://localhost/users/"+ currentUser.getUserId().toString()+"/locations/"+(int.parse(location.markerId.value)-3000).toString();
+    String urlTemp = "https://google.electricityupcfib.es/users/"+ currentUser.getUserId().toString()+"/locations/"+(int.parse(location.markerId.value)-3000).toString();
     Response res = await ApiService().deletePersonalUbi(urlTemp);
     if(res.statusCode == 201) currentUser.deletePersonalUbi(index);
 
