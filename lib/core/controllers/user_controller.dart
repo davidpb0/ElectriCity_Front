@@ -1,4 +1,4 @@
-
+import 'dart:io';
 import 'package:electricity_front/core/controllers/login_controller.dart';
 import 'package:electricity_front/core/services/api_service.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,6 +10,7 @@ class UserController {
 
 
   late User currentUser = User();
+  late BitmapDescriptor personalMarker;
 
   factory UserController(){
     return _this;
@@ -22,11 +23,24 @@ class UserController {
 
   startSession(String mail, String pwd, BuildContext ctext) async {
     try {
+      setCustomMarker();
       currentUser = await LoginController().logIn(mail, pwd, ctext);
       ApiService().setToken(currentUser.token);
       //print("El token es:" + currentUser.token);
     } catch (e) {
-      Container();
+      Exception("Error en iniciar la sesion");
+    }
+  }
+
+  void setCustomMarker() async {
+    if (Platform.isIOS) {
+      personalMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/homepin_ios.png');
+    } else {
+      personalMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/homepin.png');
     }
   }
 
