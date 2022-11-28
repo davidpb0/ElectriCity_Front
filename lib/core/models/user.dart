@@ -6,7 +6,7 @@ class User {
   String username = "";
   String token = "";
   String email = "";
-  int id = 0;
+  int _id = 0;
   List<int> testlist = [1,2,3,4,5];
 
   String tokenGoogle =
@@ -16,13 +16,14 @@ class User {
 
   User.fromJson(dynamic json) {
     username = json['email'];
-    token = json['apiTokensValues'].last;
-    id = json['id'];
+    token = json['apiTokens'].last['token'];
+    _id = json['id'];
     email = json['email'];
+
   }
 
   Map toJson() {
-    return {'email': email, 'id' : id };
+    return {'email': email, 'id' : _id };
   }
 
   getUserTkn() {
@@ -30,7 +31,7 @@ class User {
   }
 
   getUserId() {
-    return id;
+    return _id;
   }
 
   deletePersonalUbi(int index){
