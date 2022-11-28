@@ -165,7 +165,7 @@ class GoogleMapaState extends State<GoogleMapa> {
           polylines: _polylines,
           onLongPress: (latlang) async {
             _mapaController.coords = latlang;
-            _mapaController.personalMarker = await personalMarker;
+            _mapaController.personalMarker = personalMarker;
             // ignore: use_build_context_synchronously
             Navigator.of(context).pushReplacementNamed('/form_ubi');
           },

@@ -191,7 +191,7 @@ class _SignupPageState extends State<SignupPage> {
                           controller: _passwdValidTextController,
                           obscureText: true,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                             border: InputBorder.none,
                             hintText: 'Repeat password',
                             errorText: signupCtrl.pwdError(),
