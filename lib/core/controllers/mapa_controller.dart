@@ -114,7 +114,7 @@ class MapaController {
       "numStations": 1
     };
     
-    Response res = await _apiService.routePainting(data, 'https://localhost/route/station');
+    Response res = await _apiService.routePainting(data, 'route/station');
     if (res.statusCode == 200) {
       print(res.body.length.toString());
       var body = jsonDecode(res.body);

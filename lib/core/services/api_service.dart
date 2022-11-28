@@ -66,9 +66,10 @@ class ApiService {
     );
   }
 
-  routePainting(data, apiURl) async {
+  routePainting(data, apiUrl) async {
+    var fullUrl=_url+apiUrl;
     return await http.post(
-        Uri.parse(apiURl),
+        Uri.parse(fullUrl),
         body: jsonEncode(data),
         headers:{"Content-type":"application/json",
         "Accept":"application/json",

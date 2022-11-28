@@ -128,7 +128,7 @@ class GoogleMapaState extends State<GoogleMapa> {
           _markers.add(
             Marker(
               markerId:
-              MarkerId("id-${k + 502}"),
+              MarkerId("id-${k + 601}"),
               position: chargerStationList[k].coords,
               icon: chargerMarker,
               onTap: () {
