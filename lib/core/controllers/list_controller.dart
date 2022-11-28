@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:electricity_front/core/models/recharge_station.dart';
-import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 import '../models/StationList.dart';
 import 'package:http/http.dart';
 
@@ -16,16 +15,19 @@ class ListController {
   bool bici = true;
   bool bicisStarted = false;
   bool chargersStarted = false;
+  bool bicisComplete = false;
+  bool chargersComplete = false;
+  int bicisIterator = 2;
+  int chargersIterator = 2;
 
   StreamController<List<RechargeStation>> rechargeStationStreamController = StreamController<List<RechargeStation>>.broadcast();
   StreamController<List<Station>> bicingStationStreamController = StreamController<List<Station>>.broadcast();
 
   factory ListController(){
-    if (_this == null) _this = ListController._();
     return _this;
   }
 
-  static ListController _this = ListController._();
+  static final ListController _this = ListController._();
 
   ListController._();
 
@@ -44,7 +46,7 @@ class ListController {
     Response res = await _apiService.getData('bicing_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
-      print('first bicing stations recieved');
+      //print('first bicing stations recieved');
       StationList estaciones = StationList.fromJson(body);
       _bicinglist = estaciones.getBicingStations();
       bicisStarted = true;
@@ -57,7 +59,7 @@ class ListController {
     Response res = await _apiService.getData('recharge_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
-      print('first recharge stations recieved');
+      //print('first recharge stations recieved');
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
       chargersStarted = true;
@@ -67,21 +69,19 @@ class ListController {
   }
 
   void streamBicingStations() async {
-    int i = 2;
-    bool done = false;
-    while(!done) {
-      Response res = await _apiService.getData('bicing_stations?page=$i');
+    while(!bicisComplete) {
+      Response res = await _apiService.getData('bicing_stations?page=$bicisIterator');
       var body = json.decode(res.body);
-      print('bicing iteration ' + i.toString() + res.statusCode.toString());
+      //print('bicing iteration ' + bicisIterator.toString() + res.statusCode.toString());
       if (res.statusCode == 200) {
         StationList estaciones = StationList.fromJson(body);
-        if(estaciones.listMember.length == 0){
-          done = true;
+        if(estaciones.listMember.isEmpty){
+          bicisComplete = true;
         }
         else {
           bicingStationStreamController.add(estaciones.listMember);
           _bicinglist.addAll(estaciones.listMember);
-          i++;
+          bicisIterator++;
         }
       } else {
         throw Exception('Algo falló');
@@ -91,21 +91,19 @@ class ListController {
   }
 
   void streamRechargeStations() async {
-    int i = 2;
-    bool done = false;
-    while(!done) {
-      Response res = await _apiService.getData('recharge_stations?page=$i');
+    while(!chargersComplete) {
+      Response res = await _apiService.getData('recharge_stations?page=$chargersIterator');
       var body = json.decode(res.body);
-      print('recharge iteration ' + i.toString() + res.statusCode.toString());
+      //print('recharge iteration $chargersIterator${res.statusCode}');
       if (res.statusCode == 200) {
         RechargeStationList estaciones = RechargeStationList.fromJson(body);
-        if(estaciones.chargeStation.length == 0){
-          done = true;
+        if(estaciones.chargeStation.isEmpty){
+          chargersComplete = true;
         }
         else {
           rechargeStationStreamController.add(estaciones.chargeStation);
           _rechargelist.addAll(estaciones.chargeStation);
-          i++;
+          chargersIterator++;
         }
       } else {
         throw Exception('Algo falló');
@@ -135,16 +133,19 @@ class ListController {
   }
 
   int getTotalBicingStations(){
-    print("bicis:" + _bicinglist.length.toString());
+    //print("bicis:${_bicinglist.length}");
+    if (!bicisStarted) return 0;
     return _bicinglist.length;
   }
 
   int getTotalRechargeStations(){
-    print("eCar:" + _rechargelist.length.toString());
+    //print("eCar:" + _rechargelist.length.toString());
+    if (!chargersStarted) return 0;
     return _rechargelist.length;
   }
 
   Station getBicingStation(int index){
+
     return _bicinglist.elementAt(index);
   }
 

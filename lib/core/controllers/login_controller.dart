@@ -27,9 +27,9 @@ class LoginController {
 
     Response res = await _apiService.login(data, 'login');
     var body = json.decode(res.body);
-    print(res.statusCode.toString());
+    //print(res.statusCode.toString());
     if (res.statusCode == 201) {
-      print(body.toString());
+      //print(body.toString());
       Navigator.of(ctext).pushReplacementNamed('/home');
       return User.fromJson(body);
     }
@@ -45,7 +45,7 @@ class LoginController {
 
     // set up the button
     Widget okButton = TextButton(
-      child: Text("OK"),
+      child: const Text("OK"),
       onPressed: () {
         Navigator.of(context).pushReplacementNamed('/login');
       },
@@ -53,7 +53,7 @@ class LoginController {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("User Error"),
+      title: const Text("User Error"),
       content: const Text("The email or the password introduced were incorrect"),
       actions: [
         okButton,

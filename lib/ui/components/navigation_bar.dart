@@ -14,10 +14,10 @@ class BottomBar extends StatefulWidget {
 
 class BottomBarState extends State<BottomBar> {
   static final List<Widget> _widgetOptions = <Widget>[
-    GoogleMapa(),
+    const GoogleMapa(),
     const ListPage(),
     InfoPersonalUbiForm(),
-    ProfilePage(),
+    const ProfilePage(),
     //ProfilePage()
   ];
   var _selectedIndex = 0;

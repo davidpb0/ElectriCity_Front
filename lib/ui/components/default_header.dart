@@ -28,7 +28,7 @@ class DefaultHeader extends StatelessWidget implements PreferredSizeWidget{
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 child: Text(
                   "ElectriCity",
@@ -41,7 +41,7 @@ class DefaultHeader extends StatelessWidget implements PreferredSizeWidget{
               ),
 
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: Image.asset(
                   'assets/images/title_logo_car.png',
                   fit: BoxFit.contain,
