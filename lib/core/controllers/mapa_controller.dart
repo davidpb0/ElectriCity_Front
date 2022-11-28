@@ -84,7 +84,6 @@ class MapaController {
       "description": desc
     };
     Response res = await ApiService().postPersonalUbi(data, urlPrueba);
-    print(UserController().currentUser.getUserId().toString());
     var body = jsonDecode(res.body);
     if (res.statusCode == 201) {
       Marker marker = Marker(
@@ -99,7 +98,6 @@ class MapaController {
       );
       UserController().currentUser.personalUbi.add(marker);
       UserController().currentUser.personalUbiBD.add(coords);
-      print(res.statusCode.toString());
       Navigator.of(context).pushReplacementNamed('/home');
     }
   }
@@ -115,9 +113,7 @@ class MapaController {
 
     Response res = await _apiService.routePainting(data, 'route/station');
     if (res.statusCode == 200) {
-      print(res.body.length.toString());
       var body = jsonDecode(res.body);
-      print(body.length.toString());
       List<PointLatLng> pointsList = <PointLatLng>[];
       for (int i = 0; i < body.length; ++i) {
         PointLatLng pointLatLng =

@@ -135,7 +135,6 @@ class _ListPageState extends State<ListPage> {
               child: StreamBuilder(
                   stream: listCtrl.getRechargeStationsStream(),
                   builder: (context, snapshot) {
-                    // print('eCar connection:' + snapshot.connectionState.toString());
                     if (snapshot.hasError) {
                       return const Center(child: Text("Error"));
                     } else if (snapshot.connectionState ==

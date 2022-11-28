@@ -60,7 +60,6 @@ class UserController {
   }
 
   deletePersonalUbiEveryWhere(int index) async {
-    print(currentUser.getUserId());
     Marker location = currentUser.personalUbi.elementAt(index);
 
     String urlTemp = "users/${currentUser.getUserId()}/locations/${int.parse(location.markerId.value) - 3000}";
