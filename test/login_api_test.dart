@@ -1,9 +1,6 @@
-
-import 'package:electricity_front/core/services/api_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
-
 
 class MockHttp extends Mock implements http.Client {}
 
@@ -11,10 +8,8 @@ class MockResponse extends Mock implements http.Response {}
 
 class FakeUri extends Fake implements Uri {}
 
-
-void main(){
-  
-    /*late ApiService apiService;
+void main() {
+  /*late ApiService apiService;
     late MockHttp httpClient;
 
     setUpAll(() {
@@ -28,7 +23,7 @@ void main(){
 
   test(
       'make correct http request with wrong password,'
-          ' throw [ErrorEmptyResponse]', () async {
+      ' throw [ErrorEmptyResponse]', () async {
     expect(1, 1);
     /*final response = MockResponse();
 
@@ -40,8 +35,5 @@ void main(){
     } catch (error) {
       expect(error, 'Error con el usuario');
     }*/
-
   });
-
 }
-

@@ -2,30 +2,28 @@ import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
 import '../components/header_login_component.dart';
 
-class LoginPage extends StatefulWidget{
+class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
-
 }
 
 class _LoginPageState extends State<LoginPage> {
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.green,
-      ),
-      body: Body()
-    );
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.grey[300],
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.green,
+        ),
+        body: Body());
   }
 }
 
-class Body extends StatelessWidget{
+class Body extends StatelessWidget {
   final TextEditingController emailTextController = TextEditingController();
   final TextEditingController _passwdTextController = TextEditingController();
   final UserController userCtrl = UserController();
@@ -33,7 +31,7 @@ class Body extends StatelessWidget{
   Body({super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     //Da la altura y el ancho total de la pantalla
     Size size = MediaQuery.of(context).size;
     return Column(
@@ -64,7 +62,6 @@ class Body extends StatelessWidget{
                   prefixIcon: Icon(Icons.email),
                   border: InputBorder.none,
                   hintText: 'Email',
-
                 ),
               ),
             ),
@@ -111,56 +108,50 @@ class Body extends StatelessWidget{
             Text(
               ' Click here',
               style: TextStyle(
-                  color: Colors.indigoAccent,
-                  fontWeight: FontWeight.bold
-              ),
+                  color: Colors.indigoAccent, fontWeight: FontWeight.bold),
             )
-
           ],
         ),
-        const SizedBox(height: 50),
-
-
+        //const SizedBox(height: 50),
 
         //SigIn Botton
         SizedBox(
           height: 80,
           width: 200,
           child: TextButton(
-            onPressed: (){
+            onPressed: () {
               //CAMBIO A MAPA FAST (SIN API)
-              userCtrl.startSession(emailTextController.text, _passwdTextController.text, context);
+              userCtrl.startSession(emailTextController.text,
+                  _passwdTextController.text, context);
             },
-
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 0.0),
               child: Container(
                 padding: const EdgeInsets.all(10),
-                decoration:  BoxDecoration(
+                decoration: BoxDecoration(
                   boxShadow: const [
                     BoxShadow(
                       offset: Offset(0, 2),
                       blurRadius: 5,
                     ),
                   ],
-                  color:  Colors.green,
+                  color: Colors.green,
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: const Center(
                     child: Text(
-                        'Sign In',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                    )
-                ),
+                  'Sign In',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                )),
               ),
             ),
           ),
         ),
-        const SizedBox(height: 30),
+        //const SizedBox(height: 30),
 
         //Sign with
         const Text('Sign with:'),
@@ -170,8 +161,8 @@ class Body extends StatelessWidget{
           width: 100,
           height: 100,
           child: TextButton(
-              onPressed: (){
-                Navigator.of(context).pushReplacementNamed('/list');
+              onPressed: () {
+                //Navigator.of(context).pushReplacementNamed('/home');
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -187,9 +178,7 @@ class Body extends StatelessWidget{
                     color: Color(0xFFEEEEEE),
                   ),
                   child: Center(
-                      child: Image.asset('assets/images/googleIcon.png')
-                  ),
-
+                      child: Image.asset('assets/images/googleIcon.png')),
                 ),
               )
           ),
@@ -203,23 +192,20 @@ class Body extends StatelessWidget{
             const Text('Not a member?'),
             SizedBox(
               child: TextButton(
-                onPressed:(){
+                onPressed: () {
                   Navigator.of(context).pushReplacementNamed('/signup');
                 },
                 child: const Text('Sign up',
-                  style: TextStyle(
-                  color: Colors.indigoAccent,
-                  fontWeight: FontWeight.bold
-                  )
+                    style: TextStyle(
+                        color: Colors.indigoAccent,
+                        fontWeight: FontWeight.bold
+                    )
                 ),
               ),
             )
           ],
         ),
-
-
       ],
     );
   }
 }
-

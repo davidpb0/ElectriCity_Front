@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 
 import '../../fonts/test_icons_icons.dart';
 
+// ignore: must_be_immutable
 class InfoChargeStationWindow extends StatelessWidget {
-  const InfoChargeStationWindow(
+  InfoChargeStationWindow(
       {super.key,
       required this.slots,
       required this.addres,
       required this.connectionType});
 
   final int? slots;
-  final String addres, connectionType;
+  final String addres;
+  String? connectionType;
 
   @override
   Widget build(BuildContext context) {
@@ -19,22 +21,22 @@ class InfoChargeStationWindow extends StatelessWidget {
       child: Container(
         height: 150,
         decoration: BoxDecoration(
-            boxShadow: const [
-              BoxShadow(
-                offset: Offset(0, 2),
-                blurRadius: 1,
-              )
-            ],
-            border: Border.all(color: Colors.white),
-            borderRadius: BorderRadius.circular(12),
-            color: Colors.white),
+          boxShadow: const [
+            BoxShadow(
+              offset: Offset(0, 2),
+              blurRadius: 1,
+            )
+          ],
+          border: Border.all(color: Colors.white),
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.white),
         child: Column(children: [
           Container(
             decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12),
-                    topRight: Radius.circular(12)),
-                color: Colors.green),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12)),
+              color: Colors.green),
             width: MediaQuery.of(context).size.width,
             child: Text(
               addres,
@@ -53,25 +55,26 @@ class InfoChargeStationWindow extends StatelessWidget {
                   Row(
                     children: [
                       const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          child: Icon(TestIcons.eCar, size: 20)),
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          child: Icon(TestIcons.eCar, size: 20)
+                      ),
                       const Text("Tipus de connexió: "),
-                      Text(connectionType)
+                      Text(connectionType.toString())
                     ],
                   ),
                   Row(
                     children: [
                       const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          child: Icon(TestIcons.eCharger, size: 20)),
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          child: Icon(TestIcons.eCharger, size: 20)
+                      ),
                       const Text("Espais disponibles: "),
                       Text(slots.toString())
                     ],
                   )
                 ],
-              )),
+              )
+          ),
         ]),
       ),
     );

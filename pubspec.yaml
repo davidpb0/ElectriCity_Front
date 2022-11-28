@@ -42,6 +42,12 @@ dependencies:
   google_maps_flutter: ^2.2.1
   google_maps_flutter_web: ^0.4.0+3
   custom_info_window:
+  flutter_polyline_points:
+  flutter_google_places_hoc081098: ^1.0.0-nullsafety.5
+  google_api_headers: ^1.1.1
+  google_maps_webservice: ^0.0.20-nullsafety.5
+  geolocator: ^8.0.1
+
 
 dev_dependencies:
   flutter_test:
@@ -72,9 +78,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
 
-     - assets/animations/
-     - assets/images/
-     - assets/icons/
+    - assets/animations/
+    - assets/images/
 
   #  - images/a_dot_ham.jpeg
 

@@ -1,12 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.electricity_front">
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+
    <application
         android:label="electricity_front"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher">
        <meta-data android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyB4OEbG_kVJrlxbpDESN1EDr8N4SxYf_Bw"/>
+           android:value="AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

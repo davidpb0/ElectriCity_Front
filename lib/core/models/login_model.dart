@@ -5,6 +5,5 @@ class LoginResponseModel {
   void setStatus(int code) {
     _statusCode = code;
     success = (_statusCode == 200);
-
   }
 }

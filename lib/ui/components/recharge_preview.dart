@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../core/models/StationList.dart';
+import '../../core/models/recharge_station.dart';
 import '../../fonts/test_icons_icons.dart';
 
-class ListItemComponent extends StatelessWidget {
-  final Station info;
+class RechargePreview extends StatelessWidget {
+  final RechargeStation info;
 
-  const ListItemComponent({
+  const RechargePreview({
     Key? key,
     required this.info,
   }) : super(key: key);
@@ -34,9 +34,9 @@ class ListItemComponent extends StatelessWidget {
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-                decoration: const ShapeDecoration(
-                  color: Colors.blueGrey,
-                  shape: RoundedRectangleBorder(
+                decoration: ShapeDecoration(
+                  color: Colors.green.shade800,
+                  shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.zero,
                         topLeft: Radius.circular(8),
@@ -88,17 +88,19 @@ class ListItemComponent extends StatelessWidget {
                       children: [
                         const Padding(
                           padding: EdgeInsets.symmetric(vertical: 6),
-                          child: Icon(TestIcons.bike, size: 20),
+                          child: Icon(TestIcons.speedType, size: 20),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: Text(
-                            info.mechanical.toString(),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Text(
+                              info.speedType.toString(),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
@@ -107,17 +109,19 @@ class ListItemComponent extends StatelessWidget {
                     Row(children: [
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 6),
-                        child: Icon(TestIcons.ebike, size: 20),
+                        child: Icon(TestIcons.eCharger, size: 20),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: Text(
-                          info.electrical.toString(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Text(
+                            info.connectionType.toString(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
@@ -126,17 +130,19 @@ class ListItemComponent extends StatelessWidget {
                         children: [
                       const Padding(
                         padding: EdgeInsets.symmetric(vertical: 6),
-                        child: Icon(TestIcons.bicingParking, size: 20),
+                        child: Icon(TestIcons.eCar, size: 20),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: Text(
-                          info.availableSlots.toString(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(6),
+                          child: Text(
+                            info.slots.toString(),
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),

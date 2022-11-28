@@ -1,4 +1,3 @@
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class StationList {
@@ -17,12 +16,8 @@ class StationList {
       });
     }
     totalItems = json['hydra:totalItems'];
-    hydraView = json['hydra:view'] != null
-        ? HydraView.fromJson(json['hydra:view'])
-        : null;
-    hydraSearch = json['hydra:search'] != null
-        ? HydraSearch.fromJson(json['hydra:search'])
-        : null;
+    hydraView = json['hydra:view'] != null ? HydraView.fromJson(json['hydra:view']) : null;
+    hydraSearch = json['hydra:search'] != null ? HydraSearch.fromJson(json['hydra:search']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -39,14 +34,14 @@ class StationList {
   }
 
   List<LatLng> getCoords() {
-    List<LatLng>listcoords = <LatLng>[];
+    List<LatLng> listcoords = <LatLng>[];
     for (var e in listMember) {
       listcoords.add(e.coords);
     }
     return listcoords;
   }
 
-  List<Station> getBicingStations(){
+  List<Station> getBicingStations() {
     return listMember;
   }
 }
@@ -64,7 +59,6 @@ class Station {
   late String address;
 
   Station();
-
 
   Station.fromJson(Map<String, dynamic> json) {
     capacity = json['capacity'];
@@ -104,11 +98,12 @@ class HydraView {
 
   HydraView(
       {this.id,
-        this.type,
-        this.hydraFirst,
-        this.hydraLast,
-        this.hydraPrevious,
-        this.hydraNext});
+      this.type,
+      this.hydraFirst,
+      this.hydraLast,
+      this.hydraPrevious,
+      this.hydraNext
+      });
 
   HydraView.fromJson(Map<String, dynamic> json) {
     id = json['@id'];
@@ -139,9 +134,10 @@ class HydraSearch {
 
   HydraSearch(
       {this.type,
-        this.hydraTemplate,
-        this.hydraVariableRepresentation,
-        this.hydraMapping});
+      this.hydraTemplate,
+      this.hydraVariableRepresentation,
+      this.hydraMapping
+      });
 
   HydraSearch.fromJson(Map<String, dynamic> json) {
     type = json['@type'];
@@ -161,8 +157,7 @@ class HydraSearch {
     data['hydra:template'] = hydraTemplate;
     data['hydra:variableRepresentation'] = hydraVariableRepresentation;
     if (hydraMapping != null) {
-      data['hydra:mapping'] =
-          hydraMapping!.map((v) => v.toJson()).toList();
+      data['hydra:mapping'] = hydraMapping!.map((v) => v.toJson()).toList();
     }
     return data;
   }

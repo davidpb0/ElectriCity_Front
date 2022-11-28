@@ -57,17 +57,18 @@ class HeaderLoginComponent extends StatelessWidget {
           ),
         ),
         Positioned(
-            bottom: -5,
-            left: 170,
-            right: 0,
-            child: SizedBox(
-              height: 110,
-              child: Image.asset(
-                'assets/images/title_logo_car.png',
-                fit: BoxFit.contain,
-                height: 100,
-              ),
-            )),
+          bottom: -5,
+          left: 170,
+          right: 0,
+          child: SizedBox(
+            height: 110,
+            child: Image.asset(
+              'assets/images/title_logo_car.png',
+              fit: BoxFit.contain,
+              height: 100,
+            ),
+          )
+        ),
       ]),
     );
   }

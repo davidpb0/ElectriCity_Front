@@ -1,14 +1,12 @@
-import 'dart:convert';
-
 import 'package:electricity_front/core/services/api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart';
 
-import '../models/user.dart';
+import '../../core/controllers/user_controller.dart';
 
 class SignupController {
   final ApiService _apiService = ApiService();
-  User? _loggedUser;
+  UserController userCtrl = UserController();
 
   var _username = "";
   String? _usernameError;
@@ -16,7 +14,10 @@ class SignupController {
   var _email = "";
   String? _emailError;
 
-  var _passwd = "";
+  var _passwd1 = "";
+
+  var _passwd2 = "";
+
   String? _passwdError;
 
   factory SignupController() {
@@ -35,32 +36,39 @@ class SignupController {
     _email = mail;
   }
 
-  void setPasswd(String pwd1, String pwd2) {
-    if (pwd1 == pwd2) {
-      //print("Password matching");
-      _passwd = pwd1;
-      return;
-    }
-    //print("Password not matching");
-    _passwdError = "Password not matching";
+  void setPasswd(String pwd1) {
+    _passwd1 = pwd1;
   }
 
-  signUp(BuildContext ctext) async {
+  void setPasswdRepeat(String pwd1) {
+    _passwd2 = pwd1;
+  }
+
+  bool validatePassword() {
+    if (_passwd1 == _passwd2) {
+      return true;
+    }
+    else {
+      _passwdError = "Password not matching";
+      return false;
+    }
+  }
+
+  signUp(String email, String pwd, BuildContext ctext) async {
     var data = {
       "username": _username,
+      "password": _passwd1,
       "email": _email,
-      "password": _passwd,
+      "fullname": _username,
     };
-    _loggedUser;
-    Response res = await _apiService.postData(data, 'signup');
-    var body = json.decode(res.body);
-    if (body['message'] == 'Successfull login') {
-      _loggedUser = User.fromJson(body);
+
+    Response res = await _apiService.postData(data, 'register');
+    if (res.statusCode == 201) {
+      // ignore: use_build_context_synchronously
+      userCtrl.startSession(email, pwd, ctext);
+    } else {
+      _emailError = 'This email is already being used';
     }
-    //print(res.statusCode);
-    //print(res.body.toString());
-    //print(body['user']['tokens'].first);
-    //print(_loggedUser?.username);
   }
 
   String? usernameError() {
