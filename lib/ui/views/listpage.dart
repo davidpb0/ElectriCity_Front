@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:electricity_front/core/models/recharge_station.dart';
-import 'package:electricity_front/core/models/StationList.dart';
+import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/ui/components/bicing_preview.dart';
 import 'package:electricity_front/ui/components/recharge_preview.dart';
 import 'package:flutter/material.dart';

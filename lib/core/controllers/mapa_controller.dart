@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:electricity_front/core/controllers/user_controller.dart';
-import 'package:electricity_front/core/models/StationList.dart';
+import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
@@ -98,6 +98,7 @@ class MapaController {
       );
       UserController().currentUser.personalUbi.add(marker);
       UserController().currentUser.personalUbiBD.add(coords);
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacementNamed('/home');
     }
   }

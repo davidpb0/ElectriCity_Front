@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:electricity_front/core/models/recharge_station.dart';
-import '../models/StationList.dart';
+import '../models/station_list.dart';
 import 'package:http/http.dart';
 
 import '../services/api_service.dart';

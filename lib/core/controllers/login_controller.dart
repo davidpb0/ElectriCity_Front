@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:electricity_front/core/models/user.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import '../services/api_service.dart';
@@ -25,9 +24,11 @@ class LoginController {
     Response res = await _apiService.login(data, 'login');
     var body = json.decode(res.body);
     if (res.statusCode == 201) {
+      // ignore: use_build_context_synchronously
       Navigator.of(ctext).pushReplacementNamed('/home');
       return User.fromJson(body);
     } else {
+      // ignore: use_build_context_synchronously
       showAlertDialog(ctext);
     }
   }

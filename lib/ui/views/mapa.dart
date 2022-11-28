@@ -1,6 +1,6 @@
 import 'package:electricity_front/core/controllers/mapa_controller.dart';
 import 'package:electricity_front/core/controllers/user_controller.dart';
-import 'package:electricity_front/core/models/StationList.dart';
+import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/ui/components/info_bicing_station_window.dart';
 import 'package:electricity_front/ui/components/info_charge_station_window.dart';
@@ -166,6 +166,7 @@ class GoogleMapaState extends State<GoogleMapa> {
           onLongPress: (latlang) async {
             _mapaController.coords = latlang;
             _mapaController.personalMarker = await personalMarker;
+            // ignore: use_build_context_synchronously
             Navigator.of(context).pushReplacementNamed('/form_ubi');
           },
           onTap: (latlang) {

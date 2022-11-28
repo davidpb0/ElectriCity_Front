@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../core/models/StationList.dart';
+import '../../core/models/station_list.dart';
 import '../../fonts/test_icons_icons.dart';
 
 class BicingPreview extends StatelessWidget {

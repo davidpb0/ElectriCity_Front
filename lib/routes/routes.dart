@@ -12,7 +12,7 @@ Map<String, WidgetBuilder> getApplicationRoutes() {
     '/signup': (BuildContext context) => const SignupPage(),
     '/list': (BuildContext context) => const ListPage(),
     '/home': (BuildContext context) => const BottomBar(),
-    '/profile': (BuildContext context) => ProfilePage(),
+    '/profile': (BuildContext context) => const ProfilePage(),
     '/form_ubi': (BuildContext context) => InfoPersonalUbiForm(),
   };
 }

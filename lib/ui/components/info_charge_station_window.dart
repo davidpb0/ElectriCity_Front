@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../fonts/test_icons_icons.dart';
 
+// ignore: must_be_immutable
 class InfoChargeStationWindow extends StatelessWidget {
   InfoChargeStationWindow(
       {super.key,
