@@ -52,6 +52,7 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   @override
   void initState() {
+    //getCurrentLocation();
     super.initState();
   }
 
@@ -80,7 +81,6 @@ class GoogleMapaState extends State<GoogleMapa> {
           const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
           'assets/images/homepin.png');
     }
-
   }
 
   void _onMapCreated(GoogleMapController controller) async {
@@ -93,8 +93,8 @@ class GoogleMapaState extends State<GoogleMapa> {
     int q = 0;
 
     while (o < bicingPages) {
-      //await _mapaController.bicingApi(o);
-      //await _mapaController.rechargeApi(o);
+      await _mapaController.bicingApi(o);
+      await _mapaController.rechargeApi(o);
 
       bicingList = _mapaController.bicingList;
       rcList = _mapaController.cargaList;
