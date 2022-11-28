@@ -21,7 +21,9 @@ class MapaController {
   late LatLng coords;
   late BitmapDescriptor personalMarker;
 
+
   late GoogleMapaState googleMapaState;
+
 
   factory MapaController() {
     return _this;
@@ -41,30 +43,32 @@ class MapaController {
   }
 
   bicingApi(int numPage) async {
-    if (numPage == 1) {
+    if(numPage == 1){
       bicingStationList.clear();
       bicingList.clear();
     }
-    Response res = await _apiService.getData('bicing_stations?page=$numPage');
-    var body = json.decode(res.body);
-    //print(res.statusCode.toString());
-    if (res.statusCode == 200) {
-      StationList estaciones = StationList.fromJson(body);
-      bicingList.addAll(estaciones.getCoords());
-      bicingStationList.addAll(estaciones.getBicingStations());
-      //print("Estacions Bicing");
-      //print(bicingList.length);
-      //print(bicingList.getRange(0, 10));
+        Response res = await _apiService.getData(
+            'bicing_stations?page=$numPage');
+        var body = json.decode(res.body);
+        //print(res.statusCode.toString());
+        if (res.statusCode == 200) {
+          StationList estaciones = StationList.fromJson(body);
+            bicingList.addAll(estaciones.getCoords());
+            bicingStationList.addAll(estaciones.getBicingStations());
+            //print("Estacions Bicing");
+            //print(bicingList.length);
+            //print(bicingList.getRange(0, 10));
 
-    } else {
-      throw Exception('Algo falló');
-    }
-    //print(res.statusCode);
-    //print(body);
+        } else {
+          throw Exception('Algo falló');
+        }
+        //print(res.statusCode);
+        //print(body);
+
   }
 
   rechargeApi(int numPage) async {
-    if (numPage == 1) {
+    if(numPage == 1){
       chargerStationList.clear();
       cargaList.clear();
     }
@@ -112,7 +116,6 @@ class MapaController {
       print(res.statusCode.toString());
       Navigator.of(context).pushReplacementNamed('/home');
     }
-
   }
 
   routePainting(PointLatLng origin, PointLatLng destination) async {
@@ -149,4 +152,5 @@ class MapaController {
   GoogleMapaState getGoogleMapa() {
     return googleMapaState;
   }
+
 }

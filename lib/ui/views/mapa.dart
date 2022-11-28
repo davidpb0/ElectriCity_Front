@@ -52,6 +52,7 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   @override
   void initState() {
+    //getCurrentLocation();
     super.initState();
   }
 
@@ -80,7 +81,6 @@ class GoogleMapaState extends State<GoogleMapa> {
           const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
           'assets/images/homepin.png');
     }
-
   }
 
   void _onMapCreated(GoogleMapController controller) async {

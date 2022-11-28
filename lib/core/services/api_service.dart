@@ -37,6 +37,7 @@ class ApiService {
     "Accept":"application/json",
   };
 
+
   postPersonalUbi(data, apiUrl) async {
     var fullUrl=_url+apiUrl;
     print(fullUrl);
@@ -59,7 +60,6 @@ class ApiService {
         "X-AUTH-TOKEN": token},
     );
   }
-
 
   login(data, apiUrl) async {
     var fullUrl=_url+apiUrl;
