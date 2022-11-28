@@ -38,6 +38,29 @@ class ApiService {
   };
 
 
+  postPersonalUbi(data, apiUrl) async {
+    var fullUrl=_url+apiUrl;
+    print(fullUrl);
+    return await http.post(
+      Uri.parse(fullUrl),
+      body: jsonEncode(data),
+      headers:{"Content-type":"application/json",
+        "Accept":"application/json",
+        "X-AUTH-TOKEN": token},
+    );
+  }
+
+  deletePersonalUbi(apiUrl) async {
+    var fullUrl=_url+apiUrl;
+    print(fullUrl);
+    return await http.delete(
+      Uri.parse(fullUrl),
+      headers:{"Content-type":"application/json",
+        "Accept":"application/json",
+        "X-AUTH-TOKEN": token},
+    );
+  }
+
   login(data, apiUrl) async {
     var fullUrl=_url+apiUrl;
     //print(fullUrl);

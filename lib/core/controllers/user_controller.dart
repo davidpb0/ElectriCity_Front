@@ -51,4 +51,14 @@ void logOut(BuildContext ctxt) {
 
   }
 
+
+  deletePersonalUbiEveryWhere(int index) async{
+    print(currentUser.getUserId());
+    Marker location = currentUser.personalUbi.elementAt(index);
+
+    String urlTemp = "users/${currentUser.getUserId()}/locations/${int.parse(location.markerId.value)-3000}";
+    Response res = await ApiService().deletePersonalUbi(urlTemp);
+    if(res.statusCode == 201) currentUser.deletePersonalUbi(index);
+
+  }
 }

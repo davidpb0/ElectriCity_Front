@@ -88,21 +88,34 @@ class MapaController {
     //print(body);
   }
 
-  personalUbi(String tit, String? desc, BuildContext context) {
-    Marker marker = Marker(
-      markerId: MarkerId(
-          (3000 + UserController().currentUser.personalUbi.length)
-              .toString()),
-      position: coords,
-      icon: personalMarker,
-      infoWindow: InfoWindow(
-        title: tit,
-        snippet: desc,
-      ),
-    );
-    UserController().currentUser.personalUbi.add(marker);
-    UserController().currentUser.personalUbiBD.add(coords);
-    Navigator.of(context).pushReplacementNamed('/home');
+  personalUbi(String tit, String? desc, BuildContext context) async {
+    String urlPrueba = "users/${UserController().currentUser.getUserId()}/locations";
+    var data = {
+      "id": 3000 + UserController().currentUser.personalUbi.length,
+      "latitude": coords.latitude,
+      "longitude": coords.longitude,
+      "title": tit,
+      "description": desc
+    };
+    Response res = await ApiService().postPersonalUbi(data, urlPrueba);
+    print(UserController().currentUser.getUserId().toString());
+    var body = jsonDecode(res.body);
+    if (res.statusCode == 201) {
+      Marker marker = Marker(
+        markerId:
+            MarkerId((body['favouriteLocations'].last['id'] + 3000).toString()),
+        position: coords,
+        icon: personalMarker,
+        infoWindow: InfoWindow(
+          title: tit,
+          snippet: desc,
+        ),
+      );
+      UserController().currentUser.personalUbi.add(marker);
+      UserController().currentUser.personalUbiBD.add(coords);
+      print(res.statusCode.toString());
+      Navigator.of(context).pushReplacementNamed('/home');
+    }
   }
 
   routePainting(PointLatLng origin, PointLatLng destination) async {
