@@ -111,6 +111,8 @@ class GoogleMapaState extends State<GoogleMapa> {
                 icon: bicingMarker,
                 onTap: () {
                   setState(() {
+                    deleteMarker("origin");
+                    deleteMarker("destination");
                     info = InfoBicingStationWindow(
                         belec: bicingStationList[i].electrical,
                         bmech: bicingStationList[i].mechanical,
