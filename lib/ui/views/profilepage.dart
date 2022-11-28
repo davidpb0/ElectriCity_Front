@@ -1,5 +1,6 @@
 import 'package:electricity_front/ui/components/default_header.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../core/controllers/user_controller.dart';
 import '../components/personal_ubi_preview.dart';
 
@@ -343,7 +344,7 @@ class _ProfilePageState extends State<ProfilePage> {
     }
 
   Widget listaPersonalUbi() {
-    if (userCtrl.currentUser.personalUbi.isEmpty){ return
+    if (userCtrl.currentUser.personalUbiBD.isEmpty){ return
       const Padding(
         padding: EdgeInsets.symmetric(vertical: 16),
         child: Material (
@@ -359,7 +360,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: userCtrl.currentUser.personalUbi.length,
+        itemCount: userCtrl.currentUser.personalUbiBD.length,
         itemBuilder: (context, index) {
           return Dismissible(
             background: Container(
@@ -386,10 +387,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
 
             ),
-            key: UniqueKey(),
-            onDismissed: (DismissDirection direction) async {
-              await userCtrl.deletePersonalUbiEveryWhere(index);
+            key: ValueKey<Marker>(userCtrl.currentUser.personalUbi[index]),
+            onDismissed: (DismissDirection direction) {
               setState(() {
+                userCtrl.currentUser.deletePersonalUbi(index);
               });
             },
             child: Padding(
@@ -400,7 +401,6 @@ class _ProfilePageState extends State<ProfilePage> {
         });
   }
 
-  /*
   Widget listaPersonalUbi2() {
     return ListView.builder(
         shrinkWrap: true,
@@ -433,15 +433,10 @@ class _ProfilePageState extends State<ProfilePage> {
             );
         });
   }
-*/
 
   void logout(BuildContext context) async {
     await userCtrl.deleteUser();
     if (!mounted) return;
     userCtrl.logOut(context);
-  }
-
-  void delete(int index) async{
-    await userCtrl.deletePersonalUbiEveryWhere(index);
   }
 }

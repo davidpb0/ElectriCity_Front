@@ -29,7 +29,7 @@ class LoginController {
     var body = json.decode(res.body);
     //print(res.statusCode.toString());
     if (res.statusCode == 201) {
-      print(body.toString());
+      //print(body.toString());
       Navigator.of(ctext).pushReplacementNamed('/home');
       return User.fromJson(body);
     }
