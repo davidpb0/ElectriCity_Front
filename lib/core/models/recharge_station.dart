@@ -1,4 +1,3 @@
-
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class RechargeStationList {
@@ -17,12 +16,8 @@ class RechargeStationList {
       });
     }
     totalItems = json['hydra:totalItems'];
-    hydraView = json['hydra:view'] != null
-        ? HydraView.fromJson(json['hydra:view'])
-        : null;
-    hydraSearch = json['hydra:search'] != null
-        ? HydraSearch.fromJson(json['hydra:search'])
-        : null;
+    hydraView = json['hydra:view'] != null ? HydraView.fromJson(json['hydra:view']) : null;
+    hydraSearch = json['hydra:search'] != null ? HydraSearch.fromJson(json['hydra:search']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -39,22 +34,22 @@ class RechargeStationList {
   }
 
   List<LatLng> getCoordsRcSt() {
-    List<LatLng>listcoords = <LatLng>[];
+    List<LatLng> listcoords = <LatLng>[];
     for (var e in chargeStation) {
       listcoords.add(e.coords);
     }
     return listcoords;
   }
 
-  List<RechargeStation> getChargerStations(){
+  List<RechargeStation> getChargerStations() {
     return chargeStation;
   }
 }
 
 class RechargeStation {
-  late String ?speedType;
-  late String ?connectionType;
-  late int ?slots;
+  late String? speedType;
+  late String? connectionType;
+  late int? slots;
   late int id;
   late double latitude;
   late double longitude;
@@ -62,9 +57,7 @@ class RechargeStation {
   late bool status;
   late String address;
 
-
   RechargeStation();
-
 
   RechargeStation.fromJson(Map<String, dynamic> json) {
     speedType = json['speedType'];
@@ -106,11 +99,12 @@ class HydraView {
 
   HydraView(
       {this.id,
-        this.type,
-        this.hydraFirst,
-        this.hydraLast,
-        this.hydraPrevious,
-        this.hydraNext});
+      this.type,
+      this.hydraFirst,
+      this.hydraLast,
+      this.hydraPrevious,
+      this.hydraNext
+      });
 
   HydraView.fromJson(Map<String, dynamic> json) {
     id = json['@id'];
@@ -141,9 +135,10 @@ class HydraSearch {
 
   HydraSearch(
       {this.type,
-        this.hydraTemplate,
-        this.hydraVariableRepresentation,
-        this.hydraMapping});
+      this.hydraTemplate,
+      this.hydraVariableRepresentation,
+      this.hydraMapping
+      });
 
   HydraSearch.fromJson(Map<String, dynamic> json) {
     type = json['@type'];
@@ -163,8 +158,7 @@ class HydraSearch {
     data['hydra:template'] = hydraTemplate;
     data['hydra:variableRepresentation'] = hydraVariableRepresentation;
     if (hydraMapping != null) {
-      data['hydra:mapping'] =
-          hydraMapping!.map((v) => v.toJson()).toList();
+      data['hydra:mapping'] = hydraMapping!.map((v) => v.toJson()).toList();
     }
     return data;
   }

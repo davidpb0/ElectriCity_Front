@@ -154,9 +154,12 @@ class _RoutePageState extends State<RoutePage> {
                             ),
                             trailing: const Icon(Icons.search),
                             dense: true,
-                          )),
+                          )
+                      ),
                     ),
-                  ))),
+                  )
+              )
+          ),
           Positioned(
             top: 90,
             child: Row(
@@ -166,7 +169,8 @@ class _RoutePageState extends State<RoutePage> {
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 14,
-                    )),
+                    )
+                ),
               ],
             ),
           ),
@@ -192,7 +196,7 @@ class _RoutePageState extends State<RoutePage> {
                         destination = place.description.toString();
                       });
 
-                      //form google_maps_webservice package
+                      //from google_maps_webservice package
                       final plist = GoogleMapsPlaces(
                         apiKey: googleApikey,
                         apiHeaders: await const GoogleApiHeaders().getHeaders(),
@@ -245,9 +249,12 @@ class _RoutePageState extends State<RoutePage> {
                             ),
                             trailing: const Icon(Icons.search),
                             dense: true,
-                          )),
+                          )
+                      ),
                     ),
-                  ))),
+                  )
+              )
+          ),
         ],
       ),
     ));

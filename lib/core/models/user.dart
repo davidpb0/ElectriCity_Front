@@ -24,9 +24,11 @@ class User {
       for (int i = 0; i < json['favouriteLocations'].length; ++i) {
         personalUbi.add(Marker(
             markerId: MarkerId(
-                (json['favouriteLocations'][i]['id'] + 3000).toString()),
+                (json['favouriteLocations'][i]['id'] + 3000).toString()
+            ),
             position: LatLng(json['favouriteLocations'][i]['latitude'],
-                json['favouriteLocations'][i]['longitude']),
+                json['favouriteLocations'][i]['longitude']
+            ),
             icon: UserController().personalMarker,
             infoWindow: InfoWindow(
               title: json['favouriteLocations'][i]['title'],
@@ -35,11 +37,10 @@ class User {
         ));
       }
     }
-
   }
 
   Map toJson() {
-    return {'email': email, 'id' : _id };
+    return {'email': email, 'id': _id};
   }
 
   getUserTkn() {
@@ -50,9 +51,7 @@ class User {
     return _id;
   }
 
-  deletePersonalUbi(int index){
+  deletePersonalUbi(int index) {
     personalUbi.removeAt(index);
-    //personalUbiBD.removeAt(index);
   }
-
 }

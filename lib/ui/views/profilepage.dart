@@ -22,9 +22,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return MaterialApp(
       title: "Profile",
       color: Colors.grey[300],
-      home: Stack(
-        children: [
-
+      home: Stack(children: [
         SingleChildScrollView(
           child: Column(
             children: [
@@ -39,54 +37,53 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                     ],
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: screensize.height*0.18),
-                      Padding(
+                  child: Column(children: [
+                    SizedBox(height: screensize.height * 0.18),
+                    Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Material(
-                            color: Colors.transparent,
-                            child:Text(userCtrl.currentUser.username,
-                                style: const TextStyle(
-                                    fontSize: 20,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold)),
-
-                          ),
-                          const SizedBox(width: 20),
-                          const Icon(Icons.account_circle, size: 60, color: Colors.white)
-                        ],
-                      )
-                      ),
-
-
-                    ]
-                  )),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Material(
+                              color: Colors.transparent,
+                              child: Text(userCtrl.currentUser.username,
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold
+                                  )
+                              ),
+                            ),
+                            const SizedBox(width: 20),
+                            const Icon(Icons.account_circle,
+                                size: 60, color: Colors.white
+                            )
+                          ],
+                        )
+                    ),
+                  ])
+              ),
               Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                   child: Column(children: [
                     const SizedBox(height: 20),
 
                     // PERSONAL LOCATIONS
                     Container(
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        color: Colors.blueGrey,
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(8)),
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(0, 2),
-                            blurRadius: 1,
-                          ),
-                        ],
-                      ),
-                      child: Column(
-                        children: [
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          color: Colors.blueGrey,
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 2),
+                              blurRadius: 1,
+                            ),
+                          ],
+                        ),
+                        child: Column(children: [
                           TextButton(
                               onPressed: () {
                                 setState(() {
@@ -115,7 +112,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         size: 28, color: Colors.white);
                                   }
                                 }),
-                              ])),
+                              ])
+                          ),
                           Visibility(
                               visible: visiblePersonalList,
                               child: Container(
@@ -126,20 +124,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                     borderRadius: const BorderRadius.all(
                                         Radius.circular(8)),
                                   ),
-
-                                      child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child:  Builder(builder: (context) {
-                                            return listaPersonalUbi();
-                                          }),
-                                      )
-
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Builder(builder: (context) {
+                                      return listaPersonalUbi();
+                                    }),
+                                  )
                               )
                           )
-                        ]
-                      )
+                        ])
                     ),
-
 
                     const SizedBox(height: 40),
 
@@ -148,8 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         alignment: Alignment.center,
                         decoration: const BoxDecoration(
                           color: Colors.blueGrey,
-                          borderRadius:
-                              BorderRadius.all(Radius.circular(8)),
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
                           boxShadow: [
                             BoxShadow(
                               offset: Offset(0, 2),
@@ -186,7 +179,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         size: 28, color: Colors.white);
                                   }
                                 }),
-                              ])),
+                              ])
+                          ),
                           Visibility(
                               visible: visibleFavouriteList,
                               child: Container(
@@ -199,11 +193,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child:  Builder(builder: (context) {
+                                    child: Builder(builder: (context) {
                                       return listaFavStations();
                                     }),
-                                  ))),
-                        ])),
+                                  )
+                              )
+                          ),
+                        ])
+                    ),
 
                     const SizedBox(height: 40),
 
@@ -317,43 +314,43 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
         ),
-          Material(
-            color: Colors.transparent,
-            child:DefaultHeader(
-                size: Size(screensize.width, (screensize.height * 0.15))),
-          )
-
-      ]
-      ),
+        Material(
+          color: Colors.transparent,
+          child: DefaultHeader(
+              size: Size(screensize.width, (screensize.height * 0.15))),
+        )
+      ]),
     );
   }
 
   Widget listaFavStations() {
-    return const Material (
+    return const Material(
         color: Colors.transparent,
-        child:Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
-          child: Text(
-            "No favourite stations found",
-            style: TextStyle(fontSize: 20, ),
-            textAlign: TextAlign.center,
-          )
+        child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 16),
+            child: Text(
+              "No favourite stations found",
+              style: TextStyle(
+                fontSize: 20,
+              ),
+              textAlign: TextAlign.center,
+            )
         )
-      );
-    }
+    );
+  }
 
   Widget listaPersonalUbi() {
-    if (userCtrl.currentUser.personalUbi.isEmpty){ return
-      const Padding(
-        padding: EdgeInsets.symmetric(vertical: 16),
-        child: Material (
-          color: Colors.transparent,
-          child:Text(
-            "No personal locations found",
-            style: TextStyle(fontSize: 20),
-            textAlign: TextAlign.center,
+    if (userCtrl.currentUser.personalUbi.isEmpty) {
+      return const Padding(
+          padding: EdgeInsets.symmetric(vertical: 16),
+          child: Material(
+              color: Colors.transparent,
+              child: Text(
+                "No personal locations found",
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              )
           )
-        )
       );
     }
     return ListView.builder(
@@ -363,39 +360,27 @@ class _ProfilePageState extends State<ProfilePage> {
         itemBuilder: (context, index) {
           return Dismissible(
             background: Container(
-              padding: const EdgeInsets.all(20),
-              /*decoration: const BoxDecoration(
-                color: Colors.red,
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                boxShadow: [
-                  const BoxShadow(
-                    offset: Offset(0, 2),
-                    blurRadius: 1,
-                  ),
-                ],
-              ),*/
-              child: Row(
-                children: const [
-                  Icon(Icons.delete_forever,
+                padding: const EdgeInsets.all(20),
+                child: Row(children: const [
+                  Icon(
+                    Icons.delete_forever,
                     size: 60,
                     color: Colors.red,
                     textDirection: TextDirection.ltr,
-                ),
-                Expanded( child: SizedBox())
-                ])
-
-
-            ),
+                  ),
+                  Expanded(child: SizedBox())
+                ])),
             key: UniqueKey(),
             onDismissed: (DismissDirection direction) async {
               await userCtrl.deletePersonalUbiEveryWhere(index);
-              setState(() {
-              });
+              setState(() {});
             },
             child: Padding(
                 padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
                 child: PersonalUbiPreview(
-                    info: userCtrl.currentUser.personalUbi.elementAt(index))),
+                    info: userCtrl.currentUser.personalUbi.elementAt(index)
+                )
+            ),
           );
         });
   }
@@ -404,31 +389,36 @@ class _ProfilePageState extends State<ProfilePage> {
     return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: userCtrl.currentUser.personalUbi.length, //userCtrl.currentUser.personalUbiBD.length,
+        itemCount: userCtrl.currentUser.personalUbi.length,
         itemBuilder: (context, index) {
-            return Padding(
-                key: UniqueKey(),
-                padding: const EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    Text(
-                      userCtrl.currentUser.personalUbi.elementAt(index).infoWindow.title.toString(),
-                      textAlign: TextAlign.left,
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                      ),
+          return Padding(
+              key: UniqueKey(),
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                children: [
+                  Text(
+                    userCtrl.currentUser.personalUbi
+                        .elementAt(index)
+                        .infoWindow
+                        .title
+                        .toString(),
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 20,
                     ),
-                    const Expanded( child: SizedBox()),
-                    IconButton(onPressed: (){
-                      userCtrl.currentUser.personalUbi.removeAt(index);
-                      Navigator.of(context).build(context);
-
-                    }, icon: const Icon(Icons.delete, size: 24, color: Colors.black ))
-                  ],
-                )
-
-            );
+                  ),
+                  const Expanded(child: SizedBox()),
+                  IconButton(
+                      onPressed: () {
+                        userCtrl.currentUser.personalUbi.removeAt(index);
+                        Navigator.of(context).build(context);
+                      },
+                      icon: const Icon(Icons.delete,
+                          size: 24, color: Colors.black))
+                ],
+              )
+          );
         });
   }
 
@@ -438,7 +428,7 @@ class _ProfilePageState extends State<ProfilePage> {
     userCtrl.logOut(context);
   }
 
-  void delete(int index) async{
+  void delete(int index) async {
     await userCtrl.deletePersonalUbiEveryWhere(index);
   }
 }

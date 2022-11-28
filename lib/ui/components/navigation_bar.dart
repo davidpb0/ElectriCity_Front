@@ -42,10 +42,8 @@ class BottomBarState extends State<BottomBar> {
         currentIndex: _selectedIndex,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.map), label: "Map"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.electric_car), label: "Mobility"),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.military_tech), label: "Prizes"),
+          BottomNavigationBarItem(icon: Icon(Icons.electric_car), label: "Mobility"),
+          BottomNavigationBarItem(icon: Icon(Icons.military_tech), label: "Prizes"),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile")
         ],
       ),

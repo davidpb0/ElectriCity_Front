@@ -6,18 +6,15 @@ import 'package:http/http.dart';
 import '../services/api_service.dart';
 
 class LoginController {
-
   static final LoginController _this = LoginController._();
 
   final ApiService _apiService = ApiService();
-  
 
   factory LoginController() {
     return _this;
   }
 
   LoginController._();
-
 
   logIn(String mail, String pwd, BuildContext ctext) async {
     var data = {
@@ -32,17 +29,12 @@ class LoginController {
       //print(body.toString());
       Navigator.of(ctext).pushReplacementNamed('/home');
       return User.fromJson(body);
-    }
-    else{
+    } else {
       showAlertDialog(ctext);
     }
-
-    //print(_userController.current_user.username);
-    //print(body['user']['tokens'].first);
-    //print(_loggedUser?.username);
   }
-  showAlertDialog(BuildContext context) {
 
+  showAlertDialog(BuildContext context) {
     // set up the button
     Widget okButton = TextButton(
       child: const Text("OK"),
@@ -54,7 +46,8 @@ class LoginController {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: const Text("User Error"),
-      content: const Text("The email or the password introduced were incorrect"),
+      content:
+          const Text("The email or the password introduced were incorrect"),
       actions: [
         okButton,
       ],
@@ -68,5 +61,4 @@ class LoginController {
       },
     );
   }
-
 }

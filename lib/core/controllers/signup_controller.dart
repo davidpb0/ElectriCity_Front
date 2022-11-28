@@ -46,10 +46,9 @@ class SignupController {
 
   bool validatePassword() {
     if (_passwd1 == _passwd2) {
-      //print("Password matching");
       return true;
-    } else {
-      //print("Password not matching");
+    }
+    else {
       _passwdError = "Password not matching";
       return false;
     }
@@ -63,28 +62,13 @@ class SignupController {
       "fullname": _username,
     };
 
-
-    //printData();
-
     Response res = await _apiService.postData(data, 'register');
     if (res.statusCode == 201) {
       userCtrl.startSession(email, pwd, ctext);
     } else {
       _emailError = 'This email is already being used';
-      //print(res.statusCode);
     }
-    //print(res.statusCode);
-    //print(res.body.toString());
-    //print(body['user']['tokens'].first);
-    //print(_loggedUser?.username);
   }
-
-  /*void printData() {
-    print("Username: " + _username);
-    print("Email: " + _email);
-    print("Password: " + _passwd1);
-    print("Password repeat: " + _passwd2);
-  }*/
 
   String? usernameError() {
     return _usernameError;

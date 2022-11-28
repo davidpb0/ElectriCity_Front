@@ -82,7 +82,6 @@ class _ListPageState extends State<ListPage> {
                 child: StreamBuilder(
                     stream: listCtrl.getBicingStationsStream(),
                     builder: (context, snapshot) {
-                      //print('bicing connection:' + snapshot.connectionState.toString());
                       if (snapshot.hasError) {
                         return const Center(child: Text("Error"));
                       } else if (snapshot.connectionState ==
@@ -100,33 +99,36 @@ class _ListPageState extends State<ListPage> {
                       } else {
                         return ShaderMask(
                             shaderCallback: (Rect bounds) {
-                          return LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: <Color>[
-                                Colors.grey.shade300,
-                                Colors.transparent,
-                                Colors.transparent,
-                                Colors.grey.shade300
-                              ],
-                              stops: const [
-                                0.0,
-                                0.05,
-                                0.95,
-                                1.0
-                              ]).createShader(bounds);
-                        },
-                      blendMode: BlendMode.dstOut,
-                      child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: listCtrl.getTotalBicingStations(),
-                          itemBuilder: (context, index) {
-                            return BicingPreview(
-                                info: listCtrl.getBicingStation(index));
-                          },
-                        ));
+                              return LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: <Color>[
+                                    Colors.grey.shade300,
+                                    Colors.transparent,
+                                    Colors.transparent,
+                                    Colors.grey.shade300
+                                  ],
+                                  stops: const [
+                                    0.0,
+                                    0.05,
+                                    0.95,
+                                    1.0
+                                  ]).createShader(bounds);
+                            },
+                            blendMode: BlendMode.dstOut,
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              itemCount: listCtrl.getTotalBicingStations(),
+                              itemBuilder: (context, index) {
+                                return BicingPreview(
+                                    info: listCtrl.getBicingStation(index));
+                              },
+                            )
+                        );
                       }
-                    }))),
+                    })
+            )
+        ),
         Visibility(
           visible: !bicing,
           child: Expanded(
@@ -176,47 +178,12 @@ class _ListPageState extends State<ListPage> {
                               return RechargePreview(
                                   info: listCtrl.getRechargeStation(index));
                             },
-                          ));
+                          )
+                      );
                     }
-                  })),
+                  })
+          ),
         )
-
-        /*Expanded(
-            child: FutureBuilder(
-                future: futureBicing,
-                builder: (context, snapshot) {
-                  // WHILE THE CALL IS BEING MADE AKA LOADING
-                  if (ConnectionState.active != null && !snapshot.hasData) {
-                    return Center(child: Text('Loading'));
-                  }
-
-                  // WHEN THE CALL IS DONE BUT HAPPENS TO HAVE AN ERROR
-                  else if (ConnectionState.done != null && snapshot.hasError) {
-                    return Center(child: Text("Error"));
-                  }
-
-                  // IF IT WORKS IT GOES HERE!
-                  else if (bicing) {
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: listCtrl.getTotalBicingStations(),
-                      itemBuilder: (context, index) {
-                        return BicingPreview(
-                            info: listCtrl.getBicingStation(index));
-                      },
-                    );
-                  } else
-                    return ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: listCtrl.getTotalRechargeStations(),
-                      itemBuilder: (context, index) {
-                        return RechargePreview(
-                            info: listCtrl.getRechargeStation(index));
-                      },
-                    );
-                }))
-
-         */
       ]),
     );
   }

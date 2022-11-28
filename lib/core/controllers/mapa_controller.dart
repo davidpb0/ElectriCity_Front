@@ -21,9 +21,7 @@ class MapaController {
   late LatLng coords;
   late BitmapDescriptor personalMarker;
 
-
   late GoogleMapaState googleMapaState;
-
 
   factory MapaController() {
     return _this;
@@ -34,7 +32,6 @@ class MapaController {
   MapaController._();
 
   Future<List<LatLng>> markersBicing() async {
-    //print(bicingList.length);
     return bicingList;
   }
 
@@ -43,32 +40,24 @@ class MapaController {
   }
 
   bicingApi(int numPage) async {
-    if(numPage == 1){
+    if (numPage == 1) {
       bicingStationList.clear();
       bicingList.clear();
     }
-        Response res = await _apiService.getData(
-            'bicing_stations?page=$numPage');
-        var body = json.decode(res.body);
-        //print(res.statusCode.toString());
-        if (res.statusCode == 200) {
-          StationList estaciones = StationList.fromJson(body);
-            bicingList.addAll(estaciones.getCoords());
-            bicingStationList.addAll(estaciones.getBicingStations());
-            //print("Estacions Bicing");
-            //print(bicingList.length);
-            //print(bicingList.getRange(0, 10));
-
-        } else {
-          throw Exception('Algo falló');
-        }
-        //print(res.statusCode);
-        //print(body);
-
+    Response res = await _apiService.getData('bicing_stations?page=$numPage');
+    var body = json.decode(res.body);
+    if (res.statusCode == 200) {
+      StationList estaciones = StationList.fromJson(body);
+      bicingList.addAll(estaciones.getCoords());
+      bicingStationList.addAll(estaciones.getBicingStations());
+    }
+    else {
+      throw Exception('Error en función bicingApi');
+    }
   }
 
   rechargeApi(int numPage) async {
-    if(numPage == 1){
+    if (numPage == 1) {
       chargerStationList.clear();
       cargaList.clear();
     }
@@ -78,18 +67,15 @@ class MapaController {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       cargaList.addAll(rcSt.getCoordsRcSt());
       chargerStationList.addAll(rcSt.getChargerStations());
-      //print("Estacions carga");
-      //print(cargaList.length);
-      //print(cargaList.getRange(0, 10));
-    } else {
-      throw Exception('Algo falló');
     }
-    //print(res.statusCode);
-    //print(body);
+    else {
+      throw Exception('Error en función rechargeApi');
+    }
   }
 
   personalUbi(String tit, String? desc, BuildContext context) async {
-    String urlPrueba = "users/${UserController().currentUser.getUserId()}/locations";
+    String urlPrueba =
+        "users/${UserController().currentUser.getUserId()}/locations";
     var data = {
       "id": 3000 + UserController().currentUser.personalUbi.length,
       "latitude": coords.latitude,
@@ -126,7 +112,7 @@ class MapaController {
       "longitudeB": destination.longitude,
       "numStations": 1
     };
-    
+
     Response res = await _apiService.routePainting(data, 'route/station');
     if (res.statusCode == 200) {
       print(res.body.length.toString());
@@ -134,15 +120,17 @@ class MapaController {
       print(body.length.toString());
       List<PointLatLng> pointsList = <PointLatLng>[];
       for (int i = 0; i < body.length; ++i) {
-        PointLatLng pointLatLng = PointLatLng(body[i]['latitude'], body[i]['longitude']);
+        PointLatLng pointLatLng =
+            PointLatLng(body[i]['latitude'], body[i]['longitude']);
         pointsList.add(pointLatLng);
       }
       return pointsList;
     }
     else {
-      throw Exception("Error in API request of creation of route painting, StatudCode: ${res.statusCode}");
+      throw Exception(
+          "Error in API request of creation of route painting, StatudCode: ${res.statusCode}"
+      );
     }
-
   }
 
   void setGoogleMapaState(GoogleMapaState googleMapaState) {
@@ -152,5 +140,4 @@ class MapaController {
   GoogleMapaState getGoogleMapa() {
     return googleMapaState;
   }
-
 }

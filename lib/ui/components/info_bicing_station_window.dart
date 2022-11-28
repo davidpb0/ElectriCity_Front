@@ -82,7 +82,8 @@ class InfoBicingStationWindow extends StatelessWidget {
                     ],
                   )
                 ],
-              )),
+              )
+          ),
         ]),
       ),
     );

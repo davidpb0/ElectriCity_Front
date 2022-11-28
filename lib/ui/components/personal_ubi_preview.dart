@@ -1,7 +1,5 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 
 class PersonalUbiPreview extends StatelessWidget {
   final Marker info;
@@ -19,9 +17,9 @@ class PersonalUbiPreview extends StatelessWidget {
         alignment: Alignment.center,
         decoration: const BoxDecoration(
           color: Colors.white60,
-          borderRadius:  BorderRadius.all(Radius.circular(8)),
+          borderRadius: BorderRadius.all(Radius.circular(8)),
           boxShadow: [
-             BoxShadow(
+            BoxShadow(
               offset: Offset(0, 2),
               blurRadius: 1,
             ),
@@ -34,10 +32,10 @@ class PersonalUbiPreview extends StatelessWidget {
             children: <Widget>[
               Container(
                 padding:
-                const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                 decoration: const ShapeDecoration(
                   color: Colors.yellow,
-                  shape:  RoundedRectangleBorder(
+                  shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.zero,
                         topLeft: Radius.circular(8),
@@ -63,16 +61,17 @@ class PersonalUbiPreview extends StatelessWidget {
               ),
               Container(
                 padding:
-                const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                 decoration: const ShapeDecoration(
                     color: Colors.white,
-                    shape:  RoundedRectangleBorder(
+                    shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(8),
                           topLeft: Radius.zero,
                           bottomRight: Radius.circular(8),
                           topRight: Radius.zero),
-                    )),
+                    )
+                ),
                 child: Column(
                   children: [
                     Row(

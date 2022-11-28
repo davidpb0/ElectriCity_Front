@@ -1,4 +1,4 @@
-class BicingStation{
+class BicingStation {
   final int code;
   final String name;
   final double xCoord;
@@ -8,5 +8,6 @@ class BicingStation{
   final int freedocks;
   final int totaldocks;
 
-  BicingStation(this.code, this.name, this.xCoord, this.yCoord, this.manbikes,this.elebikes, this.freedocks, this.totaldocks);
+  BicingStation(this.code, this.name, this.xCoord, this.yCoord, this.manbikes,
+      this.elebikes, this.freedocks, this.totaldocks);
 }

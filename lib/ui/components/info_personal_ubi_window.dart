@@ -52,8 +52,7 @@ class InfoPersonalUbiWindow extends StatelessWidget {
                   Row(
                     children: [
                       const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.eCar, size: 20)),
                       const Text("Direcció: "),
                       Text(ubi.toString())
@@ -62,15 +61,15 @@ class InfoPersonalUbiWindow extends StatelessWidget {
                   Row(
                     children: [
                       const Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
+                          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                           child: Icon(TestIcons.eCharger, size: 20)),
                       const Text("Telèfon: "),
                       Text(telf.toString())
                     ],
                   )
                 ],
-              )),
+              )
+          ),
         ]),
       ),
     );

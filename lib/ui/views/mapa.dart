@@ -57,9 +57,7 @@ class GoogleMapaState extends State<GoogleMapa> {
   }
 
   void setCustomMarker() async {
-    bool isIOS = Theme
-        .of(context)
-        .platform == TargetPlatform.iOS;
+    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
     if (isIOS) {
       bicingMarker = await BitmapDescriptor.fromAssetImage(
           const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
@@ -125,8 +123,7 @@ class GoogleMapaState extends State<GoogleMapa> {
         for (int k = q; k < chargerStationList.length; ++k) {
           _markers.add(
             Marker(
-              markerId:
-              MarkerId("id-${k + 601}"),
+              markerId: MarkerId("id-${k + 601}"),
               position: chargerStationList[k].coords,
               icon: chargerMarker,
               onTap: () {
@@ -159,13 +156,10 @@ class GoogleMapaState extends State<GoogleMapa> {
     _mapaController.setGoogleMapaState(this);
     return Stack(alignment: Alignment.topCenter, children: [
       Stack(children: [
-        /*currentLocation == null
-            ? const Center(child: Text("Loading"),)*/
         GoogleMap(
           onMapCreated: _onMapCreated,
           initialCameraPosition: CameraPosition(
             target: widget._aux,
-            //LatLng(currentLocation!.latitude!, currentLocation!.longitude!),
             zoom: 16,
           ),
           myLocationEnabled: true,
@@ -191,58 +185,35 @@ class GoogleMapaState extends State<GoogleMapa> {
         Container(
             height: 130,
             margin:
-            EdgeInsets.only(top: MediaQuery
-                .of(context)
-                .size
-                .height * 0.75),
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.75),
             child: info),
         Container(
             height: 130,
             margin:
-            EdgeInsets.only(top: MediaQuery
-                .of(context)
-                .size
-                .height * 0.5),
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
             child: form),
       ]),
       top,
       Container(
         margin: EdgeInsets.only(
-            top: MediaQuery
-                .of(context)
-                .size
-                .height * 0.72,
-            left: MediaQuery
-                .of(context)
-                .size
-                .width * 0.8),
+            top: MediaQuery.of(context).size.height * 0.72,
+            left: MediaQuery.of(context).size.width * 0.8),
         child: FloatingActionButton(
           onPressed: () {
             setState(() {
               top =
-                  RoutePage(height: MediaQuery
-                      .of(context)
-                      .size
-                      .height * 0.25);
+                  RoutePage(height: MediaQuery.of(context).size.height * 0.25);
             });
           },
           child: const Icon(Icons.turn_right_outlined),
         ),
       ),
-
-
       Visibility(
           visible: Theme.of(context).platform != TargetPlatform.iOS,
           child: Container(
             margin: EdgeInsets.only(
-                top: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.81,
-                left: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.8),
+                top: MediaQuery.of(context).size.height * 0.81,
+                left: MediaQuery.of(context).size.width * 0.8),
             child: FloatingActionButton(
               onPressed: () async {
                 Position position = await _determinePosition();
@@ -250,21 +221,20 @@ class GoogleMapaState extends State<GoogleMapa> {
                     target: LatLng(position.latitude, position.longitude),
                     zoom: 14)));
 
-                _markers.add(Marker(markerId: const MarkerId("currentLocation"),
+                _markers.add(Marker(
+                    markerId: const MarkerId("currentLocation"),
                     position: LatLng(position.latitude, position.longitude)));
 
-                setState(() {
-
-                });
+                setState(() {});
               },
               child: const Icon(Icons.location_history),
             ),
-          )
-      )
+          ))
     ]);
   }
 
-  void setPolylines(final PointLatLng punto1, final PointLatLng punto2, final newPaint) async {
+  void setPolylines(final PointLatLng punto1, final PointLatLng punto2,
+      final newPaint) async {
     polylinePoints = PolylinePoints();
     if (newPaint) polylineCoordinates.clear();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
@@ -274,7 +244,6 @@ class GoogleMapaState extends State<GoogleMapa> {
       for (var point in result.points) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       }
-      //WidgetsBinding.instance.addPostFrameCallback((_)
       setState(() {
         _polylines.add(Polyline(
             width: 10,
@@ -297,7 +266,7 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   void deleteMarker(String id) {
     Marker marker =
-    _markers.firstWhere((marker) => marker.markerId.value == id);
+        _markers.firstWhere((marker) => marker.markerId.value == id);
     setState(() {
       _markers.remove(marker);
     });
@@ -326,6 +295,4 @@ class GoogleMapaState extends State<GoogleMapa> {
     Position position = await Geolocator.getCurrentPosition();
     return position;
   }
-
-
 }

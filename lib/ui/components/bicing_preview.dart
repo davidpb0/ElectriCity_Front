@@ -81,7 +81,8 @@ class BicingPreview extends StatelessWidget {
                           topLeft: Radius.zero,
                           bottomRight: Radius.circular(8),
                           topRight: Radius.zero),
-                    )),
+                    )
+                ),
                 child: Column(
                   children: [
                     Row(
