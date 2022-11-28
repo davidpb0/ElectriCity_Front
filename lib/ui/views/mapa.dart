@@ -93,8 +93,8 @@ class GoogleMapaState extends State<GoogleMapa> {
     int q = 0;
 
     while (o < bicingPages) {
-      //await _mapaController.bicingApi(o);
-      //await _mapaController.rechargeApi(o);
+      await _mapaController.bicingApi(o);
+      await _mapaController.rechargeApi(o);
 
       bicingList = _mapaController.bicingList;
       rcList = _mapaController.cargaList;
