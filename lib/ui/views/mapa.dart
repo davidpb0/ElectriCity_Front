@@ -123,7 +123,8 @@ class GoogleMapaState extends State<GoogleMapa> {
         for (int k = q; k < chargerStationList.length; ++k) {
           _markers.add(
             Marker(
-              markerId: MarkerId("id-${k + 502}"),
+              markerId:
+              MarkerId("id-${k + 601}"),
               position: chargerStationList[k].coords,
               icon: chargerMarker,
               onTap: () {
@@ -261,9 +262,9 @@ class GoogleMapaState extends State<GoogleMapa> {
     ]);
   }
 
-  void setPolylines(final PointLatLng punto1, final PointLatLng punto2) async {
+  void setPolylines(final PointLatLng punto1, final PointLatLng punto2, final newPaint) async {
     polylinePoints = PolylinePoints();
-    polylineCoordinates.clear();
+    if (newPaint) polylineCoordinates.clear();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
         "AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM", punto1, punto2);
 

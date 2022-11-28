@@ -4,6 +4,7 @@ import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:electricity_front/core/models/StationList.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 
@@ -112,6 +113,33 @@ class MapaController {
       UserController().currentUser.personalUbiBD.add(coords);
       print(res.statusCode.toString());
       Navigator.of(context).pushReplacementNamed('/home');
+    }
+
+  }
+
+  routePainting(PointLatLng origin, PointLatLng destination) async {
+    var data = {
+      "latitudeA": origin.latitude,
+      "longitudeA": origin.longitude,
+      "latitudeB": destination.latitude,
+      "longitudeB": destination.longitude,
+      "numStations": 1
+    };
+    
+    Response res = await _apiService.routePainting(data, 'route/station');
+    if (res.statusCode == 200) {
+      print(res.body.length.toString());
+      var body = jsonDecode(res.body);
+      print(body.length.toString());
+      List<PointLatLng> pointsList = <PointLatLng>[];
+      for (int i = 0; i < body.length; ++i) {
+        PointLatLng pointLatLng = PointLatLng(body[i]['latitude'], body[i]['longitude']);
+        pointsList.add(pointLatLng);
+      }
+      return pointsList;
+    }
+    else {
+      throw Exception("Error in API request of creation of route painting, StatudCode: ${res.statusCode}");
     }
 
   }
