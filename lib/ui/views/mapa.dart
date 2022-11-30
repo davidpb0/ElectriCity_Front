@@ -183,6 +183,25 @@ class GoogleMapaState extends State<GoogleMapa> {
           markers: _markers,
         ),
         Container(
+          margin: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height * 0.75,
+              left: MediaQuery.of(context).size.width * 0.82),
+          decoration: BoxDecoration(
+            color: Colors.green,
+            borderRadius: BorderRadius.circular(0),
+          ),
+          child: TextButton.icon(
+            label: const Text(""),
+            icon: const Icon(Icons.turn_right_outlined),
+            onPressed: () {
+              setState(() {
+                top = RoutePage(
+                    height: MediaQuery.of(context).size.height * 0.25);
+              });
+            },
+          ),
+        ),
+        Container(
             height: 130,
             margin:
                 EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.75),
@@ -194,20 +213,6 @@ class GoogleMapaState extends State<GoogleMapa> {
             child: form),
       ]),
       top,
-      Container(
-        margin: EdgeInsets.only(
-            top: MediaQuery.of(context).size.height * 0.72,
-            left: MediaQuery.of(context).size.width * 0.8),
-        child: FloatingActionButton(
-          onPressed: () {
-            setState(() {
-              top =
-                  RoutePage(height: MediaQuery.of(context).size.height * 0.25);
-            });
-          },
-          child: const Icon(Icons.turn_right_outlined),
-        ),
-      ),
       Visibility(
           visible: Theme.of(context).platform != TargetPlatform.iOS,
           child: Container(

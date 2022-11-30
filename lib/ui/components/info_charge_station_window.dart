@@ -4,16 +4,23 @@ import 'package:flutter/material.dart';
 import '../../fonts/test_icons_icons.dart';
 
 // ignore: must_be_immutable
-class InfoChargeStationWindow extends StatelessWidget {
-  InfoChargeStationWindow(
-      {super.key,
-      required this.slots,
-      required this.addres,
-      required this.connectionType});
+class InfoChargeStationWindow extends StatefulWidget {
+  InfoChargeStationWindow({super.key,
+    required this.slots,
+    required this.addres,
+    required this.connectionType});
 
   final int? slots;
   final String addres;
   String? connectionType;
+
+  @override
+  State<InfoChargeStationWindow> createState() =>
+      _InfoChargeStationWindow();
+}
+class _InfoChargeStationWindow extends State<InfoChargeStationWindow>{
+  Icon like = const Icon(Icons.favorite_border_outlined);
+  bool liked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +46,7 @@ class InfoChargeStationWindow extends StatelessWidget {
               color: Colors.green),
             width: MediaQuery.of(context).size.width,
             child: Text(
-              addres,
+              widget.addres,
               textAlign: TextAlign.center,
               style: const TextStyle(
                 color: Colors.white,
@@ -59,7 +66,7 @@ class InfoChargeStationWindow extends StatelessWidget {
                           child: Icon(TestIcons.eCar, size: 20)
                       ),
                       const Text("Tipus de connexió: "),
-                      Text(connectionType.toString())
+                      Text(widget.connectionType.toString())
                     ],
                   ),
                   Row(
@@ -69,7 +76,7 @@ class InfoChargeStationWindow extends StatelessWidget {
                           child: Icon(TestIcons.eCharger, size: 20)
                       ),
                       const Text("Espais disponibles: "),
-                      Text(slots.toString())
+                      Text(widget.slots.toString())
                     ],
                   )
                 ],

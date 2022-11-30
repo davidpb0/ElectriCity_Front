@@ -3,16 +3,25 @@ import 'package:flutter/material.dart';
 
 import '../../fonts/test_icons_icons.dart';
 
-class InfoBicingStationWindow extends StatelessWidget {
-  const InfoBicingStationWindow(
-      {super.key,
-      required this.belec,
-      required this.bmech,
-      required this.slots,
-      required this.addres});
+class InfoBicingStationWindow extends StatefulWidget {
+  const InfoBicingStationWindow({super.key,
+    required this.belec,
+    required this.bmech,
+    required this.slots,
+    required this.addres});
 
   final int? belec, bmech, slots;
   final String addres;
+
+
+  @override
+  State<InfoBicingStationWindow> createState() =>
+      _InfoBicingStationWindowState();
+}
+
+class _InfoBicingStationWindowState extends State<InfoBicingStationWindow>{
+  Icon like = const Icon(Icons.favorite_border_outlined);
+  bool liked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +46,33 @@ class InfoBicingStationWindow extends StatelessWidget {
                     topRight: Radius.circular(12)),
                 color: Colors.blue),
             width: MediaQuery.of(context).size.width,
-            child: Text(
-              addres,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
+            child: Row(children: [
+              Expanded(
+                child: Text(
+                  widget.addres,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
               ),
-            ),
+              IconButton(
+                  onPressed: () {
+                    setState(() {
+                      if(liked) {
+                        liked = false;
+                        like = const Icon(Icons.favorite_border_outlined);
+                      }
+                      else {
+                        liked = true;
+                        like = const Icon(Icons.favorite);
+                      }
+                    });
+                  },
+                  icon: like
+              )
+            ]),
           ),
           Container(
               color: Colors.white,
@@ -58,7 +86,7 @@ class InfoBicingStationWindow extends StatelessWidget {
                               EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.ebike, size: 20)),
                       const Text("Bicicletes elèctriques disponibles: "),
-                      Text(belec.toString())
+                      Text(widget.belec.toString())
                     ],
                   ),
                   Row(
@@ -68,7 +96,7 @@ class InfoBicingStationWindow extends StatelessWidget {
                               EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.bike, size: 20)),
                       const Text("Bicicletes mecàniques disponibles: "),
-                      Text(bmech.toString())
+                      Text(widget.bmech.toString())
                     ],
                   ),
                   Row(
@@ -78,14 +106,14 @@ class InfoBicingStationWindow extends StatelessWidget {
                               EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.bicingParking, size: 20)),
                       const Text("Espais disponibles: "),
-                      Text(slots.toString())
+                      Text(widget.slots.toString())
                     ],
                   )
                 ],
-              )
-          ),
+              )),
         ]),
       ),
     );
   }
+
 }
