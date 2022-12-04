@@ -111,6 +111,12 @@ abstract class AppLocalizations {
   /// **'Sign In'**
   String get login_signin;
 
+  /// No description provided for @login_signinwith.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with:'**
+  String get login_signinwith;
+
   /// No description provided for @login_clickhere.
   ///
   /// In en, this message translates to:
@@ -128,6 +134,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Sign up'**
   String get login_signup;
+
+  /// No description provided for @signup_username.
+  ///
+  /// In en, this message translates to:
+  /// **'User'**
+  String get signup_username;
+
+  /// No description provided for @signup_password.
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get signup_password;
+
+  /// No description provided for @signup_repeatpassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat password'**
+  String get signup_repeatpassword;
+
+  /// No description provided for @signup_createaccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Create account'**
+  String get signup_createaccount;
+
+  /// No description provided for @homepage_map.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get homepage_map;
+
+  /// No description provided for @homepage_stations.
+  ///
+  /// In en, this message translates to:
+  /// **'Stations'**
+  String get homepage_stations;
+
+  /// No description provided for @homepage_prizes.
+  ///
+  /// In en, this message translates to:
+  /// **'Prizes'**
+  String get homepage_prizes;
+
+  /// No description provided for @homepage_profile.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get homepage_profile;
+
+  /// No description provided for @route_origin.
+  ///
+  /// In en, this message translates to:
+  /// **'Origin'**
+  String get route_origin;
+
+  /// No description provided for @route_searchorigin.
+  ///
+  /// In en, this message translates to:
+  /// **'Search origin'**
+  String get route_searchorigin;
+
+  /// No description provided for @route_destination.
+  ///
+  /// In en, this message translates to:
+  /// **'Destination'**
+  String get route_destination;
+
+  /// No description provided for @route_searchdestination.
+  ///
+  /// In en, this message translates to:
+  /// **'Search destination'**
+  String get route_searchdestination;
+
+  /// No description provided for @personallocation_header.
+  ///
+  /// In en, this message translates to:
+  /// **'New personal location'**
+  String get personallocation_header;
+
+  /// No description provided for @personallocation_addtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a title to your location'**
+  String get personallocation_addtitle;
+
+  /// No description provided for @personallocation_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get personallocation_title;
+
+  /// No description provided for @personallocation_adddescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a description to your location'**
+  String get personallocation_adddescription;
+
+  /// No description provided for @personallocation_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Description'**
+  String get personallocation_description;
+
+  /// No description provided for @personallocation_submit.
+  ///
+  /// In en, this message translates to:
+  /// **'Add location'**
+  String get personallocation_submit;
+
+  /// No description provided for @profile_personallocations.
+  ///
+  /// In en, this message translates to:
+  /// **'Personal locations'**
+  String get profile_personallocations;
+
+  /// No description provided for @profile_nolocations.
+  ///
+  /// In en, this message translates to:
+  /// **'No personal locations found'**
+  String get profile_nolocations;
+
+  /// No description provided for @profile_favouritestations.
+  ///
+  /// In en, this message translates to:
+  /// **'Favourite stations'**
+  String get profile_favouritestations;
+
+  /// No description provided for @profile_nostations.
+  ///
+  /// In en, this message translates to:
+  /// **'No favourite stations found'**
+  String get profile_nostations;
+
+  /// No description provided for @profile_logout.
+  ///
+  /// In en, this message translates to:
+  /// **'Log out'**
+  String get profile_logout;
+
+  /// No description provided for @profile_delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete account'**
+  String get profile_delete;
+
+  /// No description provided for @profile_checkdelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete your account?'**
+  String get profile_checkdelete;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
