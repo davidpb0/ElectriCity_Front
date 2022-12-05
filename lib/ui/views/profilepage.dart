@@ -47,7 +47,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: <Widget>[
                             Material(
                               color: Colors.transparent,
-                              child: Text(userCtrl.currentUser.username,
+                              child: Text(userCtrl.currentUser.getUsername(),
                                   style: const TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
@@ -340,7 +340,7 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget listaPersonalUbi() {
-    if (userCtrl.currentUser.personalUbi.isEmpty) {
+    if (userCtrl.currentUser.getPersonalUbi().isEmpty) {
       return const Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Material(
@@ -356,7 +356,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: userCtrl.currentUser.personalUbi.length,
+        itemCount: userCtrl.currentUser.getPersonalUbi().length,
         itemBuilder: (context, index) {
           return Dismissible(
             background: Container(
@@ -378,7 +378,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Padding(
                 padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
                 child: PersonalUbiPreview(
-                    info: userCtrl.currentUser.personalUbi.elementAt(index)
+                    info: userCtrl.currentUser.getPersonalUbi().elementAt(index)
                 )
             ),
           );
@@ -389,7 +389,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: userCtrl.currentUser.personalUbi.length,
+        itemCount: userCtrl.currentUser.getPersonalUbi().length,
         itemBuilder: (context, index) {
           return Padding(
               key: UniqueKey(),
@@ -397,7 +397,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Row(
                 children: [
                   Text(
-                    userCtrl.currentUser.personalUbi
+                    userCtrl.currentUser.getPersonalUbi()
                         .elementAt(index)
                         .infoWindow
                         .title
@@ -411,7 +411,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   const Expanded(child: SizedBox()),
                   IconButton(
                       onPressed: () {
-                        userCtrl.currentUser.personalUbi.removeAt(index);
+                        userCtrl.currentUser.deletePersonalUbi(index);
                         Navigator.of(context).build(context);
                       },
                       icon: const Icon(Icons.delete,

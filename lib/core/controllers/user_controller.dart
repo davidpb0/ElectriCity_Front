@@ -22,7 +22,7 @@ class UserController {
     try {
       setCustomMarker();
       currentUser = await LoginController().logIn(mail, pwd, ctext);
-      ApiService().setToken(currentUser.token);
+      ApiService().setToken(currentUser.getUserTkn());
     }
     catch (e) {
       Exception("Error en iniciar la sesion");
@@ -60,7 +60,7 @@ class UserController {
   }
 
   deletePersonalUbiEveryWhere(int index) async {
-    Marker location = currentUser.personalUbi.elementAt(index);
+    Marker location = currentUser.getPersonalUbi().elementAt(index);
 
     String urlTemp = "users/${currentUser.getUserId()}/locations/${int.parse(location.markerId.value) - 3000}";
     Response res = await ApiService().deletePersonalUbi(urlTemp);

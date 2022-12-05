@@ -96,7 +96,7 @@ class GoogleMapaState extends State<GoogleMapa> {
 
       bicingList = _mapaController.bicingList;
       rcList = _mapaController.cargaList;
-      personalMarkers = _userController.currentUser.personalUbi;
+      personalMarkers = _userController.currentUser.getPersonalUbi();
       bicingStationList = _mapaController.bicingStationList;
       chargerStationList = _mapaController.chargerStationList;
 
