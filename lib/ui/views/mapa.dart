@@ -57,9 +57,7 @@ class GoogleMapaState extends State<GoogleMapa> {
   }
 
   void setCustomMarker() async {
-    bool isIOS = Theme
-        .of(context)
-        .platform == TargetPlatform.iOS;
+    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
     if (isIOS) {
       bicingMarker = await BitmapDescriptor.fromAssetImage(
           const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
@@ -108,16 +106,22 @@ class GoogleMapaState extends State<GoogleMapa> {
             Marker(
                 markerId: MarkerId("id-${i + 1}"),
                 position: bicingStationList[i].coords,
-                icon: bicingMarker,
+                icon: (UserController()
+                        .currentUser
+                        .isFavouriteBicing(bicingStationList[i]))
+                    ? personalMarker
+                    : bicingMarker,
                 onTap: () {
                   setState(() {
                     info = InfoBicingStationWindow(
-                      belec: bicingStationList[i].electrical,
-                      bmech: bicingStationList[i].mechanical,
-                      slots: bicingStationList[i].availableSlots,
-                      addres: bicingStationList[i].address,
-                      liked: UserController().currentUser.isFavouriteBicing(bicingStationList[i]),
-                      id: MarkerId("${i + 1}"));
+                        belec: bicingStationList[i].electrical,
+                        bmech: bicingStationList[i].mechanical,
+                        slots: bicingStationList[i].availableSlots,
+                        addres: bicingStationList[i].address,
+                        liked: UserController()
+                            .currentUser
+                            .isFavouriteBicing(bicingStationList[i]),
+                        id: MarkerId("${i + 1}"));
                   });
                 }),
           );
@@ -127,16 +131,21 @@ class GoogleMapaState extends State<GoogleMapa> {
             Marker(
               markerId: MarkerId("id-${k + 601}"),
               position: chargerStationList[k].coords,
-              icon: chargerMarker,
+              icon: (UserController()
+                      .currentUser
+                      .isFavouriteCharger(chargerStationList[k]))
+                  ? personalMarker
+                  : chargerMarker,
               onTap: () {
                 setState(() {
                   info = InfoChargeStationWindow(
                       slots: chargerStationList[k].slots,
                       addres: chargerStationList[k].address,
                       connectionType: chargerStationList[k].connectionType,
-                      liked: UserController().currentUser.isFavouriteCharger(chargerStationList[k]) ,
-                      id: MarkerId("${k + 601}")
-                  );
+                      liked: UserController()
+                          .currentUser
+                          .isFavouriteCharger(chargerStationList[k]),
+                      id: MarkerId("${k + 601}"));
                 });
               },
             ),
@@ -190,14 +199,8 @@ class GoogleMapaState extends State<GoogleMapa> {
         ),
         Container(
           margin: EdgeInsets.only(
-              top: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.75,
-              left: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.82),
+              top: MediaQuery.of(context).size.height * 0.75,
+              left: MediaQuery.of(context).size.width * 0.82),
           decoration: BoxDecoration(
             color: Colors.green,
             borderRadius: BorderRadius.circular(0),
@@ -208,10 +211,7 @@ class GoogleMapaState extends State<GoogleMapa> {
             onPressed: () {
               setState(() {
                 top = RoutePage(
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height * 0.25);
+                    height: MediaQuery.of(context).size.height * 0.25);
               });
             },
           ),
@@ -219,35 +219,21 @@ class GoogleMapaState extends State<GoogleMapa> {
         Container(
             height: 130,
             margin:
-            EdgeInsets.only(top: MediaQuery
-                .of(context)
-                .size
-                .height * 0.75),
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.75),
             child: info),
         Container(
             height: 130,
             margin:
-            EdgeInsets.only(top: MediaQuery
-                .of(context)
-                .size
-                .height * 0.5),
+                EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.5),
             child: form),
       ]),
       top,
       Visibility(
-          visible: Theme
-              .of(context)
-              .platform != TargetPlatform.iOS,
+          visible: Theme.of(context).platform != TargetPlatform.iOS,
           child: Container(
             margin: EdgeInsets.only(
-                top: MediaQuery
-                    .of(context)
-                    .size
-                    .height * 0.81,
-                left: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.8),
+                top: MediaQuery.of(context).size.height * 0.81,
+                left: MediaQuery.of(context).size.width * 0.8),
             child: FloatingActionButton(
               onPressed: () async {
                 Position position = await _determinePosition();
@@ -300,7 +286,7 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   void deleteMarker(String id) {
     Marker marker =
-    _markers.firstWhere((marker) => marker.markerId.value == id);
+        _markers.firstWhere((marker) => marker.markerId.value == id);
     setState(() {
       _markers.remove(marker);
     });
