@@ -86,6 +86,12 @@ class Station {
     data['address'] = address;
     return data;
   }
+  @override
+  bool operator ==(Object other) =>
+      other is Station &&
+          other.runtimeType == runtimeType &&
+          other.address == address;
+
 }
 
 class HydraView {

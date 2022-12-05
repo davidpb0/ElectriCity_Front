@@ -66,21 +66,18 @@ class User {
   isFavouriteCharger(RechargeStation charger){
     return _favouriteChargerStation.contains(charger);
   }
+
   addFavBicing(Station bicing){
     _favouriteBicingStation.add(bicing);
-    print(_favouriteBicingStation.length);
   }
   deleteFavBicing(Station bicing){
     _favouriteBicingStation.remove(bicing);
-    print(_favouriteBicingStation.length);
   }
 
   addFavCharger(RechargeStation charger){
     _favouriteChargerStation.add(charger);
-    print(_favouriteChargerStation.length);
   }
-  deleteFavCarger(RechargeStation charger){
+  deleteFavCharger(RechargeStation charger){
     _favouriteChargerStation.remove(charger);
-    print(_favouriteChargerStation.length);
   }
 }

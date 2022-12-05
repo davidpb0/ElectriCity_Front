@@ -1,27 +1,34 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../core/controllers/mapa_controller.dart';
+import '../../core/controllers/user_controller.dart';
 import '../../fonts/test_icons_icons.dart';
 
+// ignore: must_be_immutable
 class InfoBicingStationWindow extends StatefulWidget {
-  const InfoBicingStationWindow({super.key,
-    required this.belec,
-    required this.bmech,
-    required this.slots,
-    required this.addres});
+  InfoBicingStationWindow(
+      {super.key,
+      required this.belec,
+      required this.bmech,
+      required this.slots,
+      required this.addres,
+      required this.liked,
+      required this.id});
 
   final int? belec, bmech, slots;
   final String addres;
-
+  final MarkerId id;
+  bool liked;
 
   @override
   State<InfoBicingStationWindow> createState() =>
       _InfoBicingStationWindowState();
 }
 
-class _InfoBicingStationWindowState extends State<InfoBicingStationWindow>{
+class _InfoBicingStationWindowState extends State<InfoBicingStationWindow> {
   Icon like = const Icon(Icons.favorite_border_outlined);
-  bool liked = false;
 
   @override
   Widget build(BuildContext context) {
@@ -60,18 +67,24 @@ class _InfoBicingStationWindowState extends State<InfoBicingStationWindow>{
               IconButton(
                   onPressed: () {
                     setState(() {
-                      if(liked) {
-                        liked = false;
-                        like = const Icon(Icons.favorite_border_outlined);
-                      }
-                      else {
-                        liked = true;
-                        like = const Icon(Icons.favorite);
+                      if (widget.liked) {
+                        widget.liked = false;
+                        UserController().currentUser.deleteFavBicing(
+                            (MapaController()
+                                .bicingStationList
+                                .elementAt(int.parse(widget.id.value) - 1)));
+                      } else {
+                        widget.liked = true;
+                        UserController().currentUser.addFavBicing(
+                            (MapaController()
+                                .bicingStationList
+                                .elementAt(int.parse(widget.id.value) - 1)));
                       }
                     });
                   },
-                  icon: like
-              )
+                  icon: Icon((widget.liked)
+                      ? Icons.favorite
+                      : Icons.favorite_border_outlined))
             ]),
           ),
           Container(
@@ -115,5 +128,4 @@ class _InfoBicingStationWindowState extends State<InfoBicingStationWindow>{
       ),
     );
   }
-
 }
