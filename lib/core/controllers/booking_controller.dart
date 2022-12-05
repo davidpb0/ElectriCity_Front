@@ -21,6 +21,8 @@ class BookingController {
 
   late DateTime _endtime;
 
+  bool _successfulBooking = false;
+
 
   factory BookingController() {
     return _this;
@@ -37,6 +39,7 @@ class BookingController {
     _starttime = DateTime.now();
     _timeError = "";
     _endtime = DateTime.now();
+    _successfulBooking = false;
   }
 
   void setStationId(String id) {
@@ -53,6 +56,10 @@ class BookingController {
 
   void setEndTime(DateTime et) {
     _endtime = et;
+  }
+
+  void mockSuccess() {
+    _successfulBooking = true;
   }
 
   bool validateDuration() {
@@ -98,6 +105,10 @@ class BookingController {
 
   String timeError() {
     return _timeError;
+  }
+
+  bool getSuccessfulBooking(){
+    return _successfulBooking;
   }
 
 }
