@@ -80,6 +80,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get personallocation_submit => 'Add location';
 
   @override
+  String get reservation_title => 'Book a charging slot';
+
+  @override
+  String get reservation_date => 'Date';
+
+  @override
+  String get reservation_starttime => 'From:';
+
+  @override
+  String get reservation_endtime => 'To:';
+
+  @override
   String get profile_personallocations => 'Personal locations';
 
   @override

@@ -243,6 +243,30 @@ abstract class AppLocalizations {
   /// **'Add location'**
   String get personallocation_submit;
 
+  /// No description provided for @reservation_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a charging slot'**
+  String get reservation_title;
+
+  /// No description provided for @reservation_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get reservation_date;
+
+  /// No description provided for @reservation_starttime.
+  ///
+  /// In en, this message translates to:
+  /// **'From:'**
+  String get reservation_starttime;
+
+  /// No description provided for @reservation_endtime.
+  ///
+  /// In en, this message translates to:
+  /// **'To:'**
+  String get reservation_endtime;
+
   /// No description provided for @profile_personallocations.
   ///
   /// In en, this message translates to:

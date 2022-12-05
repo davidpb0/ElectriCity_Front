@@ -29,6 +29,11 @@
     "personallocation_description": "Description",
     "personallocation_submit": "Add location",
 
+    "reservation_title": "Book a charging slot",
+    "reservation_date": "Date",
+    "reservation_starttime": "From:",
+    "reservation_endtime": "To:",
+
     "profile_personallocations": "Personal locations",
     "profile_nolocations": "No personal locations found",
     "profile_favouritestations": "Favourite stations",

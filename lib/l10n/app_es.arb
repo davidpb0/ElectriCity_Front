@@ -30,6 +30,11 @@
     "personallocation_description": "Descripción",
     "personallocation_submit": "Añadir ubicación",
 
+    "reservation_title": "Reserva una plaza",
+    "reservation_date": "Fecha",
+    "reservation_starttime": "Desde:",
+    "reservation_endtime": "Hasta:",
+
     "profile_personallocations": "Ubicaciones personales",
     "profile_nolocations": "No tiene ubicaciones personales",
     "profile_favouritestations": "Estaciones favoritas",
