@@ -4,6 +4,7 @@ import 'package:electricity_front/core/controllers/booking_controller.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/ui/components/reservation_form.dart';
+import 'package:electricity_front/ui/components/station_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -48,9 +49,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
     return Scaffold(
         backgroundColor: Colors.grey[300],
         body: Stack(children: [
-          Material(
-            color: Colors.transparent,
-            child: SingleChildScrollView(
+          SingleChildScrollView(
               child: Column(children: [
                 Container(
                   width: screensize.width,
@@ -306,11 +305,12 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                 Divider(),
                 Container(
                   child: Text("Comments")
-                )
+                ),
+                const StationComment(),
 
               ]),
             ),
-          ),
+
           Material(
             color: Colors.transparent,
             child: DefaultHeader(
