@@ -1,3 +1,5 @@
+import 'package:electricity_front/core/models/recharge_station.dart';
+import 'package:electricity_front/core/models/station_list.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../controllers/user_controller.dart';
@@ -5,6 +7,8 @@ import '../controllers/user_controller.dart';
 class User {
   List<Marker> personalUbi = [];
   List<LatLng> personalUbiBD = [];
+  final List<Station> _favouriteBicingStation = [];
+  final List<RechargeStation> _favouriteChargerStation = [];
   String username = "";
   String token = "";
   String email = "";
@@ -53,5 +57,30 @@ class User {
 
   deletePersonalUbi(int index) {
     personalUbi.removeAt(index);
+  }
+
+  isFavouriteBicing(Station bicing){
+    return _favouriteBicingStation.contains(bicing);
+  }
+
+  isFavouriteCharger(RechargeStation charger){
+    return _favouriteChargerStation.contains(charger);
+  }
+  addFavBicing(Station bicing){
+    _favouriteBicingStation.add(bicing);
+    print(_favouriteBicingStation.length);
+  }
+  deleteFavBicing(Station bicing){
+    _favouriteBicingStation.remove(bicing);
+    print(_favouriteBicingStation.length);
+  }
+
+  addFavCharger(RechargeStation charger){
+    _favouriteChargerStation.add(charger);
+    print(_favouriteChargerStation.length);
+  }
+  deleteFavCarger(RechargeStation charger){
+    _favouriteChargerStation.remove(charger);
+    print(_favouriteChargerStation.length);
   }
 }
