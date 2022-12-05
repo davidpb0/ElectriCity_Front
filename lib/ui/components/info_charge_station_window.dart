@@ -45,13 +45,34 @@ class _InfoChargeStationWindow extends State<InfoChargeStationWindow>{
                 topRight: Radius.circular(12)),
               color: Colors.green),
             width: MediaQuery.of(context).size.width,
-            child: Text(
-              widget.addres,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    widget.addres,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                IconButton(
+                    onPressed: () {
+                      setState(() {
+                        if(liked) {
+                          liked = false;
+                          like = const Icon(Icons.favorite_border_outlined);
+                        }
+                        else {
+                          liked = true;
+                          like = const Icon(Icons.favorite);
+                        }
+                      });
+                    },
+                    icon: like
+                )
+              ],
             ),
           ),
           Container(
