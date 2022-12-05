@@ -267,6 +267,42 @@ abstract class AppLocalizations {
   /// **'To:'**
   String get reservation_endtime;
 
+  /// No description provided for @bicingstation_mechanical.
+  ///
+  /// In en, this message translates to:
+  /// **'Mechanical bikes'**
+  String get bicingstation_mechanical;
+
+  /// No description provided for @bicingstation_electrical.
+  ///
+  /// In en, this message translates to:
+  /// **'Electrical bikes'**
+  String get bicingstation_electrical;
+
+  /// No description provided for @bicingstation_slots.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty slots'**
+  String get bicingstation_slots;
+
+  /// No description provided for @rechargestation_speed.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed type'**
+  String get rechargestation_speed;
+
+  /// No description provided for @rechargestation_connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection type'**
+  String get rechargestation_connection;
+
+  /// No description provided for @rechargestation_slots.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty slots'**
+  String get rechargestation_slots;
+
   /// No description provided for @profile_personallocations.
   ///
   /// In en, this message translates to:

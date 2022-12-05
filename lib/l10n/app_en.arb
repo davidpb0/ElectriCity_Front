@@ -34,6 +34,14 @@
     "reservation_starttime": "From:",
     "reservation_endtime": "To:",
 
+    "bicingstation_mechanical": "Mechanical bikes",
+    "bicingstation_electrical": "Electrical bikes",
+    "bicingstation_slots": "Empty slots",
+
+    "rechargestation_speed": "Speed type",
+    "rechargestation_connection": "Connection type",
+    "rechargestation_slots": "Empty slots",
+
     "profile_personallocations": "Personal locations",
     "profile_nolocations": "No personal locations found",
     "profile_favouritestations": "Favourite stations",

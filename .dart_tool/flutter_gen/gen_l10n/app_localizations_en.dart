@@ -92,6 +92,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reservation_endtime => 'To:';
 
   @override
+  String get bicingstation_mechanical => 'Mechanical bikes';
+
+  @override
+  String get bicingstation_electrical => 'Electrical bikes';
+
+  @override
+  String get bicingstation_slots => 'Empty slots';
+
+  @override
+  String get rechargestation_speed => 'Speed type';
+
+  @override
+  String get rechargestation_connection => 'Connection type';
+
+  @override
+  String get rechargestation_slots => 'Empty slots';
+
+  @override
   String get profile_personallocations => 'Personal locations';
 
   @override

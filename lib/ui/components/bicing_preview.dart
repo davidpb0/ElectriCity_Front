@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
 import '../../core/models/station_list.dart';
 import '../../fonts/test_icons_icons.dart';
+import '../views/expandedstationpage.dart';
 
-class BicingPreview extends StatelessWidget {
+class BicingPreview extends StatefulWidget {
   final Station info;
 
   const BicingPreview({
     Key? key,
     required this.info,
   }) : super(key: key);
+
+  @override
+  State<BicingPreview> createState() => _BicingPreviewState();
+}
+
+class _BicingPreviewState extends State<BicingPreview> {
+  bool faved = false;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +56,7 @@ class BicingPreview extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        info.address,
+                        widget.info.address,
                         textAlign: TextAlign.left,
                         style: const TextStyle(
                           color: Colors.white,
@@ -58,7 +66,7 @@ class BicingPreview extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        info.id.toString(),
+                        widget.info.id.toString(),
                         textAlign: TextAlign.right,
                         style: const TextStyle(
                           color: Colors.white,
@@ -83,67 +91,101 @@ class BicingPreview extends StatelessWidget {
                           topRight: Radius.zero),
                     )
                 ),
-                child: Column(
+                child: Row(
                   children: [
-                    Row(
+                  Expanded(
+                    flex: 2,
+                    child: Column(
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 6),
-                          child: Icon(TestIcons.bike, size: 20),
+                        Row(
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 6),
+                              child: Icon(TestIcons.bike, size: 20),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Text(
+                                widget.info.mechanical.toString(),
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(6),
-                          child: Text(
-                            info.mechanical.toString(),
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                        Row(children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 6),
+                            child: Icon(TestIcons.ebike, size: 20),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Text(
+                              widget.info.electrical.toString(),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
+                        ]),
+                        Row(// TEXT
+                            children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 6),
+                            child: Icon(TestIcons.bicingParking, size: 20),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(6),
+                            child: Text(
+                              widget.info.availableSlots.toString(),
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ]) //TEXT
                       ],
                     ),
-                    Row(children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6),
-                        child: Icon(TestIcons.ebike, size: 20),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: Text(
-                          info.electrical.toString(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ]),
-                    Row(// TEXT
-                        children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 6),
-                        child: Icon(TestIcons.bicingParking, size: 20),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(6),
-                        child: Text(
-                          info.availableSlots.toString(),
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ]) //TEXT
-                  ],
-                ),
+                  ),
+                    const VerticalDivider(),
+                    Expanded(
+                        flex: 1,
+                        child: Column(
+                            children: [
+                              IconButton(onPressed: (){
+                                setState(() {
+                                  if (faved) {
+                                    faved = false;
+                                  } else {
+                                    faved = true;
+                                  }
+                                });
+                                print("faved!");
+                                print(faved);
+                              },
+                                icon: Icon((faved) ? Icons.favorite_outline : Icons.favorite),
+                              ),
+
+                              IconButton(onPressed: (){
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  ExpandedStationPage(index: widget.info.id, bicing: true)));
+                              },
+                                icon: Icon(Icons.open_in_new),
+                              )
+
+                            ]
+                        )
+                    )
+                ])
               ),
             ],
           ),

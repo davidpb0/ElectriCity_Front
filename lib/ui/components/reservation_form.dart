@@ -248,16 +248,16 @@ class _ReservationFormState extends State<ReservationForm> {
                             endTimeError == "") {
                           if (booking.validateDuration()) {
                             print("valid");
-                            booking.mockSuccess();
-                            completedBooking = true;
-                            /*
+                            //booking.mockSuccess();
+                            //completedBooking = true;
+
                                                       Future<bool> success = booking.tryBooking(context);
                                                       if (await success) {
                                                         completedBooking = true;
 
                                                       }
 
-                                                       */
+
                           }
 
                           setState(() {
