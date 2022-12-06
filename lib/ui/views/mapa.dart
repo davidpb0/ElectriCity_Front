@@ -104,7 +104,7 @@ class GoogleMapaState extends State<GoogleMapa> {
         for (int i = q; i < bicingList.length; ++i) {
           _markers.add(
             Marker(
-                markerId: MarkerId("id-${i + 1}"),
+                markerId: MarkerId("id-${bicingStationList[i].id}"),
                 position: bicingStationList[i].coords,
                 icon: (UserController()
                         .currentUser
@@ -114,14 +114,15 @@ class GoogleMapaState extends State<GoogleMapa> {
                 onTap: () {
                   setState(() {
                     info = InfoBicingStationWindow(
-                        belec: bicingStationList[i].electrical,
-                        bmech: bicingStationList[i].mechanical,
-                        slots: bicingStationList[i].availableSlots,
-                        addres: bicingStationList[i].address,
-                        liked: UserController()
-                            .currentUser
-                            .isFavouriteBicing(bicingStationList[i]),
-                        id: MarkerId("${i + 1}"));
+                      belec: bicingStationList[i].electrical,
+                      bmech: bicingStationList[i].mechanical,
+                      slots: bicingStationList[i].availableSlots,
+                      addres: bicingStationList[i].address,
+                      liked: UserController()
+                          .currentUser
+                          .isFavouriteBicing(bicingStationList[i]),
+                      bicing: bicingStationList[i],
+                    );
                   });
                 }),
           );
@@ -129,7 +130,7 @@ class GoogleMapaState extends State<GoogleMapa> {
         for (int k = q; k < chargerStationList.length; ++k) {
           _markers.add(
             Marker(
-              markerId: MarkerId("id-${k + 601}"),
+              markerId: MarkerId("id-${chargerStationList[k].id + 601}"),
               position: chargerStationList[k].coords,
               icon: (UserController()
                       .currentUser
@@ -145,7 +146,7 @@ class GoogleMapaState extends State<GoogleMapa> {
                       liked: UserController()
                           .currentUser
                           .isFavouriteCharger(chargerStationList[k]),
-                      id: MarkerId("${k + 601}"));
+                      id: MarkerId("${chargerStationList[k].id + 601}"));
                 });
               },
             ),

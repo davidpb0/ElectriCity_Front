@@ -1,9 +1,7 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
-import '../../core/controllers/mapa_controller.dart';
 import '../../core/controllers/user_controller.dart';
+import '../../core/models/station_list.dart';
 import '../../fonts/test_icons_icons.dart';
 
 // ignore: must_be_immutable
@@ -15,11 +13,11 @@ class InfoBicingStationWindow extends StatefulWidget {
       required this.slots,
       required this.addres,
       required this.liked,
-      required this.id});
+      required this.bicing});
 
   final int? belec, bmech, slots;
   final String addres;
-  final MarkerId id;
+  final Station bicing;
   bool liked;
 
   @override
@@ -65,22 +63,23 @@ class _InfoBicingStationWindowState extends State<InfoBicingStationWindow> {
                 ),
               ),
               IconButton(
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() {
                       if (widget.liked) {
                         widget.liked = false;
-                        UserController().currentUser.deleteFavBicing(
-                            (MapaController()
-                                .bicingStationList
-                                .elementAt(int.parse(widget.id.value) - 1)));
                       } else {
                         widget.liked = true;
-                        UserController().currentUser.addFavBicing(
-                            (MapaController()
-                                .bicingStationList
-                                .elementAt(int.parse(widget.id.value) - 1)));
                       }
                     });
+                    if (!widget.liked) {
+                      UserController().deleteFavBicingBD(widget.bicing.id, widget.bicing);
+                    } else {
+                      print("Entro aqui");
+                      print(widget.bicing.id);
+                      print(widget.bicing.address);
+                      await UserController()
+                          .addFavBicingBD(widget.bicing.id, widget.bicing);
+                    }
                   },
                   icon: Icon((widget.liked)
                       ? Icons.favorite

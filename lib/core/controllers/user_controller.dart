@@ -4,6 +4,7 @@ import 'package:electricity_front/core/services/api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
+import '../models/station_list.dart';
 import '../models/user.dart';
 
 class UserController {
@@ -67,5 +68,31 @@ class UserController {
     if (res.statusCode == 201) {
       currentUser.deletePersonalUbi(index);
     }
+  }
+
+  addFavBicingBD(int index, Station bicing) async {
+    String urlTemp = "https://localhost/users/${currentUser.getUserId()}/bicingStation/$index";
+    var data = {};
+    //Cambiar a postData cuando deploy de backEnd
+    Response res = await ApiService().postDataAux(data, urlTemp);
+    print(res.statusCode.toString());
+    if (res.statusCode == 201) {
+      print("GG wp");
+      currentUser.addFavBicing(bicing);
+    }
+
+  }
+
+  deleteFavBicingBD(int index, Station bicing) async {
+    String urlTemp = "https://localhost/users/${currentUser.getUserId()}/bicingStation/$index";
+
+    //Cambiar a delteData cuando deploy de backEnd
+    Response res = await ApiService().deleteDataAux(urlTemp);
+    print(res.statusCode.toString());
+    if (res.statusCode == 201) {
+      print("GG wp");
+      currentUser.deleteFavBicing(bicing);
+    }
+
   }
 }
