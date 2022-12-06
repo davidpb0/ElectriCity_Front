@@ -169,8 +169,10 @@ class GoogleMapaState extends State<GoogleMapa> {
           },
           onTap: (latlang) {
             setState(() {
-              deleteMarker('origin');
-              deleteMarker('destination');
+              if (_polylines.isNotEmpty) {
+                deleteMarker('origin');
+                deleteMarker('destination');
+              }
               info = Container();
               form = Container();
               top = const DefaultHeader(size: Size(100.0, 100.0));
