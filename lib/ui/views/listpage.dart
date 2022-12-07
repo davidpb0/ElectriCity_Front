@@ -6,7 +6,8 @@ import 'package:electricity_front/ui/components/bicing_preview.dart';
 import 'package:electricity_front/ui/components/recharge_preview.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/controllers/list_controller.dart';
+
+import '../../core/controllers/station_controller.dart';
 import '../../fonts/test_icons_icons.dart';
 import '../components/default_header.dart';
 
@@ -20,18 +21,12 @@ class ListPage extends StatefulWidget {
 class _ListPageState extends State<ListPage> {
   late Future<List<Station>> futureBicing;
   late Future<List<RechargeStation>> futureRecharge;
-  late ListController listCtrl;
+  StationController stationCtrl = StationController();
   bool bicing = true;
 
   @override
   void initState() {
     super.initState();
-    listCtrl = ListController();
-    if (!listCtrl.bicisStarted) listCtrl.fetchFirstBicingStations();
-    if (!listCtrl.bicisComplete) listCtrl.streamBicingStations();
-    if (!listCtrl.chargersStarted) listCtrl.fetchFirstRechargeStations();
-    if (!listCtrl.chargersComplete) listCtrl.streamRechargeStations();
-
     Timer(const Duration(seconds: 1), () => build(context));
   }
 
@@ -80,21 +75,21 @@ class _ListPageState extends State<ListPage> {
             visible: bicing,
             child: Expanded(
                 child: StreamBuilder(
-                    stream: listCtrl.getBicingStationsStream(),
+                    stream: stationCtrl.getBicingStationsStream(),
                     builder: (context, snapshot) {
                       if (snapshot.hasError) {
                         return const Center(child: Text("Error"));
                       } else if (snapshot.connectionState ==
                               ConnectionState.none &&
-                          !listCtrl.bicisStarted) {
+                          !stationCtrl.bicisStarted) {
                         return const Center(child: Text('Loading'));
                       } else if (snapshot.connectionState ==
                               ConnectionState.waiting &&
-                          !listCtrl.bicisStarted) {
+                          !stationCtrl.bicisStarted) {
                         return const Center(child: Text('Loading'));
                       } else if (snapshot.connectionState ==
                               ConnectionState.active &&
-                          !listCtrl.bicisStarted) {
+                          !stationCtrl.bicisStarted) {
                         return const Center(child: Text('Loading'));
                       } else {
                         return ShaderMask(
@@ -118,10 +113,10 @@ class _ListPageState extends State<ListPage> {
                             blendMode: BlendMode.dstOut,
                             child: ListView.builder(
                               shrinkWrap: true,
-                              itemCount: listCtrl.getTotalBicingStations(),
+                              itemCount: stationCtrl.getTotalBicingStations(),
                               itemBuilder: (context, index) {
                                 return BicingPreview(
-                                    info: listCtrl.getBicingStation(index));
+                                    info: stationCtrl.getBicingStation(index));
                               },
                             )
                         );
@@ -133,21 +128,21 @@ class _ListPageState extends State<ListPage> {
           visible: !bicing,
           child: Expanded(
               child: StreamBuilder(
-                  stream: listCtrl.getRechargeStationsStream(),
+                  stream: stationCtrl.getRechargeStationsStream(),
                   builder: (context, snapshot) {
                     if (snapshot.hasError) {
                       return const Center(child: Text("Error"));
                     } else if (snapshot.connectionState ==
                             ConnectionState.none &&
-                        !listCtrl.chargersStarted) {
+                        !stationCtrl.chargersStarted) {
                       return const Center(child: Text('Loading'));
                     } else if (snapshot.connectionState ==
                             ConnectionState.waiting &&
-                        !listCtrl.chargersStarted) {
+                        !stationCtrl.chargersStarted) {
                       return const Center(child: Text('Loading'));
                     } else if (snapshot.connectionState ==
                             ConnectionState.active &&
-                        !listCtrl.chargersStarted) {
+                        !stationCtrl.chargersStarted) {
                       return const Center(child: Text('Loading'));
                     } else {
                       // WHILE THE CALL IS BEING MADE AKA LOADING
@@ -172,10 +167,10 @@ class _ListPageState extends State<ListPage> {
                           blendMode: BlendMode.dstOut,
                           child: ListView.builder(
                             shrinkWrap: true,
-                            itemCount: listCtrl.getTotalRechargeStations(),
+                            itemCount: stationCtrl.getTotalRechargeStations(),
                             itemBuilder: (context, index) {
                               return RechargePreview(
-                                  info: listCtrl.getRechargeStation(index));
+                                  info: stationCtrl.getRechargeStation(index));
                             },
                           )
                       );

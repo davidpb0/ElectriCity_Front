@@ -1,4 +1,5 @@
 import 'package:electricity_front/core/controllers/mapa_controller.dart';
+import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
@@ -28,7 +29,7 @@ class GoogleMapaState extends State<GoogleMapa> {
   late BitmapDescriptor bicingMarker;
   late BitmapDescriptor chargerMarker;
   late BitmapDescriptor personalMarker;
-  final Set<Marker> _markers = {};
+  Set<Marker> _markers = {};
   final MapaController _mapaController = MapaController();
   final UserController _userController = UserController();
   late List<LatLng> bicingList;
@@ -56,35 +57,33 @@ class GoogleMapaState extends State<GoogleMapa> {
     super.initState();
   }
 
-  void setCustomMarker() async {
-    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-    if (isIOS) {
-      bicingMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
-          'assets/images/bikepin_ios.png');
-      chargerMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
-          'assets/images/chargerpin_ios.png');
-      personalMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
-          'assets/images/homepin_ios.png');
-    } else {
-      bicingMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
-          'assets/images/bikepin.png');
-      chargerMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
-          'assets/images/chargerpin.png');
-      personalMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
-          'assets/images/homepin.png');
-    }
-  }
+
 
   void _onMapCreated(GoogleMapController controller) async {
-    setCustomMarker();
+    _mapaController.setCustomMarker(context);
+    _mapaController.initMarkers();
+    //setCustomMarker();
 
     mc = controller;
+
+    if(_mapaController.checkMarkers()){
+      setState(() {
+        _markers = _mapaController.getMarkers();
+      });
+
+    }
+    else {
+      while(!_mapaController.checkMarkers()){
+        _mapaController.getMarkersStream().listen((list) {
+          setState(() {
+            _markers = list;
+          });
+        });
+
+
+      }
+    }
+    /*
 
     int o = 1;
     int j = 0;
@@ -146,6 +145,8 @@ class GoogleMapaState extends State<GoogleMapa> {
       ++o;
       q += 30;
     }
+
+     */
   }
 
   @override
@@ -253,6 +254,31 @@ class GoogleMapaState extends State<GoogleMapa> {
       });
     }
   }
+
+  void setAuxStation(int id, bool bicing){
+    setState(() {
+      if(bicing){
+        info = InfoBicingStationWindow(
+            belec: StationController().getBicingStation(id).electrical,
+            bmech: StationController().getBicingStation(id).mechanical,
+            slots: StationController().getBicingStation(id).availableSlots,
+            addres: StationController().getBicingStation(id).address);
+
+      }
+
+      else {
+        info = InfoChargeStationWindow(
+          slots: StationController().getRechargeStation(id).slots,
+          addres: StationController().getRechargeStation(id).address,
+          connectionType: StationController().getRechargeStation(id).connectionType,
+        );
+
+      }
+    });
+  }
+
+
+
 
   void setMarker(LatLng location, String id) {
     setState(() {

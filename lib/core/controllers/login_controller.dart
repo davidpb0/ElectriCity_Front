@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:electricity_front/core/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -25,6 +26,7 @@ class LoginController {
     var body = json.decode(res.body);
     if (res.statusCode == 201) {
       // ignore: use_build_context_synchronously
+
       Navigator.of(ctext).pushReplacementNamed('/home');
       return User.fromJson(body);
     } else {
