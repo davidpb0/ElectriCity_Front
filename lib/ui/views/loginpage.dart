@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import '../components/header_login_component.dart';
 
 class LoginPage extends StatefulWidget {
@@ -91,10 +89,10 @@ class Body extends StatelessWidget {
               child: TextField(
                 controller: _passwdTextController,
                 obscureText: true,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.lock),
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.lock),
                   border: InputBorder.none,
-                  hintText: AppLocalizations.of(context).signup_password,
+                  hintText: 'Password',
                 ),
               ),
             ),
@@ -105,10 +103,10 @@ class Body extends StatelessWidget {
         //Forget password
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(AppLocalizations.of(context).login_forgotpassword),
+          children: const [
+            Text("Forgot password?"),
             Text(
-              AppLocalizations.of(context).login_clickhere,
+              ' Click here',
               style: TextStyle(
                   color: Colors.indigoAccent, fontWeight: FontWeight.bold),
             )
@@ -140,10 +138,10 @@ class Body extends StatelessWidget {
                   color: Colors.green,
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: Center(
-                  child: Text(
-                    AppLocalizations.of(context).login_signin,
-                    style: const TextStyle(
+                child: const Center(
+                    child: Text(
+                  'Sign In',
+                  style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
@@ -156,7 +154,7 @@ class Body extends StatelessWidget {
         //const SizedBox(height: 30),
 
         //Sign with
-        Text(AppLocalizations.of(context).login_signinwith),
+        const Text('Sign with:'),
 
         //Google botton
         SizedBox(
@@ -191,14 +189,14 @@ class Body extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(AppLocalizations.of(context).login_notamember),
+            const Text('Not a member?'),
             SizedBox(
               child: TextButton(
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed('/signup');
                 },
-                child: Text(AppLocalizations.of(context).login_signup,
-                    style: const TextStyle(
+                child: const Text('Sign up',
+                    style: TextStyle(
                         color: Colors.indigoAccent,
                         fontWeight: FontWeight.bold
                     )

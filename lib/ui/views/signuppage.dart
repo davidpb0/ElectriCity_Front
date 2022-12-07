@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/controllers/signup_controller.dart';
 import '../../core/controllers/user_controller.dart';
@@ -72,10 +71,10 @@ class _SignupPageState extends State<SignupPage> {
                         padding: const EdgeInsets.only(left: 5.0),
                         child: TextFormField(
                           controller: usernameTextController,
-                          decoration:  InputDecoration(
-                            prefixIcon: const Icon(Icons.account_circle),
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(Icons.account_circle),
                             border: InputBorder.none,
-                            hintText: AppLocalizations.of(context).signup_username,
+                            hintText: 'Username',
                           ),
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
@@ -151,10 +150,10 @@ class _SignupPageState extends State<SignupPage> {
                         child: TextFormField(
                           controller: _passwdTextController,
                           obscureText: true,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             prefixIcon: Icon(Icons.lock),
                             border: InputBorder.none,
-                            hintText: AppLocalizations.of(context).signup_password,
+                            hintText: 'Password',
                           ),
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
@@ -194,7 +193,7 @@ class _SignupPageState extends State<SignupPage> {
                           decoration: InputDecoration(
                             prefixIcon: const Icon(Icons.lock),
                             border: InputBorder.none,
-                            hintText: AppLocalizations.of(context).signup_repeatpassword,
+                            hintText: 'Repeat password',
                             errorText: signupCtrl.pwdError(),
                           ),
                           validator: (String? value) {
@@ -249,10 +248,10 @@ class _SignupPageState extends State<SignupPage> {
                             color: Colors.green,
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          child:  Center(
-                            child: Text(
-                              AppLocalizations.of(context).signup_createaccount,
-                              style: const TextStyle(
+                          child: const Center(
+                              child: Text(
+                            'Create account',
+                            style: TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
