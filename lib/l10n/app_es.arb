@@ -49,6 +49,10 @@
     "profile_nostations": "No tiene estaciones favioritas",
     "profile_logout": "Cerrar sesión",
     "profile_delete": "Borrar cuenta",
-    "profile_checkdelete": "¿Está seguro de querer borrar su cuenta?"
+    "profile_checkdelete": "¿Está seguro de querer borrar su cuenta?",
+
+    "expandedStation_noComments":"Todavía no hay comentarios",
+    "expandedStation_favButton":"Favorito",
+    "expandedStation_addComment":"Añade un comentario"
 
 }

@@ -48,6 +48,12 @@
     "profile_nostations": "No favourite stations found",
     "profile_logout": "Log out",
     "profile_delete": "Delete account",
-    "profile_checkdelete": "Are you sure you want to delete your account?"
+    "profile_checkdelete": "Are you sure you want to delete your account?",
+
+    "expandedStation_noComments":"There's no comments yet",
+    "expandedStation_favButton":"Favourite",
+    "expandedStation_addComment":"Add Comment"
+
+
 
 }

@@ -344,6 +344,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to delete your account?'**
   String get profile_checkdelete;
+
+  /// No description provided for @expandedStation_noComments.
+  ///
+  /// In en, this message translates to:
+  /// **'There\'s no comments yet'**
+  String get expandedStation_noComments;
+
+  /// No description provided for @expandedStation_favButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Favourite'**
+  String get expandedStation_favButton;
+
+  /// No description provided for @expandedStation_addComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Comment'**
+  String get expandedStation_addComment;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

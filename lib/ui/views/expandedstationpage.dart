@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:electricity_front/core/controllers/booking_controller.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/station_list.dart';
@@ -7,10 +5,9 @@ import 'package:electricity_front/ui/components/reservation_form.dart';
 import 'package:electricity_front/ui/components/station_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
-
 import '../../core/controllers/list_controller.dart';
 import '../../fonts/test_icons_icons.dart';
+import '../components/commentForm.dart';
 import '../components/default_header.dart';
 
 class ExpandedStationPage extends StatefulWidget {
@@ -50,214 +47,224 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
         backgroundColor: Colors.grey[300],
         body: Stack(children: [
           SingleChildScrollView(
-              child: Column(children: [
-                Container(
-                  width: screensize.width,
-                  decoration: const BoxDecoration(
-                    color: Colors.grey,
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0, 3),
-                        blurRadius: 2,
-                      ),
-                    ],
-                  ),
-                  child: Column(children: [
-                    const SizedBox(height: 112),
-                    Padding(
-                        padding: const EdgeInsets.all(12),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Expanded(
-                                flex: 3,
-                                child: Text(
-                                    (widget.bicing)
-                                        ? bicingStation.address
-                                        : rechargeStation.address,
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold))),
-                            Expanded(
-                                flex: 1,
-                                child: Container(
-                                    height: 60,
-                                    decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        shape: BoxShape.circle),
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                        (widget.bicing)
-                                            ? bicingStation.id.toString()
-                                            : rechargeStation.id.toString(),
-                                        style: const TextStyle(
-                                            fontSize: 28,
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.bold))))
-                          ],
-                        )),
-                  ]),
+            child: Column(children: [
+              Container(
+                width: screensize.width,
+                decoration: const BoxDecoration(
+                  color: Colors.grey,
+                  boxShadow: [
+                    BoxShadow(
+                      offset: Offset(0, 3),
+                      blurRadius: 2,
+                    ),
+                  ],
                 ),
-                Padding(
-                    padding: const EdgeInsets.all(12),
-                    child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Padding(
-                                padding: EdgeInsets.only(top:12),
-                                child:Row(
+                child: Column(children: [
+                  const SizedBox(height: 112),
+                  Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                              flex: 3,
+                              child: Text(
+                                  (widget.bicing)
+                                      ? bicingStation.address
+                                      : rechargeStation.address,
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold))),
+                          Expanded(
+                              flex: 1,
+                              child: Container(
+                                  height: 60,
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle),
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                      (widget.bicing)
+                                          ? bicingStation.id.toString()
+                                          : rechargeStation.id.toString(),
+                                      style: const TextStyle(
+                                          fontSize: 28,
+                                          color: Colors.grey,
+                                          fontWeight: FontWeight.bold))))
+                        ],
+                      )),
+                ]),
+              ),
+              Padding(
+                  padding: const EdgeInsets.all(12),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(top: 12),
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(6),
-                                      child: Icon((widget.bicing)
-                                          ? TestIcons.bike
-                                          : TestIcons.speedType, size: 60),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            (widget.bicing)
-                                                ? AppLocalizations.of(context).bicingstation_mechanical
-                                                : AppLocalizations.of(context).rechargestation_speed,
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-
-
-                                          Padding(
-                                            padding: const EdgeInsets.only(top: 4),
-                                            child: Text(
-                                              (widget.bicing)
-                                                  ? bicingStation.mechanical.toString()
-                                                  : rechargeStation.speedType.toString(),
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 18,
-
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                  ],
-                                ),),
-
-                            Padding(
-                                padding: EdgeInsets.only(top:12),
-                                child:Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(6),
-                                      child: Icon((widget.bicing)
-                                          ? TestIcons.ebike
-                                          : TestIcons.eCharger, size: 60),
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            (widget.bicing)
-                                                ? AppLocalizations.of(context).bicingstation_electrical
-                                                : AppLocalizations.of(context).rechargestation_connection,
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-
-
-                                          Padding(
-                                            padding: const EdgeInsets.only(top: 4),
-                                            child: Text(
-                                              (widget.bicing)
-                                                  ? bicingStation.electrical.toString()
-                                                  : rechargeStation.connectionType.toString(),
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 18,
-
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-
-                                  ],
-                                ),),
-
-                            Padding(
-                                padding: EdgeInsets.only(top:12),
-                                child:Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(6),
-                                  child: Icon((widget.bicing)
-                                      ? TestIcons.bicingParking
-                                      : TestIcons.eCar, size: 60),                                ),
-                                Expanded(
-                                  child: Column(
-                                    children: [
-                                      Text(
-                                        (widget.bicing)
-                                            ? AppLocalizations.of(context).bicingstation_slots
-                                            : AppLocalizations.of(context).rechargestation_slots,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-
-
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 4),
-                                        child: Text(
+                                      child: Icon(
                                           (widget.bicing)
-                                              ? bicingStation.availableSlots.toString()
-                                              : rechargeStation.slots.toString(),
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 18,
-
+                                              ? TestIcons.bike
+                                              : TestIcons.speedType,
+                                          size: 60),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            (widget.bicing)
+                                                ? AppLocalizations.of(context)
+                                                    .bicingstation_mechanical
+                                                : AppLocalizations.of(context)
+                                                    .rechargestation_speed,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
-                                        ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 4),
+                                            child: Text(
+                                              (widget.bicing)
+                                                  ? bicingStation.mechanical
+                                                      .toString()
+                                                  : rechargeStation.speedType
+                                                      .toString(),
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
-
-                              ],
-                            ),),
-
-                          ],
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 12),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(6),
+                                      child: Icon(
+                                          (widget.bicing)
+                                              ? TestIcons.ebike
+                                              : TestIcons.eCharger,
+                                          size: 60),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            (widget.bicing)
+                                                ? AppLocalizations.of(context)
+                                                    .bicingstation_electrical
+                                                : AppLocalizations.of(context)
+                                                    .rechargestation_connection,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 4),
+                                            child: Text(
+                                              (widget.bicing)
+                                                  ? bicingStation.electrical
+                                                      .toString()
+                                                  : rechargeStation
+                                                      .connectionType
+                                                      .toString(),
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(top: 12),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(6),
+                                      child: Icon(
+                                          (widget.bicing)
+                                              ? TestIcons.bicingParking
+                                              : TestIcons.eCar,
+                                          size: 60),
+                                    ),
+                                    Expanded(
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            (widget.bicing)
+                                                ? AppLocalizations.of(context)
+                                                    .bicingstation_slots
+                                                : AppLocalizations.of(context)
+                                                    .rechargestation_slots,
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 4),
+                                            child: Text(
+                                              (widget.bicing)
+                                                  ? bicingStation.availableSlots
+                                                      .toString()
+                                                  : rechargeStation.slots
+                                                      .toString(),
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      VerticalDivider(),
-
-                      Column(
+                        VerticalDivider(),
+                        Column(
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(top: 12),
@@ -280,12 +287,12 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                   showDialog(
                                       context: context,
                                       builder: (context) {
-                                        BookingController booking = BookingController();
+                                        BookingController booking =
+                                            BookingController();
                                         booking.wipe();
-                                        booking.setStationId(rechargeStation.id.toString());
+                                        booking.setStationId(
+                                            rechargeStation.id.toString());
                                         return const ReservationForm();
-
-
                                       });
                                 },
                                 minWidth: screensize.width / 3,
@@ -300,17 +307,13 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                             ),
                           ],
                         ),
-
-                    ])),
-                Divider(),
-                Container(
-                  child: Text("Comments")
-                ),
-                const StationComment(),
-
-              ]),
-            ),
-
+                      ])),
+              Divider(),
+              Container(child: Text("Comments")),
+               StationCommentForm(id: widget.index, bicing: widget.bicing,),
+              listaCommentsBicing(),
+            ]),
+          ),
           Material(
             color: Colors.transparent,
             child: DefaultHeader(
@@ -330,5 +333,26 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                         color: Colors.white,
                       ))))
         ]));
+  }
+
+  Widget listaCommentsBicing() {
+    if (bicingStation.commentsBicing.isEmpty) {
+      return Padding(
+          padding: EdgeInsets.symmetric(vertical: 16),
+          child: Material(
+              color: Colors.transparent,
+              child: Text(
+                AppLocalizations.of(context).expandedStation_noComments,
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              )));
+    }
+    return ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: bicingStation.commentsBicing.length,
+        itemBuilder: (context, index) {
+          return StationComment();
+        });
   }
 }

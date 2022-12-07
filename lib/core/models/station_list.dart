@@ -1,3 +1,5 @@
+import 'package:electricity_front/core/models/comment.dart';
+import 'package:electricity_front/core/models/user.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class StationList {
@@ -46,6 +48,7 @@ class StationList {
   }
 }
 
+
 class Station {
   late int capacity;
   late int mechanical;
@@ -57,6 +60,12 @@ class Station {
   late LatLng coords;
   late bool status;
   late String address;
+  List<Comment> commentsBicing = [];
+
+  addComment(String ctext, User creator){
+    Comment newComment = Comment(ctext, creator, DateTime.now().toString());
+    commentsBicing.add(newComment);
+  }
 
   Station();
 

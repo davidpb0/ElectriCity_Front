@@ -36,7 +36,7 @@ class MapaController {
   }
 
   initBD() async {
-    await _apiService.getData('station_bicing');
+    await _apiService.getData('stations');
   }
 
   bicingApi(int numPage) async {
