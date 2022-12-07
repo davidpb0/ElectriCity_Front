@@ -71,6 +71,24 @@ class UserController {
     }
   }
 
+  deleteFavouriteBicingStationEveryWhere(int index) async {
+    int stationId = int.parse(currentUser.getFavouriteBicingStations().elementAt(index));
+    String urlTemp = "users/${currentUser.getUserId()}/bicingStation/$stationId";
+    Response res = await ApiService().deleteData(urlTemp);
+    if (res.statusCode == 201) {
+      currentUser.deleteFavouriteBicingStationIndex(stationId);
+    }
+  }
+
+  deleteFavouriteRechargeStationEveryWhere(int index) async {
+    int stationId = int.parse(currentUser.getFavouriteRechargeStations().elementAt(index));
+    String urlTemp = "users/${currentUser.getUserId()}/rechargeStation/$stationId";
+    Response res = await ApiService().deleteData(urlTemp);
+    if (res.statusCode == 201) {
+      currentUser.deleteFavouriteBicingStationIndex(stationId);
+    }
+  }
+
   addFavBicingBD(int index, Station bicing) async {
     String urlTemp = "https://localhost/users/${currentUser.getUserId()}/bicingStation/$index";
     var data = {};

@@ -57,6 +57,7 @@ class Station {
   late LatLng coords;
   late bool status;
   late String address;
+  bool favorite = false;
 
   Station();
 

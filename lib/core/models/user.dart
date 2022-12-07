@@ -9,6 +9,8 @@ class User {
   List<LatLng> personalUbiBD = [];
   final List<Station> _favouriteBicingStation = [];
   final List<RechargeStation> _favouriteChargerStation = [];
+  final List<String> _favouriteBicingStationIndex = [];
+  final List<String> _favouriteChargerStationIndex = [];
   String _username = "";
   String _token = "";
   String _email = "";
@@ -33,7 +35,24 @@ class User {
             infoWindow: InfoWindow(
               title: json['favouriteLocations'][i]['title'],
               snippet: json['favouriteLocations'][i]['description'],
-            )));
+            )
+        ));
+      }
+    }
+
+    if (json['favouriteBicingStations'] != null) {
+      for (int i = 0; i < json['favouriteBicingStations'].length; ++i) {
+        String id = json['favouriteBicingStation'][i].toString();
+        id = id.split("/").last;
+        _favouriteBicingStationIndex.add(id);
+      }
+    }
+
+    if (json['favouriteRechargeStations'] != null) {
+      for (int i = 0; i < json['favouriteRechargeStations'].length; ++i) {
+        String id = json['favouriteRechargeStations'][i].toString();
+        id = id.split("/").last;
+        _favouriteChargerStationIndex.add(id);
       }
     }
   }
@@ -97,4 +116,39 @@ class User {
   getFavCharger() {
     return _favouriteChargerStation;
   }
+
+  ///Aqui empiezan funciones con Lista Indice a conservar
+
+  getFavouriteBicingStations() {
+    return _favouriteBicingStationIndex;
+  }
+
+  getFavouriteRechargeStations() {
+    return _favouriteChargerStationIndex;
+  }
+
+  isFavouriteBicingStationIndex(String index) {
+    return _favouriteBicingStationIndex.contains(index);
+  }
+
+  isFavouriteRechargeStationIndex(String index) {
+    return _favouriteChargerStationIndex.contains(index);
+  }
+
+  addFavouriteBicingStationIndex(String index) {
+    _favouriteBicingStationIndex.add(index);
+  }
+
+  addFavouriteRechargeStationIndex(String index) {
+    _favouriteChargerStationIndex.add(index);
+  }
+
+  deleteFavouriteBicingStationIndex(int index) {
+    return _favouriteBicingStationIndex.removeAt(index);
+  }
+
+  deleteFavouriteRechargeStationIndex(int index) {
+    return _favouriteChargerStationIndex.removeAt(index);
+  }
+
 }

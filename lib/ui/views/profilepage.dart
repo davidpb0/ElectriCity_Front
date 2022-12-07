@@ -1,7 +1,10 @@
+import 'package:electricity_front/core/controllers/list_controller.dart';
+import 'package:electricity_front/ui/components/bicing_preview.dart';
 import 'package:electricity_front/ui/components/default_header.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
 import '../components/personal_ubi_preview.dart';
+import '../components/recharge_preview.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatefulWidget {
@@ -13,6 +16,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   UserController userCtrl = UserController();
+  ListController listController = ListController();
   bool visiblePersonalList = false;
   bool visibleFavouriteList = false;
 
@@ -324,19 +328,85 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget listaFavStations() {
-    return const Material(
-        color: Colors.transparent,
-        child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            child: Text(
-              "No favourite stations found",
-              style: TextStyle(
-                fontSize: 20,
-              ),
-              textAlign: TextAlign.center,
-            )
-        )
-    );
+    if (userCtrl.currentUser.getPersonalUbi().isEmpty) {
+      return const Padding(
+          padding: EdgeInsets.symmetric(vertical: 16),
+          child: Material(
+              color: Colors.transparent,
+              child: Text(
+                "No favourite stations found",
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              )
+          )
+      );
+    }
+    return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: userCtrl.currentUser.getFavouriteBicingStations().length + userCtrl.currentUser.getFavouriteRechargeStations().length,
+      itemBuilder: (context, index) {
+        while (index < userCtrl.currentUser
+            .getFavouriteBicingStations()
+            .length) {
+          int item = int.parse(
+              userCtrl.currentUser.getFavouriteBicingStations().elementAt(
+                  index));
+          return Dismissible(
+            background: Container(
+                padding: const EdgeInsets.all(20),
+                child: Row(children: const [
+                  Icon(
+                    Icons.delete_forever,
+                    size: 60,
+                    color: Colors.red,
+                    textDirection: TextDirection.ltr,
+                  ),
+                  Expanded(child: SizedBox())
+                ])
+            ),
+            key: UniqueKey(),
+            onDismissed: (DismissDirection direction) async {
+              await userCtrl.deleteFavouriteBicingStationEveryWhere(item);
+              setState(() {});
+            },
+            child: Padding(
+                padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
+                child: BicingPreview(
+                    info: listController.getBicingStation(item)
+                )
+            ),
+          );
+        } ///End while Bicing Stations
+        int item = int.parse(
+            userCtrl.currentUser.getFavouriteRechargeStations().elementAt(
+                index-userCtrl.currentUser.getFavouriteRechargeStations().length));
+        return Dismissible(
+          background: Container(
+              padding: const EdgeInsets.all(20),
+              child: Row(children: const [
+                Icon(
+                  Icons.delete_forever,
+                  size: 60,
+                  color: Colors.red,
+                  textDirection: TextDirection.ltr,
+                ),
+                Expanded(child: SizedBox())
+              ])
+          ),
+          key: UniqueKey(),
+          onDismissed: (DismissDirection direction) async {
+            await userCtrl.deleteFavouriteRechargeStationEveryWhere(item);
+            setState(() {});
+          },
+          child: Padding(
+              padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
+              child: RechargePreview(
+                  info: listController.getRechargeStation(item)
+              )
+          ),
+        );
+      });
   }
 
   Widget listaPersonalUbi() {
