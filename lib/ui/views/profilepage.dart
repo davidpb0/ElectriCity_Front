@@ -2,6 +2,7 @@ import 'package:electricity_front/ui/components/default_header.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
 import '../components/personal_ubi_preview.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatefulWidget {
@@ -95,9 +96,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 });
                               },
                               child: Row(children: [
-                                const Text(
-                                  'Personal locations',
-                                  style: TextStyle(
+                                Text(
+                                  AppLocalizations.of(context).profile_personallocations,
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
@@ -162,9 +163,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 });
                               },
                               child: Row(children: [
-                                const Text(
-                                  'Favourite stations',
-                                  style: TextStyle(
+                                Text(
+                                  AppLocalizations.of(context).profile_favouritestations,
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold),
@@ -229,16 +230,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: const [
+                                      children: [
                                         Text(
-                                          'Log Out',
-                                          style: TextStyle(
+                                          AppLocalizations.of(context).profile_logout,
+                                          style: const TextStyle(
                                               fontSize: 16,
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        SizedBox(width: 16),
-                                        Icon(Icons.close,
+                                        const SizedBox(width: 16),
+                                        const Icon(Icons.close,
                                             size: 28, color: Colors.white)
                                       ]),
                                 ),
@@ -262,9 +263,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                     showDialog(
                                       context: context,
                                       builder: (ctx) => AlertDialog(
-                                        title: const Text("Delete Account"),
-                                        content: const Text(
-                                            "Are you sure you want to delete your account?"),
+                                        title: Text(AppLocalizations.of(context).profile_delete),
+                                        content: Text(
+                                            AppLocalizations.of(context).profile_checkdelete),
                                         actions: <Widget>[
                                           TextButton(
                                             onPressed: () async {
@@ -291,16 +292,16 @@ class _ProfilePageState extends State<ProfilePage> {
                                   child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
-                                      children: const [
+                                      children: [
                                         Text(
-                                          'Delete Account',
-                                          style: TextStyle(
+                                          AppLocalizations.of(context).profile_delete,
+                                          style: const TextStyle(
                                               fontSize: 16,
                                               color: Colors.white,
                                               fontWeight: FontWeight.bold),
                                         ),
-                                        SizedBox(width: 16),
-                                        Icon(Icons.delete_forever,
+                                        const SizedBox(width: 16),
+                                        const Icon(Icons.delete_forever,
                                             size: 28, color: Colors.white)
                                       ]),
                                 ),
@@ -324,13 +325,13 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget listaFavStations() {
-    return const Material(
+    return Material(
         color: Colors.transparent,
         child: Padding(
             padding: EdgeInsets.symmetric(vertical: 16),
             child: Text(
-              "No favourite stations found",
-              style: TextStyle(
+              AppLocalizations.of(context).profile_nostations,
+              style: const TextStyle(
                 fontSize: 20,
               ),
               textAlign: TextAlign.center,
@@ -341,12 +342,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget listaPersonalUbi() {
     if (userCtrl.currentUser.personalUbi.isEmpty) {
-      return const Padding(
+      return Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Material(
               color: Colors.transparent,
               child: Text(
-                "No personal locations found",
+                AppLocalizations.of(context).profile_nolocations,
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               )

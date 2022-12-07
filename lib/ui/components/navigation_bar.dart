@@ -1,5 +1,6 @@
 import 'package:electricity_front/ui/views/profilepage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../views/listpage.dart';
 import '../views/mapa.dart';
@@ -40,11 +41,11 @@ class BottomBarState extends State<BottomBar> {
         selectedItemColor: Colors.green,
         unselectedItemColor: const Color(0xFF526480),
         currentIndex: _selectedIndex,
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: "Map"),
-          BottomNavigationBarItem(icon: Icon(Icons.electric_car), label: "Mobility"),
-          BottomNavigationBarItem(icon: Icon(Icons.military_tech), label: "Prizes"),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile")
+        items:  [
+          BottomNavigationBarItem(icon: Icon(Icons.map), label: AppLocalizations.of(context).homepage_map),
+          BottomNavigationBarItem(icon: Icon(Icons.electric_car), label: AppLocalizations.of(context).homepage_stations),
+          BottomNavigationBarItem(icon: Icon(Icons.military_tech), label: AppLocalizations.of(context).homepage_prizes),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: AppLocalizations.of(context).homepage_profile)
         ],
       ),
     );
