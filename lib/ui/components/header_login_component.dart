@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HeaderLoginComponent extends StatelessWidget {
   const HeaderLoginComponent({
@@ -34,7 +33,7 @@ class HeaderLoginComponent extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Column(
-                children:  [
+                children: const [
                   Text(
                     "ElectriCity",
                     textAlign: TextAlign.left,
@@ -44,7 +43,7 @@ class HeaderLoginComponent extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    AppLocalizations.of(context).login_welcomeback,
+                    "Welcome back!",
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Colors.white,

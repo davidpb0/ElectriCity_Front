@@ -109,6 +109,8 @@ class GoogleMapaState extends State<GoogleMapa> {
                 icon: bicingMarker,
                 onTap: () {
                   setState(() {
+                    deleteMarker("origin");
+                    deleteMarker("destination");
                     info = InfoBicingStationWindow(
                         belec: bicingStationList[i].electrical,
                         bmech: bicingStationList[i].mechanical,
@@ -169,13 +171,13 @@ class GoogleMapaState extends State<GoogleMapa> {
           },
           onTap: (latlang) {
             setState(() {
-              deleteMarker('origin');
-              deleteMarker('destination');
               info = Container();
               form = Container();
               top = const DefaultHeader(size: Size(100.0, 100.0));
               _polylines.clear();
               polylineCoordinates.clear();
+              deleteMarker('origin');
+              deleteMarker('destination');
             });
           },
           markers: _markers,

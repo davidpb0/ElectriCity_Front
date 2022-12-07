@@ -54,7 +54,6 @@ class SignupController {
     }
   }
 
-
   signUp(String email, String pwd, BuildContext ctext) async {
     var data = {
       "username": _username,
