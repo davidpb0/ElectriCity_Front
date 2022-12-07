@@ -72,11 +72,8 @@ class _InfoBicingStationWindowState extends State<InfoBicingStationWindow> {
                       }
                     });
                     if (!widget.liked) {
-                      UserController().deleteFavBicingBD(widget.bicing.id, widget.bicing);
+                      await UserController().deleteFavBicingBD(widget.bicing.id, widget.bicing);
                     } else {
-                      print("Entro aqui");
-                      print(widget.bicing.id);
-                      print(widget.bicing.address);
                       await UserController()
                           .addFavBicingBD(widget.bicing.id, widget.bicing);
                     }

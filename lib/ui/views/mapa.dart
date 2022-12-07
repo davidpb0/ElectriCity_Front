@@ -140,13 +140,14 @@ class GoogleMapaState extends State<GoogleMapa> {
               onTap: () {
                 setState(() {
                   info = InfoChargeStationWindow(
-                      slots: chargerStationList[k].slots,
-                      addres: chargerStationList[k].address,
-                      connectionType: chargerStationList[k].connectionType,
-                      liked: UserController()
-                          .currentUser
-                          .isFavouriteCharger(chargerStationList[k]),
-                      id: MarkerId("${chargerStationList[k].id + 601}"));
+                    slots: chargerStationList[k].slots,
+                    addres: chargerStationList[k].address,
+                    connectionType: chargerStationList[k].connectionType,
+                    liked: UserController()
+                        .currentUser
+                        .isFavouriteCharger(chargerStationList[k]),
+                    charger: chargerStationList[k],
+                  );
                 });
               },
             ),

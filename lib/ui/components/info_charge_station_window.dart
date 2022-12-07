@@ -1,9 +1,7 @@
 import 'dart:core';
-import 'package:electricity_front/core/controllers/mapa_controller.dart';
 import 'package:electricity_front/core/controllers/user_controller.dart';
+import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-
 import '../../fonts/test_icons_icons.dart';
 
 // ignore: must_be_immutable
@@ -14,11 +12,11 @@ class InfoChargeStationWindow extends StatefulWidget {
       required this.addres,
       required this.connectionType,
       required this.liked,
-      required this.id});
+      required this.charger});
 
   final int? slots;
   final String addres;
-  final MarkerId id;
+  final RechargeStation charger;
   String? connectionType;
   bool liked;
 
@@ -65,23 +63,21 @@ class _InfoChargeStationWindow extends State<InfoChargeStationWindow> {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {
+                    onPressed: () async {
                       setState(() {
                         if (widget.liked) {
                           widget.liked = false;
-                          UserController().currentUser.deleteFavCharger(
-                              (MapaController()
-                                  .chargerStationList
-                                  .elementAt(int.parse(widget.id.value) - 601)));
                         } else {
                           widget.liked = true;
-                          UserController().currentUser.addFavCharger(
-                              (MapaController()
-                                  .chargerStationList
-                                  .elementAt(int.parse(widget.id.value) - 601)));
-
                         }
                       });
+                      if (!widget.liked) {
+                        await UserController().deleteFavChargerBD(
+                            widget.charger.id, widget.charger);
+                      } else {
+                        await UserController()
+                            .addFavChargerBD(widget.charger.id, widget.charger);
+                      }
                     },
                     icon: Icon((widget.liked)
                         ? Icons.favorite
