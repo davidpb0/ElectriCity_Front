@@ -29,9 +29,11 @@ class _StationCommentFormState extends State<StationCommentForm> {
     super.initState();
     listCtrl = ListController();
     if (widget.bicing) {
-      bicingStation = listCtrl.getBicingStation(widget.id);
+      var firstBicing = listCtrl.getBicingStation(0);
+      bicingStation = listCtrl.getBicingStation(widget.id - firstBicing.id);
     } else {
-      rechargeStation = listCtrl.getRechargeStation(widget.id);
+      var firstCharger = listCtrl.getRechargeStation(0);
+      rechargeStation = listCtrl.getRechargeStation(widget.id - firstCharger.id);
     }
   }
 

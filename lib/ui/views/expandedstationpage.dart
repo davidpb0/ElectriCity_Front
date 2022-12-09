@@ -32,9 +32,12 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
     super.initState();
     listCtrl = ListController();
     if (widget.bicing) {
-      bicingStation = listCtrl.getBicingStation(widget.index);
+      var firstBicing = listCtrl.getBicingStation(0);
+      bicingStation = listCtrl.getBicingStation(widget.index - firstBicing.id);
     } else {
-      rechargeStation = listCtrl.getRechargeStation(widget.index);
+      var firstCharger = listCtrl.getRechargeStation(0);
+      rechargeStation =
+          listCtrl.getRechargeStation(widget.index - firstCharger.id);
     }
   }
 
@@ -310,7 +313,10 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                       ])),
               Divider(),
               Container(child: Text("Comments")),
-               StationCommentForm(id: widget.index, bicing: widget.bicing,),
+              StationCommentForm(
+                id: widget.index,
+                bicing: widget.bicing,
+              ),
               listaCommentsBicing(),
             ]),
           ),

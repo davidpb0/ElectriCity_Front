@@ -23,6 +23,7 @@ class UserController {
       setCustomMarker();
       currentUser = await LoginController().logIn(mail, pwd, ctext);
       ApiService().setToken(currentUser.token);
+
     }
     catch (e) {
       Exception("Error en iniciar la sesion");

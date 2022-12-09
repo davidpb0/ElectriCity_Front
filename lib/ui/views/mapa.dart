@@ -83,6 +83,7 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   void _onMapCreated(GoogleMapController controller) async {
     setCustomMarker();
+    await MapaController().initBD();
 
     mc = controller;
 

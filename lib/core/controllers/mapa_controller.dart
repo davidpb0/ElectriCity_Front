@@ -36,7 +36,9 @@ class MapaController {
   }
 
   initBD() async {
-    await _apiService.getData('stations');
+    Response res = await _apiService.getData('stations');
+    print("El Codioges: " + res.statusCode.toString());
+    print(res.body.toString());
   }
 
   bicingApi(int numPage) async {
