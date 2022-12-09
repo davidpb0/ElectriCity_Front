@@ -1,6 +1,7 @@
 import 'package:electricity_front/core/models/comment.dart';
 import 'package:electricity_front/core/models/user.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
 class StationList {
   late List<Station> listMember;
@@ -63,7 +64,9 @@ class Station {
   List<Comment> commentsBicing = [];
 
   addComment(String ctext, User creator){
-    Comment newComment = Comment(ctext, creator, DateTime.now().toString());
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('EEE d MMM kk:mm:ss').format(now);
+    Comment newComment = Comment(ctext, creator, formattedDate);
     commentsBicing.add(newComment);
   }
 

@@ -1,13 +1,14 @@
 
-import 'package:electricity_front/ui/views/expandedstationpage.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import '../../core/models/recharge_station.dart';
-import '../../fonts/test_icons_icons.dart';
+import '../../core/models/comment.dart';
 
 class StationComment extends StatefulWidget {
+  final Comment info;
 
   const StationComment({
-    Key? key,
+    Key? key, required this.info,
   }) : super(key: key);
 
   @override
@@ -47,7 +48,7 @@ class _StationCommentState extends State<StationComment> {
                             padding:
                             const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                             decoration: ShapeDecoration(
-                              color: Colors.grey[300],
+                              color: Colors.primaries[Random().nextInt(Colors.primaries.length)] ,
                               shape: const RoundedRectangleBorder(
                                 borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.zero,
@@ -57,12 +58,12 @@ class _StationCommentState extends State<StationComment> {
                               ),
                             ),
                             child: Row(
-                              children: const [
-                                SizedBox(width: 40,),
+                              children:  [
+                                const SizedBox(width: 40,),
                                 Text(
-                                  "Username",
+                                  widget.info.creator.username,
                                   textAlign: TextAlign.right,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.white,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -94,13 +95,17 @@ class _StationCommentState extends State<StationComment> {
                                   children: [
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
-                                      children: const [
+                                      children: [
                                         Expanded(
                                           child: Text(
-                                              'This is a comment'
+                                              widget.info.text
                                           ),
-                                        )
+                                        ),
                                       ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                        widget.info.timestamp
                                     ),
                                   ])
 

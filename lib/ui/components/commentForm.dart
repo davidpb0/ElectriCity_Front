@@ -6,10 +6,11 @@ import '../../core/models/station_list.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StationCommentForm extends StatefulWidget {
+  final Function() notifyParent;
   const StationCommentForm({
     Key? key,
     required this.id,
-    required this.bicing,
+    required this.bicing, required this.notifyParent,
   }) : super(key: key);
   final int id;
   final bool bicing;
@@ -65,9 +66,9 @@ class _StationCommentFormState extends State<StationCommentForm> {
                           child: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 24),
-                        decoration: ShapeDecoration(
-                          color: Colors.grey[300],
-                          shape: const RoundedRectangleBorder(
+                        decoration: const ShapeDecoration(
+                          color: Colors.black,
+                          shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.zero,
                                 topLeft: Radius.circular(8),
@@ -119,7 +120,7 @@ class _StationCommentFormState extends State<StationCommentForm> {
                                           child: TextField(
                                             controller: commentTextController,
                                             decoration: InputDecoration(
-                                              prefixIcon: Icon(Icons.comment),
+                                              prefixIcon: const Icon(Icons.comment),
                                               border: InputBorder.none,
                                               hintText: AppLocalizations.of(
                                                       context)
@@ -135,9 +136,12 @@ class _StationCommentFormState extends State<StationCommentForm> {
                                                     UserController()
                                                         .currentUser);
                                               }
-                                              setState(() {});
+                                              setState(() {
+                                                commentTextController.text = "";
+                                              });
+                                              widget.notifyParent();
                                             },
-                                            icon: Icon(Icons.send))
+                                            icon: const Icon(Icons.send))
                                       ],
                                     ),
                                   ]))),

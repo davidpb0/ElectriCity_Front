@@ -45,6 +45,9 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
   Widget build(BuildContext context) {
     //Da la altura y el ancho total de la pantalla
     Size screensize = MediaQuery.of(context).size;
+    refresh() {
+      setState(() {});
+    }
 
     return Scaffold(
         backgroundColor: Colors.grey[300],
@@ -314,9 +317,9 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
               Divider(),
               Container(child: Text("Comments")),
               StationCommentForm(
-                id: widget.index,
-                bicing: widget.bicing,
-              ),
+                  id: widget.index,
+                  bicing: widget.bicing,
+                  notifyParent: refresh),
               listaCommentsBicing(),
             ]),
           ),
@@ -358,7 +361,28 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
         shrinkWrap: true,
         itemCount: bicingStation.commentsBicing.length,
         itemBuilder: (context, index) {
-          return StationComment();
+          return Dismissible(
+            background: Container(
+                padding: const EdgeInsets.all(20),
+                child: Row(children: const [
+                  Icon(
+                    Icons.delete_forever,
+                    size: 60,
+                    color: Colors.red,
+                    textDirection: TextDirection.ltr,
+                  ),
+                  Expanded(child: SizedBox())
+                ])),
+            key: UniqueKey(),
+            onDismissed: (DismissDirection direction) async {
+              //await userCtrl.deletePersonalUbiEveryWhere(index);
+              setState(() {});
+            },
+            child: Padding(
+                padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
+                child: StationComment(
+                    info: bicingStation.commentsBicing.elementAt(index))),
+          );
         });
   }
 }
