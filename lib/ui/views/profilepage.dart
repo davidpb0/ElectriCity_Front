@@ -416,13 +416,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget listaPersonalUbi() {
     if (userCtrl.currentUser.getPersonalUbi().isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(vertical: 16),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: Material(
             color: Colors.transparent,
             child: Text(
               AppLocalizations.of(context).profile_nolocations,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
               textAlign: TextAlign.center,
             )
           )

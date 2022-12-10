@@ -42,10 +42,10 @@ class BottomBarState extends State<BottomBar> {
         unselectedItemColor: const Color(0xFF526480),
         currentIndex: _selectedIndex,
         items:  [
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: AppLocalizations.of(context).homepage_map),
-          BottomNavigationBarItem(icon: Icon(Icons.electric_car), label: AppLocalizations.of(context).homepage_stations),
-          BottomNavigationBarItem(icon: Icon(Icons.military_tech), label: AppLocalizations.of(context).homepage_prizes),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: AppLocalizations.of(context).homepage_profile)
+          BottomNavigationBarItem(icon: const Icon(Icons.map), label: AppLocalizations.of(context).homepage_map),
+          BottomNavigationBarItem(icon: const Icon(Icons.electric_car), label: AppLocalizations.of(context).homepage_stations),
+          BottomNavigationBarItem(icon: const Icon(Icons.military_tech), label: AppLocalizations.of(context).homepage_prizes),
+          BottomNavigationBarItem(icon: const Icon(Icons.person), label: AppLocalizations.of(context).homepage_profile)
         ],
       ),
     );
