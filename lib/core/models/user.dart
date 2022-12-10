@@ -42,7 +42,7 @@ class User {
 
     if (json['favouriteBicingStations'] != null) {
       for (int i = 0; i < json['favouriteBicingStations'].length; ++i) {
-        String id = json['favouriteBicingStation'][i].toString();
+        String id = json['favouriteBicingStations'][i];
         id = id.split("/").last;
         _favouriteBicingStationIndex.add(id);
       }

@@ -373,8 +373,11 @@ class _ProfilePageState extends State<ProfilePage> {
             },
             child: Padding(
                 padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
-                child: BicingPreview(
-                    info: listController.getBicingStation(item)
+                child: Material(
+                    color: Colors.transparent,
+                    child: BicingPreview(
+                        info: listController.getBicingStationbyId(item)
+                    )
                 )
             ),
           );
