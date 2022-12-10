@@ -72,10 +72,11 @@ class _InfoBicingStationWindowState extends State<InfoBicingStationWindow> {
                       }
                     });
                     if (!widget.liked) {
-                      await UserController().deleteFavBicingBD(widget.bicing.id, widget.bicing);
+                      await UserController().deleteFavBicingBD(
+                          widget.bicing.id.toString());
                     } else {
                       await UserController()
-                          .addFavBicingBD(widget.bicing.id, widget.bicing);
+                          .addFavBicingBD(widget.bicing.id);
                     }
                   },
                   icon: Icon((widget.liked)

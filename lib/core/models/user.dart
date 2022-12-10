@@ -143,12 +143,12 @@ class User {
     _favouriteChargerStationIndex.add(index);
   }
 
-  deleteFavouriteBicingStationIndex(int index) {
-    return _favouriteBicingStationIndex.removeAt(index);
+  deleteFavouriteBicingStationIndex(String idStation) {
+    return _favouriteBicingStationIndex.remove(idStation);
   }
 
-  deleteFavouriteRechargeStationIndex(int index) {
-    return _favouriteChargerStationIndex.removeAt(index);
+  deleteFavouriteRechargeStationIndex(String idStation) {
+    return _favouriteChargerStationIndex.remove(idStation);
   }
 
 }

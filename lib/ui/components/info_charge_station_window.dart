@@ -73,10 +73,10 @@ class _InfoChargeStationWindow extends State<InfoChargeStationWindow> {
                       });
                       if (!widget.liked) {
                         await UserController().deleteFavChargerBD(
-                            widget.charger.id, widget.charger);
+                            widget.charger.id.toString());
                       } else {
                         await UserController()
-                            .addFavChargerBD(widget.charger.id, widget.charger);
+                            .addFavChargerBD(widget.charger.id);
                       }
                     },
                     icon: Icon((widget.liked)

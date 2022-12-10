@@ -368,7 +368,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             key: UniqueKey(),
             onDismissed: (DismissDirection direction) async {
-              await userCtrl.deleteFavouriteBicingStationEveryWhere(item);
+              await userCtrl.deleteFavBicingBD(item.toString());
               setState(() {});
             },
             child: Padding(
@@ -400,7 +400,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           key: UniqueKey(),
           onDismissed: (DismissDirection direction) async {
-            await userCtrl.deleteFavouriteRechargeStationEveryWhere(item);
+            await userCtrl.deleteFavChargerBD(item.toString());
             setState(() {});
           },
           child: Padding(

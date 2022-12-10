@@ -4,8 +4,6 @@ import 'package:electricity_front/core/services/api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
-import '../models/recharge_station.dart';
-import '../models/station_list.dart';
 import '../models/user.dart';
 
 class UserController {
@@ -63,7 +61,6 @@ class UserController {
 
   deletePersonalUbiEveryWhere(int index) async {
     Marker location = currentUser.getPersonalUbi().elementAt(index);
-
     String urlTemp = "users/${currentUser.getUserId()}/locations/${int.parse(location.markerId.value) - 3000}";
     Response res = await ApiService().deletePersonalUbi(urlTemp);
     if (res.statusCode == 201) {
@@ -71,8 +68,16 @@ class UserController {
     }
   }
 
-  deleteFavouriteBicingStationEveryWhere(int index) async {
-    int stationId = int.parse(currentUser.getFavouriteBicingStations().elementAt(index));
+  addFavBicingBD(int index) async {
+    String urlTemp = "users/${currentUser.getUserId()}/bicingStation/$index";
+    var data = {};
+    Response res = await ApiService().postData(data, urlTemp);
+    if (res.statusCode == 201) {
+      currentUser.addFavouriteBicingStationIndex(index.toString());
+    }
+  }
+
+  deleteFavBicingBD(String stationId) async {
     String urlTemp = "users/${currentUser.getUserId()}/bicingStation/$stationId";
     Response res = await ApiService().deleteData(urlTemp);
     if (res.statusCode == 201) {
@@ -80,66 +85,21 @@ class UserController {
     }
   }
 
-  deleteFavouriteRechargeStationEveryWhere(int index) async {
-    int stationId = int.parse(currentUser.getFavouriteRechargeStations().elementAt(index));
+  addFavChargerBD(int stationId) async {
+    String urlTemp = "users/${currentUser.getUserId()}/rechargeStation/$stationId";
+    var data = {};
+    Response res = await ApiService().postData(data, urlTemp);
+    if (res.statusCode == 201) {
+      currentUser.addFavouriteRechargeStationIndex(stationId.toString());
+    }
+  }
+
+  deleteFavChargerBD(String stationId) async {
     String urlTemp = "users/${currentUser.getUserId()}/rechargeStation/$stationId";
     Response res = await ApiService().deleteData(urlTemp);
     if (res.statusCode == 201) {
-      currentUser.deleteFavouriteBicingStationIndex(stationId);
+      currentUser.deleteFavouriteRechargeStationIndex(stationId);
     }
   }
 
-  addFavBicingBD(int index, Station bicing) async {
-    String urlTemp = "users/${currentUser.getUserId()}/bicingStation/$index";
-    var data = {};
-    //Cambiar a postData cuando deploy de backEnd
-    Response res = await ApiService().postData(data, urlTemp);
-    print(res.statusCode.toString());
-    if (res.statusCode == 201) {
-      print("GG wp");
-      currentUser.addFavouriteBicingStationIndex(index.toString());
-      //currentUser.addFavBicing(bicing);
-    }
-
-  }
-
-  deleteFavBicingBD(int index, Station bicing) async {
-    String urlTemp = "users/${currentUser.getUserId()}/bicingStation/$index";
-
-    //Cambiar a delteData cuando deploy de backEnd
-    Response res = await ApiService().deleteData(urlTemp);
-    print(res.statusCode.toString());
-    if (res.statusCode == 201) {
-      print("GG wp");
-      currentUser.deleteFavouriteBicingStationIndex(index);
-      currentUser.deleteFavBicing(bicing);
-    }
-
-  }
-
-  addFavChargerBD(int index, RechargeStation bicing) async {
-    String urlTemp = "users/${currentUser.getUserId()}/rechargeStation/$index";
-    var data = {};
-    //Cambiar a postData cuando deploy de backEnd
-    Response res = await ApiService().postData(data, urlTemp);
-    print(res.statusCode.toString());
-    if (res.statusCode == 201) {
-      print("GG wp");
-      currentUser.addFavCharger(bicing);
-    }
-
-  }
-
-  deleteFavChargerBD(int index, RechargeStation bicing) async {
-    String urlTemp = "users/${currentUser.getUserId()}/rechargeStation/$index";
-
-    //Cambiar a delteData cuando deploy de backEnd
-    Response res = await ApiService().deleteData(urlTemp);
-    print(res.statusCode.toString());
-    if (res.statusCode == 201) {
-      print("GG wp");
-      currentUser.deleteFavCharger(bicing);
-    }
-
-  }
 }

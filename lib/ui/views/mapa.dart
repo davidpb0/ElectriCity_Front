@@ -120,7 +120,7 @@ class GoogleMapaState extends State<GoogleMapa> {
                       addres: bicingStationList[i].address,
                       liked: UserController()
                           .currentUser
-                          .isFavouriteBicing(bicingStationList[i]),
+                          .isFavouriteBicingStationIndex(bicingStationList[i].id.toString()),
                       bicing: bicingStationList[i],
                     );
                   });
@@ -145,7 +145,7 @@ class GoogleMapaState extends State<GoogleMapa> {
                     connectionType: chargerStationList[k].connectionType,
                     liked: UserController()
                         .currentUser
-                        .isFavouriteCharger(chargerStationList[k]),
+                        .isFavouriteRechargeStationIndex(chargerStationList[k].id.toString()),
                     charger: chargerStationList[k],
                   );
                 });
