@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:electricity_front/core/controllers/mapa_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InfoPersonalUbiForm extends StatelessWidget {
   InfoPersonalUbiForm({super.key});
@@ -15,9 +16,9 @@ class InfoPersonalUbiForm extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.yellow,
-        title: const Text(
-          "Add a personal location",
-          style: TextStyle(fontSize: 20, color: Colors.black),
+        title: Text(
+          AppLocalizations.of(context).personallocation_header,
+          style: const TextStyle(fontSize: 20, color: Colors.black),
         ),
         automaticallyImplyLeading: false,
         leading: IconButton(
@@ -34,11 +35,11 @@ class InfoPersonalUbiForm extends StatelessWidget {
             Column(children: [
               const SizedBox(height: 80, width: 500),
               Row(
-                children: const [
-                  SizedBox(width: 25),
+                children: [
+                  const SizedBox(width: 25),
                   Text(
-                    "Add a title to your location:",
-                    style: TextStyle(
+                    AppLocalizations.of(context).personallocation_addtitle,
+                    style: const TextStyle(
                       fontSize: 16,
                     ),
                   ),
@@ -60,19 +61,19 @@ class InfoPersonalUbiForm extends StatelessWidget {
                 width: 350,
                 child: TextField(
                   controller: titolTextController,
-                  decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.maps_home_work),
+                  decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.maps_home_work),
                       border: InputBorder.none,
-                      hintText: "Title"),
+                      hintText: AppLocalizations.of(context).personallocation_title),
                 ),
               ),
               const SizedBox(height: 40),
               Row(
-                children: const [
-                  SizedBox(width: 25),
+                children:  [
+                  const SizedBox(width: 25),
                   Text(
-                    "Add a description to your location:",
-                    style: TextStyle(
+                    AppLocalizations.of(context).personallocation_adddescription,
+                    style: const TextStyle(
                       fontSize: 16,
                     ),
                   ),
@@ -94,10 +95,10 @@ class InfoPersonalUbiForm extends StatelessWidget {
                 width: 350,
                 child: TextField(
                   controller: telefTextController,
-                  decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.location_on),
+                  decoration:  InputDecoration(
+                      prefixIcon: const Icon(Icons.location_on),
                       border: InputBorder.none,
-                      hintText: "Description"),
+                      hintText: AppLocalizations.of(context).personallocation_description),
                 ),
               ),
               const SizedBox(height: 60),
@@ -125,10 +126,10 @@ class InfoPersonalUbiForm extends StatelessWidget {
                         color: Colors.yellow,
                         borderRadius: BorderRadius.circular(30),
                       ),
-                      child: const Center(
+                      child:  Center(
                           child: Text(
-                        'Add location',
-                        style: TextStyle(
+                            AppLocalizations.of(context).personallocation_submit,
+                        style: const TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                           fontSize: 18,

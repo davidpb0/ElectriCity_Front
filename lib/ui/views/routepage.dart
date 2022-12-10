@@ -5,6 +5,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'mapa.dart';
 
@@ -40,7 +41,10 @@ class _RoutePageState extends State<RoutePage> {
   final formKey = GlobalKey<FormState>();
 
   @override
+
   Widget build(BuildContext context) {
+    origin = AppLocalizations.of(context).route_searchorigin;
+    destination = AppLocalizations.of(context).route_searchdestination;
     return SizedBox(
         child: Container(
       padding: const EdgeInsets.only(left: 50, right: 50, top: 27),
@@ -74,10 +78,10 @@ class _RoutePageState extends State<RoutePage> {
           Positioned(
             top: 15,
             child: Row(
-              children: const [
-                SizedBox(width: 7),
-                Text("Origin",
-                    style: TextStyle(
+              children: [
+                const SizedBox(width: 7),
+                Text(AppLocalizations.of(context).route_origin,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                     )),
@@ -163,10 +167,10 @@ class _RoutePageState extends State<RoutePage> {
           Positioned(
             top: 90,
             child: Row(
-              children: const [
-                SizedBox(width: 7),
-                Text("Destination",
-                    style: TextStyle(
+              children: [
+                const SizedBox(width: 7),
+                Text(AppLocalizations.of(context).route_destination,
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 14,
                     )
