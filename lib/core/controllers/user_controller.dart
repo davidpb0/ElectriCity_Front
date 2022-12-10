@@ -90,36 +90,38 @@ class UserController {
   }
 
   addFavBicingBD(int index, Station bicing) async {
-    String urlTemp = "https://localhost/users/${currentUser.getUserId()}/bicingStation/$index";
+    String urlTemp = "users/${currentUser.getUserId()}/bicingStation/$index";
     var data = {};
     //Cambiar a postData cuando deploy de backEnd
-    Response res = await ApiService().postDataAux(data, urlTemp);
+    Response res = await ApiService().postData(data, urlTemp);
     print(res.statusCode.toString());
     if (res.statusCode == 201) {
       print("GG wp");
-      currentUser.addFavBicing(bicing);
+      currentUser.addFavouriteBicingStationIndex(index.toString());
+      //currentUser.addFavBicing(bicing);
     }
 
   }
 
   deleteFavBicingBD(int index, Station bicing) async {
-    String urlTemp = "https://localhost/users/${currentUser.getUserId()}/bicingStation/$index";
+    String urlTemp = "users/${currentUser.getUserId()}/bicingStation/$index";
 
     //Cambiar a delteData cuando deploy de backEnd
-    Response res = await ApiService().deleteDataAux(urlTemp);
+    Response res = await ApiService().deleteData(urlTemp);
     print(res.statusCode.toString());
     if (res.statusCode == 201) {
       print("GG wp");
+      currentUser.deleteFavouriteBicingStationIndex(index);
       currentUser.deleteFavBicing(bicing);
     }
 
   }
 
   addFavChargerBD(int index, RechargeStation bicing) async {
-    String urlTemp = "https://localhost/users/${currentUser.getUserId()}/rechargeStation/$index";
+    String urlTemp = "users/${currentUser.getUserId()}/rechargeStation/$index";
     var data = {};
     //Cambiar a postData cuando deploy de backEnd
-    Response res = await ApiService().postDataAux(data, urlTemp);
+    Response res = await ApiService().postData(data, urlTemp);
     print(res.statusCode.toString());
     if (res.statusCode == 201) {
       print("GG wp");
@@ -129,10 +131,10 @@ class UserController {
   }
 
   deleteFavChargerBD(int index, RechargeStation bicing) async {
-    String urlTemp = "https://localhost/users/${currentUser.getUserId()}/rechargeStation/$index";
+    String urlTemp = "users/${currentUser.getUserId()}/rechargeStation/$index";
 
     //Cambiar a delteData cuando deploy de backEnd
-    Response res = await ApiService().deleteDataAux(urlTemp);
+    Response res = await ApiService().deleteData(urlTemp);
     print(res.statusCode.toString());
     if (res.statusCode == 201) {
       print("GG wp");

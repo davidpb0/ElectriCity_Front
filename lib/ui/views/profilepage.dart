@@ -328,7 +328,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget listaFavStations() {
-    if (userCtrl.currentUser.getPersonalUbi().isEmpty) {
+    if (userCtrl.currentUser.getFavouriteBicingStations().isEmpty &&
+        userCtrl.currentUser.getFavouriteRechargeStations().isEmpty) {
       return const Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Material(
