@@ -22,7 +22,7 @@ class UserController {
     try {
       setCustomMarker();
       currentUser = await LoginController().logIn(mail, pwd, ctext);
-      ApiService().setToken(currentUser.token);
+      ApiService().setToken(currentUser.getUserTkn());
     }
     catch (e) {
       Exception("Error en iniciar la sesion");
@@ -60,12 +60,46 @@ class UserController {
   }
 
   deletePersonalUbiEveryWhere(int index) async {
-    Marker location = currentUser.personalUbi.elementAt(index);
-
+    Marker location = currentUser.getPersonalUbi().elementAt(index);
     String urlTemp = "users/${currentUser.getUserId()}/locations/${int.parse(location.markerId.value) - 3000}";
     Response res = await ApiService().deletePersonalUbi(urlTemp);
     if (res.statusCode == 201) {
       currentUser.deletePersonalUbi(index);
     }
   }
+
+  addFavBicingBD(int index) async {
+    String urlTemp = "users/${currentUser.getUserId()}/bicingStation/$index";
+    var data = {};
+    Response res = await ApiService().postData(data, urlTemp);
+    if (res.statusCode == 201) {
+      currentUser.addFavouriteBicingStationIndex(index.toString());
+    }
+  }
+
+  deleteFavBicingBD(String stationId) async {
+    String urlTemp = "users/${currentUser.getUserId()}/bicingStation/$stationId";
+    Response res = await ApiService().deleteData(urlTemp);
+    if (res.statusCode == 201) {
+      currentUser.deleteFavouriteBicingStationIndex(stationId);
+    }
+  }
+
+  addFavChargerBD(int stationId) async {
+    String urlTemp = "users/${currentUser.getUserId()}/rechargeStation/$stationId";
+    var data = {};
+    Response res = await ApiService().postData(data, urlTemp);
+    if (res.statusCode == 201) {
+      currentUser.addFavouriteRechargeStationIndex(stationId.toString());
+    }
+  }
+
+  deleteFavChargerBD(String stationId) async {
+    String urlTemp = "users/${currentUser.getUserId()}/rechargeStation/$stationId";
+    Response res = await ApiService().deleteData(urlTemp);
+    if (res.statusCode == 201) {
+      currentUser.deleteFavouriteRechargeStationIndex(stationId);
+    }
+  }
+
 }

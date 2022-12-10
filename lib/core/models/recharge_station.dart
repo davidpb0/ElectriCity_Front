@@ -87,6 +87,12 @@ class RechargeStation {
     data['address'] = address;
     return data;
   }
+
+  @override
+  bool operator ==(Object other) =>
+      other is RechargeStation &&
+          other.runtimeType == runtimeType &&
+          other.address == address;
 }
 
 class HydraView {

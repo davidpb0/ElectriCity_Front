@@ -1,7 +1,10 @@
+import 'package:electricity_front/core/controllers/list_controller.dart';
+import 'package:electricity_front/ui/components/bicing_preview.dart';
 import 'package:electricity_front/ui/components/default_header.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
 import '../components/personal_ubi_preview.dart';
+import '../components/recharge_preview.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
@@ -14,6 +17,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   UserController userCtrl = UserController();
+  ListController listController = ListController();
   bool visiblePersonalList = false;
   bool visibleFavouriteList = false;
 
@@ -48,7 +52,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: <Widget>[
                             Material(
                               color: Colors.transparent,
-                              child: Text(userCtrl.currentUser.username,
+                              child: Text(userCtrl.currentUser.getUsername(),
                                   style: const TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
@@ -325,29 +329,14 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget listaFavStations() {
-    return Material(
-        color: Colors.transparent,
-        child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 16),
-            child: Text(
-              AppLocalizations.of(context).profile_nostations,
-              style: const TextStyle(
-                fontSize: 20,
-              ),
-              textAlign: TextAlign.center,
-            )
-        )
-    );
-  }
-
-  Widget listaPersonalUbi() {
-    if (userCtrl.currentUser.personalUbi.isEmpty) {
-      return Padding(
+    if (userCtrl.currentUser.getFavouriteBicingStations().isEmpty &&
+        userCtrl.currentUser.getFavouriteRechargeStations().isEmpty) {
+      return const Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
           child: Material(
               color: Colors.transparent,
               child: Text(
-                AppLocalizations.of(context).profile_nolocations,
+                "No favourite stations found",
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               )
@@ -355,9 +344,94 @@ class _ProfilePageState extends State<ProfilePage> {
       );
     }
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: userCtrl.currentUser.getFavouriteBicingStations().length + userCtrl.currentUser.getFavouriteRechargeStations().length,
+      itemBuilder: (context, index) {
+        while (index < userCtrl.currentUser
+            .getFavouriteBicingStations()
+            .length) {
+          int item = int.parse(
+              userCtrl.currentUser.getFavouriteBicingStations().elementAt(
+                  index));
+          return Dismissible(
+            background: Container(
+                padding: const EdgeInsets.all(20),
+                child: Row(children: const [
+                  Icon(
+                    Icons.delete_forever,
+                    size: 60,
+                    color: Colors.red,
+                    textDirection: TextDirection.ltr,
+                  ),
+                  Expanded(child: SizedBox())
+                ])
+            ),
+            key: UniqueKey(),
+            onDismissed: (DismissDirection direction) async {
+              await userCtrl.deleteFavBicingBD(item.toString());
+              setState(() {});
+            },
+            child: Padding(
+                padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
+                child: Material(
+                    color: Colors.transparent,
+                    child: BicingPreview(
+                        info: listController.getBicingStationbyId(item)
+                    )
+                )
+            ),
+          );
+        } ///End while Bicing Stations
+        int item = int.parse(
+            userCtrl.currentUser.getFavouriteRechargeStations().elementAt(
+                index-userCtrl.currentUser.getFavouriteRechargeStations().length));
+        return Dismissible(
+          background: Container(
+              padding: const EdgeInsets.all(20),
+              child: Row(children: const [
+                Icon(
+                  Icons.delete_forever,
+                  size: 60,
+                  color: Colors.red,
+                  textDirection: TextDirection.ltr,
+                ),
+                Expanded(child: SizedBox())
+              ])
+          ),
+          key: UniqueKey(),
+          onDismissed: (DismissDirection direction) async {
+            await userCtrl.deleteFavChargerBD(item.toString());
+            setState(() {});
+          },
+          child: Padding(
+              padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
+              child: RechargePreview(
+                  info: listController.getRechargeStation(item)
+              )
+          ),
+        );
+      });
+  }
+
+  Widget listaPersonalUbi() {
+    if (userCtrl.currentUser.getPersonalUbi().isEmpty) {
+      return const Padding(
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: Material(
+            color: Colors.transparent,
+            child: Text(
+              AppLocalizations.of(context).profile_nolocations,
+              style: TextStyle(fontSize: 20),
+              textAlign: TextAlign.center,
+            )
+          )
+      );
+    }
+    return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: userCtrl.currentUser.personalUbi.length,
+        itemCount: userCtrl.currentUser.getPersonalUbi().length,
         itemBuilder: (context, index) {
           return Dismissible(
             background: Container(
@@ -379,7 +453,7 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Padding(
                 padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
                 child: PersonalUbiPreview(
-                    info: userCtrl.currentUser.personalUbi.elementAt(index)
+                    info: userCtrl.currentUser.getPersonalUbi().elementAt(index)
                 )
             ),
           );
@@ -390,7 +464,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return ListView.builder(
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: userCtrl.currentUser.personalUbi.length,
+        itemCount: userCtrl.currentUser.getPersonalUbi().length,
         itemBuilder: (context, index) {
           return Padding(
               key: UniqueKey(),
@@ -398,7 +472,7 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Row(
                 children: [
                   Text(
-                    userCtrl.currentUser.personalUbi
+                    userCtrl.currentUser.getPersonalUbi()
                         .elementAt(index)
                         .infoWindow
                         .title
@@ -412,7 +486,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   const Expanded(child: SizedBox()),
                   IconButton(
                       onPressed: () {
-                        userCtrl.currentUser.personalUbi.removeAt(index);
+                        userCtrl.currentUser.deletePersonalUbi(index);
                         Navigator.of(context).build(context);
                       },
                       icon: const Icon(Icons.delete,
