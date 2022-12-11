@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:intl/intl.dart';
 import '../models/comment.dart';
@@ -54,8 +55,6 @@ class StationController {
   Future<bool> fetchFirstBicingStations() async {
     Response res = await _apiService.getData('bicing_stations');
     var body = json.decode(res.body);
-    print(res.statusCode);
-    print(body);
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
       _bicinglist = estaciones.getBicingStations();
@@ -69,8 +68,6 @@ class StationController {
   Future<bool> fetchFirstRechargeStations() async {
     Response res = await _apiService.getData('recharge_stations');
     var body = json.decode(res.body);
-    print(res.statusCode);
-    print(body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
@@ -93,7 +90,6 @@ class StationController {
         } else {
           _bicinglist.addAll(estaciones.getBicingStations());
           bicingStationStreamController.add(_bicinglist.length);
-          print(_rechargelist.length);
           bicisIterator++;
         }
       } else {
@@ -114,7 +110,6 @@ class StationController {
         } else {
           _rechargelist.addAll(estaciones.getChargerStations());
           rechargeStationStreamController.add(_rechargelist.length);
-          print(_rechargelist.length);
 
           chargersIterator++;
         }
@@ -177,15 +172,12 @@ class StationController {
   addBicingCommentBD(Station bicing, String txt, String creator) async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-MM-dd kk:mm:ss').format(now);
-    print(formattedDate);
     var data = {"message": txt, "date": formattedDate};
 
     var aux = bicing.id - 2017;
-    print(aux);
 
     Response res = await _apiService.postDataAux(
         data, "https://localhost/bicing_stations/$aux/comments");
-    print(res.statusCode.toString());
     var body = jsonDecode(res.body);
     if (res.statusCode == 201) {
       _addBicingComment(body["id"], bicing, txt, creator);
@@ -196,11 +188,9 @@ class StationController {
 
   extractCommentsBicing(int id, Station bicing) async {
     var aux = id - 2017;
-    print(aux);
 
     Response res = await _apiService
         .getDataAux("https://localhost/bicing_stations/$aux/comments");
-    print(res.statusCode.toString());
     var body = jsonDecode(res.body);
     if (res.statusCode == 200) {
       List<Comment> comments = [];
@@ -208,12 +198,18 @@ class StationController {
         Response res2 = await _apiService
             .getDataAux("https://localhost" + body["comments"][i]["userOwner"]);
         var body2 = jsonDecode(res2.body);
-        if (res2.statusCode == 200) {
+
+        Response res3 = await _apiService.getDataAux(
+            "https://localhost" + body["comments"][i]["bicingStation"]);
+        var body3 = jsonDecode(res3.body);
+        if (res3.statusCode == 200) {
           Comment comment = Comment(
               body["comments"][i]["id"],
               body["comments"][i]["message"],
               body2["username"],
-              body["comments"][i]["date"]);
+              body["comments"][i]["date"],
+              Station.fromJson(body3),
+              null);
           comments.add(comment);
         } else {
           throw Exception('Error en función extractCommentsBicing segundo if');
@@ -223,5 +219,18 @@ class StationController {
     } else {
       throw Exception('Error en función addBicingCommentBD');
     }
+  }
+
+  deleteBicingComment(Comment comment) async{
+    Response res = await _apiService.deleteDataAux("https://localhost/users/" + UserController().currentUser.getUserId().toString()+ "/comments/"+ comment.id.toString());
+
+    if(res.statusCode == 200){
+      comment.bicing?.deleteComment(comment.id);
+      return true;
+    }
+    else{
+      throw Exception('Error en función deleteBicingComment');
+    }
+
   }
 }

@@ -70,12 +70,16 @@ class Station {
   addComment(int id, String ctext, String creator) {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('yyyy-mm-dd kk:mm:ss').format(now);
-    Comment newComment = Comment(id, ctext, creator, formattedDate);
+    Comment newComment = Comment(id, ctext, creator, formattedDate, this, null);
     commentsBicing.add(newComment);
   }
 
   addListComments(List<Comment> comments) {
     commentsBicing = comments;
+  }
+
+  deleteComment(int id){
+    commentsBicing.removeWhere((element) => element.id == id);
   }
 
   Station();

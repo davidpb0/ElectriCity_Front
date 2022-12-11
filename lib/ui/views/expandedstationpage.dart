@@ -5,7 +5,6 @@ import 'package:electricity_front/ui/components/reservation_form.dart';
 import 'package:electricity_front/ui/components/station_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../core/controllers/list_controller.dart';
 import '../../core/controllers/station_controller.dart';
 import '../../fonts/test_icons_icons.dart';
 import '../components/commentForm.dart';
@@ -311,7 +310,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                     id: widget.index,
                     bicing: widget.bicing,
                     notifyParent: refresh),
-                listaCommentsBicing(),
+                listaCommentsBicing(refresh),
 
               ]),
             ),
@@ -337,7 +336,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
         ]));
   }
 
-  Widget listaCommentsBicing() {
+  Widget listaCommentsBicing(dynamic ref) {
     if (bicingStation.commentsBicing.isEmpty) {
       return Padding(
           padding: EdgeInsets.symmetric(vertical: 16),
@@ -374,7 +373,8 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
             child: Padding(
                 padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
                 child: StationComment(
-                    info: bicingStation.commentsBicing.elementAt(index))),
+                    info: bicingStation.commentsBicing.elementAt(index),
+                notifyParent: ref,)),
           );
         });
   }
