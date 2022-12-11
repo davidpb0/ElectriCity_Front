@@ -105,7 +105,10 @@ class _StationCommentState extends State<StationComment> {
                                     ),
                                     const SizedBox(height: 10),
                                     Text(
-                                        widget.info.timestamp
+                                        widget.info.timestamp,
+                                      style: const TextStyle(
+                                        fontWeight: FontWeight.w200
+                                      ),
                                     ),
                                   ])
 

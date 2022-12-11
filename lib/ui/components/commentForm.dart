@@ -135,6 +135,7 @@ class _StationCommentFormState extends State<StationCommentForm> {
                                                     commentTextController.text,
                                                     UserController()
                                                         .currentUser);
+
                                               }
                                               setState(() {
                                                 commentTextController.text = "";
