@@ -99,4 +99,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get profile_checkdelete => 'Are you sure you want to delete your account?';
+
+  @override
+  String get editprofile_oldpassword => 'Current password';
+
+  @override
+  String get editprofile_newpassword => 'New password';
+
+  @override
+  String get editprofile_repeatnewpassword => 'Repeat new password';
+
+  @override
+  String get editprofile_confirm_changes => 'Confirm new changes';
+
+  @override
+  String get editprofile_cancel_changes => 'Cancel changes';
+
+  @override
+  String get editprofile_text => 'Edit account';
 }
