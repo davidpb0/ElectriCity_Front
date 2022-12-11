@@ -1,6 +1,6 @@
+import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
-import '../../core/controllers/list_controller.dart';
 import '../../core/models/recharge_station.dart';
 import '../../core/models/station_list.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -21,20 +21,18 @@ class StationCommentForm extends StatefulWidget {
 
 class _StationCommentFormState extends State<StationCommentForm> {
   final TextEditingController commentTextController = TextEditingController();
-  late ListController listCtrl;
+  late StationController _stationController;
   late Station bicingStation;
   late RechargeStation rechargeStation;
 
   @override
   void initState() {
     super.initState();
-    listCtrl = ListController();
+    _stationController = StationController();
     if (widget.bicing) {
-      var firstBicing = listCtrl.getBicingStation(0);
-      bicingStation = listCtrl.getBicingStation(widget.id - firstBicing.id);
+      bicingStation = _stationController.getBicingStationbyId(widget.id);
     } else {
-      var firstCharger = listCtrl.getRechargeStation(0);
-      rechargeStation = listCtrl.getRechargeStation(widget.id - firstCharger.id);
+      rechargeStation = _stationController.getRechargeStationbyId(widget.id);
     }
   }
 
@@ -129,13 +127,12 @@ class _StationCommentFormState extends State<StationCommentForm> {
                                           ),
                                         ),
                                         IconButton(
-                                            onPressed: () {
+                                            onPressed: () async {
                                               if (widget.bicing) {
-                                                bicingStation.addComment(
+                                                await _stationController.addBicingCommentBD(bicingStation,
                                                     commentTextController.text,
                                                     UserController()
-                                                        .currentUser);
-
+                                                        .currentUser.getUsername());
                                               }
                                               setState(() {
                                                 commentTextController.text = "";

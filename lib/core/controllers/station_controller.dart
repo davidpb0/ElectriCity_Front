@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:electricity_front/core/models/recharge_station.dart';
+import 'package:intl/intl.dart';
+import '../models/comment.dart';
 import '../models/station_list.dart';
 import 'package:http/http.dart';
-
 import '../services/api_service.dart';
 
 class StationController {
@@ -44,9 +44,7 @@ class StationController {
     }
   }
 
-
-
-  void initStations() async{
+  void initStations() async {
     await fetchFirstBicingStations();
     await fetchFirstRechargeStations();
     streamBicingStations();
@@ -69,7 +67,6 @@ class StationController {
   }
 
   Future<bool> fetchFirstRechargeStations() async {
-
     Response res = await _apiService.getData('recharge_stations');
     var body = json.decode(res.body);
     print(res.statusCode);
@@ -171,5 +168,60 @@ class StationController {
 
   RechargeStation getRechargeStationbyId(int id) {
     return _rechargelist.singleWhere((o) => o.id == id);
+  }
+
+  _addBicingComment(int id, Station bicing, String txt, String creator) {
+    bicing.addComment(id, txt, creator);
+  }
+
+  addBicingCommentBD(Station bicing, String txt, String creator) async {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd kk:mm:ss').format(now);
+    print(formattedDate);
+    var data = {"message": txt, "date": formattedDate};
+
+    var aux = bicing.id - 2017;
+    print(aux);
+
+    Response res = await _apiService.postDataAux(
+        data, "https://localhost/bicing_stations/$aux/comments");
+    print(res.statusCode.toString());
+    var body = jsonDecode(res.body);
+    if (res.statusCode == 201) {
+      _addBicingComment(body["id"], bicing, txt, creator);
+    } else {
+      throw Exception('Error en función addBicingCommentBD');
+    }
+  }
+
+  extractCommentsBicing(int id, Station bicing) async {
+    var aux = id - 2017;
+    print(aux);
+
+    Response res = await _apiService
+        .getDataAux("https://localhost/bicing_stations/$aux/comments");
+    print(res.statusCode.toString());
+    var body = jsonDecode(res.body);
+    if (res.statusCode == 200) {
+      List<Comment> comments = [];
+      for (int i = body["comments"].length - 1; i >= 0; --i) {
+        Response res2 = await _apiService
+            .getDataAux("https://localhost" + body["comments"][i]["userOwner"]);
+        var body2 = jsonDecode(res2.body);
+        if (res2.statusCode == 200) {
+          Comment comment = Comment(
+              body["comments"][i]["id"],
+              body["comments"][i]["message"],
+              body2["username"],
+              body["comments"][i]["date"]);
+          comments.add(comment);
+        } else {
+          throw Exception('Error en función extractCommentsBicing segundo if');
+        }
+      }
+      bicing.addListComments(comments);
+    } else {
+      throw Exception('Error en función addBicingCommentBD');
+    }
   }
 }

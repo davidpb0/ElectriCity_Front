@@ -1,3 +1,4 @@
+import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:flutter/material.dart';
 import '../../core/models/station_list.dart';
 import '../../fonts/test_icons_icons.dart';
@@ -176,7 +177,8 @@ class _BicingPreviewState extends State<BicingPreview> {
                                 icon: Icon((faved) ? Icons.favorite_outline : Icons.favorite),
                               ),
 
-                              IconButton(onPressed: (){
+                              IconButton(onPressed: () async {
+                                await StationController().extractCommentsBicing(widget.info.id, widget.info);
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  ExpandedStationPage(index: widget.info.id, bicing: true)));
                               },
                                 icon: Icon(Icons.open_in_new),

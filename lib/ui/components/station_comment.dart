@@ -61,7 +61,7 @@ class _StationCommentState extends State<StationComment> {
                               children:  [
                                 const SizedBox(width: 40,),
                                 Text(
-                                  widget.info.creator.getUsername(),
+                                  widget.info.creator,
                                   textAlign: TextAlign.right,
                                   style: const TextStyle(
                                     color: Colors.white,
@@ -103,11 +103,12 @@ class _StationCommentState extends State<StationComment> {
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 10),
+                                    const SizedBox(height: 20),
                                     Text(
                                         widget.info.timestamp,
                                       style: const TextStyle(
-                                        fontWeight: FontWeight.w200
+                                        fontWeight: FontWeight.w200,
+                                        fontSize: 10
                                       ),
                                     ),
                                   ])

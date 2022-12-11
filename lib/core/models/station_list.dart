@@ -1,5 +1,4 @@
 import 'package:electricity_front/core/models/comment.dart';
-import 'package:electricity_front/core/models/user.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
@@ -19,8 +18,12 @@ class StationList {
       });
     }
     totalItems = json['hydra:totalItems'];
-    hydraView = json['hydra:view'] != null ? HydraView.fromJson(json['hydra:view']) : null;
-    hydraSearch = json['hydra:search'] != null ? HydraSearch.fromJson(json['hydra:search']) : null;
+    hydraView = json['hydra:view'] != null
+        ? HydraView.fromJson(json['hydra:view'])
+        : null;
+    hydraSearch = json['hydra:search'] != null
+        ? HydraSearch.fromJson(json['hydra:search'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -49,7 +52,6 @@ class StationList {
   }
 }
 
-
 class Station {
   late int capacity;
   late int mechanical;
@@ -63,12 +65,17 @@ class Station {
   late String address;
   bool favorite = false;
   List<Comment> commentsBicing = [];
+  List<String> commentsFromBd = [];
 
-  addComment(String ctext, User creator){
+  addComment(int id, String ctext, String creator) {
     DateTime now = DateTime.now();
-    String formattedDate = DateFormat('EEE d MMM kk:mm:ss').format(now);
-    Comment newComment = Comment(ctext, creator, formattedDate);
+    String formattedDate = DateFormat('yyyy-mm-dd kk:mm:ss').format(now);
+    Comment newComment = Comment(id, ctext, creator, formattedDate);
     commentsBicing.add(newComment);
+  }
+
+  addListComments(List<Comment> comments) {
+    commentsBicing = comments;
   }
 
   Station();
@@ -99,12 +106,12 @@ class Station {
     data['address'] = address;
     return data;
   }
+
   @override
   bool operator ==(Object other) =>
       other is Station &&
-          other.runtimeType == runtimeType &&
-          other.address == address;
-
+      other.runtimeType == runtimeType &&
+      other.address == address;
 }
 
 class HydraView {
@@ -121,8 +128,7 @@ class HydraView {
       this.hydraFirst,
       this.hydraLast,
       this.hydraPrevious,
-      this.hydraNext
-      });
+      this.hydraNext});
 
   HydraView.fromJson(Map<String, dynamic> json) {
     id = json['@id'];
@@ -155,8 +161,7 @@ class HydraSearch {
       {this.type,
       this.hydraTemplate,
       this.hydraVariableRepresentation,
-      this.hydraMapping
-      });
+      this.hydraMapping});
 
   HydraSearch.fromJson(Map<String, dynamic> json) {
     type = json['@type'];
