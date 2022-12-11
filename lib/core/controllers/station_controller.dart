@@ -172,4 +172,5 @@ class StationController {
   RechargeStation getRechargeStationbyId(int id) {
     return _rechargelist.singleWhere((o) => o.id == id);
   }
+
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../core/controllers/user_controller.dart';
 import '../../core/models/station_list.dart';
 import '../../fonts/test_icons_icons.dart';
 import '../views/expandedstationpage.dart';
@@ -16,10 +17,11 @@ class BicingPreview extends StatefulWidget {
 }
 
 class _BicingPreviewState extends State<BicingPreview> {
-  bool faved = false;
+
 
   @override
   Widget build(BuildContext context) {
+    bool faved = UserController().currentUser.isFavouriteBicingStationIndex(widget.info.id.toString());
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       child: Container(
@@ -162,7 +164,14 @@ class _BicingPreviewState extends State<BicingPreview> {
                         flex: 1,
                         child: Column(
                             children: [
-                              IconButton(onPressed: (){
+                              IconButton(onPressed: () async {
+                                if (faved) {
+                                  await UserController().deleteFavBicingBD(
+                                      widget.info.id.toString());
+                                } else {
+                                  await UserController()
+                                      .addFavBicingBD(widget.info.id);
+                                }
                                 setState(() {
                                   if (faved) {
                                     faved = false;
@@ -170,10 +179,8 @@ class _BicingPreviewState extends State<BicingPreview> {
                                     faved = true;
                                   }
                                 });
-                                print("faved!");
-                                print(faved);
                               },
-                                icon: Icon((faved) ? Icons.favorite_outline : Icons.favorite),
+                                icon: Icon((faved) ? Icons.favorite : Icons.favorite_outline),
                               ),
 
                               IconButton(onPressed: (){
