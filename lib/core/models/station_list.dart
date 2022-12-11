@@ -16,8 +16,12 @@ class StationList {
       });
     }
     totalItems = json['hydra:totalItems'];
-    hydraView = json['hydra:view'] != null ? HydraView.fromJson(json['hydra:view']) : null;
-    hydraSearch = json['hydra:search'] != null ? HydraSearch.fromJson(json['hydra:search']) : null;
+    hydraView = json['hydra:view'] != null
+        ? HydraView.fromJson(json['hydra:view'])
+        : null;
+    hydraSearch = json['hydra:search'] != null
+        ? HydraSearch.fromJson(json['hydra:search'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -87,12 +91,13 @@ class Station {
     data['address'] = address;
     return data;
   }
+
   @override
   bool operator ==(Object other) =>
-      other is Station &&
-          other.runtimeType == runtimeType &&
-          other.address == address;
+      other is Station && other.runtimeType == runtimeType && other.id == id;
 
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class HydraView {
@@ -109,8 +114,7 @@ class HydraView {
       this.hydraFirst,
       this.hydraLast,
       this.hydraPrevious,
-      this.hydraNext
-      });
+      this.hydraNext});
 
   HydraView.fromJson(Map<String, dynamic> json) {
     id = json['@id'];
@@ -143,8 +147,7 @@ class HydraSearch {
       {this.type,
       this.hydraTemplate,
       this.hydraVariableRepresentation,
-      this.hydraMapping
-      });
+      this.hydraMapping});
 
   HydraSearch.fromJson(Map<String, dynamic> json) {
     type = json['@type'];
