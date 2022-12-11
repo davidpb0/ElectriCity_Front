@@ -30,6 +30,19 @@
     "personallocation_description": "Descripción",
     "personallocation_submit": "Añadir ubicación",
 
+    "reservation_title": "Reserva una plaza",
+    "reservation_date": "Fecha",
+    "reservation_starttime": "Desde:",
+    "reservation_endtime": "Hasta:",
+
+    "bicingstation_mechanical": "Bicis mecánicas",
+    "bicingstation_electrical": "Bicis eléctricas",
+    "bicingstation_slots": "Anclajes libres",
+
+    "rechargestation_speed": "Velocidad de carga",
+    "rechargestation_connection": "Tipo de conexión",
+    "rechargestation_slots": "Plazas libres",
+
     "profile_personallocations": "Ubicaciones personales",
     "profile_nolocations": "No tiene ubicaciones personales",
     "profile_favouritestations": "Estaciones favoritas",

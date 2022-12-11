@@ -80,6 +80,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get personallocation_submit => 'Add location';
 
   @override
+  String get reservation_title => 'Book a charging slot';
+
+  @override
+  String get reservation_date => 'Date';
+
+  @override
+  String get reservation_starttime => 'From:';
+
+  @override
+  String get reservation_endtime => 'To:';
+
+  @override
+  String get bicingstation_mechanical => 'Mechanical bikes';
+
+  @override
+  String get bicingstation_electrical => 'Electrical bikes';
+
+  @override
+  String get bicingstation_slots => 'Empty slots';
+
+  @override
+  String get rechargestation_speed => 'Speed type';
+
+  @override
+  String get rechargestation_connection => 'Connection type';
+
+  @override
+  String get rechargestation_slots => 'Empty slots';
+
+  @override
   String get profile_personallocations => 'Personal locations';
 
   @override
