@@ -61,6 +61,7 @@ class Station {
   late LatLng coords;
   late bool status;
   late String address;
+  bool favorite = false;
   List<Comment> commentsBicing = [];
 
   addComment(String ctext, User creator){
@@ -98,6 +99,12 @@ class Station {
     data['address'] = address;
     return data;
   }
+  @override
+  bool operator ==(Object other) =>
+      other is Station &&
+          other.runtimeType == runtimeType &&
+          other.address == address;
+
 }
 
 class HydraView {

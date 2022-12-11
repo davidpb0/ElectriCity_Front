@@ -7,7 +7,7 @@ import 'package:http/http.dart';
 
 import '../services/api_service.dart';
 
-class ListController {
+class StationController {
   final ApiService _apiService = ApiService();
   late List<Station> _bicinglist;
   late List<RechargeStation> _rechargelist;
@@ -19,18 +19,18 @@ class ListController {
   int bicisIterator = 2;
   int chargersIterator = 2;
 
-  StreamController<List<RechargeStation>> rechargeStationStreamController =
-      StreamController<List<RechargeStation>>.broadcast();
-  StreamController<List<Station>> bicingStationStreamController =
-      StreamController<List<Station>>.broadcast();
+  StreamController<int> rechargeStationStreamController =
+      StreamController<int>.broadcast();
+  StreamController<int> bicingStationStreamController =
+      StreamController<int>.broadcast();
 
-  factory ListController() {
+  factory StationController() {
     return _this;
   }
 
-  static final ListController _this = ListController._();
+  static final StationController _this = StationController._();
 
-  ListController._();
+  StationController._();
 
   Future<List<Station>> fetchBicingStations() async {
     Response res = await _apiService.getData('bicing_stations');
@@ -44,25 +44,41 @@ class ListController {
     }
   }
 
-  void fetchFirstBicingStations() async {
+
+
+  void initStations() async{
+    await fetchFirstBicingStations();
+    await fetchFirstRechargeStations();
+    streamBicingStations();
+    streamRechargeStations();
+  }
+
+  Future<bool> fetchFirstBicingStations() async {
     Response res = await _apiService.getData('bicing_stations');
     var body = json.decode(res.body);
+    print(res.statusCode);
+    print(body);
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
       _bicinglist = estaciones.getBicingStations();
       bicisStarted = true;
+      return true;
     } else {
       throw Exception('Error en función fetchFirstBicingStations');
     }
   }
 
-  void fetchFirstRechargeStations() async {
+  Future<bool> fetchFirstRechargeStations() async {
+
     Response res = await _apiService.getData('recharge_stations');
     var body = json.decode(res.body);
+    print(res.statusCode);
+    print(body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
       chargersStarted = true;
+      return true;
     } else {
       throw Exception('Error en función fetchFirstRechargeStations');
     }
@@ -78,8 +94,9 @@ class ListController {
         if (estaciones.listMember.isEmpty) {
           bicisComplete = true;
         } else {
-          bicingStationStreamController.add(estaciones.listMember);
-          _bicinglist.addAll(estaciones.listMember);
+          _bicinglist.addAll(estaciones.getBicingStations());
+          bicingStationStreamController.add(_bicinglist.length);
+          print(_rechargelist.length);
           bicisIterator++;
         }
       } else {
@@ -98,8 +115,10 @@ class ListController {
         if (estaciones.chargeStation.isEmpty) {
           chargersComplete = true;
         } else {
-          rechargeStationStreamController.add(estaciones.chargeStation);
-          _rechargelist.addAll(estaciones.chargeStation);
+          _rechargelist.addAll(estaciones.getChargerStations());
+          rechargeStationStreamController.add(_rechargelist.length);
+          print(_rechargelist.length);
+
           chargersIterator++;
         }
       } else {
@@ -120,11 +139,11 @@ class ListController {
     }
   }
 
-  Stream<List<RechargeStation>> getRechargeStationsStream() {
+  Stream<int> getRechargeStationsStream() {
     return rechargeStationStreamController.stream;
   }
 
-  Stream<List<Station>> getBicingStationsStream() {
+  Stream<int> getBicingStationsStream() {
     return bicingStationStreamController.stream;
   }
 

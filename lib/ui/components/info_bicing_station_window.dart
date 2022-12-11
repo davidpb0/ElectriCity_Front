@@ -1,18 +1,32 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-
+import '../../core/controllers/user_controller.dart';
+import '../../core/models/station_list.dart';
 import '../../fonts/test_icons_icons.dart';
 
-class InfoBicingStationWindow extends StatelessWidget {
-  const InfoBicingStationWindow(
+// ignore: must_be_immutable
+class InfoBicingStationWindow extends StatefulWidget {
+  InfoBicingStationWindow(
       {super.key,
       required this.belec,
       required this.bmech,
       required this.slots,
-      required this.addres});
+      required this.addres,
+      required this.liked,
+      required this.bicing});
 
   final int? belec, bmech, slots;
   final String addres;
+  final Station bicing;
+  bool liked;
+
+  @override
+  State<InfoBicingStationWindow> createState() =>
+      _InfoBicingStationWindowState();
+}
+
+class _InfoBicingStationWindowState extends State<InfoBicingStationWindow> {
+  Icon like = const Icon(Icons.favorite_border_outlined);
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +51,38 @@ class InfoBicingStationWindow extends StatelessWidget {
                     topRight: Radius.circular(12)),
                 color: Colors.blue),
             width: MediaQuery.of(context).size.width,
-            child: Text(
-              addres,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
+            child: Row(children: [
+              Expanded(
+                child: Text(
+                  widget.addres,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
               ),
-            ),
+              IconButton(
+                  onPressed: () async {
+                    setState(() {
+                      if (widget.liked) {
+                        widget.liked = false;
+                      } else {
+                        widget.liked = true;
+                      }
+                    });
+                    if (!widget.liked) {
+                      await UserController().deleteFavBicingBD(
+                          widget.bicing.id.toString());
+                    } else {
+                      await UserController()
+                          .addFavBicingBD(widget.bicing.id);
+                    }
+                  },
+                  icon: Icon((widget.liked)
+                      ? Icons.favorite
+                      : Icons.favorite_border_outlined))
+            ]),
           ),
           Container(
               color: Colors.white,
@@ -58,7 +96,7 @@ class InfoBicingStationWindow extends StatelessWidget {
                               EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.ebike, size: 20)),
                       const Text("Bicicletes elèctriques disponibles: "),
-                      Text(belec.toString())
+                      Text(widget.belec.toString())
                     ],
                   ),
                   Row(
@@ -68,7 +106,7 @@ class InfoBicingStationWindow extends StatelessWidget {
                               EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.bike, size: 20)),
                       const Text("Bicicletes mecàniques disponibles: "),
-                      Text(bmech.toString())
+                      Text(widget.bmech.toString())
                     ],
                   ),
                   Row(
@@ -78,12 +116,11 @@ class InfoBicingStationWindow extends StatelessWidget {
                               EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.bicingParking, size: 20)),
                       const Text("Espais disponibles: "),
-                      Text(slots.toString())
+                      Text(widget.slots.toString())
                     ],
                   )
                 ],
-              )
-          ),
+              )),
         ]),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:electricity_front/ui/views/prizespage.dart';
 import 'package:electricity_front/ui/views/profilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,9 +16,10 @@ class BottomBar extends StatefulWidget {
 
 class BottomBarState extends State<BottomBar> {
   static final List<Widget> _widgetOptions = <Widget>[
-    const GoogleMapa(),
-    const ListPage(),
-    InfoPersonalUbiForm(),
+    GoogleMapa(),
+    ListPage(),
+    //InfoPersonalUbiForm(),
+    const PrizesPage(),
     const ProfilePage(),
     //ProfilePage()
   ];
@@ -42,10 +44,10 @@ class BottomBarState extends State<BottomBar> {
         unselectedItemColor: const Color(0xFF526480),
         currentIndex: _selectedIndex,
         items:  [
-          BottomNavigationBarItem(icon: Icon(Icons.map), label: AppLocalizations.of(context).homepage_map),
-          BottomNavigationBarItem(icon: Icon(Icons.electric_car), label: AppLocalizations.of(context).homepage_stations),
-          BottomNavigationBarItem(icon: Icon(Icons.military_tech), label: AppLocalizations.of(context).homepage_prizes),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: AppLocalizations.of(context).homepage_profile)
+          BottomNavigationBarItem(icon: const Icon(Icons.map), label: AppLocalizations.of(context).homepage_map),
+          BottomNavigationBarItem(icon: const Icon(Icons.electric_car), label: AppLocalizations.of(context).homepage_stations),
+          BottomNavigationBarItem(icon: const Icon(Icons.military_tech), label: AppLocalizations.of(context).homepage_prizes),
+          BottomNavigationBarItem(icon: const Icon(Icons.person), label: AppLocalizations.of(context).homepage_profile)
         ],
       ),
     );
