@@ -82,7 +82,7 @@ class _StationCommentFormState extends State<StationCommentForm> {
                               width: 40,
                             ),
                             Text(
-                              UserController().currentUser.username,
+                              UserController().currentUser.getUsername(),
                               textAlign: TextAlign.right,
                               style: const TextStyle(
                                 color: Colors.white,
