@@ -391,15 +391,26 @@ class GoogleMapaState extends State<GoogleMapa> {
     _stationController.getBicingStationsStream().listen((value) {
       while(i<value && i<_stationController.getTotalBicingStations()){
         print("added bicing marker ${i+1}");
+        Station current = _stationController.getBicingStation(i);
         setState(() {
           _markers.add(
               Marker(
-                  markerId: MarkerId("B-${i + 1}"),
-                  position: _stationController.getBicingStation(i).coords,
+                  markerId: MarkerId("B-${current.id}"),
+                  position: current.coords,
                   icon: bicingMarker,
                   onTap: () {
                     print("salta 3");
-                    setAuxStation(_stationController.getBicingStation(i).id, true);
+                    setState(() {
+                        info = InfoBicingStationWindow(
+                            belec: _stationController.getBicingStationbyId(current.id).electrical,
+                            bmech: _stationController.getBicingStationbyId(current.id).mechanical,
+                            slots: _stationController.getBicingStationbyId(current.id).availableSlots,
+                            addres: _stationController.getBicingStationbyId(current.id).address,
+                            liked: UserController().currentUser.isFavouriteBicingStationIndex(current.id.toString()),
+                            bicing: _stationController.getBicingStationbyId(current.id)
+                        );
+
+                    });
                   }
               ));
         });
@@ -424,8 +435,17 @@ class GoogleMapaState extends State<GoogleMapa> {
                   position: _stationController.getRechargeStation(i).coords,
                   icon: chargerMarker,
                   onTap: () {
-
-                    setAuxStation(i, false);
+                    setState(() {
+                        info = InfoChargeStationWindow(
+                          slots: _stationController.getRechargeStation(i).slots,
+                          addres: _stationController.getRechargeStation(i).address,
+                          connectionType: _stationController.getRechargeStation(i).connectionType,
+                          liked: UserController()
+                              .currentUser
+                              .isFavouriteRechargeStationIndex(_stationController.getRechargeStation(i).id.toString()),
+                          charger: _stationController.getRechargeStation(i),
+                        );
+                    });
                   }
               ));
         });
