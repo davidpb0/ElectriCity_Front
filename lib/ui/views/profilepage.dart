@@ -1,6 +1,7 @@
 import 'package:electricity_front/core/controllers/list_controller.dart';
 import 'package:electricity_front/ui/components/bicing_preview.dart';
 import 'package:electricity_front/ui/components/default_header.dart';
+import 'package:electricity_front/ui/views/editprofile.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
 import '../components/personal_ubi_preview.dart';
@@ -23,7 +24,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size screensize = MediaQuery.of(context).size;
+    Size screenSize = MediaQuery.of(context).size;
     return MaterialApp(
       title: "Profile",
       color: Colors.grey[300],
@@ -32,7 +33,7 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Column(
             children: [
               Container(
-                  width: screensize.width,
+                  width: screenSize.width,
                   decoration: const BoxDecoration(
                     color: Colors.grey,
                     boxShadow: [
@@ -43,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ],
                   ),
                   child: Column(children: [
-                    SizedBox(height: screensize.height * 0.18),
+                    SizedBox(height: screenSize.height * 0.18),
                     Padding(
                         padding: const EdgeInsets.only(bottom: 12),
                         child: Row(
@@ -67,8 +68,47 @@ class _ProfilePageState extends State<ProfilePage> {
                           ],
                         )
                     ),
+                    const SizedBox(height: 16),
+
+                    Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Colors.green.shade700,
+                        borderRadius: const BorderRadius.all(
+                            Radius.circular(8)),
+                        boxShadow: const [
+                          BoxShadow(
+                            offset: Offset(0, 2),
+                            blurRadius: 1,
+                          ),
+                        ],
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  EditProfile()));
+                        },
+
+                        child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                AppLocalizations.of(context).editprofile_text,
+                                style: const TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(width: 16),
+                              const Icon(Icons.edit,
+                                  size: 28, color: Colors.white)
+                            ]
+                        ),
+                      ),
+                    ),
                   ])
               ),
+
               Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
@@ -307,7 +347,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                         const SizedBox(width: 16),
                                         const Icon(Icons.delete_forever,
                                             size: 28, color: Colors.white)
-                                      ]),
+                                      ]
+                                  ),
                                 ),
                               ),
                             ],
@@ -322,7 +363,7 @@ class _ProfilePageState extends State<ProfilePage> {
         Material(
           color: Colors.transparent,
           child: DefaultHeader(
-              size: Size(screensize.width, (screensize.height * 0.15))),
+              size: Size(screenSize.width, (screenSize.height * 0.15))),
         )
       ]),
     );
@@ -416,13 +457,13 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Widget listaPersonalUbi() {
     if (userCtrl.currentUser.getPersonalUbi().isEmpty) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(vertical: 16),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16),
         child: Material(
             color: Colors.transparent,
             child: Text(
               AppLocalizations.of(context).profile_nolocations,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
               textAlign: TextAlign.center,
             )
           )

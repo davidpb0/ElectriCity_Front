@@ -284,6 +284,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to delete your account?'**
   String get profile_checkdelete;
+
+  /// No description provided for @editprofile_oldpassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Current password'**
+  String get editprofile_oldpassword;
+
+  /// No description provided for @editprofile_newpassword.
+  ///
+  /// In en, this message translates to:
+  /// **'New password'**
+  String get editprofile_newpassword;
+
+  /// No description provided for @editprofile_repeatnewpassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat new password'**
+  String get editprofile_repeatnewpassword;
+
+  /// No description provided for @editprofile_confirm_changes.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm new changes'**
+  String get editprofile_confirm_changes;
+
+  /// No description provided for @editprofile_cancel_changes.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel changes'**
+  String get editprofile_cancel_changes;
+
+  /// No description provided for @editprofile_text.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit account'**
+  String get editprofile_text;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

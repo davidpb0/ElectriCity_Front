@@ -109,14 +109,14 @@ class Body extends StatelessWidget {
             Text(AppLocalizations.of(context).login_forgotpassword),
             Text(
               AppLocalizations.of(context).login_clickhere,
-              style: TextStyle(
+              style: const TextStyle(
                   color: Colors.indigoAccent, fontWeight: FontWeight.bold),
             )
           ],
         ),
         //const SizedBox(height: 50),
 
-        //SigIn Botton
+        //SignIn Botton
         SizedBox(
           height: 80,
           width: 200,

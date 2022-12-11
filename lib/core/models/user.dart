@@ -19,7 +19,7 @@ class User {
   User();
 
   User.fromJson(dynamic json) {
-    _username = json['email'];
+    _username = json['username'];
     _token = json['apiTokens'].last['token'];
     _id = json['id'];
     _email = json['email'];
