@@ -57,6 +57,7 @@ class Station {
   late LatLng coords;
   late bool status;
   late String address;
+  bool favorite = false;
 
   Station();
 
@@ -86,6 +87,12 @@ class Station {
     data['address'] = address;
     return data;
   }
+  @override
+  bool operator ==(Object other) =>
+      other is Station &&
+          other.runtimeType == runtimeType &&
+          other.address == address;
+
 }
 
 class HydraView {

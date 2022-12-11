@@ -47,7 +47,7 @@ class MapaController {
   }
 
   initBD() async {
-    await _apiService.getData('station_bicing');
+    await _apiService.getData('stations');
   }
 
   initMarkers() async {
@@ -197,7 +197,7 @@ class MapaController {
     String urlPrueba =
         "users/${UserController().currentUser.getUserId()}/locations";
     var data = {
-      "id": 3000 + UserController().currentUser.personalUbi.length,
+      "id": 3000 + UserController().currentUser.getPersonalUbi().length,
       "latitude": coords.latitude,
       "longitude": coords.longitude,
       "title": tit,
@@ -216,7 +216,7 @@ class MapaController {
           snippet: desc,
         ),
       );
-      UserController().currentUser.personalUbi.add(marker);
+      UserController().currentUser.addPersonalUbi(marker);
       UserController().currentUser.personalUbiBD.add(coords);
       // ignore: use_build_context_synchronously
       Navigator.of(context).pushReplacementNamed('/home');

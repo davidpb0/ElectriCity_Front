@@ -1,34 +1,36 @@
+import 'package:electricity_front/core/models/recharge_station.dart';
+import 'package:electricity_front/core/models/station_list.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../controllers/user_controller.dart';
 
 class User {
-  List<Marker> personalUbi = [];
+  List<Marker> _personalUbi = [];
   List<LatLng> personalUbiBD = [];
-  String username = "";
-  String token = "";
-  String email = "";
+  final List<Station> _favouriteBicingStation = [];
+  final List<RechargeStation> _favouriteChargerStation = [];
+  final List<String> _favouriteBicingStationIndex = [];
+  final List<String> _favouriteChargerStationIndex = [];
+  String _username = "";
+  String _token = "";
+  String _email = "";
   int _id = 0;
-  String tokenGoogle =
-      "d8f2ac7af9bc7a48fd595dace56e49bd833ec008e45cfe90d775033c9ad6de4f1d11ce062268137f41f3d39d9528f8fe59110261783bfc8cbc2d7179e52a477cbf6ccc2e22b0e7de230025a517b31c16ea945c2ac3b1049a78599c5489287e12cc761f3919592b2e38d5f53353dd2970934aebcb1bf4e2b7db8b4dc639";
 
   User();
 
   User.fromJson(dynamic json) {
-    username = json['email'];
-    token = json['apiTokens'].last['token'];
+    _username = json['email'];
+    _token = json['apiTokens'].last['token'];
     _id = json['id'];
-    email = json['email'];
+    _email = json['email'];
     if (json['favouriteLocations'] != null) {
-      personalUbi = <Marker>[];
+      _personalUbi = <Marker>[];
       for (int i = 0; i < json['favouriteLocations'].length; ++i) {
-        personalUbi.add(Marker(
+        _personalUbi.add(Marker(
             markerId: MarkerId(
-                (json['favouriteLocations'][i]['id'] + 3000).toString()
-            ),
+                (json['favouriteLocations'][i]['id'] + 3000).toString()),
             position: LatLng(json['favouriteLocations'][i]['latitude'],
-                json['favouriteLocations'][i]['longitude']
-            ),
+                json['favouriteLocations'][i]['longitude']),
             icon: UserController().personalMarker,
             infoWindow: InfoWindow(
               title: json['favouriteLocations'][i]['title'],
@@ -37,21 +39,116 @@ class User {
         ));
       }
     }
-  }
 
-  Map toJson() {
-    return {'email': email, 'id': _id};
+    if (json['favouriteBicingStations'] != null) {
+      for (int i = 0; i < json['favouriteBicingStations'].length; ++i) {
+        String id = json['favouriteBicingStations'][i];
+        id = id.split("/").last;
+        _favouriteBicingStationIndex.add(id);
+      }
+    }
+
+    if (json['favouriteRechargeStations'] != null) {
+      for (int i = 0; i < json['favouriteRechargeStations'].length; ++i) {
+        String id = json['favouriteRechargeStations'][i].toString();
+        id = id.split("/").last;
+        _favouriteChargerStationIndex.add(id);
+      }
+    }
   }
 
   getUserTkn() {
-    return token;
+    return _token;
+  }
+
+  getUsername(){
+    return _username;
   }
 
   getUserId() {
     return _id;
   }
 
-  deletePersonalUbi(int index) {
-    personalUbi.removeAt(index);
+  getEmail(){
+    return _email;
   }
+
+  addPersonalUbi(Marker marker) {
+    _personalUbi.add(marker);
+  }
+
+  deletePersonalUbi(int index) {
+    _personalUbi.removeAt(index);
+  }
+
+  getPersonalUbi() {
+    return _personalUbi;
+  }
+
+  isFavouriteBicing(Station bicing) {
+    return _favouriteBicingStation.contains(bicing);
+  }
+
+  isFavouriteCharger(RechargeStation charger) {
+    return _favouriteChargerStation.contains(charger);
+  }
+
+  addFavBicing(Station bicing) {
+    _favouriteBicingStation.add(bicing);
+  }
+
+  deleteFavBicing(Station bicing) {
+    _favouriteBicingStation.remove(bicing);
+  }
+
+  addFavCharger(RechargeStation charger) {
+    _favouriteChargerStation.add(charger);
+  }
+
+  deleteFavCharger(RechargeStation charger) {
+    _favouriteChargerStation.remove(charger);
+  }
+
+  getFavBicing() {
+    return _favouriteBicingStation;
+  }
+
+  getFavCharger() {
+    return _favouriteChargerStation;
+  }
+
+  ///Aqui empiezan funciones con Lista Indice a conservar
+
+  getFavouriteBicingStations() {
+    return _favouriteBicingStationIndex;
+  }
+
+  getFavouriteRechargeStations() {
+    return _favouriteChargerStationIndex;
+  }
+
+  isFavouriteBicingStationIndex(String index) {
+    return _favouriteBicingStationIndex.contains(index);
+  }
+
+  isFavouriteRechargeStationIndex(String index) {
+    return _favouriteChargerStationIndex.contains(index);
+  }
+
+  addFavouriteBicingStationIndex(String index) {
+    _favouriteBicingStationIndex.add(index);
+  }
+
+  addFavouriteRechargeStationIndex(String index) {
+    _favouriteChargerStationIndex.add(index);
+  }
+
+  deleteFavouriteBicingStationIndex(String idStation) {
+    return _favouriteBicingStationIndex.remove(idStation);
+  }
+
+  deleteFavouriteRechargeStationIndex(String idStation) {
+    return _favouriteChargerStationIndex.remove(idStation);
+  }
+
 }

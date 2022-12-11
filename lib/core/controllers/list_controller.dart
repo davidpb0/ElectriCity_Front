@@ -142,7 +142,15 @@ class ListController {
     return _bicinglist.elementAt(index);
   }
 
+  Station getBicingStationbyId(int id) {
+    return _bicinglist.singleWhere((o) => o.id == id);
+  }
+
   RechargeStation getRechargeStation(int index) {
     return _rechargelist.elementAt(index);
+  }
+
+  RechargeStation getRechargeStationbyId(int id) {
+    return _rechargelist.singleWhere((o) => o.id == id);
   }
 }

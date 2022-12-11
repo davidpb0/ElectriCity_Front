@@ -35,7 +35,7 @@ class HeaderLoginComponent extends StatelessWidget {
             children: <Widget>[
               Column(
                 children:  [
-                  Text(
+                  const Text(
                     "ElectriCity",
                     textAlign: TextAlign.left,
                     style: TextStyle(
@@ -46,7 +46,7 @@ class HeaderLoginComponent extends StatelessWidget {
                   Text(
                     AppLocalizations.of(context).login_welcomeback,
                     textAlign: TextAlign.left,
-                    style: TextStyle(
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 30,
                       fontWeight: FontWeight.bold,

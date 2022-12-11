@@ -152,7 +152,7 @@ class _SignupPageState extends State<SignupPage> {
                           controller: _passwdTextController,
                           obscureText: true,
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.lock),
+                            prefixIcon: const Icon(Icons.lock),
                             border: InputBorder.none,
                             hintText: AppLocalizations.of(context).signup_password,
                           ),
