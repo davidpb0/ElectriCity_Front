@@ -9,6 +9,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/controllers/list_controller.dart';
+import '../../core/controllers/station_controller.dart';
 import '../../fonts/test_icons_icons.dart';
 import '../components/default_header.dart';
 
@@ -25,18 +26,18 @@ class ExpandedStationPage extends StatefulWidget {
 }
 
 class _ExpandedStationPageState extends State<ExpandedStationPage> {
-  late ListController listCtrl;
+  late StationController _stationController;
   late Station bicingStation;
   late RechargeStation rechargeStation;
 
   @override
   void initState() {
     super.initState();
-    listCtrl = ListController();
+    _stationController = StationController();
     if (widget.bicing) {
-      bicingStation = listCtrl.getBicingStation(widget.index);
+      bicingStation = _stationController.getBicingStationbyId(widget.index);
     } else {
-      rechargeStation = listCtrl.getRechargeStation(widget.index);
+      rechargeStation = _stationController.getRechargeStationbyId(widget.index);
     }
   }
 

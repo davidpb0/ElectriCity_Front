@@ -44,6 +44,8 @@ class StationController {
     }
   }
 
+
+
   void initStations() async{
     await fetchFirstBicingStations();
     await fetchFirstRechargeStations();
@@ -92,7 +94,7 @@ class StationController {
         if (estaciones.listMember.isEmpty) {
           bicisComplete = true;
         } else {
-          _bicinglist.addAll(estaciones.listMember);
+          _bicinglist.addAll(estaciones.getBicingStations());
           bicingStationStreamController.add(_bicinglist.length);
           print(_rechargelist.length);
           bicisIterator++;
@@ -113,7 +115,7 @@ class StationController {
         if (estaciones.chargeStation.isEmpty) {
           chargersComplete = true;
         } else {
-          _rechargelist.addAll(estaciones.chargeStation);
+          _rechargelist.addAll(estaciones.getChargerStations());
           rechargeStationStreamController.add(_rechargelist.length);
           print(_rechargelist.length);
 
@@ -159,7 +161,15 @@ class StationController {
     return _bicinglist.elementAt(index);
   }
 
+  Station getBicingStationbyId(int id) {
+    return _bicinglist.singleWhere((o) => o.id == id);
+  }
+
   RechargeStation getRechargeStation(int index) {
     return _rechargelist.elementAt(index);
+  }
+
+  RechargeStation getRechargeStationbyId(int id) {
+    return _rechargelist.singleWhere((o) => o.id == id);
   }
 }

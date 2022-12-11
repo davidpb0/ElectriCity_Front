@@ -1,3 +1,4 @@
+import 'package:electricity_front/ui/views/prizespage.dart';
 import 'package:electricity_front/ui/views/profilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,9 +16,10 @@ class BottomBar extends StatefulWidget {
 
 class BottomBarState extends State<BottomBar> {
   static final List<Widget> _widgetOptions = <Widget>[
-    const GoogleMapa(),
-    const ListPage(),
-    InfoPersonalUbiForm(),
+    GoogleMapa(),
+    ListPage(),
+    //InfoPersonalUbiForm(),
+    const PrizesPage(),
     const ProfilePage(),
     //ProfilePage()
   ];

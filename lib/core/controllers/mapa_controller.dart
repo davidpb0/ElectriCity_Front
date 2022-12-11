@@ -219,7 +219,7 @@ class MapaController {
       UserController().currentUser.addPersonalUbi(marker);
       UserController().currentUser.personalUbiBD.add(coords);
       // ignore: use_build_context_synchronously
-      Navigator.of(context).pushReplacementNamed('/home');
+      Navigator.of(context).pop(context);
     }
   }
 
