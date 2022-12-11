@@ -17,6 +17,12 @@ class EditProfile extends StatelessWidget {
     final String userEmail = userController.currentUser.getEmail();
     final String userName = userController.currentUser.getUsername();
 
+    final TextEditingController usernameTextController = TextEditingController();
+    final TextEditingController emailTextController = TextEditingController();
+    final TextEditingController oldPasswordTextController = TextEditingController();
+    final TextEditingController newPasswordTextController = TextEditingController();
+    final TextEditingController repeatPasswordTextController = TextEditingController();
+
     return Scaffold (
       backgroundColor: Colors.grey[350],
       appBar: DefaultHeader(
@@ -43,6 +49,7 @@ class EditProfile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: TextField(
+                  controller: usernameTextController,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.account_circle),
                     border: InputBorder.none,
@@ -72,6 +79,7 @@ class EditProfile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: TextField(
+                  controller: emailTextController,
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.email),
@@ -102,6 +110,7 @@ class EditProfile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: TextField(
+                  controller: oldPasswordTextController,
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
@@ -132,6 +141,7 @@ class EditProfile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: TextField(
+                  controller: newPasswordTextController,
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
@@ -162,6 +172,7 @@ class EditProfile extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: TextField(
+                  controller: repeatPasswordTextController,
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock_reset),
@@ -180,8 +191,11 @@ class EditProfile extends StatelessWidget {
             width: 500,
             child: TextButton(
               onPressed: () {
-                //userCtrl.startSession(emailTextController.text,
-                    //_passwdTextController.text, context);
+                userController.updateUserProfile(
+                    usernameTextController.text, emailTextController.text, oldPasswordTextController.text,
+                    newPasswordTextController.text, repeatPasswordTextController.text
+                );
+                Navigator.of(context).pop(context);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0.0),

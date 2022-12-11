@@ -61,16 +61,24 @@ class User {
     return _token;
   }
 
-  getUsername(){
+  getUsername() {
     return _username;
+  }
+
+  setUsername(String username) {
+    _username = username;
   }
 
   getUserId() {
     return _id;
   }
 
-  getEmail(){
+  getEmail() {
     return _email;
+  }
+
+  setEmail(String email) {
+    _email = email;
   }
 
   addPersonalUbi(Marker marker) {
