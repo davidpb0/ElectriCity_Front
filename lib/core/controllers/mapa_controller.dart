@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
@@ -17,11 +19,18 @@ class MapaController {
   late List<Station> bicingStationList = <Station>[];
   late List<RechargeStation> chargerStationList = <RechargeStation>[];
   late List<LatLng> cargaList = <LatLng>[];
+  StationController stationController = StationController();
+  final Set<Marker> _markers = {};
+  int _markersComplete = 0;
 
   late LatLng coords;
+  late BitmapDescriptor bicingMarker;
+  late BitmapDescriptor chargerMarker;
   late BitmapDescriptor personalMarker;
 
   late GoogleMapaState googleMapaState;
+  StreamController<Set<Marker>> markerStreamController =
+  StreamController<Set<Marker>>.broadcast();
 
   factory MapaController() {
     return _this;
@@ -37,6 +46,115 @@ class MapaController {
 
   initBD() async {
     await _apiService.getData('stations');
+  }
+
+  initMarkers() async {
+    initBicingMarkers();
+    initRechargeMarkers();
+
+  }
+
+  initBicingMarkers() async {
+    int i = 0;
+    stationController.getBicingStationsStream().listen((value) {
+      while(i<value && i<stationController.getTotalBicingStations()){
+        //print("added bicing marker ${i+1}");
+        _markers.add(
+          Marker(
+              markerId: MarkerId("bicing-${i + 1}"),
+              position: stationController.getBicingStation(i).coords,
+              icon: bicingMarker,
+              onTap: () {
+                /*
+                setState(() {
+                  info = InfoBicingStationWindow(
+                      belec: bicingStationList[i].electrical,
+                      bmech: bicingStationList[i].mechanical,
+                      slots: bicingStationList[i].availableSlots,
+                      addres: bicingStationList[i].address);
+
+                 */
+
+
+
+              }),
+        );
+        i++;
+        markerStreamController.add(_markers);
+        if (stationController.bicisComplete && i+1 == stationController.getTotalBicingStations()) _markersComplete++;
+
+      }
+    });
+  }
+
+  initRechargeMarkers() async {
+    int i = 0;
+    stationController.getRechargeStationsStream().listen((value) {
+      while(i<value && i<stationController.getTotalBicingStations()){
+        //print("added recharge marker ${i+1}");
+        _markers.add(
+          Marker(
+              markerId: MarkerId("recharge-${i + 1}"),
+              position: stationController.getRechargeStation(i).coords,
+              icon: chargerMarker,
+              onTap: () {
+                /*
+                setState(() {
+                  info = InfoBicingStationWindow(
+                      belec: bicingStationList[i].electrical,
+                      bmech: bicingStationList[i].mechanical,
+                      slots: bicingStationList[i].availableSlots,
+                      addres: bicingStationList[i].address);
+
+                 */
+
+
+
+              }),
+        );
+        i++;
+        markerStreamController.add(_markers);
+
+      }
+      if (stationController.chargersComplete && i+1 == stationController.getTotalRechargeStations()) _markersComplete++;
+    });
+  }
+
+  void setCustomMarker(context) async {
+    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+    if (isIOS) {
+      bicingMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/bikepin_ios.png');
+      chargerMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/chargerpin_ios.png');
+      personalMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/homepin_ios.png');
+    } else {
+      bicingMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/bikepin.png');
+      chargerMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/chargerpin.png');
+      personalMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/homepin.png');
+    }
+  }
+
+  Set<Marker> getMarkers(){
+    return _markers;
+  }
+
+  Stream<Set<Marker>> getMarkersStream() {
+    return markerStreamController.stream;
+  }
+
+  bool checkMarkers(){
+    return _markersComplete == 2;
   }
 
   bicingApi(int numPage) async {
@@ -99,7 +217,7 @@ class MapaController {
       UserController().currentUser.addPersonalUbi(marker);
       UserController().currentUser.personalUbiBD.add(coords);
       // ignore: use_build_context_synchronously
-      Navigator.of(context).pushReplacementNamed('/home');
+      Navigator.of(context).pop(context);
     }
   }
 

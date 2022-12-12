@@ -1,4 +1,5 @@
 import 'package:electricity_front/core/controllers/mapa_controller.dart';
+import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
@@ -11,6 +12,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../components/default_header.dart';
+import '../components/info_personal_ubi_form.dart';
 
 // ignore: must_be_immutable
 class GoogleMapa extends StatefulWidget {
@@ -30,6 +32,7 @@ class GoogleMapaState extends State<GoogleMapa> {
   late BitmapDescriptor personalMarker;
   final Set<Marker> _markers = {};
   final MapaController _mapaController = MapaController();
+  final StationController _stationController = StationController();
   final UserController _userController = UserController();
   late List<LatLng> bicingList;
   late List<Station> bicingStationList;
@@ -56,35 +59,18 @@ class GoogleMapaState extends State<GoogleMapa> {
     super.initState();
   }
 
-  void setCustomMarker() async {
-    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
-    if (isIOS) {
-      bicingMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
-          'assets/images/bikepin_ios.png');
-      chargerMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
-          'assets/images/chargerpin_ios.png');
-      personalMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
-          'assets/images/homepin_ios.png');
-    } else {
-      bicingMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
-          'assets/images/bikepin.png');
-      chargerMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
-          'assets/images/chargerpin.png');
-      personalMarker = await BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
-          'assets/images/homepin.png');
-    }
-  }
+
 
   void _onMapCreated(GoogleMapController controller) async {
-    setCustomMarker();
+    setCustomMarker(context);
+    //_mapaController.initBD();
+    initMarkers();
+    //setCustomMarker();
 
     mc = controller;
+
+
+    /*
 
     int o = 1;
     int j = 0;
@@ -163,6 +149,8 @@ class GoogleMapaState extends State<GoogleMapa> {
       ++o;
       q += 30;
     }
+
+     */
   }
 
   @override
@@ -181,8 +169,15 @@ class GoogleMapaState extends State<GoogleMapa> {
           onLongPress: (latlang) async {
             _mapaController.coords = latlang;
             _mapaController.personalMarker = personalMarker;
+            int aux = _userController.currentUser.getPersonalUbi().length;
             // ignore: use_build_context_synchronously
-            Navigator.of(context).pushReplacementNamed('/form_ubi');
+            //Navigator.of(context).pushReplacementNamed('/form_ubi');
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  InfoPersonalUbiForm()));
+            if (aux != _userController.currentUser.getPersonalUbi().length){
+              setState(() {
+                _markers.add((_userController.currentUser.getPersonalUbi()).last);
+              });
+            }
           },
           onTap: (latlang) {
             setState(() {
@@ -237,6 +232,7 @@ class GoogleMapaState extends State<GoogleMapa> {
                 top: MediaQuery.of(context).size.height * 0.81,
                 left: MediaQuery.of(context).size.width * 0.8),
             child: FloatingActionButton(
+              heroTag: "btn2",
               onPressed: () async {
                 Position position = await _determinePosition();
                 mc.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
@@ -274,6 +270,35 @@ class GoogleMapaState extends State<GoogleMapa> {
             points: polylineCoordinates));
       });
     }
+  }
+
+  void setAuxStation(int id, bool bicing){
+    setState(() {
+      if(bicing){
+        info = InfoBicingStationWindow(
+            belec: _stationController.getBicingStationbyId(id).electrical,
+            bmech: _stationController.getBicingStationbyId(id).mechanical,
+            slots: _stationController.getBicingStationbyId(id).availableSlots,
+            addres: _stationController.getBicingStationbyId(id).address,
+            liked: UserController().currentUser.isFavouriteBicingStationIndex(id.toString()),
+            bicing: _stationController.getBicingStationbyId(id)
+        );
+
+      }
+
+      else {
+        info = InfoChargeStationWindow(
+          slots: _stationController.getRechargeStation(id).slots,
+          addres: _stationController.getRechargeStation(id).address,
+          connectionType: _stationController.getRechargeStation(id).connectionType,
+          liked: UserController()
+              .currentUser
+              .isFavouriteRechargeStationIndex(_stationController.getRechargeStation(id).id.toString()),
+          charger: _stationController.getRechargeStation(id),
+        );
+
+      }
+    });
   }
 
   void setMarker(LatLng location, String id) {
@@ -316,5 +341,150 @@ class GoogleMapaState extends State<GoogleMapa> {
     }
     Position position = await Geolocator.getCurrentPosition();
     return position;
+  }
+
+  initMarkers() async {
+    _markers.clear();
+    await setCustomMarker(context);
+    if (_stationController.bicisComplete){
+      for(int i = 0; i < _stationController.getTotalBicingStations(); ++i ){
+        //print("adding marker $i");
+        setState(() {
+          _markers.add(
+              Marker(
+                  markerId: MarkerId("B-${i + 1}"),
+                  position: _stationController.getBicingStation(i).coords,
+                  icon: bicingMarker,
+                  onTap: () {
+                    setAuxStation(_stationController.getBicingStation(i).id, true);
+                  }
+              ));
+        });
+      }
+    }
+    else{
+      initBicingMarkers();
+    }
+    if (_stationController.chargersComplete){
+      for(int i = 0; i < _stationController.getTotalRechargeStations(); ++i ){
+        setState(() {
+          _markers.add(
+              Marker(
+                  markerId: MarkerId("R-${i + 1}"),
+                  position: _stationController.getRechargeStation(i).coords,
+                  icon: chargerMarker,
+                  onTap: () {
+                    //print("salta 2");
+                    setAuxStation(i, false);
+                  }
+              ));
+        });
+      }
+
+
+    }
+    else{
+      initRechargeMarkers();
+    }
+    for (int j = 0; j < _userController.currentUser.getPersonalUbi().length; ++j) {
+      _markers.add(_userController.currentUser.getPersonalUbi()[j]);
+    }
+
+  }
+
+  initBicingMarkers() async {
+    int i = 0;
+    _stationController.getBicingStationsStream().listen((value) {
+      while(i<value && i<_stationController.getTotalBicingStations()){
+        //print("added bicing marker ${i+1}");
+        Station current = _stationController.getBicingStation(i);
+        setState(() {
+          _markers.add(
+              Marker(
+                  markerId: MarkerId("B-${current.id}"),
+                  position: current.coords,
+                  icon: bicingMarker,
+                  onTap: () {
+                    //print("salta 3");
+                    setState(() {
+                        info = InfoBicingStationWindow(
+                            belec: _stationController.getBicingStationbyId(current.id).electrical,
+                            bmech: _stationController.getBicingStationbyId(current.id).mechanical,
+                            slots: _stationController.getBicingStationbyId(current.id).availableSlots,
+                            addres: _stationController.getBicingStationbyId(current.id).address,
+                            liked: UserController().currentUser.isFavouriteBicingStationIndex(current.id.toString()),
+                            bicing: _stationController.getBicingStationbyId(current.id)
+                        );
+
+                    });
+                  }
+              ));
+        });
+
+        i++;
+
+
+      }
+    });
+  }
+
+  initRechargeMarkers() async {
+    int i = 0;
+    _stationController.getRechargeStationsStream().listen((value) {
+      while(i<value && i<_stationController.getTotalRechargeStations()){
+        //print("added recharge marker ${i+1}");
+        RechargeStation current = _stationController.getRechargeStation(i);
+        setState(() {
+          _markers.add(
+              Marker(
+                  markerId: MarkerId("R-${current.id}"),
+                  position: current.coords,
+                  icon: chargerMarker,
+                  onTap: () {
+                    setState(() {
+                        info = InfoChargeStationWindow(
+                          slots: _stationController.getRechargeStationbyId(current.id).slots,
+                          addres: _stationController.getRechargeStationbyId(current.id).address,
+                          connectionType: _stationController.getRechargeStationbyId(current.id).connectionType,
+                          liked: UserController().currentUser.isFavouriteRechargeStationIndex(current.id.toString()),
+                          charger: _stationController.getRechargeStationbyId(current.id),
+                        );
+                    });
+                  }
+              ));
+        });
+
+        i++;
+
+
+
+      }
+
+    });
+  }
+
+  Future<void> setCustomMarker(context) async {
+    bool isIOS = Theme.of(context).platform == TargetPlatform.iOS;
+    if (isIOS) {
+      bicingMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/bikepin_ios.png');
+      chargerMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/chargerpin_ios.png');
+      personalMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/homepin_ios.png');
+    } else {
+      bicingMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/bikepin.png');
+      chargerMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/chargerpin.png');
+      personalMarker = await BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(0.1, 0.1), devicePixelRatio: 0.1),
+          'assets/images/homepin.png');
+    }
   }
 }

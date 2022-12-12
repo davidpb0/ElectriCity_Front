@@ -1,4 +1,5 @@
-import 'package:electricity_front/core/controllers/list_controller.dart';
+
+import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:electricity_front/ui/components/bicing_preview.dart';
 import 'package:electricity_front/ui/components/default_header.dart';
 import 'package:electricity_front/ui/views/editprofile.dart';
@@ -18,7 +19,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   UserController userCtrl = UserController();
-  ListController listController = ListController();
+
   bool visiblePersonalList = false;
   bool visibleFavouriteList = false;
 
@@ -427,7 +428,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 child: Material(
                     color: Colors.transparent,
                     child: BicingPreview(
-                        info: listController.getBicingStationbyId(item)
+                        info: StationController().getBicingStationbyId(item)
                     )
                 )
             ),
@@ -457,7 +458,7 @@ class _ProfilePageState extends State<ProfilePage> {
           child: Padding(
               padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
               child: RechargePreview(
-                  info: listController.getRechargeStation(item)
+                  info: StationController().getRechargeStation(item)
               )
           ),
         );

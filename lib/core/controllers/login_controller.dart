@@ -25,6 +25,7 @@ class LoginController {
     var body = json.decode(res.body);
     if (res.statusCode == 201) {
       // ignore: use_build_context_synchronously
+
       Navigator.of(ctext).pushReplacementNamed('/home');
       return User.fromJson(body);
     } else {

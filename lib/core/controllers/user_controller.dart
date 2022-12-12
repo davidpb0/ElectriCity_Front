@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:electricity_front/core/controllers/login_controller.dart';
+import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:electricity_front/core/services/api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,6 +24,7 @@ class UserController {
       setCustomMarker();
       currentUser = await LoginController().logIn(mail, pwd, ctext);
       ApiService().setToken(currentUser.getUserTkn());
+      StationController().initStations();
     }
     catch (e) {
       Exception("Error en iniciar la sesion");
