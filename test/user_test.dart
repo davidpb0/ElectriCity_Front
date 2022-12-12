@@ -11,6 +11,7 @@ void main() {
 
   test('User should created with json values passed', () {
     var json = {
+      "username":"example",
       "email": "example@email.com",
       "apiTokens": [
         {"token": "aaaa"},
@@ -21,7 +22,7 @@ void main() {
     };
     final user = User.fromJson(json);
 
-    expect(user.getUsername(), "example@email.com");
+    expect(user.getUsername(), "example");
     expect(user.getUserTkn(), "abcd");
     expect(user.getEmail(), "example@email.com");
     expect(user.getUserId(), 1);
