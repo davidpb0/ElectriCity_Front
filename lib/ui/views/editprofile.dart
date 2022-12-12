@@ -1,4 +1,5 @@
 import 'package:electricity_front/core/controllers/user_controller.dart';
+import 'package:electricity_front/ui/views/profilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -11,17 +12,17 @@ class EditProfile extends StatelessWidget {
     Key? key,
   }) : super (key: key);
 
+  final TextEditingController usernameTextController = TextEditingController();
+  final TextEditingController emailTextController = TextEditingController();
+  final TextEditingController oldPasswordTextController = TextEditingController();
+  final TextEditingController newPasswordTextController = TextEditingController();
+  final TextEditingController repeatPasswordTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     final String userEmail = userController.currentUser.getEmail();
     final String userName = userController.currentUser.getUsername();
-
-    final TextEditingController usernameTextController = TextEditingController();
-    final TextEditingController emailTextController = TextEditingController();
-    final TextEditingController oldPasswordTextController = TextEditingController();
-    final TextEditingController newPasswordTextController = TextEditingController();
-    final TextEditingController repeatPasswordTextController = TextEditingController();
 
     return Scaffold (
       backgroundColor: Colors.grey[350],
@@ -177,7 +178,7 @@ class EditProfile extends StatelessWidget {
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock_reset),
                     border: InputBorder.none,
-                      hintText: AppLocalizations.of(context).editprofile_repeatnewpassword,
+                    hintText: AppLocalizations.of(context).editprofile_repeatnewpassword,
                   ),
                 ),
               ),
@@ -195,7 +196,7 @@ class EditProfile extends StatelessWidget {
                     usernameTextController.text, emailTextController.text, oldPasswordTextController.text,
                     newPasswordTextController.text, repeatPasswordTextController.text
                 );
-                Navigator.of(context).pop(context);
+                Navigator.pop(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0.0),

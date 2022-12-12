@@ -23,6 +23,11 @@ class _ProfilePageState extends State<ProfilePage> {
   bool visibleFavouriteList = false;
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
     return MaterialApp(

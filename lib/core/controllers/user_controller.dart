@@ -129,7 +129,7 @@ class UserController {
     if (data.isNotEmpty) {
       String urlTemp = "users/${currentUser.getUserId()}";
       Response res = await ApiService().updateUserInfo(data, urlTemp);
-      if (res.statusCode == 201) {
+      if (res.statusCode == 200) {
         if (username.isNotEmpty) currentUser.setUsername(username);
         if (email.isNotEmpty) currentUser.setEmail(email);
       }
