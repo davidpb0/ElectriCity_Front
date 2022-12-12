@@ -5,18 +5,37 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../components/default_header.dart';
 
-class EditProfile extends StatelessWidget {
-  final UserController userController = UserController();
+class EditProfile extends StatefulWidget {
 
-  EditProfile({
+
+  final Function() notifyParent;
+
+  const EditProfile({
     Key? key,
+    required this.notifyParent,
   }) : super (key: key);
+  @override
+  State<EditProfile> createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
+
+  final UserController userController = UserController();
 
   final TextEditingController usernameTextController = TextEditingController();
   final TextEditingController emailTextController = TextEditingController();
   final TextEditingController oldPasswordTextController = TextEditingController();
   final TextEditingController newPasswordTextController = TextEditingController();
   final TextEditingController repeatPasswordTextController = TextEditingController();
+
+  Future<void> updateUserData(context) async {
+    await userController.updateUserProfile(
+        usernameTextController.text, emailTextController.text, oldPasswordTextController.text,
+        newPasswordTextController.text, repeatPasswordTextController.text
+    );
+    widget.notifyParent();
+    Navigator.pop(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -192,11 +211,7 @@ class EditProfile extends StatelessWidget {
             width: 500,
             child: TextButton(
               onPressed: () {
-                userController.updateUserProfile(
-                    usernameTextController.text, emailTextController.text, oldPasswordTextController.text,
-                    newPasswordTextController.text, repeatPasswordTextController.text
-                );
-                Navigator.pop(context, MaterialPageRoute(builder: (context) => const ProfilePage()));
+                updateUserData(context);
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 0.0),

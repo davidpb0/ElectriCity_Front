@@ -27,6 +27,10 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
   }
 
+  refresh() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
@@ -90,7 +94,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  EditProfile()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  EditProfile(notifyParent: refresh,)));
                         },
 
                         child: Row(
