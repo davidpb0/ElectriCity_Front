@@ -35,6 +35,12 @@
     "profile_nostations": "No favourite stations found",
     "profile_logout": "Log out",
     "profile_delete": "Delete account",
-    "profile_checkdelete": "Are you sure you want to delete your account?"
+    "profile_checkdelete": "Are you sure you want to delete your account?",
 
+    "editprofile_oldpassword": "Current password",
+    "editprofile_newpassword": "New password",
+    "editprofile_repeatnewpassword": "Repeat new password",
+    "editprofile_confirm_changes": "Confirm new changes",
+    "editprofile_cancel_changes": "Cancel changes",
+    "editprofile_text": "Edit account"
 }

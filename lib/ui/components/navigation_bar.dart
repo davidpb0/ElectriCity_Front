@@ -19,7 +19,6 @@ class BottomBarState extends State<BottomBar> {
     const ListPage(),
     InfoPersonalUbiForm(),
     const ProfilePage(),
-    //ProfilePage()
   ];
   var _selectedIndex = 0;
 

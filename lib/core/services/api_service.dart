@@ -95,6 +95,19 @@ class ApiService {
     });
   }
 
+  updateUserInfo(data, apiUrl) async {
+    var fullUrl = _url + apiUrl;
+    return await http.put(
+      Uri.parse(fullUrl),
+      body: jsonEncode(data),
+      headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json",
+        "X-AUTH-TOKEN": token
+      },
+    );
+  }
+
   deleteDataAux(apiUrl) async {
     return await http.delete(Uri.parse(apiUrl), headers: {
       "Content-type": "application/json",
