@@ -16,6 +16,7 @@
     "homepage_map": "Mapa",
     "homepage_stations": "Estaciones",
     "homepage_prizes": "Premios",
+    "homepage_chat": "Chat",
     "homepage_profile": "Perfil",
 
     "route_origin": "Orígen",
@@ -43,5 +44,7 @@
     "editprofile_repeatnewpassword": "Repita la nueva contraseña",
     "editprofile_confirm_changes": "Guardar los cambios",
     "editprofile_cancel_changes": "Cancelar cambios",
-    "editprofile_text": "Editar mi cuenta"
+    "editprofile_text": "Editar mi cuenta",
+
+    "chatview_adduser": "Añadir usuario"
 }

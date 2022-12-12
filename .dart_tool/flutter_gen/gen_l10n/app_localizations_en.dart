@@ -47,6 +47,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homepage_prizes => 'Prizes';
 
   @override
+  String get homepage_chat => 'Chat';
+
+  @override
   String get homepage_profile => 'Profile';
 
   @override
@@ -117,4 +120,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get editprofile_text => 'Edit account';
+
+  @override
+  String get chatview_adduser => 'Add user';
 }
