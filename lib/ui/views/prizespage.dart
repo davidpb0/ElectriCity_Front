@@ -1,8 +1,7 @@
 
-import 'package:electricity_front/ui/components/default_header.dart';
+//import 'package:electricity_front/ui/components/default_header.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
-import '../components/personal_ubi_preview.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
@@ -18,7 +17,7 @@ class _PrizesPageState extends State<PrizesPage> {
   bool expandedMapCursors = false;
 
   List<String> prizes = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"];
-  List<bool> prizes_locked = [true, true, true, true, true, true, true, true, true, true, true];
+  List<bool> prizesLocked = [true, true, true, true, true, true, true, true, true, true, true];
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +28,13 @@ class _PrizesPageState extends State<PrizesPage> {
           title: const Text("Prize Counter"),
         ),
         body: Padding(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
             child: Column(
               children: [
                 Container(
                   height:screensize.height*0.3
                 ),
-                Divider(),
+                const Divider(),
                 
                 // Map cursors
                 Container(
@@ -62,9 +61,9 @@ class _PrizesPageState extends State<PrizesPage> {
                             });
                           },
                           child: Row(children: [
-                            Text(
+                            const Text(
                               "Color themes",
-                              style: const TextStyle(
+                              style: TextStyle(
                                   fontSize: 20,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),

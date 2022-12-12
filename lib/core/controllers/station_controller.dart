@@ -56,8 +56,6 @@ class StationController {
   Future<bool> fetchFirstBicingStations() async {
     Response res = await _apiService.getData('bicing_stations');
     var body = json.decode(res.body);
-    print(res.statusCode);
-    print(body);
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
       _bicinglist = estaciones.getBicingStations();
@@ -72,8 +70,6 @@ class StationController {
 
     Response res = await _apiService.getData('recharge_stations');
     var body = json.decode(res.body);
-    print(res.statusCode);
-    print(body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
@@ -96,7 +92,6 @@ class StationController {
         } else {
           _bicinglist.addAll(estaciones.getBicingStations());
           bicingStationStreamController.add(_bicinglist.length);
-          print(_rechargelist.length);
           bicisIterator++;
         }
       } else {
@@ -117,8 +112,6 @@ class StationController {
         } else {
           _rechargelist.addAll(estaciones.getChargerStations());
           rechargeStationStreamController.add(_rechargelist.length);
-          print(_rechargelist.length);
-
           chargersIterator++;
         }
       } else {

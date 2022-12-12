@@ -83,11 +83,11 @@ class BookingController {
       "dataFi": '$_date ${DateFormat('HH:mm:ss').format(_endtime)}',
       "idStation": _stationid,
     };
-    print(data);
+    //print(data);
 
     Response res = await _apiService.postData(data, 'reservations');
     var body = json.decode(res.body);
-    print(body);
+    //print(body);
     if (res.statusCode == 201) {
       return true;
     } else {

@@ -1,10 +1,8 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:electricity_front/ui/views/expandedstationpage.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../core/controllers/booking_controller.dart';
-import '../../core/models/recharge_station.dart';
-import '../../fonts/test_icons_icons.dart';
+
 
 class ReservationForm extends StatefulWidget {
 
@@ -104,7 +102,7 @@ class _ReservationFormState extends State<ReservationForm> {
                       if (pickedDate != null) {
                         String formattedDate = DateFormat('yyyy-MM-dd').format(
                             pickedDate);
-                        print(formattedDate);
+                        //print(formattedDate);
                         booking.setDate(formattedDate);
 
                         setState(() {
@@ -112,7 +110,7 @@ class _ReservationFormState extends State<ReservationForm> {
                           dateError = "";
                         });
                       } else {
-                        print("Date is not selected");
+                        //print("Date is not selected");
                         setState(() {
                           dateError = "Please select a date";
                         });
@@ -164,7 +162,7 @@ class _ReservationFormState extends State<ReservationForm> {
                           startTimeError = "";
                         });
                       } else {
-                        print("Time is not selected");
+                        //print("Time is not selected");
 
                         setState(() {
                           startTimeError = "Please select a starting time";
@@ -207,7 +205,7 @@ class _ReservationFormState extends State<ReservationForm> {
                       );
 
                       if (pickedTime != null) {
-                        print(pickedTime.format(context)); //output 10:51 PM
+                        //print(pickedTime.format(context)); //output 10:51 PM
                         DateTime parsedTime = DateFormat.jm().parse(
                             pickedTime.format(context).toString());
                         booking.setEndTime(parsedTime);
@@ -218,7 +216,7 @@ class _ReservationFormState extends State<ReservationForm> {
                           endTimeError = "";
                         });
                       } else {
-                        print("Time is not selected");
+                        //print("Time is not selected");
                         setState(() {
                           endTimeError = "Please select an ending time";
                         });
@@ -247,7 +245,7 @@ class _ReservationFormState extends State<ReservationForm> {
                         if (dateError == "" && startTimeError == "" &&
                             endTimeError == "") {
                           if (booking.validateDuration()) {
-                            print("valid");
+                            //print("valid");
                             //booking.mockSuccess();
                             //completedBooking = true;
 

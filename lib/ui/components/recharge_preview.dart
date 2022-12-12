@@ -192,7 +192,7 @@ class _RechargePreviewState extends State<RechargePreview> {
                           IconButton(onPressed: (){
                             Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  ExpandedStationPage(index: widget.info.id, bicing: false)));
                           },
-                            icon: Icon(Icons.open_in_new),
+                            icon: const Icon(Icons.open_in_new),
                           )
 
                         ]

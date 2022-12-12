@@ -1,14 +1,9 @@
-import 'dart:async';
-
 import 'package:electricity_front/core/controllers/booking_controller.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/ui/components/reservation_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
-
-import '../../core/controllers/list_controller.dart';
 import '../../core/controllers/station_controller.dart';
 import '../../fonts/test_icons_icons.dart';
 import '../components/default_header.dart';
@@ -112,7 +107,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                         child: Column(
                           children: [
                             Padding(
-                                padding: EdgeInsets.only(top:12),
+                                padding: const EdgeInsets.only(top:12),
                                 child:Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -160,7 +155,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                 ),),
 
                             Padding(
-                                padding: EdgeInsets.only(top:12),
+                                padding: const EdgeInsets.only(top:12),
                                 child:Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -208,7 +203,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                 ),),
 
                             Padding(
-                                padding: EdgeInsets.only(top:12),
+                                padding: const EdgeInsets.only(top:12),
                                 child:Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -257,7 +252,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                           ],
                         ),
                       ),
-                      VerticalDivider(),
+                      const VerticalDivider(),
 
                       Column(
                           children: [
@@ -304,10 +299,8 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                         ),
 
                     ])),
-                Divider(),
-                Container(
-                  child: Text("Comments")
-                )
+                const Divider(),
+                const Text("Comments")
 
               ]),
             ),

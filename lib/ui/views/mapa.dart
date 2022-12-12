@@ -30,7 +30,7 @@ class GoogleMapaState extends State<GoogleMapa> {
   late BitmapDescriptor bicingMarker;
   late BitmapDescriptor chargerMarker;
   late BitmapDescriptor personalMarker;
-  Set<Marker> _markers = {};
+  final Set<Marker> _markers = {};
   final MapaController _mapaController = MapaController();
   final StationController _stationController = StationController();
   final UserController _userController = UserController();
@@ -273,7 +273,6 @@ class GoogleMapaState extends State<GoogleMapa> {
   }
 
   void setAuxStation(int id, bool bicing){
-    print(id);
     setState(() {
       if(bicing){
         info = InfoBicingStationWindow(
@@ -348,9 +347,8 @@ class GoogleMapaState extends State<GoogleMapa> {
     _markers.clear();
     await setCustomMarker(context);
     if (_stationController.bicisComplete){
-      print("bicisISComplete");
       for(int i = 0; i < _stationController.getTotalBicingStations(); ++i ){
-        print("adding marker $i");
+        //print("adding marker $i");
         setState(() {
           _markers.add(
               Marker(
@@ -358,7 +356,6 @@ class GoogleMapaState extends State<GoogleMapa> {
                   position: _stationController.getBicingStation(i).coords,
                   icon: bicingMarker,
                   onTap: () {
-                    print("salta 1");
                     setAuxStation(_stationController.getBicingStation(i).id, true);
                   }
               ));
@@ -377,7 +374,7 @@ class GoogleMapaState extends State<GoogleMapa> {
                   position: _stationController.getRechargeStation(i).coords,
                   icon: chargerMarker,
                   onTap: () {
-                    print("salta 2");
+                    //print("salta 2");
                     setAuxStation(i, false);
                   }
               ));
@@ -399,7 +396,7 @@ class GoogleMapaState extends State<GoogleMapa> {
     int i = 0;
     _stationController.getBicingStationsStream().listen((value) {
       while(i<value && i<_stationController.getTotalBicingStations()){
-        print("added bicing marker ${i+1}");
+        //print("added bicing marker ${i+1}");
         Station current = _stationController.getBicingStation(i);
         setState(() {
           _markers.add(
@@ -408,7 +405,7 @@ class GoogleMapaState extends State<GoogleMapa> {
                   position: current.coords,
                   icon: bicingMarker,
                   onTap: () {
-                    print("salta 3");
+                    //print("salta 3");
                     setState(() {
                         info = InfoBicingStationWindow(
                             belec: _stationController.getBicingStationbyId(current.id).electrical,
@@ -435,7 +432,7 @@ class GoogleMapaState extends State<GoogleMapa> {
     int i = 0;
     _stationController.getRechargeStationsStream().listen((value) {
       while(i<value && i<_stationController.getTotalRechargeStations()){
-        print("added recharge marker ${i+1}");
+        //print("added recharge marker ${i+1}");
         RechargeStation current = _stationController.getRechargeStation(i);
         setState(() {
           _markers.add(

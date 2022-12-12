@@ -186,7 +186,7 @@ class _BicingPreviewState extends State<BicingPreview> {
                               IconButton(onPressed: (){
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  ExpandedStationPage(index: widget.info.id, bicing: true)));
                               },
-                                icon: Icon(Icons.open_in_new),
+                                icon: const Icon(Icons.open_in_new),
                               )
 
                             ]
