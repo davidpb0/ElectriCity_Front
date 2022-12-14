@@ -211,7 +211,7 @@ class _ReservationFormState extends State<ReservationForm> {
                         booking.setEndTime(parsedTime);
 
                         setState(() {
-                          starttimeinput.text =
+                          endtimeinput.text =
                               DateFormat('HH:mm:ss').format(parsedTime);
                           endTimeError = "";
                         });
