@@ -288,9 +288,10 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                 padding: const EdgeInsets.only(top: 12),
                                 child: MaterialButton(
                                   onPressed: () {
-                                    Notifications.showBigTextNotification(
+                                    Notifications.showSchedueleNotification(
                                         title: "Ana quiere conocerte",
                                         body: "Esta a solo 50km desde tu casa",
+                                        seconds: 10,
                                         fln: flutterLocalNotificationsPlugin);
                                   },
                                   minWidth: screensize.width / 3,
