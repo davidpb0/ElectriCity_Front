@@ -362,6 +362,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add Comment'**
   String get expandedStation_addComment;
+
+  /// No description provided for @expandedStation_editComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Comment'**
+  String get expandedStation_editComment;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

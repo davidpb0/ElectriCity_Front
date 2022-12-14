@@ -33,7 +33,6 @@ class GoogleMapaState extends State<GoogleMapa> {
   Set<Marker> _markers = {};
   final MapaController _mapaController = MapaController();
   final StationController _stationController = StationController();
-  final UserController _userController = UserController();
   late List<LatLng> bicingList;
   late List<Station> bicingStationList;
   late List<Marker> personalMarkers;
@@ -344,7 +343,6 @@ class GoogleMapaState extends State<GoogleMapa> {
     if (_stationController.bicisComplete){
       print("bicisISComplete");
       for(int i = 0; i < _stationController.getTotalBicingStations(); ++i ){
-        print("adding marker $i");
         setState(() {
           _markers.add(
               Marker(
@@ -352,7 +350,6 @@ class GoogleMapaState extends State<GoogleMapa> {
                   position: _stationController.getBicingStation(i).coords,
                   icon: bicingMarker,
                   onTap: () {
-                    print("salta 1");
                     setAuxStation(_stationController.getBicingStation(i).id, true);
                   }
               ));
@@ -371,7 +368,6 @@ class GoogleMapaState extends State<GoogleMapa> {
                   position: _stationController.getRechargeStation(i).coords,
                   icon: chargerMarker,
                   onTap: () {
-                    print("salta 2");
                     setAuxStation(i, false);
                   }
               ));
@@ -390,7 +386,6 @@ class GoogleMapaState extends State<GoogleMapa> {
     int i = 0;
     _stationController.getBicingStationsStream().listen((value) {
       while(i<value && i<_stationController.getTotalBicingStations()){
-        print("added bicing marker ${i+1}");
         Station current = _stationController.getBicingStation(i);
         setState(() {
           _markers.add(
@@ -399,7 +394,6 @@ class GoogleMapaState extends State<GoogleMapa> {
                   position: current.coords,
                   icon: bicingMarker,
                   onTap: () {
-                    print("salta 3");
                     setState(() {
                         info = InfoBicingStationWindow(
                             belec: _stationController.getBicingStationbyId(current.id).electrical,
@@ -426,9 +420,7 @@ class GoogleMapaState extends State<GoogleMapa> {
     int i = 0;
     _stationController.getRechargeStationsStream().listen((value) {
       while(i<value && i<_stationController.getTotalRechargeStations()){
-        print("added recharge marker ${i+1}");
         setState(() {
-          print("salta 4");
           _markers.add(
               Marker(
                   markerId: MarkerId("R-${i + 1}"),

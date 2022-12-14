@@ -1,9 +1,9 @@
 import 'dart:math';
-
 import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/station_controller.dart';
 import '../../core/models/comment.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class StationComment extends StatefulWidget {
   final Comment info;
@@ -11,7 +11,8 @@ class StationComment extends StatefulWidget {
 
   const StationComment({
     Key? key,
-    required this.info, required this.notifyParent,
+    required this.info,
+    required this.notifyParent,
   }) : super(key: key);
 
   @override
@@ -19,6 +20,10 @@ class StationComment extends StatefulWidget {
 }
 
 class _StationCommentState extends State<StationComment> {
+
+  final TextEditingController commentTextController = TextEditingController();
+
+
   @override
   void initState() {
     super.initState();
@@ -26,15 +31,53 @@ class _StationCommentState extends State<StationComment> {
   }
 
   Widget delete = Container();
+  Widget modify = Container();
+  Widget text = Container();
 
   isFromActualUSer() {
-    if (widget.info.creator == UserController().currentUser.getUsername()) {
-      delete = IconButton(onPressed: () async {
-        bool b = false;
-        b = await StationController().deleteBicingComment(widget.info);
-        if (b) widget.notifyParent();
-
-      }, icon: Icon(Icons.delete));
+    if (widget.info.bicing != null) {
+      if (widget.info.creator == UserController().currentUser.getUsername()) {
+        text = Text(widget.info.text);
+        delete = IconButton(
+            onPressed: () async {
+              bool b = false;
+              b = await StationController().deleteBicingComment(widget.info);
+              if (b) widget.notifyParent();
+            },
+            icon: Icon(Icons.delete));
+        modify = IconButton(
+            onPressed: () async {
+              /*bool b = false;
+              b = await StationController().deleteBicingComment(widget.info);
+              if (b) widget.notifyParent();*/
+              commentTextController.text = widget.info.text;
+              setState(() {
+                text = Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: commentTextController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: AppLocalizations.of(context)
+                              .expandedStation_editComment,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () async {
+                          bool b = false;
+                          b = await StationController().editBicingComment(widget.info, commentTextController.text);
+                          if (b) widget.notifyParent();
+                        },
+                        icon: const Icon(Icons.send))
+                  ],
+                );
+              });
+            },
+            icon: Icon(Icons.edit));
+      }
     }
   }
 
@@ -93,7 +136,10 @@ class _StationCommentState extends State<StationComment> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Expanded(child: SizedBox(),),
+                            Expanded(
+                              child: SizedBox(),
+                            ),
+                            modify,
                             delete,
                           ],
                         ),
@@ -122,7 +168,7 @@ class _StationCommentState extends State<StationComment> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Expanded(
-                                          child: Text(widget.info.text),
+                                          child: text,
                                         ),
                                       ],
                                     ),

@@ -53,6 +53,7 @@
 
     "expandedStation_noComments":"Todavía no hay comentarios",
     "expandedStation_favButton":"Favorito",
-    "expandedStation_addComment":"Añade un comentario"
+    "expandedStation_addComment":"Añade un comentario",
+    "expandedStation_editComment":"Edita el comentario"
 
 }

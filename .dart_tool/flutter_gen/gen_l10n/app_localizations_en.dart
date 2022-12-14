@@ -138,4 +138,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get expandedStation_addComment => 'Add Comment';
+
+  @override
+  String get expandedStation_editComment => 'Edit Comment';
 }

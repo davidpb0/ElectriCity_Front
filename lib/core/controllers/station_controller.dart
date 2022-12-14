@@ -208,14 +208,16 @@ class StationController {
               body["comments"][i]["message"],
               body2["username"],
               body["comments"][i]["date"],
-              Station.fromJson(body3),
+              getBicingStationbyId(body3["id"]+2017),
               null);
           comments.add(comment);
-        } else {
+        }
+        else {
           throw Exception('Error en función extractCommentsBicing segundo if');
         }
       }
       bicing.addListComments(comments);
+      print(bicing);
     } else {
       throw Exception('Error en función addBicingCommentBD');
     }
@@ -226,6 +228,28 @@ class StationController {
 
     if(res.statusCode == 200){
       comment.bicing?.deleteComment(comment.id);
+      return true;
+    }
+    else{
+      throw Exception('Error en función deleteBicingComment');
+    }
+
+  }
+
+  editBicingComment(Comment comment, String text) async {
+    print("El texto antes es:" + text);
+    var data = {
+      "message": text
+    };
+    Response res = await _apiService.putDataAux(data, "https://localhost/comments/"+ comment.id.toString());
+
+    if(res.statusCode == 200){
+      /*print(comment.bicing.toString());
+      print(comment.bicing?.id.toString());
+      print(comment.bicing?.commentsBicing.length.toString());
+      print(comment.bicing?.address.toString());*/
+      comment.bicing?.editComment(comment.id, text);
+
       return true;
     }
     else{
