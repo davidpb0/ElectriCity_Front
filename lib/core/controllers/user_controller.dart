@@ -139,4 +139,48 @@ class UserController {
     }
   }
 
+  sendMessage(String text, int idReceiver) async {
+    String urlTemp = "users/${currentUser.getUserId()}/messages";
+    var data = {
+      "text": text,
+      "idReceiver": idReceiver
+    };
+    Response res = await ApiService().sendNewMessage(urlTemp, data);
+    if (res.statusCode == 201) {
+      return userWithConversation(res.body);
+    }
+    else {
+      throw Exception("Error while sending a message");
+    }
+  }
+
+  getConversationWithOneUser(int idUserWithConversation) async {
+    String urlTemp = "users/${currentUser.getUserId()}/messages";
+    var data = {
+      "idReceiver": idUserWithConversation
+    };
+    Response res = await ApiService().getConversationBetweenUsers(urlTemp, data);
+    if (res.statusCode == 201) {
+      return userWithConversation(res.body);
+    }
+    else {
+      throw Exception("Error while getting a conversation with a user");
+    }
+  }
+
+  getAllUserConversations() async {
+    String urlTemp = "users/${currentUser.getUserId()}/conversations";
+    Response res = await ApiService().getUserConversations(urlTemp);
+    if (res.statusCode == 201) {
+      return userWithConversation(res.body);
+    }
+    else {
+      throw Exception("Error while getting user conversations");
+    }
+  }
+
+  userWithConversation(dynamic json) {
+    return json['userWithConversation'];
+  }
+
 }

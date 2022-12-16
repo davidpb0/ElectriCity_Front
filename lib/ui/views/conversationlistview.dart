@@ -1,3 +1,4 @@
+import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:electricity_front/ui/views/conversationpreview.dart';
 import 'package:electricity_front/ui/views/newconversationview.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   NewConversationView newConversationView = NewConversationView();
+  UserController userController = UserController();
 
   List<ChatUsers> chatUsers = [
     ChatUsers(name: "Jane Russel",
@@ -98,7 +100,7 @@ class _ChatPageState extends State<ChatPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       const Text("Conversations", style: TextStyle(
-                          fontSize: 32, fontWeight: FontWeight.bold),),
+                          fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white),),
                       Container(
                         padding: const EdgeInsets.only(
                             left: 8, right: 8, top: 2, bottom: 2),
@@ -147,6 +149,7 @@ class _ChatPageState extends State<ChatPage> {
             ),
             ListView.builder(
               itemCount: chatUsers.length,
+              //itemCount: userController.getConversations(),
               shrinkWrap: true,
               padding: const EdgeInsets.only(top: 16),
               physics: const NeverScrollableScrollPhysics(),
