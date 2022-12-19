@@ -4,12 +4,9 @@ import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/ui/components/reservation_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 import '../../core/controllers/station_controller.dart';
 import '../../fonts/test_icons_icons.dart';
 import '../components/default_header.dart';
-import '../components/social_button.dart';
 
 class ExpandedStationPage extends StatefulWidget {
   const ExpandedStationPage(
@@ -309,16 +306,6 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                       )),
                                 ),
                               ),
-                              const SizedBox(height:20),
-                              SocialButton(
-                                  icon: FontAwesomeIcons.twitter,
-                                  color: const Color(0xFF1da1F2),
-                                  onClicked: () => share(SocialMedia.twitter)),
-                              const SizedBox(height:20),
-                              SocialButton(
-                                  icon: FontAwesomeIcons.facebook,
-                                  color: const Color(0xff0c74b4),
-                                  onClicked: () => share(SocialMedia.facebook))
                             ],
                           ),
                         ])),
@@ -346,25 +333,5 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                         color: Colors.white,
                       ))))
         ]));
-
-
-  }
-  Future share(SocialMedia socialPlatform) async {
-    //const subject = "ElectriCity best app";
-    const text = "Hey i'm using ElectriCity";
-    final urlShare =
-    Uri.encodeComponent('https://github.com/davidpb0/ElectriCity_Front');
-    final urls = {
-      SocialMedia.twitter:
-      'https://twitter.com/intent/tweet?url=$urlShare&text=$text',
-      SocialMedia.facebook:
-          'https://www.facebook.com/sharer/sharer.php?u=$urlShare&t=$text'
-    };
-
-    final url = urls[socialPlatform]!;
-
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
-    }
   }
 }
