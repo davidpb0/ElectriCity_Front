@@ -4,12 +4,9 @@ import 'insidechatview.dart';
 
 class ConversationList extends StatefulWidget {
   final String name;
-  final String messageText;
-  final String imageUrl;
-  final String time;
+  final String email;
   final bool isMessageRead;
-  const ConversationList({super.key, required this.name, required this.messageText, required this.imageUrl,
-    required this.time, required this.isMessageRead});
+  const ConversationList({super.key, required this.name, required this.email, required this.isMessageRead});
 
   @override
   State<ConversationList> createState() => ConversationListState();
@@ -44,7 +41,7 @@ class ConversationListState extends State<ConversationList> {
                         children: <Widget>[
                           Text(widget.name, style: const TextStyle(fontSize: 16),),
                           const SizedBox(height: 6,),
-                          Text(widget.messageText,style: TextStyle(fontSize: 13,color: Colors.grey.shade600, fontWeight: widget.isMessageRead?FontWeight.bold:FontWeight.normal),),
+                          Text(widget.email,style: TextStyle(fontSize: 13,color: Colors.grey.shade600, fontWeight: widget.isMessageRead?FontWeight.bold:FontWeight.normal),),
                         ],
                       ),
                     ),
@@ -52,7 +49,6 @@ class ConversationListState extends State<ConversationList> {
                 ],
               ),
             ),
-            Text(widget.time,style: TextStyle(fontSize: 12,fontWeight: widget.isMessageRead?FontWeight.bold:FontWeight.normal),),
           ],
         ),
       ),

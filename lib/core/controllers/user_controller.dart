@@ -4,6 +4,7 @@ import 'package:electricity_front/core/services/api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
+import '../models/chatusers.dart';
 import '../models/user.dart';
 
 class UserController {
@@ -180,7 +181,14 @@ class UserController {
   }
 
   userWithConversation(dynamic json) {
-    return json['userWithConversation'];
+    if (json['userWithConversation'] != null) {
+      List<ChatUsers> chatUsers = {} as List<ChatUsers>;
+      for (int i = 0; i < json['userWithConversation'].length; ++i) {
+        chatUsers.add(
+          ChatUsers(name: json['userWithConversation'][i]['username'], email: json['userWithConversation'][i]['email'])
+        );
+      }
+    }
   }
 
 }
