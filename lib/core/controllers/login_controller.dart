@@ -23,6 +23,7 @@ class LoginController {
 
     Response res = await _apiService.login(data, 'login');
     var body = json.decode(res.body);
+    print(body);
     if (res.statusCode == 201) {
       // ignore: use_build_context_synchronously
 

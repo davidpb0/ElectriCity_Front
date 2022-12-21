@@ -1,7 +1,11 @@
 
 //import 'package:electricity_front/ui/components/default_header.dart';
+
+import 'package:electricity_front/core/controllers/prize_controller.dart';
+import 'package:electricity_front/core/models/prize_data.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
+import '../components/prize_preview.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
@@ -14,10 +18,29 @@ class PrizesPage extends StatefulWidget {
 
 class _PrizesPageState extends State<PrizesPage> {
   UserController userCtrl = UserController();
+  PrizeController prizeCtrl = PrizeController();
+  late List<bool> colors;
+  late int currentColor;
   bool expandedMapCursors = false;
 
-  List<String> prizes = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K"];
-  List<bool> prizesLocked = [true, true, true, true, true, true, true, true, true, true, true];
+
+  @override
+  void initState() {
+    super.initState();
+    colors = prizeCtrl.getColorAvailability();
+    currentColor = prizeCtrl.getCurrentColor();
+  }
+
+  refresh(){
+    setState(() {
+      colors = prizeCtrl.getColorAvailability();
+      currentColor = prizeCtrl.getCurrentColor();
+    });
+    print("refresh");
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -83,9 +106,13 @@ class _PrizesPageState extends State<PrizesPage> {
                       ListView.builder(
                         physics: const NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: ((expandedMapCursors)? prizes.length~/4 : 1),
+                        itemCount: ((expandedMapCursors)? colors.length~/4 : 1),
                         itemBuilder: (context, index) {
-                          return prizesRow(prizes[index]);
+                          int end = 4;
+                          if ((index+1)*4 > colors.length){
+                            end = (colors.length%4);
+                          }
+                          return prizesRow(index*4, end, context, colors, currentColor, refresh);
                         }
                       )
                     ])
@@ -97,7 +124,7 @@ class _PrizesPageState extends State<PrizesPage> {
   }
 }
 
-Widget prizesRow(String row) {
+Widget prizesRow(int start, int end, BuildContext context, List<bool>colors, int current, Function refresh) {
   return Material(
       color: Colors.transparent,
       child: Flex(
@@ -106,69 +133,303 @@ Widget prizesRow(String row) {
           Expanded(
             child: Container(
                 alignment: Alignment.center,
-                margin: const EdgeInsets.all(8),
+              margin: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.blueGrey.shade100,
                   borderRadius: const BorderRadius.all(
                       Radius.circular(8)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Builder(builder: (context) {
-                    return Text("${row}0");
-                  }),
-                )
+                child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return PrizePreview(id: start, refreshParent: refresh,);
+                          });
+                    },
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(8)),
+                      ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                          Stack(
+                          alignment: AlignmentDirectional.center,
+                          children: [
+                              Image.asset(PrizeController().getColorsAsset(start)),
+                              Builder(
+                                  builder: (context) {
+                                    if (!PrizeController().getColorsUnlocked(start)){
+                                      return Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.white.withOpacity(0.75),
+                                            borderRadius: const BorderRadius.all(
+                                                Radius.circular(4)),
+                                          ),
+                                          child: const Icon(Icons.lock_outline, size: 28,)
+                                      );
+                                    }
+                                    else if (PrizeController().getCurrentColor() == start){
+                                      return Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.white.withOpacity(0.75),
+                                            borderRadius: const BorderRadius.all(
+                                                Radius.circular(4)),
+                                          ),
+                                          child: const Icon(Icons.check, size: 28,)
+                                      );
+                                    }
+                                    else {
+                                      return const SizedBox.shrink();
+                                    }
+                                  }
+                              ),
+                            ],
+                          ),
+                          Padding(
+                              padding: const EdgeInsets.all(4),
+                              child: Text(PrizeController().getColorsCost(start).toString())
+                          )
+                        ],
+                      )
+                    )
+                ),
             ),
           ),
           Expanded(
             child: Container(
                 alignment: Alignment.center,
                 margin: const EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.blueGrey.shade100,
                   borderRadius: const BorderRadius.all(
                       Radius.circular(8)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Builder(builder: (context) {
-                    return Text("${row}1");
-                  }),
-                )
+                child: GestureDetector(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return PrizePreview(id: start+1, refreshParent: refresh,);
+                          });
+                    },
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(8)),
+                      ),
+                      child: Builder(builder: (context) {
+                        if (end < 2) {
+                          return const SizedBox(height: 12, width: 12,);
+                        }
+                        else {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Stack(
+                                alignment: AlignmentDirectional.center,
+                                children: [
+                                  Image.asset(PrizeController().getColorsAsset(start+1)),
+                                  Builder(
+                                      builder: (context) {
+                                        if (!PrizeController().getColorsUnlocked(start+1)){
+                                          return Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white.withOpacity(0.75),
+                                                borderRadius: const BorderRadius.all(
+                                                    Radius.circular(4)),
+                                              ),
+                                              child: const Icon(Icons.lock_outline, size: 28,)
+                                          );
+                                        }
+                                        else if (PrizeController().getCurrentColor() == start+1){
+                                          return Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.white.withOpacity(0.75),
+                                                borderRadius: const BorderRadius.all(
+                                                    Radius.circular(4)),
+                                              ),
+                                              child: const Icon(Icons.check, size: 28,)
+                                          );
+                                        }
+                                        else {
+                                          return const SizedBox.shrink();
+                                        }
+                                      }
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                  padding: const EdgeInsets.all(4),
+                                  child: Text(PrizeController().getColorsCost(start+1).toString())
+                              )
+                            ],
+                          );
+                        }
+                      }),
+                    )
+                ),
+
             ),
           ),
           Expanded(
             child: Container(
                 alignment: Alignment.center,
-                margin: const EdgeInsets.all(8),
+              margin: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.blueGrey.shade100,
                   borderRadius: const BorderRadius.all(
                       Radius.circular(8)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Builder(builder: (context) {
-                    return Text("${row}2");
-                  }),
-                )
+              child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return PrizePreview(id: start+2, refreshParent: refresh);
+                        });
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(8)),
+                    ),
+                    child: Builder(builder: (context) {
+                      if (end < 3) {
+                        return const SizedBox(height: 12, width: 12,);
+                      }
+                      else {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                Image.asset(PrizeController().getColorsAsset(start+2)),
+                                Builder(
+                                    builder: (context) {
+                                      if (!PrizeController().getColorsUnlocked(start+2)){
+                                        return Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.white.withOpacity(0.75),
+                                              borderRadius: const BorderRadius.all(
+                                                  Radius.circular(4)),
+                                            ),
+                                            child: const Icon(Icons.lock_outline, size: 28,)
+                                        );
+                                      }
+                                      else if (PrizeController().getCurrentColor() == start+2){
+                                        return Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.white.withOpacity(0.75),
+                                              borderRadius: const BorderRadius.all(
+                                                  Radius.circular(4)),
+                                            ),
+                                            child: const Icon(Icons.check, size: 28,)
+                                        );
+                                      }
+                                      else {
+                                        return const SizedBox.shrink();
+                                      }
+                                    }
+                                ),
+                              ],
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.all(4),
+                                child: Text(PrizeController().getColorsCost(start+2).toString())
+                            )
+                          ],
+                        );
+                      }
+                    }),
+                  )
+              ),
             ),
           ),
           Expanded(
             child: Container(
                 alignment: Alignment.center,
-                margin: const EdgeInsets.all(8),
+              margin: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.blueGrey.shade100,
                   borderRadius: const BorderRadius.all(
                       Radius.circular(8)),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Builder(builder: (context) {
-                    return Text("${row}3");
-                  }),
-                )
+              child: GestureDetector(
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return PrizePreview(id: start+3, refreshParent: refresh);
+                        });
+                  },
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(8)),
+                    ),
+                    child: Builder(builder: (context) {
+                      if (end < 4) {
+                        return const SizedBox(height: 12, width: 12,);
+                      }
+                      else {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Stack(
+                              alignment: AlignmentDirectional.center,
+                              children: [
+                                Image.asset(PrizeController().getColorsAsset(start+3)),
+                                Builder(
+                                    builder: (context) {
+                                      if (!PrizeController().getColorsUnlocked(start+3)){
+                                        return Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.white.withOpacity(0.75),
+                                              borderRadius: const BorderRadius.all(
+                                                  Radius.circular(4)),
+                                            ),
+                                            child: const Icon(Icons.lock_outline, size: 28,)
+                                        );
+                                      }
+                                      else if (PrizeController().getCurrentColor() == start+3){
+                                        return Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.white.withOpacity(0.75),
+                                              borderRadius: const BorderRadius.all(
+                                                  Radius.circular(4)),
+                                            ),
+                                            child: const Icon(Icons.check, size: 28,)
+                                        );
+                                      }
+                                      else {
+                                        return const SizedBox.shrink();
+                                      }
+                                    }
+                                ),
+                              ],
+                            ),
+                            Padding(
+                                padding: const EdgeInsets.all(4),
+                                child: Text(PrizeController().getColorsCost(start+3).toString())
+                            )
+                          ],
+                        );
+                      }
+                    }),
+                  )
+              ),
             ),
           ),
         ],
