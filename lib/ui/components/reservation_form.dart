@@ -97,7 +97,7 @@ class _ReservationFormState extends State<ReservationForm> {
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime.now(),
-                          lastDate: DateTime.now().add(const Duration(days: 60)));
+                          lastDate: DateTime.now().add(const Duration(hours: 24)));
 
                       if (pickedDate != null) {
                         String formattedDate = DateFormat('yyyy-MM-dd').format(

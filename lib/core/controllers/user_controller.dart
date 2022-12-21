@@ -5,11 +5,13 @@ import 'package:electricity_front/core/services/api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
+import '../models/prize_data.dart';
 import '../models/user.dart';
 
 class UserController {
   late User currentUser = User();
   late BitmapDescriptor personalMarker;
+  late ColorPrize theme;
 
   factory UserController() {
     return _this;

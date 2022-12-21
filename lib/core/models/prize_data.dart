@@ -19,9 +19,6 @@ class ColorPrize {
 
 
 
-
-
-
   ColorPrize (
       this.id,
       this.cost,
@@ -40,5 +37,10 @@ class ColorPrize {
       this.accentcoloralt,
       this.textcolorlight,
       this.textcolordark);
+
+  factory ColorPrize.fromString(int id, String data){
+    final splitted = data.split(",");
+    return ColorPrize(id, int.parse(splitted[0]), splitted[1], int.parse(splitted[2]), int.parse(splitted[3]), int.parse(splitted[4]), int.parse(splitted[5]), int.parse(splitted[6]), int.parse(splitted[7]), int.parse(splitted[8]), int.parse(splitted[9]), int.parse(splitted[10]), int.parse(splitted[11]), int.parse(splitted[12]), int.parse(splitted[13]));
+  }
 
 }
