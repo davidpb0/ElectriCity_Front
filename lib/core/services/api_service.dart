@@ -26,7 +26,7 @@ class ApiService {
       headers: {
         "Content-type": "application/json",
         "Accept": "application/json",
-        "X-AUTH-TOKEN": token
+        "Authorization": "Bearer $token"
       },
     );
   }
@@ -68,7 +68,7 @@ class ApiService {
       headers: {
         "Content-type": "application/json",
         "Accept": "application/json",
-        "X-AUTH-TOKEN": token
+        "Authorization": "Bearer $token"
       },
     );
   }
@@ -80,7 +80,7 @@ class ApiService {
       headers: {
         "Content-type": "application/json",
         "Accept": "application/json",
-        "X-AUTH-TOKEN": token
+        "Authorization": "Bearer $token"
       },
     );
   }
@@ -94,7 +94,7 @@ class ApiService {
   getData(apiUrl) async {
     var fullUrl = _url + apiUrl;
     return await http.get(Uri.parse(fullUrl), headers: {
-      "X-AUTH-TOKEN": token,
+      "Authorization": "Bearer $token",
     });
   }
 
@@ -107,7 +107,7 @@ class ApiService {
   deleteData(apiUrl) async {
     var fullUrl = _url + apiUrl;
     return await http.delete(Uri.parse(fullUrl), headers: {
-      "X-AUTH-TOKEN": token,
+      "Authorization": "Bearer $token",
     });
   }
 
@@ -125,7 +125,7 @@ class ApiService {
       headers: {
         "Content-type": "application/json",
         "Accept": "application/json",
-        "X-AUTH-TOKEN": token
+        "Authorization": "Bearer $token"
       },
     );
   }

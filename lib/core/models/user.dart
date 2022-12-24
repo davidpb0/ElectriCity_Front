@@ -20,7 +20,6 @@ class User {
 
   User.fromJson(dynamic json) {
     _username = json['username'];
-    _token = json['apiTokens'].last['token'];
     _id = json['id'];
     _email = json['email'];
     if (json['favouriteLocations'] != null) {
@@ -71,6 +70,10 @@ class User {
 
   getEmail(){
     return _email;
+  }
+
+  setToke(String tkn){
+    _token = tkn;
   }
 
   addPersonalUbi(Marker marker) {

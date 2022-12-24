@@ -190,17 +190,18 @@ class StationController {
     var aux = id - 2017;
 
     Response res = await _apiService
-        .getDataAux("https://localhost/bicing_stations/$aux/comments");
+        .getData("bicing_stations/$id/comments");
     var body = jsonDecode(res.body);
+    print(res.statusCode);
     if (res.statusCode == 200) {
       List<Comment> comments = [];
       for (int i = body["comments"].length - 1; i >= 0; --i) {
         Response res2 = await _apiService
-            .getDataAux("https://localhost" + body["comments"][i]["userOwner"]);
+            .getData(body["comments"][i]["userOwner"]);
         var body2 = jsonDecode(res2.body);
 
-        Response res3 = await _apiService.getDataAux(
-            "https://localhost" + body["comments"][i]["bicingStation"]);
+        Response res3 = await _apiService.getData(
+            body["comments"][i]["bicingStation"]);
         var body3 = jsonDecode(res3.body);
         if (res3.statusCode == 200) {
           Comment comment = Comment(
@@ -208,7 +209,7 @@ class StationController {
               body["comments"][i]["message"],
               body2["username"],
               body["comments"][i]["date"],
-              getBicingStationbyId(body3["id"]+2017),
+              getBicingStationbyId(body3["id"]),
               null);
           comments.add(comment);
         }

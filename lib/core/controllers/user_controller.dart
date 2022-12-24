@@ -23,7 +23,6 @@ class UserController {
     try {
       setCustomMarker();
       currentUser = await LoginController().logIn(mail, pwd, ctext);
-      ApiService().setToken(currentUser.getUserTkn());
       StationController().initStations();
     }
     catch (e) {
