@@ -134,6 +134,12 @@ class _StationCommentFormState extends State<StationCommentForm> {
                                                     UserController()
                                                         .currentUser.getUsername());
                                               }
+                                              else{
+                                                await _stationController.addChargerCommentBD(rechargeStation,
+                                                    commentTextController.text,
+                                                    UserController()
+                                                        .currentUser.getUsername());
+                                              }
                                               setState(() {
                                                 commentTextController.text = "";
                                               });

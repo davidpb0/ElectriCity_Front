@@ -20,7 +20,6 @@ class StationComment extends StatefulWidget {
 }
 
 class _StationCommentState extends State<StationComment> {
-
   final TextEditingController commentTextController = TextEditingController();
 
   @override
@@ -68,7 +67,8 @@ class _StationCommentState extends State<StationComment> {
                     IconButton(
                         onPressed: () async {
                           bool b = false;
-                          b = await StationController().editBicingComment(widget.info, commentTextController.text);
+                          b = await StationController().editBicingComment(
+                              widget.info, commentTextController.text);
                           if (b) widget.notifyParent();
                         },
                         icon: const Icon(Icons.send))
@@ -77,8 +77,53 @@ class _StationCommentState extends State<StationComment> {
               });
             },
             icon: Icon(Icons.edit));
+      } else {
+        text = Text(widget.info.text);
       }
-      else{
+    } else {
+      if (widget.info.creator == UserController().currentUser.getUsername()) {
+        text = Text(widget.info.text);
+        delete = IconButton(
+            onPressed: () async {
+              bool b = false;
+              b = await StationController().deleteChargerComment(widget.info);
+              if (b) widget.notifyParent();
+            },
+            icon: Icon(Icons.delete));
+        modify = IconButton(
+            onPressed: () async {
+              /*bool b = false;
+              b = await StationController().deleteBicingComment(widget.info);
+              if (b) widget.notifyParent();*/
+              commentTextController.text = widget.info.text;
+              setState(() {
+                text = Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Expanded(
+                      child: TextFormField(
+                        controller: commentTextController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: AppLocalizations.of(context)
+                              .expandedStation_editComment,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                        onPressed: () async {
+                          bool b = false;
+                          b = await StationController().editChargerComment(
+                              widget.info, commentTextController.text);
+                          if (b) widget.notifyParent();
+                        },
+                        icon: const Icon(Icons.send))
+                  ],
+                );
+              });
+            },
+            icon: Icon(Icons.edit));
+      } else {
         text = Text(widget.info.text);
       }
     }

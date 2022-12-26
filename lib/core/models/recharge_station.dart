@@ -1,4 +1,6 @@
+import 'package:electricity_front/core/models/comment.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
 class RechargeStationList {
   late List<RechargeStation> chargeStation;
@@ -56,6 +58,27 @@ class RechargeStation {
   late LatLng coords;
   late bool status;
   late String address;
+  List<Comment> commentsCharger = [];
+
+  addComment(int id, String ctext, String creator) {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-mm-dd kk:mm:ss').format(now);
+    Comment newComment = Comment(id, ctext, creator, formattedDate, null, this);
+    commentsCharger.add(newComment);
+  }
+  addListComments(List<Comment> comments) {
+    commentsCharger = comments;
+  }
+  deleteComment(int id){
+    commentsCharger.removeWhere((element) => element.id == id);
+  }
+
+  void editComment(int id, String txt) {
+    print("El texto es: " + txt);
+    Comment comment = commentsCharger.firstWhere((element) => element.id == id);
+    comment.text = txt;
+
+  }
 
   RechargeStation();
 

@@ -65,7 +65,6 @@ class Station {
   late String address;
   bool favorite = false;
   List<Comment> commentsBicing = [];
-  List<String> commentsFromBd = [];
 
   addComment(int id, String ctext, String creator) {
     DateTime now = DateTime.now();
@@ -76,7 +75,6 @@ class Station {
 
   addListComments(List<Comment> comments) {
     commentsBicing = comments;
-    print(commentsBicing[0].text);
   }
 
   deleteComment(int id){

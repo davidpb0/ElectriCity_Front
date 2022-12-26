@@ -1,6 +1,7 @@
 
 import 'package:electricity_front/ui/views/expandedstationpage.dart';
 import 'package:flutter/material.dart';
+import '../../core/controllers/station_controller.dart';
 import '../../core/models/recharge_station.dart';
 import '../../fonts/test_icons_icons.dart';
 
@@ -182,7 +183,8 @@ class _RechargePreviewState extends State<RechargePreview> {
                             icon: Icon((faved) ? Icons.favorite_outline : Icons.favorite),
                           ),
 
-                          IconButton(onPressed: (){
+                          IconButton(onPressed: () async {
+                            await StationController().extractCommentsCharger(widget.info.id, widget.info);
                             Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  ExpandedStationPage(index: widget.info.id, bicing: false)));
                           },
                             icon: Icon(Icons.open_in_new),

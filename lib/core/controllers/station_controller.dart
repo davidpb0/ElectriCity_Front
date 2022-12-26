@@ -100,8 +100,8 @@ class StationController {
 
   void streamRechargeStations() async {
     while (!chargersComplete) {
-      Response res =
-          await _apiService.getData('/recharge_stations?page=$chargersIterator');
+      Response res = await _apiService
+          .getData('/recharge_stations?page=$chargersIterator');
       var body = json.decode(res.body);
       if (res.statusCode == 200) {
         RechargeStationList estaciones = RechargeStationList.fromJson(body);
@@ -176,8 +176,8 @@ class StationController {
 
     var aux = bicing.id;
 
-    Response res = await _apiService.postData(
-        data, "/bicing_stations/$aux/comments");
+    Response res =
+        await _apiService.postData(data, "/bicing_stations/$aux/comments");
     var body = jsonDecode(res.body);
     if (res.statusCode == 201) {
       _addBicingComment(body["id"], bicing, txt, creator);
@@ -187,18 +187,17 @@ class StationController {
   }
 
   extractCommentsBicing(int id, Station bicing) async {
-    Response res = await _apiService
-        .getData("/bicing_stations/$id/comments");
+    Response res = await _apiService.getData("/bicing_stations/$id/comments");
     var body = jsonDecode(res.body);
     if (res.statusCode == 200) {
       List<Comment> comments = [];
       for (int i = body["comments"].length - 1; i >= 0; --i) {
-        Response res2 = await _apiService
-            .getData(body["comments"][i]["userOwner"]);
+        Response res2 =
+            await _apiService.getData(body["comments"][i]["userOwner"]);
         var body2 = jsonDecode(res2.body);
 
-        Response res3 = await _apiService.getData(
-            body["comments"][i]["bicingStation"]);
+        Response res3 =
+            await _apiService.getData(body["comments"][i]["bicingStation"]);
         var body3 = jsonDecode(res3.body);
         if (res3.statusCode == 200) {
           Comment comment = Comment(
@@ -210,8 +209,7 @@ class StationController {
               getBicingStationbyId(body3["id"]),
               null);
           comments.add(comment);
-        }
-        else {
+        } else {
           throw Exception('Error en función extractCommentsBicing segundo if');
         }
       }
@@ -222,28 +220,25 @@ class StationController {
     }
   }
 
-  deleteBicingComment(Comment comment) async{
-    Response res = await _apiService.deleteData("/users/${UserController().currentUser.getUserId()}/comments/${comment.id}");
+  deleteBicingComment(Comment comment) async {
+    Response res = await _apiService.deleteData(
+        "/users/${UserController().currentUser.getUserId()}/comments/${comment.id}");
     print(res.statusCode);
     print(res.body);
-    if(res.statusCode == 200){
+    if (res.statusCode == 200) {
       comment.bicing?.deleteComment(comment.id);
       return true;
-    }
-    else{
+    } else {
       throw Exception('Error en función deleteBicingComment');
     }
-
   }
 
   editBicingComment(Comment comment, String text) async {
     print("El texto antes es:" + text);
-    var data = {
-      "message": text
-    };
+    var data = {"message": text};
     Response res = await _apiService.putData(data, "/comments/${comment.id}");
 
-    if(res.statusCode == 200){
+    if (res.statusCode == 200) {
       /*print(comment.bicing.toString());
       print(comment.bicing?.id.toString());
       print(comment.bicing?.commentsBicing.length.toString());
@@ -251,10 +246,94 @@ class StationController {
       comment.bicing?.editComment(comment.id, text);
 
       return true;
-    }
-    else{
+    } else {
       throw Exception('Error en función deleteBicingComment');
     }
+  }
 
+  _addChargerComment(
+      int id, RechargeStation charger, String txt, String creator) {
+    charger.addComment(id, txt, creator);
+  }
+
+  addChargerCommentBD(
+      RechargeStation charger, String txt, String creator) async {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd kk:mm:ss').format(now);
+    var data = {"message": txt, "date": formattedDate};
+
+    var aux = charger.id;
+
+    Response res =
+        await _apiService.postData(data, "/recharge_stations/$aux/comments");
+    var body = jsonDecode(res.body);
+    if (res.statusCode == 201) {
+      _addChargerComment(body["id"], charger, txt, creator);
+    } else {
+      throw Exception('Error en función addBicingCommentBD');
+    }
+  }
+
+  extractCommentsCharger(int id, RechargeStation charger) async {
+    Response res = await _apiService.getData("/recharge_stations/$id/comments");
+    var body = jsonDecode(res.body);
+    if (res.statusCode == 200) {
+      List<Comment> comments = [];
+      for (int i = body["comments"].length - 1; i >= 0; --i) {
+        Response res2 =
+            await _apiService.getData(body["comments"][i]["userOwner"]);
+        var body2 = jsonDecode(res2.body);
+
+        Response res3 =
+            await _apiService.getData(body["comments"][i]["rechargeStation"]);
+        var body3 = jsonDecode(res3.body);
+        if (res3.statusCode == 200) {
+          Comment comment = Comment(
+              body["comments"][i]["id"],
+              body["comments"][i]["message"],
+              //body2["email"],
+              "davidpb",
+              body["comments"][i]["date"],
+              null,
+              getRechargeStationbyId(body3["id"]));
+          comments.add(comment);
+        } else {
+          throw Exception('Error en función extractCommentsCharger segundo if');
+        }
+      }
+      charger.addListComments(comments);
+      return true;
+    } else {
+      throw Exception('Error en función extractCommentsCharger');
+    }
+  }
+  deleteChargerComment(Comment comment) async {
+    Response res = await _apiService.deleteData(
+        "/users/${UserController().currentUser.getUserId()}/comments/${comment.id}");
+    print(res.statusCode);
+    print(res.body);
+    if (res.statusCode == 200) {
+      comment.charger?.deleteComment(comment.id);
+      return true;
+    } else {
+      throw Exception('Error en función deleteChargerComment');
+    }
+  }
+  editChargerComment(Comment comment, String text) async {
+    print("El texto antes es:" + text);
+    var data = {"message": text};
+    Response res = await _apiService.putData(data, "/comments/${comment.id}");
+
+    if (res.statusCode == 200) {
+      /*print(comment.bicing.toString());
+      print(comment.bicing?.id.toString());
+      print(comment.bicing?.commentsBicing.length.toString());
+      print(comment.bicing?.address.toString());*/
+      comment.charger?.editComment(comment.id, text);
+
+      return true;
+    } else {
+      throw Exception('Error en función deleteBicingComment');
+    }
   }
 }
