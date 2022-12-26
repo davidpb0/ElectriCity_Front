@@ -34,7 +34,7 @@ class StationController {
   StationController._();
 
   Future<List<Station>> fetchBicingStations() async {
-    Response res = await _apiService.getData('bicing_stations');
+    Response res = await _apiService.getData('/bicing_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
@@ -53,7 +53,7 @@ class StationController {
   }
 
   Future<bool> fetchFirstBicingStations() async {
-    Response res = await _apiService.getData('bicing_stations');
+    Response res = await _apiService.getData('/bicing_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
@@ -66,7 +66,7 @@ class StationController {
   }
 
   Future<bool> fetchFirstRechargeStations() async {
-    Response res = await _apiService.getData('recharge_stations');
+    Response res = await _apiService.getData('/recharge_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
@@ -81,7 +81,7 @@ class StationController {
   void streamBicingStations() async {
     while (!bicisComplete) {
       Response res =
-          await _apiService.getData('bicing_stations?page=$bicisIterator');
+          await _apiService.getData('/bicing_stations?page=$bicisIterator');
       var body = json.decode(res.body);
       if (res.statusCode == 200) {
         StationList estaciones = StationList.fromJson(body);
@@ -101,7 +101,7 @@ class StationController {
   void streamRechargeStations() async {
     while (!chargersComplete) {
       Response res =
-          await _apiService.getData('recharge_stations?page=$chargersIterator');
+          await _apiService.getData('/recharge_stations?page=$chargersIterator');
       var body = json.decode(res.body);
       if (res.statusCode == 200) {
         RechargeStationList estaciones = RechargeStationList.fromJson(body);
@@ -120,7 +120,7 @@ class StationController {
   }
 
   Future<List<RechargeStation>> fetchRechargeStations() async {
-    Response res = await _apiService.getData('recharge_stations');
+    Response res = await _apiService.getData('/recharge_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
@@ -174,10 +174,10 @@ class StationController {
     String formattedDate = DateFormat('yyyy-MM-dd kk:mm:ss').format(now);
     var data = {"message": txt, "date": formattedDate};
 
-    var aux = bicing.id - 2017;
+    var aux = bicing.id;
 
-    Response res = await _apiService.postDataAux(
-        data, "https://localhost/bicing_stations/$aux/comments");
+    Response res = await _apiService.postData(
+        data, "/bicing_stations/$aux/comments");
     var body = jsonDecode(res.body);
     if (res.statusCode == 201) {
       _addBicingComment(body["id"], bicing, txt, creator);
@@ -187,12 +187,9 @@ class StationController {
   }
 
   extractCommentsBicing(int id, Station bicing) async {
-    var aux = id - 2017;
-
     Response res = await _apiService
-        .getData("bicing_stations/$id/comments");
+        .getData("/bicing_stations/$id/comments");
     var body = jsonDecode(res.body);
-    print(res.statusCode);
     if (res.statusCode == 200) {
       List<Comment> comments = [];
       for (int i = body["comments"].length - 1; i >= 0; --i) {
@@ -207,7 +204,8 @@ class StationController {
           Comment comment = Comment(
               body["comments"][i]["id"],
               body["comments"][i]["message"],
-              body2["username"],
+              //body2["email"],
+              "davidpb",
               body["comments"][i]["date"],
               getBicingStationbyId(body3["id"]),
               null);
@@ -218,15 +216,16 @@ class StationController {
         }
       }
       bicing.addListComments(comments);
-      print(bicing);
+      return true;
     } else {
       throw Exception('Error en función addBicingCommentBD');
     }
   }
 
   deleteBicingComment(Comment comment) async{
-    Response res = await _apiService.deleteDataAux("https://localhost/users/" + UserController().currentUser.getUserId().toString()+ "/comments/"+ comment.id.toString());
-
+    Response res = await _apiService.deleteData("/users/${UserController().currentUser.getUserId()}/comments/${comment.id}");
+    print(res.statusCode);
+    print(res.body);
     if(res.statusCode == 200){
       comment.bicing?.deleteComment(comment.id);
       return true;
@@ -242,7 +241,7 @@ class StationController {
     var data = {
       "message": text
     };
-    Response res = await _apiService.putDataAux(data, "https://localhost/comments/"+ comment.id.toString());
+    Response res = await _apiService.putData(data, "/comments/${comment.id}");
 
     if(res.statusCode == 200){
       /*print(comment.bicing.toString());

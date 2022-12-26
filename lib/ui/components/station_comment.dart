@@ -23,11 +23,11 @@ class _StationCommentState extends State<StationComment> {
 
   final TextEditingController commentTextController = TextEditingController();
 
-
   @override
   void initState() {
     super.initState();
     isFromActualUSer();
+    print(widget.info.text);
   }
 
   Widget delete = Container();
@@ -77,6 +77,9 @@ class _StationCommentState extends State<StationComment> {
               });
             },
             icon: Icon(Icons.edit));
+      }
+      else{
+        text = Text(widget.info.text);
       }
     }
   }

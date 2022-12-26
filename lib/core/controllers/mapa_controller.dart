@@ -45,7 +45,7 @@ class MapaController {
   }
 
   initBD() async {
-    await _apiService.getData('stations');
+    await _apiService.getData('/stations');
   }
 
   initMarkers() async {
@@ -160,7 +160,7 @@ class MapaController {
       bicingStationList.clear();
       bicingList.clear();
     }
-    Response res = await _apiService.getData('bicing_stations?page=$numPage');
+    Response res = await _apiService.getData('/bicing_stations?page=$numPage');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
@@ -177,7 +177,7 @@ class MapaController {
       chargerStationList.clear();
       cargaList.clear();
     }
-    Response res = await _apiService.getData('recharge_stations?page=$numPage');
+    Response res = await _apiService.getData('/recharge_stations?page=$numPage');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
@@ -191,7 +191,7 @@ class MapaController {
 
   personalUbi(String tit, String? desc, BuildContext context) async {
     String urlPrueba =
-        "users/${UserController().currentUser.getUserId()}/locations";
+        "/users/${UserController().currentUser.getUserId()}/locations";
     var data = {
       "id": 3000 + UserController().currentUser.getPersonalUbi().length,
       "latitude": coords.latitude,
@@ -228,7 +228,7 @@ class MapaController {
       "numStations": 1
     };
 
-    Response res = await _apiService.routePainting(data, 'route/station');
+    Response res = await _apiService.routePainting(data, '/route/station');
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
       List<PointLatLng> pointsList = <PointLatLng>[];

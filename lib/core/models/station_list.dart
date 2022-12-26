@@ -76,6 +76,7 @@ class Station {
 
   addListComments(List<Comment> comments) {
     commentsBicing = comments;
+    print(commentsBicing[0].text);
   }
 
   deleteComment(int id){
