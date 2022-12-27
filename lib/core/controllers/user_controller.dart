@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import '../models/chatusers.dart';
+import '../models/chatmessagemodel.dart';
 import '../models/user.dart';
 
 class UserController {
@@ -147,10 +148,7 @@ class UserController {
       "idReceiver": idReceiver
     };
     Response res = await ApiService().sendNewMessage(urlTemp, data);
-    if (res.statusCode == 201) {
-      return userWithConversation(res.body);
-    }
-    else {
+    if (res.statusCode != 201) {
       throw Exception("Error while sending a message");
     }
   }
@@ -162,7 +160,7 @@ class UserController {
     };
     Response res = await ApiService().getConversationBetweenUsers(urlTemp, data);
     if (res.statusCode == 201) {
-      return userWithConversation(res.body);
+      return getMessages(res.body);
     }
     else {
       throw Exception("Error while getting a conversation with a user");
@@ -173,19 +171,34 @@ class UserController {
     String urlTemp = "users/${currentUser.getUserId()}/conversations";
     Response res = await ApiService().getUserConversations(urlTemp);
     if (res.statusCode == 201) {
-      return userWithConversation(res.body);
+      return getInfoUsers(res.body);
     }
     else {
       throw Exception("Error while getting user conversations");
     }
   }
 
-  userWithConversation(dynamic json) {
+  getMessages(dynamic json) {
+    List<ChatMessage> chatMessage = {} as List<ChatMessage>;
+    for (int i = 0; i < json['enviats'].length; ++i) {
+      chatMessage.add(
+          ChatMessage(id: json['enviats'][i]['id'], messageContent: json['enviats'][i], messageType: "sender")
+      );
+    }
+    for (int i = 0; i < json['rebuts'].length; ++i) {
+      chatMessage.add(
+          ChatMessage(id: json['rebuts'][i]['id'], messageContent: json['rebuts'][i], messageType: "receiver")
+      );
+    }
+    chatMessage.sort((olderMessage, newestMessage) => olderMessage.id.compareTo(newestMessage.id));
+  }
+
+  getInfoUsers(dynamic json) {
     if (json['userWithConversation'] != null) {
       List<ChatUsers> chatUsers = {} as List<ChatUsers>;
       for (int i = 0; i < json['userWithConversation'].length; ++i) {
         chatUsers.add(
-          ChatUsers(name: json['userWithConversation'][i]['username'], email: json['userWithConversation'][i]['email'])
+          ChatUsers(id: json['userWithConversation'][i]['id'], name: json['userWithConversation'][i]['username'], email: json['userWithConversation'][i]['email'])
         );
       }
     }

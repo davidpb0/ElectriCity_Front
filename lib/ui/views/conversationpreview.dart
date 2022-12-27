@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'insidechatview.dart';
 
 class ConversationList extends StatefulWidget {
+  final String id;
   final String name;
   final String email;
   final bool isMessageRead;
-  const ConversationList({super.key, required this.name, required this.email, required this.isMessageRead});
+  const ConversationList({super.key, required this.id, required this.name, required this.email, required this.isMessageRead});
 
   @override
   State<ConversationList> createState() => ConversationListState();
@@ -18,7 +19,7 @@ class ConversationListState extends State<ConversationList> {
     return GestureDetector(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (context){
-          return const InsideChatView();
+          return InsideChatView(receiverId: widget.id, name: widget.name, email: widget.email);
         }));
       },
       child: Container(

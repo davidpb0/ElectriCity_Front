@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 
+import '../../core/controllers/user_controller.dart';
 import '../../core/models/chatmessagemodel.dart';
 
 class InsideChatView extends StatefulWidget{
-  const InsideChatView({super.key});
+  final String receiverId;
+  final String name;
+  final String email;
+  const InsideChatView({super.key, required this.receiverId, required this.name, required this.email});
 
   @override
   State<InsideChatView> createState() => _InsideChatViewState();
 }
 
 class _InsideChatViewState extends State<InsideChatView> {
+  UserController userCtrl = UserController();
+  TextEditingController messageTextController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    List<ChatMessage> messages = UserController().getConversationWithOneUser(int.parse(widget.receiverId));
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -29,19 +37,19 @@ class _InsideChatViewState extends State<InsideChatView> {
                   icon: const Icon(Icons.arrow_back,color: Colors.black,),
                 ),
                 const SizedBox(width: 2,),
-                const CircleAvatar(
+                /*const CircleAvatar(
                   backgroundImage: NetworkImage("<https://randomuser.me/api/portraits/men/5.jpg>"),
                   maxRadius: 20,
-                ),
+                ),*/
                 const SizedBox(width: 12,),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      const Text("Kriss Benwat",style: TextStyle( fontSize: 16 ,fontWeight: FontWeight.w600),),
+                      Text(widget.name, style: const TextStyle( fontSize: 16 ,fontWeight: FontWeight.w600),),
                       const SizedBox(height: 6,),
-                      Text("Online",style: TextStyle(color: Colors.grey.shade600, fontSize: 13),),
+                      Text(widget.email, style: TextStyle(color: Colors.grey.shade600, fontSize: 13),),
                     ],
                   ),
                 ),
@@ -98,18 +106,22 @@ class _InsideChatViewState extends State<InsideChatView> {
                     ),
                   ),
                   const SizedBox(width: 15,),
-                  const Expanded(
+                  Expanded(
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: messageTextController,
+                      decoration: const InputDecoration(
                         hintText: "Write message...",
                         hintStyle: TextStyle(color: Colors.black54),
-                        border: InputBorder.none
+                        border: InputBorder.none,
                       ),
                     ),
                   ),
                   const SizedBox(width: 15,),
                   FloatingActionButton(
-                    onPressed: (){},
+                    onPressed: (){
+                      userCtrl.sendMessage(messageTextController.text, int.parse(widget.receiverId));
+                      messageTextController.clear();
+                    },
                     backgroundColor: Colors.blue,
                     elevation: 0,
                     child: const Icon(Icons.send,color: Colors.white,size: 18,),
