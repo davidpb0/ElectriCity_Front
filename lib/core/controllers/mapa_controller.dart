@@ -160,8 +160,11 @@ class MapaController {
       bicingStationList.clear();
       bicingList.clear();
     }
+    print("entro1");
     Response res = await _apiService.getData('/bicing_stations?page=$numPage');
     var body = json.decode(res.body);
+    print("entro2");
+    print(res.statusCode);
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
       bicingList.addAll(estaciones.getCoords());

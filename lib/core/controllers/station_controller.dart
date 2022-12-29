@@ -203,8 +203,7 @@ class StationController {
           Comment comment = Comment(
               body["comments"][i]["id"],
               body["comments"][i]["message"],
-              //body2["email"],
-              "davidpb",
+              body2["username"],
               body["comments"][i]["date"],
               getBicingStationbyId(body3["id"]),
               null);
@@ -291,8 +290,7 @@ class StationController {
           Comment comment = Comment(
               body["comments"][i]["id"],
               body["comments"][i]["message"],
-              //body2["email"],
-              "davidpb",
+              body2["username"],
               body["comments"][i]["date"],
               null,
               getRechargeStationbyId(body3["id"]));
