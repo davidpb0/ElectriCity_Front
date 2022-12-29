@@ -1,4 +1,6 @@
+import 'package:electricity_front/core/models/comment.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:intl/intl.dart';
 
 class StationList {
   late List<Station> listMember;
@@ -62,6 +64,22 @@ class Station {
   late bool status;
   late String address;
   bool favorite = false;
+  List<Comment> commentsBicing = [];
+
+  addComment(int id, String ctext, String creator) {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-mm-dd kk:mm:ss').format(now);
+    Comment newComment = Comment(id, ctext, creator, formattedDate, this, null);
+    commentsBicing.add(newComment);
+  }
+
+  addListComments(List<Comment> comments) {
+    commentsBicing = comments;
+  }
+
+  deleteComment(int id){
+    commentsBicing.removeWhere((element) => element.id == id);
+  }
 
   Station();
 
@@ -94,7 +112,16 @@ class Station {
 
   @override
   bool operator ==(Object other) =>
-      other is Station && other.runtimeType == runtimeType && other.id == id;
+      other is Station &&
+      other.runtimeType == runtimeType &&
+      other.id == id;
+
+  void editComment(int id, String txt) {
+    print("El texto es: " + txt);
+    Comment comment = commentsBicing.firstWhere((element) => element.id == id);
+    comment.text = txt;
+
+  }
 
   @override
   int get hashCode => id.hashCode;

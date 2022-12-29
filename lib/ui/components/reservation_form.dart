@@ -5,7 +5,6 @@ import '../../core/controllers/booking_controller.dart';
 
 
 class ReservationForm extends StatefulWidget {
-
   const ReservationForm({
     Key? key,
   }) : super(key: key);
@@ -30,13 +29,11 @@ class _ReservationFormState extends State<ReservationForm> {
   void initState() {
     super.initState();
     booking = BookingController();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
-    if (completedBooking){
+    if (completedBooking) {
       return AlertDialog(
         content: Padding(
             padding: const EdgeInsets.all(16),
@@ -48,8 +45,7 @@ class _ReservationFormState extends State<ReservationForm> {
                     fontWeight: FontWeight.bold,
                     color: Colors.green[900]),
               ),
-            )
-        ),
+            )),
         actions: <Widget>[
           TextButton(
             onPressed: () async {
@@ -64,21 +60,16 @@ class _ReservationFormState extends State<ReservationForm> {
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 20,
-                      fontWeight:
-                      FontWeight.bold),
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ),
           ),
         ],
       );
-
-    }
-    else {
+    } else {
       return AlertDialog(
-        title: Text(AppLocalizations
-            .of(context)
-            .reservation_title),
+        title: Text(AppLocalizations.of(context).reservation_title),
         content: Padding(
             padding: const EdgeInsets.all(16),
             child: Column(
@@ -133,15 +124,20 @@ class _ReservationFormState extends State<ReservationForm> {
                   const SizedBox(
                     height: 12,
                   ),
-                  TextField(
-                    controller: starttimeinput,
-                    decoration: InputDecoration(
-                        icon: const Icon(Icons.timer),
-                        //icon of text field
-                        labelText: AppLocalizations
-                            .of(context)
-                            .reservation_starttime //label text of field
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              TextField(
+                controller: starttimeinput,
+                decoration: InputDecoration(
+                    icon: const Icon(Icons.timer),
+                    //icon of text field
+                    labelText: AppLocalizations.of(context)
+                        .reservation_starttime //label text of field
                     ),
+
                     readOnly: true,
                     //set it true, so that user will not able to edit text
                     onTap: () async {
@@ -169,19 +165,55 @@ class _ReservationFormState extends State<ReservationForm> {
                         });
                       }
                     },
+
                   ),
-                  Visibility(
-                    visible: (startTimeError != ''),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 8),
-                      child: Text(
-                        startTimeError,
-                        style: const TextStyle(
-                            fontSize: 16,
-                            color: Colors.red),
-                      ),
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              TextField(
+                controller: endtimeinput,
+                decoration: InputDecoration(
+                    icon: const Icon(Icons.timer),
+                    //icon of text field
+                    labelText: AppLocalizations.of(context)
+                        .reservation_endtime //label text of field
                     ),
+                readOnly: true,
+                //set it true, so that user will not able to edit text
+                onTap: () async {
+                  TimeOfDay? pickedTime = await showTimePicker(
+                    initialTime: TimeOfDay.now(),
+                    context: context,
+                  );
+
+                  if (pickedTime != null) {
+                    print(pickedTime.format(context)); //output 10:51 PM
+                    DateTime parsedTime = DateFormat.jm()
+                        .parse(pickedTime.format(context).toString());
+                    booking.setEndTime(parsedTime);
+
+                    setState(() {
+                      starttimeinput.text =
+                          DateFormat('HH:mm:ss').format(parsedTime);
+                      endTimeError = "";
+                    });
+                  } else {
+                    print("Time is not selected");
+                    setState(() {
+                      endTimeError = "Please select an ending time";
+                    });
+                  }
+                },
+              ),
+              Visibility(
+                visible: (endTimeError != ''),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: Text(
+                    endTimeError,
+                    style: const TextStyle(fontSize: 16, color: Colors.red),
                   ),
                   const SizedBox(
                     height: 12,
@@ -255,35 +287,27 @@ class _ReservationFormState extends State<ReservationForm> {
 
                                                       }
 
-
-                          }
-
-                          setState(() {
-                            dateError =
-                                booking.dateError();
-                            startTimeError =
-                                booking.timeError();
-                            endTimeError =
-                                booking.timeError();
-                          });
-                        }
-                      },
-                      child: Container(
-                        color: Colors.green,
-                        padding:
-                        const EdgeInsets.all(14),
-                        child: const Text(
-                          "Request booking",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight:
-                              FontWeight.bold),
-                        ),
-                      ),
+                      setState(() {
+                        dateError = booking.dateError();
+                        startTimeError = booking.timeError();
+                        endTimeError = booking.timeError();
+                      });
+                    }
+                  },
+                  child: Container(
+                    color: Colors.green,
+                    padding: const EdgeInsets.all(14),
+                    child: const Text(
+                      "Request booking",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
-                ])),
+                ),
+              ),
+            ])),
       );
     }
   }

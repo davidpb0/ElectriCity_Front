@@ -33,7 +33,7 @@ class ListController {
   ListController._();
 
   Future<List<Station>> fetchBicingStations() async {
-    Response res = await _apiService.getData('bicing_stations');
+    Response res = await _apiService.getData('/bicing_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
@@ -45,7 +45,7 @@ class ListController {
   }
 
   void fetchFirstBicingStations() async {
-    Response res = await _apiService.getData('bicing_stations');
+    Response res = await _apiService.getData('/bicing_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
@@ -57,7 +57,7 @@ class ListController {
   }
 
   void fetchFirstRechargeStations() async {
-    Response res = await _apiService.getData('recharge_stations');
+    Response res = await _apiService.getData('/recharge_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
@@ -71,7 +71,7 @@ class ListController {
   void streamBicingStations() async {
     while (!bicisComplete) {
       Response res =
-          await _apiService.getData('bicing_stations?page=$bicisIterator');
+          await _apiService.getData('/bicing_stations?page=$bicisIterator');
       var body = json.decode(res.body);
       if (res.statusCode == 200) {
         StationList estaciones = StationList.fromJson(body);
@@ -91,7 +91,7 @@ class ListController {
   void streamRechargeStations() async {
     while (!chargersComplete) {
       Response res =
-          await _apiService.getData('recharge_stations?page=$chargersIterator');
+          await _apiService.getData('/recharge_stations?page=$chargersIterator');
       var body = json.decode(res.body);
       if (res.statusCode == 200) {
         RechargeStationList estaciones = RechargeStationList.fromJson(body);
@@ -109,7 +109,7 @@ class ListController {
   }
 
   Future<List<RechargeStation>> fetchRechargeStations() async {
-    Response res = await _apiService.getData('recharge_stations');
+    Response res = await _apiService.getData('/recharge_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
