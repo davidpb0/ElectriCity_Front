@@ -114,7 +114,7 @@ class Station {
   bool operator ==(Object other) =>
       other is Station &&
       other.runtimeType == runtimeType &&
-      other.address == address;
+      other.id == id;
 
   void editComment(int id, String txt) {
     print("El texto es: " + txt);
@@ -122,6 +122,9 @@ class Station {
     comment.text = txt;
 
   }
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class HydraView {

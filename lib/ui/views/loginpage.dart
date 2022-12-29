@@ -116,7 +116,7 @@ class Body extends StatelessWidget {
         ),
         //const SizedBox(height: 50),
 
-        //SigIn Botton
+        //SignIn Botton
         SizedBox(
           height: 80,
           width: 200,

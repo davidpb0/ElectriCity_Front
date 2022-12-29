@@ -110,7 +110,6 @@ class StationController {
         } else {
           _rechargelist.addAll(estaciones.getChargerStations());
           rechargeStationStreamController.add(_rechargelist.length);
-
           chargersIterator++;
         }
       } else {

@@ -33,12 +33,12 @@ class _ListPageState extends State<ListPage> {
   @override
   Widget build(BuildContext context) {
     //Da la altura y el ancho total de la pantalla
-    Size screensize = MediaQuery.of(context).size;
+    Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
       backgroundColor: Colors.grey[300],
       appBar: DefaultHeader(
-          size: Size(screensize.width, (screensize.height * 0.1))),
+          size: Size(screenSize.width, (screenSize.height * 0.1))),
       body: Column(children: [
         Container(
           padding: const EdgeInsets.all(8),

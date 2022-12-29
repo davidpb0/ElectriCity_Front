@@ -5,7 +5,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../views/listpage.dart';
 import '../views/mapa.dart';
-import 'info_personal_ubi_form.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -16,12 +15,11 @@ class BottomBar extends StatefulWidget {
 
 class BottomBarState extends State<BottomBar> {
   static final List<Widget> _widgetOptions = <Widget>[
-    GoogleMapa(),
-    ListPage(),
+    const GoogleMapa(),
+    const ListPage(),
     //InfoPersonalUbiForm(),
     const PrizesPage(),
     const ProfilePage(),
-    //ProfilePage()
   ];
   var _selectedIndex = 0;
 

@@ -30,7 +30,7 @@ class GoogleMapaState extends State<GoogleMapa> {
   late BitmapDescriptor bicingMarker;
   late BitmapDescriptor chargerMarker;
   late BitmapDescriptor personalMarker;
-  Set<Marker> _markers = {};
+  final Set<Marker> _markers = {};
   final MapaController _mapaController = MapaController();
   final StationController _stationController = StationController();
   late List<LatLng> bicingList;
@@ -168,9 +168,15 @@ class GoogleMapaState extends State<GoogleMapa> {
           onLongPress: (latlang) async {
             _mapaController.coords = latlang;
             _mapaController.personalMarker = personalMarker;
+            int aux = _userController.currentUser.getPersonalUbi().length;
             // ignore: use_build_context_synchronously
             //Navigator.of(context).pushReplacementNamed('/form_ubi');
             Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  InfoPersonalUbiForm()));
+            if (aux != _userController.currentUser.getPersonalUbi().length){
+              setState(() {
+                _markers.add((_userController.currentUser.getPersonalUbi()).last);
+              });
+            }
           },
           onTap: (latlang) {
             setState(() {
@@ -266,7 +272,6 @@ class GoogleMapaState extends State<GoogleMapa> {
   }
 
   void setAuxStation(int id, bool bicing){
-    print(id);
     setState(() {
       if(bicing){
         info = InfoBicingStationWindow(
@@ -341,7 +346,6 @@ class GoogleMapaState extends State<GoogleMapa> {
     _markers.clear();
     await setCustomMarker(context);
     if (_stationController.bicisComplete){
-      print("bicisISComplete");
       for(int i = 0; i < _stationController.getTotalBicingStations(); ++i ){
         setState(() {
           _markers.add(
@@ -378,6 +382,9 @@ class GoogleMapaState extends State<GoogleMapa> {
     }
     else{
       initRechargeMarkers();
+    }
+    for (int j = 0; j < _userController.currentUser.getPersonalUbi().length; ++j) {
+      _markers.add(_userController.currentUser.getPersonalUbi()[j]);
     }
 
   }
@@ -420,22 +427,21 @@ class GoogleMapaState extends State<GoogleMapa> {
     int i = 0;
     _stationController.getRechargeStationsStream().listen((value) {
       while(i<value && i<_stationController.getTotalRechargeStations()){
+        RechargeStation current = _stationController.getRechargeStation(i);
         setState(() {
           _markers.add(
               Marker(
-                  markerId: MarkerId("R-${i + 1}"),
-                  position: _stationController.getRechargeStation(i).coords,
+                  markerId: MarkerId("R-${current.id}"),
+                  position: current.coords,
                   icon: chargerMarker,
                   onTap: () {
                     setState(() {
                         info = InfoChargeStationWindow(
-                          slots: _stationController.getRechargeStation(i).slots,
-                          addres: _stationController.getRechargeStation(i).address,
-                          connectionType: _stationController.getRechargeStation(i).connectionType,
-                          liked: UserController()
-                              .currentUser
-                              .isFavouriteRechargeStationIndex(_stationController.getRechargeStation(i).id.toString()),
-                          charger: _stationController.getRechargeStation(i),
+                          slots: _stationController.getRechargeStationbyId(current.id).slots,
+                          addres: _stationController.getRechargeStationbyId(current.id).address,
+                          connectionType: _stationController.getRechargeStationbyId(current.id).connectionType,
+                          liked: UserController().currentUser.isFavouriteRechargeStationIndex(current.id.toString()),
+                          charger: _stationController.getRechargeStationbyId(current.id),
                         );
                     });
                   }

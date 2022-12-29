@@ -103,4 +103,41 @@ class UserController {
     }
   }
 
+  updateUserProfile(String username, String email, String oldPassword, String newPassword, String repeatPassword) async {
+    var data = {};
+    if (username.isNotEmpty && email.isNotEmpty) {
+      data = {
+        "username": username,
+        "email": email
+      };
+    }
+    else if (username.isNotEmpty) {
+      data = {
+        "username": username
+      };
+    }
+    else if (email.isNotEmpty) {
+      data = {
+        "email": email
+      };
+    }
+
+    //TODO: verify user old Password
+    /*if (oldPassword == currentUser.getPassword() && newPassword != "" && newPassword == repeatPassword) {
+
+    }*/
+
+    if (data.isNotEmpty) {
+      String urlTemp = "users/${currentUser.getUserId()}";
+      Response res = await ApiService().updateUserInfo(data, urlTemp);
+      if (res.statusCode == 200) {
+        if (username.isNotEmpty) currentUser.setUsername(username);
+        if (email.isNotEmpty) currentUser.setEmail(email);
+      }
+      else {
+        throw Exception("Error while updating user profile");
+      }
+    }
+  }
+
 }

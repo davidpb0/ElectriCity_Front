@@ -50,11 +50,17 @@
     "profile_delete": "Delete account",
     "profile_checkdelete": "Are you sure you want to delete your account?",
 
+
     "expandedStation_noComments":"There's no comments yet",
     "expandedStation_favButton":"Favourite",
     "expandedStation_addComment":"Add Comment",
-    "expandedStation_editComment":"Edit Comment"
+    "expandedStation_editComment":"Edit Comment",
 
-
+    "editprofile_oldpassword": "Current password",
+    "editprofile_newpassword": "New password",
+    "editprofile_repeatnewpassword": "Repeat new password",
+    "editprofile_confirm_changes": "Confirm new changes",
+    "editprofile_cancel_changes": "Cancel changes",
+    "editprofile_text": "Edit account"
 
 }

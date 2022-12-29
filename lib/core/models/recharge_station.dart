@@ -112,10 +112,13 @@ class RechargeStation {
   }
 
   @override
-  bool operator ==(Object other) =>
+  bool operator == (Object other) =>
       other is RechargeStation &&
           other.runtimeType == runtimeType &&
-          other.address == address;
+          other.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
 }
 
 class HydraView {

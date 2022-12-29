@@ -141,4 +141,22 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get expandedStation_editComment => 'Edita el comentario';
+
+  String get editprofile_oldpassword => 'Contraseña actual';
+
+  @override
+  String get editprofile_newpassword => 'Nueva contraseña';
+
+  @override
+  String get editprofile_repeatnewpassword => 'Repita la nueva contraseña';
+
+  @override
+  String get editprofile_confirm_changes => 'Guardar los cambios';
+
+  @override
+  String get editprofile_cancel_changes => 'Cancelar cambios';
+
+  @override
+  String get editprofile_text => 'Editar mi cuenta';
+
 }

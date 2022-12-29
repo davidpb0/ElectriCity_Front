@@ -5,7 +5,6 @@ import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -58,6 +57,7 @@ class MapaController {
     int i = 0;
     stationController.getBicingStationsStream().listen((value) {
       while(i<value && i<stationController.getTotalBicingStations()){
+      
         _markers.add(
           Marker(
               markerId: MarkerId("bicing-${i + 1}"),
@@ -90,6 +90,7 @@ class MapaController {
     int i = 0;
     stationController.getRechargeStationsStream().listen((value) {
       while(i<value && i<stationController.getTotalBicingStations()){
+
         _markers.add(
           Marker(
               markerId: MarkerId("recharge-${i + 1}"),
