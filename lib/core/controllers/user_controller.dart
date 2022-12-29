@@ -154,11 +154,8 @@ class UserController {
   }
 
   getConversationWithOneUser(int idUserWithConversation) async {
-    String urlTemp = "users/${currentUser.getUserId()}/messages";
-    var data = {
-      "idReceiver": idUserWithConversation
-    };
-    Response res = await ApiService().getConversationBetweenUsers(urlTemp, data);
+    String urlTemp = "users/${currentUser.getUserId()}/messages/users/$idUserWithConversation";
+    Response res = await ApiService().getConversationBetweenUsers(urlTemp);
     if (res.statusCode == 201) {
       return getMessages(res.body);
     }
@@ -194,7 +191,7 @@ class UserController {
   }
 
   getInfoUsers(dynamic json) {
-    if (json['userWithConversation'] != null) {
+    if (json['userWithConversation'] != "[]") {
       List<ChatUsers> chatUsers = {} as List<ChatUsers>;
       for (int i = 0; i < json['userWithConversation'].length; ++i) {
         chatUsers.add(

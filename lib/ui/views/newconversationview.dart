@@ -10,6 +10,7 @@ class NewConversationView extends StatelessWidget {
 
   final UserController userController = UserController();
   final TextEditingController emailTextController = TextEditingController();
+  final TextEditingController messageTextController = TextEditingController();
 
   showAlertDialog(BuildContext context) {
     // set up the AlertDialog
@@ -27,6 +28,7 @@ class NewConversationView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     emailTextController.clear();
+    messageTextController.clear();
     return AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -45,29 +47,57 @@ class NewConversationView extends StatelessWidget {
       ),
       content: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: Container(
-          decoration: BoxDecoration(
-            boxShadow: const [
-              BoxShadow(
-                offset: Offset(0, 2),
-                blurRadius: 1,
+        child: Column(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: const [
+                  BoxShadow(
+                    offset: Offset(0, 2),
+                    blurRadius: 1,
+                  ),
+                ],
+                color: Colors.grey[200],
+                border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(12),
               ),
-            ],
-            color: Colors.grey[200],
-            border: Border.all(color: Colors.white),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 5.0),
-            child: TextField(
-              controller: emailTextController,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.email),
-                border: InputBorder.none,
-                hintText: "Email",
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5.0),
+                child: TextField(
+                  controller: emailTextController,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.email),
+                    border: InputBorder.none,
+                    hintText: "Email",
+                  ),
+                ),
               ),
             ),
-          ),
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: const [
+                  BoxShadow(
+                    offset: Offset(0, 2),
+                    blurRadius: 1,
+                  ),
+                ],
+                color: Colors.grey[200],
+                border: Border.all(color: Colors.white),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 5.0),
+                child: TextField(
+                  controller: messageTextController,
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.send),
+                    border: InputBorder.none,
+                    hintText: "New message",
+                  ),
+                ),
+              ),
+            ),
+          ]
         ),
       ),
       actions: [
@@ -76,7 +106,12 @@ class NewConversationView extends StatelessWidget {
           width: 130,
           child: TextButton(
             onPressed: () {
-              Navigator.of(context).pop(context);
+              if (emailTextController.text.isNotEmpty && messageTextController.text.isNotEmpty) {
+                Navigator.of(context).pop(context);
+              }
+              else {
+
+              }
             },
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 0.0),
