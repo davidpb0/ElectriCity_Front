@@ -177,8 +177,6 @@ class _RechargePreviewState extends State<RechargePreview> {
                                 faved = true;
                               }
                               });
-                            print("faved!");
-                            print(faved);
                             },
                             icon: Icon((faved) ? Icons.favorite_outline : Icons.favorite),
                           ),

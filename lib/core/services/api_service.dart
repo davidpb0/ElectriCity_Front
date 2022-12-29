@@ -122,7 +122,6 @@ class ApiService {
 
   deleteData(apiUrl) async {
     var fullUrl = _url + apiUrl;
-    print(fullUrl);
     return await http.delete(Uri.parse(fullUrl), headers: {
       "Authorization": "Bearer $token",
     });
