@@ -32,6 +32,7 @@ class GoogleMapaState extends State<GoogleMapa> {
   late BitmapDescriptor personalMarker;
   final Set<Marker> _markers = {};
   final MapaController _mapaController = MapaController();
+  final UserController _userController = UserController();
   final StationController _stationController = StationController();
   late List<LatLng> bicingList;
   late List<Station> bicingStationList;
