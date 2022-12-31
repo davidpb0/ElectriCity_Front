@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:electricity_front/core/controllers/login_controller.dart';
 import 'package:electricity_front/core/controllers/station_controller.dart';
@@ -130,7 +131,7 @@ class UserController {
     }*/
 
     if (data.isNotEmpty) {
-      String urlTemp = "users/${currentUser.getUserId()}";
+      String urlTemp = "/users/${currentUser.getUserId()}";
       Response res = await ApiService().updateUserInfo(data, urlTemp);
       if (res.statusCode == 200) {
         if (username.isNotEmpty) currentUser.setUsername(username);
@@ -143,10 +144,11 @@ class UserController {
   }
 
   sendMessage(String text, int idReceiver) async {
-    String urlTemp = "users/${currentUser.getUserId()}/messages";
+    String urlTemp = "/users/${currentUser.getUserId()}/messages";
     var data = {
       "text": text,
-      "idReceiver": idReceiver
+      "idReceiver": idReceiver,
+      "data": DateTime.now()
     };
     Response res = await ApiService().sendNewMessage(urlTemp, data);
     if (res.statusCode != 201) {
@@ -155,7 +157,7 @@ class UserController {
   }
 
   getConversationWithOneUser(int idUserWithConversation) async {
-    String urlTemp = "users/${currentUser.getUserId()}/messages/users/$idUserWithConversation";
+    String urlTemp = "/users/${currentUser.getUserId()}/messages/users/$idUserWithConversation";
     Response res = await ApiService().getConversationBetweenUsers(urlTemp);
     if (res.statusCode == 201) {
       return getMessages(res.body);
@@ -166,10 +168,12 @@ class UserController {
   }
 
   getAllUserConversations() async {
-    String urlTemp = "users/${currentUser.getUserId()}/conversations";
+    String urlTemp = "/users/${currentUser.getUserId()}/conversations";
     Response res = await ApiService().getUserConversations(urlTemp);
+    print(res);
+    var body = json.decode(res.body);
     if (res.statusCode == 201) {
-      return getInfoUsers(res.body);
+      return getInfoUsers(body);
     }
     else {
       throw Exception("Error while getting user conversations");
@@ -192,13 +196,11 @@ class UserController {
   }
 
   getInfoUsers(dynamic json) {
-    if (json['userWithConversation'] != "[]") {
-      List<ChatUsers> chatUsers = {} as List<ChatUsers>;
-      for (int i = 0; i < json['userWithConversation'].length; ++i) {
-        chatUsers.add(
-          ChatUsers(id: json['userWithConversation'][i]['id'], name: json['userWithConversation'][i]['username'], email: json['userWithConversation'][i]['email'])
-        );
-      }
+    List<ChatUsers> chatUsers = <ChatUsers>[];
+    for (int i = 0; i < json['userWithConversation'].length; ++i) {
+      chatUsers.add(
+        ChatUsers(id: json['userWithConversation'][i]['id'], name: json['userWithConversation'][i]['username'], email: json['userWithConversation'][i]['email'])
+      );
     }
   }
 

@@ -135,7 +135,7 @@ class ApiService {
       headers: {
         "Content-type": "application/json",
         "Accept": "application/json",
-        "X-AUTH-TOKEN": token
+        "Authorization": "Bearer $token"
       },
     );
   }
@@ -154,17 +154,19 @@ class ApiService {
       headers: {
         "Content-type": "application/json",
         "Accept": "application/json",
-        "X-AUTH-TOKEN": token
+        "Authorization": "Bearer $token"
       },
     );
   }
 
-  getConversationBetweenUsers(apiUrl, data) async {
+  getConversationBetweenUsers(apiUrl) async {
     var fullUrl = _url + apiUrl;
     return await http.get(
       Uri.parse(fullUrl),
       headers: {
-        "X-AUTH-TOKEN": token,
+        "Content-type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $token",
       }
     );
   }
@@ -174,7 +176,9 @@ class ApiService {
     return await http.get(
       Uri.parse(fullUrl),
       headers: {
-        "X-AUTH-TOKEN": token,
+        "Content-type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $token",
     });
   }
 
