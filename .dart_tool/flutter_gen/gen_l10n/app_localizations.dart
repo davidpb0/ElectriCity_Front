@@ -249,6 +249,66 @@ abstract class AppLocalizations {
   /// **'Add location'**
   String get personallocation_submit;
 
+  /// No description provided for @reservation_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a charging slot'**
+  String get reservation_title;
+
+  /// No description provided for @reservation_date.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get reservation_date;
+
+  /// No description provided for @reservation_starttime.
+  ///
+  /// In en, this message translates to:
+  /// **'From:'**
+  String get reservation_starttime;
+
+  /// No description provided for @reservation_endtime.
+  ///
+  /// In en, this message translates to:
+  /// **'To:'**
+  String get reservation_endtime;
+
+  /// No description provided for @bicingstation_mechanical.
+  ///
+  /// In en, this message translates to:
+  /// **'Mechanical bikes'**
+  String get bicingstation_mechanical;
+
+  /// No description provided for @bicingstation_electrical.
+  ///
+  /// In en, this message translates to:
+  /// **'Electrical bikes'**
+  String get bicingstation_electrical;
+
+  /// No description provided for @bicingstation_slots.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty slots'**
+  String get bicingstation_slots;
+
+  /// No description provided for @rechargestation_speed.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed type'**
+  String get rechargestation_speed;
+
+  /// No description provided for @rechargestation_connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection type'**
+  String get rechargestation_connection;
+
+  /// No description provided for @rechargestation_slots.
+  ///
+  /// In en, this message translates to:
+  /// **'Empty slots'**
+  String get rechargestation_slots;
+
   /// No description provided for @profile_personallocations.
   ///
   /// In en, this message translates to:
@@ -290,6 +350,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Are you sure you want to delete your account?'**
   String get profile_checkdelete;
+
+  /// No description provided for @expandedStation_noComments.
+  ///
+  /// In en, this message translates to:
+  /// **'There\'s no comments yet'**
+  String get expandedStation_noComments;
+
+  /// No description provided for @expandedStation_favButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Favourite'**
+  String get expandedStation_favButton;
+
+  /// No description provided for @expandedStation_addComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Comment'**
+  String get expandedStation_addComment;
+
+  /// No description provided for @expandedStation_editComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Comment'**
+  String get expandedStation_editComment;
 
   /// No description provided for @editprofile_oldpassword.
   ///

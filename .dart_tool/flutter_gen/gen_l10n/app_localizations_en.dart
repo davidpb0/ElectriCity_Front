@@ -83,6 +83,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String get personallocation_submit => 'Add location';
 
   @override
+  String get reservation_title => 'Book a charging slot';
+
+  @override
+  String get reservation_date => 'Date';
+
+  @override
+  String get reservation_starttime => 'From:';
+
+  @override
+  String get reservation_endtime => 'To:';
+
+  @override
+  String get bicingstation_mechanical => 'Mechanical bikes';
+
+  @override
+  String get bicingstation_electrical => 'Electrical bikes';
+
+  @override
+  String get bicingstation_slots => 'Empty slots';
+
+  @override
+  String get rechargestation_speed => 'Speed type';
+
+  @override
+  String get rechargestation_connection => 'Connection type';
+
+  @override
+  String get rechargestation_slots => 'Empty slots';
+
+  @override
   String get profile_personallocations => 'Personal locations';
 
   @override
@@ -104,6 +134,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profile_checkdelete => 'Are you sure you want to delete your account?';
 
   @override
+  String get expandedStation_noComments => 'There\'s no comments yet';
+
+  @override
+  String get expandedStation_favButton => 'Favourite';
+
+  @override
+  String get expandedStation_addComment => 'Add Comment';
+
+  @override
+  String get expandedStation_editComment => 'Edit Comment';
+
   String get editprofile_oldpassword => 'Current password';
 
   @override

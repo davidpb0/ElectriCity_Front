@@ -106,7 +106,7 @@ class Body extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(AppLocalizations.of(context).login_forgotpassword),
+            Text("${AppLocalizations.of(context).login_forgotpassword} ") ,
             Text(
               AppLocalizations.of(context).login_clickhere,
               style: const TextStyle(

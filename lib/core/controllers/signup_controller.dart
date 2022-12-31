@@ -63,7 +63,7 @@ class SignupController {
       "fullname": _username,
     };
 
-    Response res = await _apiService.postData(data, 'register');
+    Response res = await _apiService.postData(data, '/register');
     if (res.statusCode == 201) {
       // ignore: use_build_context_synchronously
       userCtrl.startSession(email, pwd, ctext);

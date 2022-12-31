@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:electricity_front/core/controllers/login_controller.dart';
+import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:electricity_front/core/services/api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -24,7 +25,7 @@ class UserController {
     try {
       setCustomMarker();
       currentUser = await LoginController().logIn(mail, pwd, ctext);
-      ApiService().setToken(currentUser.getUserTkn());
+      StationController().initStations();
     }
     catch (e) {
       Exception("Error en iniciar la sesion");
@@ -51,7 +52,7 @@ class UserController {
   }
 
   Future<bool> deleteUser() async {
-    String endpoint = 'users/${currentUser.getUserId()}';
+    String endpoint = '/users/${currentUser.getUserId()}';
     Response res = await ApiService().deleteData(endpoint);
     if (res.statusCode == 204) {
       return true;
@@ -63,7 +64,7 @@ class UserController {
 
   deletePersonalUbiEveryWhere(int index) async {
     Marker location = currentUser.getPersonalUbi().elementAt(index);
-    String urlTemp = "users/${currentUser.getUserId()}/locations/${int.parse(location.markerId.value) - 3000}";
+    String urlTemp = "/users/${currentUser.getUserId()}/locations/${int.parse(location.markerId.value) - 3000}";
     Response res = await ApiService().deletePersonalUbi(urlTemp);
     if (res.statusCode == 201) {
       currentUser.deletePersonalUbi(index);
@@ -71,7 +72,7 @@ class UserController {
   }
 
   addFavBicingBD(int index) async {
-    String urlTemp = "users/${currentUser.getUserId()}/bicingStation/$index";
+    String urlTemp = "/users/${currentUser.getUserId()}/bicingStation/$index";
     var data = {};
     Response res = await ApiService().postData(data, urlTemp);
     if (res.statusCode == 201) {
@@ -80,7 +81,7 @@ class UserController {
   }
 
   deleteFavBicingBD(String stationId) async {
-    String urlTemp = "users/${currentUser.getUserId()}/bicingStation/$stationId";
+    String urlTemp = "/users/${currentUser.getUserId()}/bicingStation/$stationId";
     Response res = await ApiService().deleteData(urlTemp);
     if (res.statusCode == 201) {
       currentUser.deleteFavouriteBicingStationIndex(stationId);
@@ -88,7 +89,7 @@ class UserController {
   }
 
   addFavChargerBD(int stationId) async {
-    String urlTemp = "users/${currentUser.getUserId()}/rechargeStation/$stationId";
+    String urlTemp = "/users/${currentUser.getUserId()}/rechargeStation/$stationId";
     var data = {};
     Response res = await ApiService().postData(data, urlTemp);
     if (res.statusCode == 201) {
@@ -97,7 +98,7 @@ class UserController {
   }
 
   deleteFavChargerBD(String stationId) async {
-    String urlTemp = "users/${currentUser.getUserId()}/rechargeStation/$stationId";
+    String urlTemp = "/users/${currentUser.getUserId()}/rechargeStation/$stationId";
     Response res = await ApiService().deleteData(urlTemp);
     if (res.statusCode == 201) {
       currentUser.deleteFavouriteRechargeStationIndex(stationId);

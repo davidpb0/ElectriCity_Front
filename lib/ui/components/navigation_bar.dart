@@ -1,3 +1,4 @@
+import 'package:electricity_front/ui/views/prizespage.dart';
 import 'package:electricity_front/ui/views/conversationlistview.dart';
 import 'package:electricity_front/ui/views/profilepage.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,8 @@ class BottomBarState extends State<BottomBar> {
   static final List<Widget> _widgetOptions = <Widget>[
     const GoogleMapa(),
     const ListPage(),
-    InfoPersonalUbiForm(),
+    //InfoPersonalUbiForm(),
+    const PrizesPage(),
     const ChatPage(),
     const ProfilePage()
   ];

@@ -31,6 +31,19 @@
     "personallocation_description": "Descripción",
     "personallocation_submit": "Añadir ubicación",
 
+    "reservation_title": "Reserva una plaza",
+    "reservation_date": "Fecha",
+    "reservation_starttime": "Desde:",
+    "reservation_endtime": "Hasta:",
+
+    "bicingstation_mechanical": "Bicis mecánicas",
+    "bicingstation_electrical": "Bicis eléctricas",
+    "bicingstation_slots": "Anclajes libres",
+
+    "rechargestation_speed": "Velocidad de carga",
+    "rechargestation_connection": "Tipo de conexión",
+    "rechargestation_slots": "Plazas libres",
+
     "profile_personallocations": "Ubicaciones personales",
     "profile_nolocations": "No tiene ubicaciones personales",
     "profile_favouritestations": "Estaciones favoritas",
@@ -38,6 +51,13 @@
     "profile_logout": "Cerrar sesión",
     "profile_delete": "Borrar cuenta",
     "profile_checkdelete": "¿Está seguro de querer borrar su cuenta?",
+
+
+    "expandedStation_noComments":"Todavía no hay comentarios",
+    "expandedStation_favButton":"Favorito",
+    "expandedStation_addComment":"Añade un comentario",
+    "expandedStation_editComment":"Edita el comentario",
+
 
     "editprofile_oldpassword": "Contraseña actual",
     "editprofile_newpassword": "Nueva contraseña",
