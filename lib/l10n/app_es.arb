@@ -51,10 +51,18 @@
     "profile_delete": "Borrar cuenta",
     "profile_checkdelete": "¿Está seguro de querer borrar su cuenta?",
 
+
+    "expandedStation_noComments":"Todavía no hay comentarios",
+    "expandedStation_favButton":"Favorito",
+    "expandedStation_addComment":"Añade un comentario",
+    "expandedStation_editComment":"Edita el comentario",
+
+
     "editprofile_oldpassword": "Contraseña actual",
     "editprofile_newpassword": "Nueva contraseña",
     "editprofile_repeatnewpassword": "Repita la nueva contraseña",
     "editprofile_confirm_changes": "Guardar los cambios",
     "editprofile_cancel_changes": "Cancelar cambios",
     "editprofile_text": "Editar mi cuenta"
+
 }

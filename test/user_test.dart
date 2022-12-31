@@ -11,7 +11,7 @@ void main() {
 
   test('User should created with json values passed', () {
     var json = {
-      "username":"example",
+      "username": "example",
       "email": "example@email.com",
       "apiTokens": [
         {"token": "aaaa"},

@@ -249,11 +249,11 @@ class _ReservationFormState extends State<ReservationForm> {
                             //booking.mockSuccess();
                             //completedBooking = true;
 
-                                                      Future<bool> success = booking.tryBooking(context);
-                                                      if (await success) {
-                                                        completedBooking = true;
+                            Future<bool> success = booking.tryBooking(context);
+                            if (await success) {
+                              completedBooking = true;
 
-                                                      }
+                            }
 
 
                           }
