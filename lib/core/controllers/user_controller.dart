@@ -13,6 +13,7 @@ import '../models/user.dart';
 class UserController {
   late User currentUser = User();
   late BitmapDescriptor personalMarker;
+  late List<ChatUsers> chat;
 
   factory UserController() {
     return _this;
@@ -159,21 +160,22 @@ class UserController {
   getConversationWithOneUser(int idUserWithConversation) async {
     String urlTemp = "/users/${currentUser.getUserId()}/messages/users/$idUserWithConversation";
     Response res = await ApiService().getConversationBetweenUsers(urlTemp);
+    var body = json.decode(res.body);
     if (res.statusCode == 201) {
-      return getMessages(res.body);
+      return getMessages(body);
     }
     else {
       throw Exception("Error while getting a conversation with a user");
     }
   }
 
-  getAllUserConversations() async {
+  Future<bool> getAllUserConversations() async {
     String urlTemp = "/users/${currentUser.getUserId()}/conversations";
     Response res = await ApiService().getUserConversations(urlTemp);
-    print(res);
     var body = json.decode(res.body);
     if (res.statusCode == 201) {
-      return getInfoUsers(body);
+      chat = getInfoUsers(body);
+      return true;
     }
     else {
       throw Exception("Error while getting user conversations");
@@ -181,27 +183,28 @@ class UserController {
   }
 
   getMessages(dynamic json) {
-    List<ChatMessage> chatMessage = {} as List<ChatMessage>;
+    List<ChatMessage> chatMessage = <ChatMessage>[];
     for (int i = 0; i < json['enviats'].length; ++i) {
       chatMessage.add(
-          ChatMessage(id: json['enviats'][i]['id'], messageContent: json['enviats'][i], messageType: "sender")
+          ChatMessage(id: json['enviats'][i]['id'], messageContent: json['enviats'][i].toString(), messageType: "sender")
       );
     }
     for (int i = 0; i < json['rebuts'].length; ++i) {
       chatMessage.add(
-          ChatMessage(id: json['rebuts'][i]['id'], messageContent: json['rebuts'][i], messageType: "receiver")
+          ChatMessage(id: json['rebuts'][i]['id'], messageContent: json['rebuts'][i].toString(), messageType: "receiver")
       );
     }
-    chatMessage.sort((olderMessage, newestMessage) => olderMessage.id.compareTo(newestMessage.id));
+    return chatMessage.sort((olderMessage, newestMessage) => olderMessage.id.compareTo(newestMessage.id));
   }
 
-  getInfoUsers(dynamic json) {
+  List<ChatUsers> getInfoUsers(dynamic json) {
     List<ChatUsers> chatUsers = <ChatUsers>[];
     for (int i = 0; i < json['userWithConversation'].length; ++i) {
       chatUsers.add(
-        ChatUsers(id: json['userWithConversation'][i]['id'], name: json['userWithConversation'][i]['username'], email: json['userWithConversation'][i]['email'])
+        ChatUsers(id: json['userWithConversation'][i]['id'], name: json['userWithConversation'][i]['username'].toString(), email: json['userWithConversation'][i]['email'].toString())
       );
     }
+    return chatUsers;
   }
 
 }

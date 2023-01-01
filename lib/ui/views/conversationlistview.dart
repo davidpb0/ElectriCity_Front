@@ -2,9 +2,6 @@ import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:electricity_front/ui/views/conversationpreview.dart';
 import 'package:electricity_front/ui/views/newconversationview.dart';
 import 'package:flutter/material.dart';
-import 'package:wp_search_bar/wp_search_bar.dart';
-
-import '../../core/models/chatusers.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({super.key});
@@ -16,7 +13,7 @@ class ChatPage extends StatefulWidget {
 class _ChatPageState extends State<ChatPage> {
   NewConversationView newConversationView = NewConversationView();
   UserController userController = UserController();
-  List<ChatUsers> chatUsers = UserController().getAllUserConversations();
+
   var buttonFilters = {
     'name': {
       'name': 'name',
@@ -26,6 +23,11 @@ class _ChatPageState extends State<ChatPage> {
       'icon': Icons.supervised_user_circle_rounded,
     }
   };
+
+  @override
+  initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,47 +74,80 @@ class _ChatPageState extends State<ChatPage> {
                 ),
               )
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 16,left: 16,right: 16),
-              child: WPSearchBar(
-                listOfFilters: buttonFilters,
-                onSearch: (filter, value, operation) {
-                },
-                materialDesign:
-                  const {
-                  'title': {'text': 'Search...'},
-                  },
-                body: ListView.builder(
-                  itemCount: chatUsers.length,
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.only(top: 16),
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, index){
-                    return ConversationList(
-                      id: chatUsers[index].id,
-                      name: chatUsers[index].name,
-                      email: chatUsers[index].email,
-                      isMessageRead: true,
-                      //isMessageRead: (index == 0 || index == 3)?true:false,
-                    );
-                  },
-                ),
-                /*decoration: InputDecoration(
-                  hintText: "Search...",
-                  hintStyle: TextStyle(color: Colors.grey.shade600),
-                  prefixIcon: Icon(Icons.search,color: Colors.grey.shade600, size: 20,),
-                  filled: true,
-                  fillColor: Colors.grey.shade100,
-                  contentPadding: const EdgeInsets.all(8),
-                  enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(20),
-                      borderSide: BorderSide(
-                          color: Colors.grey.shade100
-                      )
-                  ),
-                ),*/
-              ),
+            const Padding(
+              padding: EdgeInsets.only(top: 16,left: 16,right: 16),
             ),
+             FutureBuilder<bool>(
+              future: UserController().getAllUserConversations(), // a previously-obtained Future<String> or null
+              builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    itemCount: UserController().chat.length,
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.only(top: 16),
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index){
+                      return ConversationList(
+                        id: UserController().chat[index].id.toString(),
+                        name: UserController().chat[index].name,
+                        email: UserController().chat[index].email,
+                        isMessageRead: true,
+                        //isMessageRead: (index == 0 || index == 3)?true:false,
+                      );
+                    },
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.error_outline,
+                          color: Colors.red,
+                          size: 60,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 16),
+                          child: Text('Error: ${snapshot.error}'),
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: CircularProgressIndicator(),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text('Loading...'),
+                        )
+                      ]
+                    )
+                  );
+                }
+              },
+            ),
+
+            /*decoration: InputDecoration(
+              hintText: "Search...",
+              hintStyle: TextStyle(color: Colors.grey.shade600),
+              prefixIcon: Icon(Icons.search,color: Colors.grey.shade600, size: 20,),
+              filled: true,
+              fillColor: Colors.grey.shade100,
+              contentPadding: const EdgeInsets.all(8),
+              enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                      color: Colors.grey.shade100
+                  )
+              ),
+            ),*/
           ],
         ),
       ),
