@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../core/controllers/user_controller.dart';
-import '../../core/models/chatmessagemodel.dart';
 
 class InsideChatView extends StatefulWidget{
   final String receiverId;
@@ -19,7 +18,6 @@ class _InsideChatViewState extends State<InsideChatView> {
 
   @override
   Widget build(BuildContext context) {
-    List<ChatMessage> messages = UserController().getConversationWithOneUser(int.parse(widget.receiverId));
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -61,28 +59,76 @@ class _InsideChatViewState extends State<InsideChatView> {
       ),
       body: Stack(
         children: <Widget>[
-          ListView.builder(
-            itemCount: messages.length,
-            shrinkWrap: true,
-            padding: const EdgeInsets.only(top: 10,bottom: 10),
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index){
-              return Container(
-                padding: const EdgeInsets.only(left: 14,right: 14,top: 10,bottom: 10),
-                child: Align(
-                  alignment: (messages[index].messageType == "receiver"?Alignment.topLeft:Alignment.topRight),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: (messages[index].messageType  == "receiver"?Colors.grey.shade200:Colors.blue[200]),
-                    ),
-                    padding: const EdgeInsets.all(16),
-                    child: Text(messages[index].messageContent, style: const TextStyle(fontSize: 15),),
+          FutureBuilder<bool>(
+            future: UserController().getConversationWithOneUser(int.parse(widget.receiverId)),// a previously-obtained Future<String> or null
+            builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: UserController().messages.length,
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Container(
+                      padding: const EdgeInsets.only(
+                          left: 14, right: 14, top: 10, bottom: 10),
+                      child: Align(
+                        alignment: (UserController().messages[index].messageType == "receiver"
+                            ? Alignment.topLeft
+                            : Alignment.topRight),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: (UserController().messages[index].messageType == "receiver"
+                                ? Colors.grey.shade200
+                                : Colors.blue[200]),
+                          ),
+                          padding: const EdgeInsets.all(16),
+                          child: Text(UserController().messages[index].messageContent,
+                            style: const TextStyle(fontSize: 15),),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+              else if (snapshot.hasError) {
+                return Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Icons.error_outline,
+                        color: Colors.red,
+                        size: 60,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16),
+                        child: Text('Error: ${snapshot.error}'),
+                      ),
+                    ],
                   ),
-                ),
-              );
-            },
-          ),
+                );
+              } else {
+                return Center(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: CircularProgressIndicator(),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 16),
+                            child: Text('Loading...'),
+                          )
+                        ]
+                    )
+                );
+              }
+            }
+            ),
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(

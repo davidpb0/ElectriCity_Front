@@ -14,6 +14,7 @@ class UserController {
   late User currentUser = User();
   late BitmapDescriptor personalMarker;
   late List<ChatUsers> chat;
+  late List<ChatMessage> messages;
 
   factory UserController() {
     return _this;
@@ -157,12 +158,13 @@ class UserController {
     }
   }
 
-  getConversationWithOneUser(int idUserWithConversation) async {
+  Future<bool> getConversationWithOneUser(int idUserWithConversation) async {
     String urlTemp = "/users/${currentUser.getUserId()}/messages/users/$idUserWithConversation";
     Response res = await ApiService().getConversationBetweenUsers(urlTemp);
     var body = json.decode(res.body);
     if (res.statusCode == 201) {
-      return getMessages(body);
+      messages = getMessages(body);
+      return true;
     }
     else {
       throw Exception("Error while getting a conversation with a user");
