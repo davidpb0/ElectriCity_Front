@@ -13,23 +13,19 @@ void main() {
     var json = {
       "username": "example",
       "email": "example@email.com",
-      "apiTokens": [
-        {"token": "aaaa"},
-        {"token": "abcd"}
-      ],
       "id": 1,
       "favouriteLocations": [],
     };
     final user = User.fromJson(json);
 
     expect(user.getUsername(), "example");
-    expect(user.getUserTkn(), "abcd");
     expect(user.getEmail(), "example@email.com");
     expect(user.getUserId(), 1);
     expect(user.getPersonalUbi().length, 0);
   });
 
   test("A personal ubi should be added to personalUbi", () {
+
     auxUsr.addPersonalUbi(const Marker(
       markerId: MarkerId("id"),
     ));
@@ -41,8 +37,9 @@ void main() {
   });
 
   test("A personal ubi should be deleted of personalUbi", () {
-    auxUsr.deletePersonalUbi(1);
-    expect(auxUsr.getPersonalUbi().length, 1);
+    auxUsr.addPersonalUbi(const Marker(
+      markerId: MarkerId("id"),
+    ));
     auxUsr.deletePersonalUbi(0);
     expect(auxUsr.getPersonalUbi().length, 0);
   });
@@ -65,7 +62,7 @@ void main() {
     bicing.address = "example";
     auxUsr.deleteFavBicing(bicing);
 
-    expect(auxUsr.getFavBicing().length, 1);
+    expect(auxUsr.getFavBicing().length, 0);
   });
 
   test("Favourite Charger station should be added", () {
@@ -86,12 +83,13 @@ void main() {
     bicing.address = "example";
     auxUsr.deleteFavCharger(bicing);
 
-    expect(auxUsr.getFavBicing().length, 1);
+    expect(auxUsr.getFavBicing().length, 0);
   });
 
   test("Favourite bicing should return true", () {
     Station bicing2 = Station();
-    bicing2.address = "example2";
+    bicing2.id = 1;
+    auxUsr.addFavBicing(bicing2);
     bool b = auxUsr.isFavouriteBicing(bicing2);
 
     expect(b, true);
@@ -107,7 +105,8 @@ void main() {
 
   test("Favourite Charger should return true", () {
     RechargeStation bicing2 = RechargeStation();
-    bicing2.address = "example2";
+    bicing2.id = 1;
+    auxUsr.addFavCharger(bicing2);
     bool b = auxUsr.isFavouriteCharger(bicing2);
 
     expect(b, true);
