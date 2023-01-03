@@ -69,7 +69,7 @@ class _InsideChatViewState extends State<InsideChatView> {
       body: Column(
         children: <Widget>[
           Expanded(
-            child: FutureBuilder<bool>(
+              child: FutureBuilder<bool>(
             future: UserController().getConversationWithOneUser(int.parse(widget.receiverId)),// a previously-obtained Future<String> or null
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData) {
@@ -120,57 +120,57 @@ class _InsideChatViewState extends State<InsideChatView> {
                 );
               } else {
                 return Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: CircularProgressIndicator(),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 16),
-                        child: Text('Loading...'),
-                      )
-                    ]
-                  )
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: CircularProgressIndicator(),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 16),
+                            child: Text('Loading...'),
+                          )
+                        ]
+                    )
                 );
               }
-              }
-            )
+            }
+              )
           ),
-          Container(
-            padding: const EdgeInsets.only(left: 10,bottom: 10,top: 10),
-            height: 60,
-            width: double.infinity,
-            color: Colors.white,
-            child: Row(
-              children: <Widget>[
-                const SizedBox(width: 15,),
-                Expanded(
-                  child: TextField(
-                    controller: messageTextController,
-                    decoration: const InputDecoration(
-                      hintText: "Write message...",
-                      hintStyle: TextStyle(color: Colors.black54),
-                      border: InputBorder.none,
+    Container(
+              padding: const EdgeInsets.only(left: 10,bottom: 10,top: 10),
+              height: 60,
+              width: double.infinity,
+              color: Colors.white,
+              child: Row(
+                children: <Widget>[
+                  const SizedBox(width: 15,),
+                  Expanded(
+                    child: TextField(
+                      controller: messageTextController,
+                      decoration: const InputDecoration(
+                        hintText: "Write message...",
+                        hintStyle: TextStyle(color: Colors.black54),
+                        border: InputBorder.none,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 15,),
-                FloatingActionButton(
-                  onPressed: (){
-                    userCtrl.sendMessage(messageTextController.text, int.parse(widget.receiverId));
-                    refresh();
-                    messageTextController.clear();
-                  },
-                  backgroundColor: Colors.blue,
-                  elevation: 0,
-                  child: const Icon(Icons.send,color: Colors.white,size: 18,),
-                ),
-              ],
+                  const SizedBox(width: 15,),
+                  FloatingActionButton(
+                    onPressed: () async{
+                      await userCtrl.sendMessage(messageTextController.text, int.parse(widget.receiverId));
+                      messageTextController.clear();
+                      refresh();
+                    },
+                    backgroundColor: Colors.blue,
+                    elevation: 0,
+                    child: const Icon(Icons.send,color: Colors.white,size: 18,),
+                  ),
+                ],
+              ),
             ),
-          ),
         ],
       ),
     );
