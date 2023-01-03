@@ -97,7 +97,6 @@ class _ProfilePageState extends State<ProfilePage> {
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  EditProfile(notifyParent: refresh,)));
                         },
-
                         child: Row(
                             mainAxisAlignment:
                             MainAxisAlignment.center,
