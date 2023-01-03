@@ -2,10 +2,12 @@ import 'package:electricity_front/core/controllers/booking_controller.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/ui/components/reservation_form.dart';
+import 'package:electricity_front/ui/components/station_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core/controllers/station_controller.dart';
 import '../../fonts/test_icons_icons.dart';
+import '../components/commentForm.dart';
 import '../components/default_header.dart';
 
 class ExpandedStationPage extends StatefulWidget {
@@ -40,6 +42,9 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
   Widget build(BuildContext context) {
     //Da la altura y el ancho total de la pantalla
     Size screensize = MediaQuery.of(context).size;
+    refresh() {
+      setState(() {});
+    }
 
     return Scaffold(
         backgroundColor: Colors.grey[300],
@@ -107,7 +112,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                             child: Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 12),
+                                  padding: EdgeInsets.only(top: 12),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -158,7 +163,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 12),
+                                  padding: EdgeInsets.only(top: 12),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -184,6 +189,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                                 color: Colors.black,
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
+
                                               ),
                                             ),
                                             Padding(
@@ -210,7 +216,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.only(top: 12),
+                                  padding: EdgeInsets.only(top: 12),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -264,7 +270,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                               ],
                             ),
                           ),
-                          const VerticalDivider(),
+                          VerticalDivider(),
                           Column(
                             children: [
                               Padding(
@@ -309,8 +315,13 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                             ],
                           ),
                         ])),
-                const Divider(),
-                const Text("Comments")
+                Divider(),
+                Container(child: Text("Comments")),
+                StationCommentForm(
+                    id: widget.index,
+                    bicing: widget.bicing,
+                    notifyParent: refresh),
+                (widget.bicing) ? listaCommentsBicing(refresh) : listaCommentsCharger(refresh),
               ]),
             ),
           ),
@@ -333,5 +344,93 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                         color: Colors.white,
                       ))))
         ]));
+  }
+
+  Widget listaCommentsBicing(dynamic ref) {
+    if (bicingStation.commentsBicing.isEmpty) {
+      return Padding(
+          padding: EdgeInsets.symmetric(vertical: 16),
+          child: Material(
+              color: Colors.transparent,
+              child: Text(
+                AppLocalizations.of(context).expandedStation_noComments,
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              )));
+    }
+    return ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: bicingStation.commentsBicing.length,
+        itemBuilder: (context, index) {
+          return Dismissible(
+            background: Container(
+                padding: const EdgeInsets.all(20),
+                child: Row(children: const [
+                  Icon(
+                    Icons.delete_forever,
+                    size: 60,
+                    color: Colors.red,
+                    textDirection: TextDirection.ltr,
+                  ),
+                  Expanded(child: SizedBox())
+                ])),
+            key: UniqueKey(),
+            onDismissed: (DismissDirection direction) async {
+              //await userCtrl.deletePersonalUbiEveryWhere(index);
+              setState(() {});
+            },
+            child: Padding(
+                padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
+                child: StationComment(
+                  info: bicingStation.commentsBicing.elementAt(index),
+                  notifyParent: ref,
+                )),
+          );
+        });
+  }
+
+  Widget listaCommentsCharger(dynamic ref) {
+    if (rechargeStation.commentsCharger.isEmpty) {
+      return Padding(
+          padding: EdgeInsets.symmetric(vertical: 16),
+          child: Material(
+              color: Colors.transparent,
+              child: Text(
+                AppLocalizations.of(context).expandedStation_noComments,
+                style: TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              )));
+    }
+    return ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: rechargeStation.commentsCharger.length,
+        itemBuilder: (context, index) {
+          return Dismissible(
+            background: Container(
+                padding: const EdgeInsets.all(20),
+                child: Row(children: const [
+                  Icon(
+                    Icons.delete_forever,
+                    size: 60,
+                    color: Colors.red,
+                    textDirection: TextDirection.ltr,
+                  ),
+                  Expanded(child: SizedBox())
+                ])),
+            key: UniqueKey(),
+            onDismissed: (DismissDirection direction) async {
+              //await userCtrl.deletePersonalUbiEveryWhere(index);
+              setState(() {});
+            },
+            child: Padding(
+                padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
+                child: StationComment(
+                  info: rechargeStation.commentsCharger.elementAt(index),
+                  notifyParent: ref,
+                )),
+          );
+        });
   }
 }

@@ -131,6 +131,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profile_checkdelete => '¿Está seguro de querer borrar su cuenta?';
 
   @override
+  String get expandedStation_noComments => 'Todavía no hay comentarios';
+
+  @override
+  String get expandedStation_favButton => 'Favorito';
+
+  @override
+  String get expandedStation_addComment => 'Añade un comentario';
+
+  @override
+  String get expandedStation_editComment => 'Edita el comentario';
+
   String get editprofile_oldpassword => 'Contraseña actual';
 
   @override
@@ -147,4 +158,5 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get editprofile_text => 'Editar mi cuenta';
+
 }
