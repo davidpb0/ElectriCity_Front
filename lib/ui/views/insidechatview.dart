@@ -160,9 +160,12 @@ class _InsideChatViewState extends State<InsideChatView> {
                   const SizedBox(width: 15,),
                   FloatingActionButton(
                     onPressed: () async{
-                      await userCtrl.sendMessage(messageTextController.text, int.parse(widget.receiverId));
-                      messageTextController.clear();
-                      refresh();
+                      if (messageTextController.text.isNotEmpty) {
+                        await userCtrl.sendMessage(messageTextController.text,
+                            int.parse(widget.receiverId));
+                        messageTextController.clear();
+                        refresh();
+                      }
                     },
                     backgroundColor: Colors.blue,
                     elevation: 0,

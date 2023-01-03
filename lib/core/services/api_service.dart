@@ -194,4 +194,16 @@ class ApiService {
       },
     );
   }
+
+  getUsers(apiUrl) async {
+    var fullUrl = _url + apiUrl;
+    return await http.get(
+      Uri.parse(fullUrl),
+      headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
+  }
 }

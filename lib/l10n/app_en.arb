@@ -64,5 +64,7 @@
     "editprofile_cancel_changes": "Cancel changes",
     "editprofile_text": "Edit account",
 
-    "chatview_adduser": "Add user"
+    "add_new_user": "Add new user",
+    "chatview_adduser": "Add user",
+    "new_message": "New message"
 }

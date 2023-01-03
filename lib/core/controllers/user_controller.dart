@@ -220,4 +220,17 @@ class UserController {
     return chatUsers;
   }
 
+  getAllUsers() async {
+    String urlTemp = "/users";
+    Response res = await ApiService().getUsers(urlTemp);
+    var body = json.decode(res.body);
+    if (res.statusCode == 201) {
+      for (int i = 0; i < body.length; ++i) {
+        if (body['']) {
+
+        }
+      }
+    }
+  }
+
 }
