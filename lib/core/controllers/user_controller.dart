@@ -196,7 +196,7 @@ class UserController {
           ChatMessage(id: json['rebuts'][i]['id'], messageContent: json['rebuts'][i]['text'].toString(), messageType: "receiver")
       );
     }
-    return chatMessage.sort((olderMessage, newestMessage) => olderMessage.id.compareTo(newestMessage.id));
+    return chatMessage;
   }
 
   List<ChatUsers> getInfoUsers(dynamic json) {
