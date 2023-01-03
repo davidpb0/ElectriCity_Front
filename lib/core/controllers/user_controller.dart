@@ -147,10 +147,16 @@ class UserController {
 
   sendMessage(String text, int idReceiver) async {
     String urlTemp = "/users/${currentUser.getUserId()}/messages";
+    String time = DateTime.now().toString();
+    time = time.split(".")[0];
+    if (time[10] == 'T') {
+      time[10] == ' ';
+    }
+
     var data = {
       "text": text,
       "idReceiver": idReceiver,
-      "data": DateTime.now()
+      "data": time
     };
     Response res = await ApiService().sendNewMessage(urlTemp, data);
     if (res.statusCode != 201) {

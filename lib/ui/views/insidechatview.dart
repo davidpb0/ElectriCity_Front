@@ -17,6 +17,15 @@ class _InsideChatViewState extends State<InsideChatView> {
   TextEditingController messageTextController = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  refresh() {
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

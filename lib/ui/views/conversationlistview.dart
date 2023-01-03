@@ -14,16 +14,6 @@ class _ChatPageState extends State<ChatPage> {
   NewConversationView newConversationView = NewConversationView();
   UserController userController = UserController();
 
-  var buttonFilters = {
-    'name': {
-      'name': 'name',
-      'selected': false,
-      'title': 'Name',
-      'operation': 'CONTAINS',
-      'icon': Icons.supervised_user_circle_rounded,
-    }
-  };
-
   @override
   initState() {
     super.initState();
