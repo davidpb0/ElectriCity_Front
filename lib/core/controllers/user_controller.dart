@@ -188,12 +188,12 @@ class UserController {
     List<ChatMessage> chatMessage = <ChatMessage>[];
     for (int i = 0; i < json['enviats'].length; ++i) {
       chatMessage.add(
-          ChatMessage(id: json['enviats'][i]['id'], messageContent: json['enviats'][i].toString(), messageType: "sender")
+          ChatMessage(id: json['enviats'][i]['id'], messageContent: json['enviats'][i]['text'].toString(), messageType: "sender")
       );
     }
     for (int i = 0; i < json['rebuts'].length; ++i) {
       chatMessage.add(
-          ChatMessage(id: json['rebuts'][i]['id'], messageContent: json['rebuts'][i].toString(), messageType: "receiver")
+          ChatMessage(id: json['rebuts'][i]['id'], messageContent: json['rebuts'][i]['text'].toString(), messageType: "receiver")
       );
     }
     return chatMessage.sort((olderMessage, newestMessage) => olderMessage.id.compareTo(newestMessage.id));
