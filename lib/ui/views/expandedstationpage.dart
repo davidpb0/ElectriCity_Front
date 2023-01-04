@@ -1,6 +1,7 @@
 import 'package:electricity_front/core/controllers/booking_controller.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/station_list.dart';
+import 'package:electricity_front/core/services/api_service.dart';
 import 'package:electricity_front/ui/components/reservation_form.dart';
 import 'package:electricity_front/ui/components/station_comment.dart';
 import 'package:flutter/material.dart';
@@ -276,7 +277,10 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 12),
                                 child: MaterialButton(
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    await StationController().potusInfo();
+
+                                  },
                                   minWidth: screensize.width / 3,
                                   color: Colors.grey[800],
                                   disabledColor: Colors.grey[800],

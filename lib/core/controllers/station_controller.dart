@@ -334,4 +334,12 @@ class StationController {
       throw Exception('Error en función deleteBicingComment');
     }
   }
+
+  potusInfo() async {
+    print("Voy a actualizar la info");
+    var data;
+    Response res = await ApiService().putData(data, "/potusInformationBicing");
+    print(res.statusCode);
+    print(res.body.toString());
+  }
 }
