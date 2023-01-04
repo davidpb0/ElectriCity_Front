@@ -345,6 +345,30 @@ abstract class AppLocalizations {
   /// **'Are you sure you want to delete your account?'**
   String get profile_checkdelete;
 
+  /// No description provided for @expandedStation_noComments.
+  ///
+  /// In en, this message translates to:
+  /// **'There\'s no comments yet'**
+  String get expandedStation_noComments;
+
+  /// No description provided for @expandedStation_favButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Favourite'**
+  String get expandedStation_favButton;
+
+  /// No description provided for @expandedStation_addComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Comment'**
+  String get expandedStation_addComment;
+
+  /// No description provided for @expandedStation_editComment.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Comment'**
+  String get expandedStation_editComment;
+
   /// No description provided for @editprofile_oldpassword.
   ///
   /// In en, this message translates to:
@@ -380,6 +404,7 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit account'**
   String get editprofile_text;
+
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
