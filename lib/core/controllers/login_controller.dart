@@ -1,13 +1,17 @@
 import 'dart:convert';
 import 'package:electricity_front/core/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart';
 import '../services/api_service.dart';
+import '../services/notifications.dart';
 
 class LoginController {
   static final LoginController _this = LoginController._();
 
   final ApiService _apiService = ApiService();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
   factory LoginController() {
     return _this;
@@ -31,6 +35,13 @@ class LoginController {
       var body2 = json.decode(res2.body);
       print(res2.statusCode);
       if (res2.statusCode == 201) {
+
+        Notifications.showSchedueleNotification(
+            title: "Ana quiere conocerte",
+            body: "Esta a solo 50km desde tu casa",
+            seconds: 10,
+            fln: flutterLocalNotificationsPlugin);
+
         Navigator.of(ctext).pushReplacementNamed('/home');
         User usr = User.fromJson(body2);
         usr.setToke(body['token']);
