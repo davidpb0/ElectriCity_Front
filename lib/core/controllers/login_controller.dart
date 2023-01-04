@@ -20,6 +20,7 @@ class LoginController {
   LoginController._();
 
   logIn(String mail, String pwd, BuildContext ctext) async {
+    Notifications.initialize(flutterLocalNotificationsPlugin);
     var data = {
       "email": mail,
       "password": pwd,
