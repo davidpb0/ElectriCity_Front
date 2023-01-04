@@ -50,8 +50,14 @@ dependencies:
   google_api_headers: ^1.1.1
   google_maps_webservice: ^0.0.20-nullsafety.5
   geolocator: ^8.0.1
+
+  flutter_local_notifications:
+  timezone:
+  rxdart:
+
   url_launcher:
   font_awesome_flutter:
+
 
 
 dev_dependencies:
