@@ -1,10 +1,14 @@
 
 //import 'package:electricity_front/ui/components/default_header.dart';
 
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/core/controllers/prize_controller.dart';
-import 'package:electricity_front/core/models/prize_data.dart';
+import 'package:electricity_front/ui/components/default_header.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
+
+
+import '../../fonts/coins_icons.dart';
 import '../components/prize_preview.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -17,16 +21,18 @@ class PrizesPage extends StatefulWidget {
 }
 
 class _PrizesPageState extends State<PrizesPage> {
-  UserController userCtrl = UserController();
+  //UserController userCtrl = UserController();
   PrizeController prizeCtrl = PrizeController();
+  CosmeticsController cosmeticsController = CosmeticsController();
   late List<bool> colors;
   late int currentColor;
   bool expandedMapCursors = false;
 
 
   @override
-  void initState() {
+  void initState(){
     super.initState();
+    prizeCtrl.readColors();
     colors = prizeCtrl.getColorAvailability();
     currentColor = prizeCtrl.getCurrentColor();
   }
@@ -46,79 +52,117 @@ class _PrizesPageState extends State<PrizesPage> {
   Widget build(BuildContext context) {
     Size screensize = MediaQuery
         .of(context).size;
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text("Prize Counter"),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(12),
-            child: Column(
-              children: [
-                Container(
-                  height:screensize.height*0.3
-                ),
-                const Divider(),
-                
-                // Map cursors
-                Container(
-                    alignment: Alignment.center,
-                    decoration: const BoxDecoration(
-                      color: Colors.blueGrey,
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                      boxShadow: [
-                        BoxShadow(
-                          offset: Offset(0, 2),
-                          blurRadius: 1,
+    return Material(
+      color: Color(cosmeticsController.getCurrentTheme().backgroundcolor),
+        child: Stack(
+          children:[
+            Padding(
+              padding: const EdgeInsets.all(12),
+                child: Column(
+                  children: [
+                    Container(
+                      height:screensize.height*0.15,
+                      margin: EdgeInsets.only(top:screensize.height*0.18),
+                      child: battlePass(),
+                    ),
+                    const Divider(),
+
+                    // Map cursors
+                    Container(
+                        alignment: Alignment.center,
+                        decoration: const BoxDecoration(
+                          color: Colors.blueGrey,
+                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 2),
+                              blurRadius: 1,
+                            ),
+                          ],
                         ),
+                        child: Column(children: [
+                          TextButton(
+                              onPressed: () {
+                                setState(() {
+                                  if (expandedMapCursors) {
+                                    expandedMapCursors = false;
+                                  } else {
+                                    expandedMapCursors = true;
+                                  }
+                                });
+                              },
+                              child: Row(children: [
+                                const Text(
+                                  "Color themes",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const Expanded(child: SizedBox(height: 20)),
+                                Builder(builder: (context) {
+                                  if (expandedMapCursors) {
+                                    return const Icon(Icons.keyboard_arrow_up,
+                                        size: 28, color: Colors.white);
+                                  } else {
+                                    return const Icon(Icons.keyboard_arrow_down,
+                                        size: 28, color: Colors.white);
+                                  }
+                                }),
+                              ])
+                          ),
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: ((expandedMapCursors)? colors.length~/4 : 1),
+                            itemBuilder: (context, index) {
+                              int end = 4;
+                              if ((index+1)*4 > colors.length){
+                                end = (colors.length%4);
+                              }
+                              return prizesRow(index*4, end, context, colors, currentColor, refresh);
+                            }
+                          )
+                        ])
+                    ),
+                  ],
+                )
+            ),
+            DefaultHeader(size: Size(screensize.width, (screensize.height * 0.15))),
+            Container(
+              alignment: const Alignment(0 , -0.7),
+              child:Container(
+                  width: screensize.width/2,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: const BorderRadius.all(Radius.circular(16)),
+                    boxShadow: const [
+                      BoxShadow(
+                        offset: Offset(0, 2),
+                        blurRadius: 1,
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(prizeCtrl.electricoins.toString(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        //Image.asset(name)
                       ],
                     ),
-                    child: Column(children: [
-                      TextButton(
-                          onPressed: () {
-                            setState(() {
-                              if (expandedMapCursors) {
-                                expandedMapCursors = false;
-                              } else {
-                                expandedMapCursors = true;
-                              }
-                            });
-                          },
-                          child: Row(children: [
-                            const Text(
-                              "Color themes",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            const Expanded(child: SizedBox(height: 20)),
-                            Builder(builder: (context) {
-                              if (expandedMapCursors) {
-                                return const Icon(Icons.keyboard_arrow_up,
-                                    size: 28, color: Colors.white);
-                              } else {
-                                return const Icon(Icons.keyboard_arrow_down,
-                                    size: 28, color: Colors.white);
-                              }
-                            }),
-                          ])
-                      ),
-                      ListView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        shrinkWrap: true,
-                        itemCount: ((expandedMapCursors)? colors.length~/4 : 1),
-                        itemBuilder: (context, index) {
-                          int end = 4;
-                          if ((index+1)*4 > colors.length){
-                            end = (colors.length%4);
-                          }
-                          return prizesRow(index*4, end, context, colors, currentColor, refresh);
-                        }
-                      )
-                    ])
-                ),
-              ],
-            )
+                  )
+              )
+            ),
+
+          ]
         )
     );
   }
@@ -434,5 +478,59 @@ Widget prizesRow(int start, int end, BuildContext context, List<bool>colors, int
           ),
         ],
       )
+  );
+}
+
+Widget battlePass(){
+    return Column(
+      children: [
+        Row(
+          children: [
+            Expanded(
+              flex: 1,
+              child: Padding(
+                padding: const EdgeInsets.all(4),
+                child: Column(
+                  children: const [
+                    Text('1'),
+                    Padding(padding: EdgeInsets.only(bottom: 8)),
+                    Text('500 coins')
+                  ],
+                )
+              )
+            ),
+            Expanded(
+              flex: 3,
+              child: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Column(
+                    children: const [
+                      Text('2'),
+                      Padding(padding: EdgeInsets.only(bottom: 8)),
+                      Text('500 coins')
+                    ],
+                  )
+              )
+            ),
+            Expanded(
+              flex: 1,
+              child: Padding(
+                  padding: const EdgeInsets.all(4),
+                  child: Column(
+                    children: const [
+                      Text('3'),
+                      Padding(padding: EdgeInsets.only(bottom: 8)),
+                      Text('500 coins')
+                    ],
+                  )
+              )
+            )
+          ],
+        ),
+        Image.asset(
+          'assets/images/battlepassroad.png',
+          fit: BoxFit.contain,
+        )
+      ],
   );
 }

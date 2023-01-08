@@ -1,3 +1,4 @@
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -20,6 +21,7 @@ class _SignupPageState extends State<SignupPage> {
       TextEditingController();
   SignupController signupCtrl = SignupController();
   UserController userCtrl = UserController();
+  CosmeticsController cosmeticsController = CosmeticsController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -27,11 +29,7 @@ class _SignupPageState extends State<SignupPage> {
     //Da la altura y el ancho total de la pantalla
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.green,
-      ),
+      backgroundColor: Color(cosmeticsController.getCurrentTheme().backgroundcolor),
       body: Column(children: <Widget>[
         Stack(alignment: AlignmentDirectional.topStart, children: <Widget>[
           HeaderLoginComponent(size: size),
@@ -39,10 +37,10 @@ class _SignupPageState extends State<SignupPage> {
               onPressed: () {
                 Navigator.of(context).pushReplacementNamed('/login');
               },
-              icon: const Icon(
+              icon: Icon(
                 Icons.arrow_back,
                 size: 24,
-                color: Colors.white,
+                color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
               )
           )
         ]),
@@ -64,8 +62,8 @@ class _SignupPageState extends State<SignupPage> {
                             blurRadius: 1,
                           ),
                         ],
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.white),
+                        color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                        border: Border.all(color: Color(cosmeticsController.getCurrentTheme().elementcolordark)),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Padding(
@@ -103,8 +101,8 @@ class _SignupPageState extends State<SignupPage> {
                             blurRadius: 1,
                           ),
                         ],
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.white),
+                        color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                        border: Border.all(color: Color(cosmeticsController.getCurrentTheme().elementcolordark)),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Padding(
@@ -142,8 +140,8 @@ class _SignupPageState extends State<SignupPage> {
                             blurRadius: 1,
                           ),
                         ],
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.white),
+                        color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                        border: Border.all(color: Color(cosmeticsController.getCurrentTheme().elementcolordark)),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Padding(
@@ -182,8 +180,8 @@ class _SignupPageState extends State<SignupPage> {
                             blurRadius: 1,
                           ),
                         ],
-                        color: Colors.grey[200],
-                        border: Border.all(color: Colors.white),
+                        color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                        border: Border.all(color: Color(cosmeticsController.getCurrentTheme().elementcolordark)),
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Padding(
@@ -246,14 +244,14 @@ class _SignupPageState extends State<SignupPage> {
                                 blurRadius: 5,
                               ),
                             ],
-                            color: Colors.green,
+                            color: Color(cosmeticsController.getCurrentTheme().accentcolor),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child:  Center(
                             child: Text(
                               AppLocalizations.of(context).signup_createaccount,
-                              style: const TextStyle(
-                              color: Colors.white,
+                              style: TextStyle(
+                              color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
                             ),

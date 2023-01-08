@@ -50,6 +50,7 @@ dependencies:
   google_api_headers: ^1.1.1
   google_maps_webservice: ^0.0.20-nullsafety.5
   geolocator: ^8.0.1
+  path_provider: ^2.0.11
 
 
 dev_dependencies:
@@ -84,6 +85,7 @@ flutter:
 
     - assets/animations/
     - assets/images/
+    - assets/images/prizes/
 
   #  - images/a_dot_ham.jpeg
 
@@ -102,6 +104,11 @@ flutter:
     - family: TestIcons
       fonts:
         - asset: fonts/TestIcons.ttf
+
+    - family: Coins
+      fonts:
+          - asset: fonts/Coins.ttf
+
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

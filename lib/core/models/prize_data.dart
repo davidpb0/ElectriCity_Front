@@ -5,6 +5,7 @@ class ColorPrize {
   final String asset;
 
   final int backgroundcolor;
+  final int textfieldcolor;
   final int elementcolor;
   final int elementcolordark;
   final int elementcoloralt;
@@ -26,6 +27,7 @@ class ColorPrize {
 
       //Theme color codes
       this.backgroundcolor,
+      this.textfieldcolor,
       this.elementcolor,
       this.elementcolordark,
       this.elementcoloralt,
@@ -40,7 +42,11 @@ class ColorPrize {
 
   factory ColorPrize.fromString(int id, String data){
     final splitted = data.split(",");
-    return ColorPrize(id, int.parse(splitted[0]), splitted[1], int.parse(splitted[2]), int.parse(splitted[3]), int.parse(splitted[4]), int.parse(splitted[5]), int.parse(splitted[6]), int.parse(splitted[7]), int.parse(splitted[8]), int.parse(splitted[9]), int.parse(splitted[10]), int.parse(splitted[11]), int.parse(splitted[12]), int.parse(splitted[13]));
+    return ColorPrize(id, int.parse(splitted[0]), splitted[1], int.parse(splitted[2]), int.parse(splitted[3]), int.parse(splitted[4]), int.parse(splitted[5]), int.parse(splitted[6]), int.parse(splitted[7]), int.parse(splitted[8]), int.parse(splitted[9]), int.parse(splitted[10]), int.parse(splitted[11]), int.parse(splitted[12]), int.parse(splitted[13]), int.parse(splitted[14]));
+  }
+
+  String toString(){
+    return '$cost,$asset,$backgroundcolor,$textfieldcolor,$elementcolordark,$elementcoloralt,$elementcolorbicing,$elementcolorcharger,$elementcolorubi,$elementcolordelete,$accentcolor,$accentcoloralt,$textcolorlight,$textcolordark';
   }
 
 }

@@ -1,4 +1,5 @@
 
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/core/services/api_service.dart';
 import '../../core/models/prize_data.dart';
 
@@ -6,8 +7,13 @@ import '../../core/controllers/user_controller.dart';
 
 class PrizeController {
   final ApiService _apiService = ApiService();
-  UserController userCtrl = UserController();
-  final List<ColorPrize> _colors = [
+  final CosmeticsController _cosmeticsController = CosmeticsController();
+  //UserController userCtrl = UserController();
+  late List<ColorPrize> _colors;
+  late List<bool> _colorsUnlocked;
+  late int _currentColor;
+  int electricoins = 50000;
+  /*final List<ColorPrize> _colors = [
     ColorPrize(0,250,'assets/images/prizes/colores_1.png',
       0XFFE0E0E0, // background color: grey[200]
       0XFF9E9E9E, // element color: grey
@@ -120,10 +126,9 @@ class PrizeController {
       0XFFFFFFFF, // light text color: white
       0XFF000000, // dark text color: black
     ),
-  ];
+  ];*/
 
-  final List<bool> _colorsUnlocked = [true, true, false, false, false, false, false, false];
-  int _currentColor = 0;
+
 
 
 
@@ -134,6 +139,13 @@ class PrizeController {
   static final PrizeController _this = PrizeController._();
 
   PrizeController._();
+
+  void readColors() async {
+    _colorsUnlocked = _cosmeticsController.unlocked;
+    _currentColor = _cosmeticsController.current;
+    _colors = _cosmeticsController.getAllThemes();
+
+  }
 
   List<bool> getColorAvailability(){
     return _colorsUnlocked;
@@ -165,6 +177,15 @@ class PrizeController {
 
   void setColor(int index){
     _currentColor = index;
+    _cosmeticsController.current = index;
+  }
+
+  bool spendCoins(int price){
+    if (price > electricoins) {
+      return false;
+    }
+    electricoins -= price;
+    return true;
   }
 
 

@@ -1,6 +1,8 @@
 import 'package:electricity_front/core/controllers/prize_controller.dart';
 import 'package:flutter/material.dart';
 
+import '../../core/controllers/cosmetics_controller.dart';
+
 
 
 class PrizePreview extends StatefulWidget {
@@ -22,6 +24,7 @@ class _PrizePreviewState extends State<PrizePreview> {
 
   late bool locked;
   late bool using;
+  Color costColor = Color(CosmeticsController().getCurrentTheme().textcolordark);
 
 
   @override
@@ -94,9 +97,10 @@ class _PrizePreviewState extends State<PrizePreview> {
                           child: Text(
                             _prizeController.getColorsCost(widget.id).toString(),
                             textAlign: TextAlign.center,
-                            style: const TextStyle(
+                            style: TextStyle(
                                 fontSize: 20,
-                                fontWeight: FontWeight.w700
+                                fontWeight: FontWeight.w700,
+                                color: costColor
                             ),
                           )
                       ),
@@ -112,10 +116,17 @@ class _PrizePreviewState extends State<PrizePreview> {
                 child: GestureDetector(
                   onTap: () {
                     if(locked){
-                      _prizeController.unlockColor(widget.id);
-                      setState(() {
-                        locked = false;
-                      });
+                      if (_prizeController.spendCoins(_prizeController.getColorsCost(widget.id))){
+                        _prizeController.unlockColor(widget.id);
+                        setState(() {
+                          locked = false;
+                        });
+                      }
+                      else{
+                        setState(() {
+                          costColor = Color(CosmeticsController().getCurrentTheme().elementcolordelete);
+                        });
+                    }
                       widget.refreshParent();
                     }
                     else if (!using){
