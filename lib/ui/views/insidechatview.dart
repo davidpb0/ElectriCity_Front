@@ -15,7 +15,8 @@ class InsideChatView extends StatefulWidget{
 class _InsideChatViewState extends State<InsideChatView> {
   UserController userCtrl = UserController();
   TextEditingController messageTextController = TextEditingController();
-
+  final ScrollController _scrollController = ScrollController();
+  
   @override
   void initState() {
     super.initState();
@@ -60,7 +61,6 @@ class _InsideChatViewState extends State<InsideChatView> {
                     ],
                   ),
                 ),
-                const Icon(Icons.settings,color: Colors.black54,),
               ],
             ),
           ),
@@ -73,7 +73,10 @@ class _InsideChatViewState extends State<InsideChatView> {
             future: UserController().getConversationWithOneUser(int.parse(widget.receiverId)),// a previously-obtained Future<String> or null
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData) {
+                () => _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
                 return ListView.builder(
+                  controller: _scrollController,
+                  reverse: true,
                   itemCount: UserController().messages.length,
                   shrinkWrap: true,
                   padding: const EdgeInsets.only(top: 10, bottom: 10),
