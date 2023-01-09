@@ -15,6 +15,7 @@ class UserController {
   late BitmapDescriptor personalMarker;
   late List<ChatUsers> chat;
   late List<ChatMessage> messages;
+  late List<String> userInfo;
 
   factory UserController() {
     return _this;
@@ -220,17 +221,17 @@ class UserController {
     return chatUsers;
   }
 
-  getAllUsers() async {
-    String urlTemp = "/users";
-    Response res = await ApiService().getUsers(urlTemp);
+  getUserInfo(var email) async {
+    String urlTemp = "/$email/user";
+    Response res = await ApiService().getUserInfo(urlTemp);
     var body = json.decode(res.body);
-    if (res.statusCode == 201) {
-      for (int i = 0; i < body.length; ++i) {
-        if (body['']) {
-
-        }
-      }
+    List<String> info = <String>[];
+    if (res.statusCode == 200) {
+      info.add(body['id'].toString());
+      info.add(body['username'].toString());
     }
+    userInfo = info;
+    return res.statusCode;
   }
 
 }
