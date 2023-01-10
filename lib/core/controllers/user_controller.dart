@@ -192,22 +192,37 @@ class UserController {
   }
 
   getMessages(dynamic json) {
+    List<ChatMessage> rebuts = <ChatMessage>[];
+    List<ChatMessage> enviats = <ChatMessage>[];
     List<ChatMessage> chatMessage = <ChatMessage>[];
+
     for (int i = 0; i < json['enviats'].length; ++i) {
-      chatMessage.add(
+      enviats.add(
           ChatMessage(id: json['enviats'][i]['id'],
               messageContent: json['enviats'][i]['text'].toString(),
               messageType: "sender")
       );
     }
     for (int i = 0; i < json['rebuts'].length; ++i) {
-      chatMessage.add(
+      rebuts.add(
           ChatMessage(id: json['rebuts'][i]['id'],
               messageContent: json['rebuts'][i]['text'].toString(),
               messageType: "receiver")
       );
     }
     //return chatMessage.sort((a, b) => a.id.compareTo(b.id));
+    int i = 0;
+    int j = 0;
+    while (i < rebuts.length && j < enviats.length) {
+      if (rebuts[i].id < rebuts[j].id) {
+        chatMessage.add(rebuts[i]);
+        ++i;
+      }
+      else {
+        chatMessage.add(enviats[j]);
+        ++j;
+      }
+    }
     return chatMessage;
   }
 
