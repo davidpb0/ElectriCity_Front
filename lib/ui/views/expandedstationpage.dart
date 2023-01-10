@@ -37,7 +37,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
     if (widget.bicing) {
       bicingStation = _stationController.getBicingStationbyId(widget.index);
       gas = bicingStation.gasAmount();
-      switch(bicingStation.polution){
+      switch (bicingStation.polution) {
         case 0:
           carita = Image.asset(
             'assets/images/gasesBien.png',
@@ -63,7 +63,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
     } else {
       rechargeStation = _stationController.getRechargeStationbyId(widget.index);
       gas = rechargeStation.gasAmount();
-      switch(rechargeStation.polution){
+      switch (rechargeStation.polution) {
         case 0:
           carita = Image.asset(
             'assets/images/gasesBien.png',
@@ -136,7 +136,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                             Expanded(
                                 flex: 1,
                                 child: Container(
-                                    height: 60,
+                                    height: 80,
                                     decoration: const BoxDecoration(
                                         color: Colors.white,
                                         shape: BoxShape.circle),
@@ -163,7 +163,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                             child: Column(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(top: 12),
+                                  padding: const EdgeInsets.only(top: 12),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -214,7 +214,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 12),
+                                  padding: const EdgeInsets.only(top: 12),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -266,7 +266,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 12),
+                                  padding: const EdgeInsets.only(top: 12),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -320,7 +320,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                               ],
                             ),
                           ),
-                          VerticalDivider(),
+                          const VerticalDivider(),
                           Column(
                             children: [
                               Padding(
@@ -364,11 +364,11 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                       )),
                                 ),
                               ),
-                              SizedBox(height: 15),
+                              const SizedBox(height: 15),
                               Text(
                                 AppLocalizations.of(context)
                                     .expandedStation_gases,
-                                style: TextStyle(fontSize: 15),
+                                style: const TextStyle(fontSize: 15),
                                 textAlign: TextAlign.center,
                               ),
                               Padding(
@@ -376,14 +376,21 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                     const EdgeInsets.symmetric(horizontal: 8),
                                 child: carita,
                               ),
-                              Text(
-                                gas.value.toString()
-                              ),
+                              gas.value != 0.0
+                                  ? Text(
+                                      "${gas.name} ${gas.value}",
+                                      style: const TextStyle(color: Colors.red),
+                                    )
+                                  : Text(
+                                      gas.name,
+                                      style:
+                                          const TextStyle(color: Colors.green),
+                                    ),
                             ],
                           ),
                         ])),
-                Divider(),
-                Container(child: Text("Comments")),
+                const Divider(),
+                const Text("Comments"),
                 StationCommentForm(
                     id: widget.index,
                     bicing: widget.bicing,
@@ -418,12 +425,12 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
   Widget listaCommentsBicing(dynamic ref) {
     if (bicingStation.commentsBicing.isEmpty) {
       return Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Material(
               color: Colors.transparent,
               child: Text(
                 AppLocalizations.of(context).expandedStation_noComments,
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               )));
     }
@@ -462,12 +469,12 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
   Widget listaCommentsCharger(dynamic ref) {
     if (rechargeStation.commentsCharger.isEmpty) {
       return Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Material(
               color: Colors.transparent,
               child: Text(
                 AppLocalizations.of(context).expandedStation_noComments,
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               )));
     }

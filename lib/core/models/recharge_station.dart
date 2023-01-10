@@ -94,7 +94,13 @@ class RechargeStation {
         pos = i;
       }
     }
-    return gasesCharger.elementAt(pos);
+    Gas devuelto;
+    if (gasesCharger.isNotEmpty) {
+      devuelto = gasesCharger.elementAt(pos);
+    } else{
+      devuelto = Gas("No hay gases nocivos", "-", 0);
+    }
+    return devuelto;
   }
   RechargeStation.fromJson(Map<String, dynamic> json) {
     speedType = json['speedType'];
