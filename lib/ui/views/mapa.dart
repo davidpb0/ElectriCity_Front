@@ -59,8 +59,6 @@ class GoogleMapaState extends State<GoogleMapa> {
     super.initState();
   }
 
-
-
   void _onMapCreated(GoogleMapController controller) async {
     setCustomMarker(context);
     //_mapaController.initBD();
@@ -68,7 +66,6 @@ class GoogleMapaState extends State<GoogleMapa> {
     //setCustomMarker();
 
     mc = controller;
-
 
     /*
 
@@ -172,10 +169,12 @@ class GoogleMapaState extends State<GoogleMapa> {
             int aux = _userController.currentUser.getPersonalUbi().length;
             // ignore: use_build_context_synchronously
             //Navigator.of(context).pushReplacementNamed('/form_ubi');
-            Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  InfoPersonalUbiForm()));
-            if (aux != _userController.currentUser.getPersonalUbi().length){
+            Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => InfoPersonalUbiForm()));
+            if (aux != _userController.currentUser.getPersonalUbi().length) {
               setState(() {
-                _markers.add((_userController.currentUser.getPersonalUbi()).last);
+                _markers
+                    .add((_userController.currentUser.getPersonalUbi()).last);
               });
             }
           },
@@ -256,7 +255,8 @@ class GoogleMapaState extends State<GoogleMapa> {
     polylinePoints = PolylinePoints();
     if (newPaint) polylineCoordinates.clear();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        "AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM", punto1, punto2);
+        "AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM", punto1, punto2,
+        travelMode: TravelMode.driving);
 
     if (result.status == 'OK') {
       for (var point in result.points) {
@@ -272,31 +272,28 @@ class GoogleMapaState extends State<GoogleMapa> {
     }
   }
 
-  void setAuxStation(int id, bool bicing){
+  void setAuxStation(int id, bool bicing) {
     setState(() {
-      if(bicing){
+      if (bicing) {
         info = InfoBicingStationWindow(
             belec: _stationController.getBicingStationbyId(id).electrical,
             bmech: _stationController.getBicingStationbyId(id).mechanical,
             slots: _stationController.getBicingStationbyId(id).availableSlots,
             addres: _stationController.getBicingStationbyId(id).address,
-            liked: UserController().currentUser.isFavouriteBicingStationIndex(id.toString()),
-            bicing: _stationController.getBicingStationbyId(id)
-        );
-
-      }
-
-      else {
+            liked: UserController()
+                .currentUser
+                .isFavouriteBicingStationIndex(id.toString()),
+            bicing: _stationController.getBicingStationbyId(id));
+      } else {
         info = InfoChargeStationWindow(
           slots: _stationController.getRechargeStation(id).slots,
           addres: _stationController.getRechargeStation(id).address,
-          connectionType: _stationController.getRechargeStation(id).connectionType,
-          liked: UserController()
-              .currentUser
-              .isFavouriteRechargeStationIndex(_stationController.getRechargeStation(id).id.toString()),
+          connectionType:
+              _stationController.getRechargeStation(id).connectionType,
+          liked: UserController().currentUser.isFavouriteRechargeStationIndex(
+              _stationController.getRechargeStation(id).id.toString()),
           charger: _stationController.getRechargeStation(id),
         );
-
       }
     });
   }
@@ -346,80 +343,78 @@ class GoogleMapaState extends State<GoogleMapa> {
   initMarkers() async {
     _markers.clear();
     await setCustomMarker(context);
-    if (_stationController.bicisComplete){
-      for(int i = 0; i < _stationController.getTotalBicingStations(); ++i ){
+    if (_stationController.bicisComplete) {
+      for (int i = 0; i < _stationController.getTotalBicingStations(); ++i) {
         setState(() {
-          _markers.add(
-              Marker(
-                  markerId: MarkerId("B-${i + 1}"),
-                  position: _stationController.getBicingStation(i).coords,
-                  icon: bicingMarker,
-                  onTap: () {
-                    setAuxStation(_stationController.getBicingStation(i).id, true);
-                  }
-              ));
+          _markers.add(Marker(
+              markerId: MarkerId("B-${i + 1}"),
+              position: _stationController.getBicingStation(i).coords,
+              icon: bicingMarker,
+              onTap: () {
+                setAuxStation(_stationController.getBicingStation(i).id, true);
+              }));
         });
       }
-    }
-    else{
+    } else {
       initBicingMarkers();
     }
-    if (_stationController.chargersComplete){
-      for(int i = 0; i < _stationController.getTotalRechargeStations(); ++i ){
+    if (_stationController.chargersComplete) {
+      for (int i = 0; i < _stationController.getTotalRechargeStations(); ++i) {
         setState(() {
-          _markers.add(
-              Marker(
-                  markerId: MarkerId("R-${i + 1}"),
-                  position: _stationController.getRechargeStation(i).coords,
-                  icon: chargerMarker,
-                  onTap: () {
-                    setAuxStation(i, false);
-                  }
-              ));
+          _markers.add(Marker(
+              markerId: MarkerId("R-${i + 1}"),
+              position: _stationController.getRechargeStation(i).coords,
+              icon: chargerMarker,
+              onTap: () {
+                setAuxStation(i, false);
+              }));
         });
       }
-
-
-    }
-    else{
+    } else {
       initRechargeMarkers();
     }
-    for (int j = 0; j < _userController.currentUser.getPersonalUbi().length; ++j) {
+    for (int j = 0;
+        j < _userController.currentUser.getPersonalUbi().length;
+        ++j) {
       _markers.add(_userController.currentUser.getPersonalUbi()[j]);
     }
-
   }
 
   initBicingMarkers() async {
     int i = 0;
     _stationController.getBicingStationsStream().listen((value) {
-      while(i<value && i<_stationController.getTotalBicingStations()){
+      while (i < value && i < _stationController.getTotalBicingStations()) {
         Station current = _stationController.getBicingStation(i);
         setState(() {
-          _markers.add(
-              Marker(
-                  markerId: MarkerId("B-${current.id}"),
-                  position: current.coords,
-                  icon: bicingMarker,
-                  onTap: () {
-                    setState(() {
-                        info = InfoBicingStationWindow(
-                            belec: _stationController.getBicingStationbyId(current.id).electrical,
-                            bmech: _stationController.getBicingStationbyId(current.id).mechanical,
-                            slots: _stationController.getBicingStationbyId(current.id).availableSlots,
-                            addres: _stationController.getBicingStationbyId(current.id).address,
-                            liked: UserController().currentUser.isFavouriteBicingStationIndex(current.id.toString()),
-                            bicing: _stationController.getBicingStationbyId(current.id)
-                        );
-
-                    });
-                  }
-              ));
+          _markers.add(Marker(
+              markerId: MarkerId("B-${current.id}"),
+              position: current.coords,
+              icon: bicingMarker,
+              onTap: () {
+                setState(() {
+                  info = InfoBicingStationWindow(
+                      belec: _stationController
+                          .getBicingStationbyId(current.id)
+                          .electrical,
+                      bmech: _stationController
+                          .getBicingStationbyId(current.id)
+                          .mechanical,
+                      slots: _stationController
+                          .getBicingStationbyId(current.id)
+                          .availableSlots,
+                      addres: _stationController
+                          .getBicingStationbyId(current.id)
+                          .address,
+                      liked: UserController()
+                          .currentUser
+                          .isFavouriteBicingStationIndex(current.id.toString()),
+                      bicing:
+                          _stationController.getBicingStationbyId(current.id));
+                });
+              }));
         });
 
         i++;
-
-
       }
     });
   }
@@ -427,34 +422,37 @@ class GoogleMapaState extends State<GoogleMapa> {
   initRechargeMarkers() async {
     int i = 0;
     _stationController.getRechargeStationsStream().listen((value) {
-      while(i<value && i<_stationController.getTotalRechargeStations()){
+      while (i < value && i < _stationController.getTotalRechargeStations()) {
         RechargeStation current = _stationController.getRechargeStation(i);
         setState(() {
-          _markers.add(
-              Marker(
-                  markerId: MarkerId("R-${current.id}"),
-                  position: current.coords,
-                  icon: chargerMarker,
-                  onTap: () {
-                    setState(() {
-                        info = InfoChargeStationWindow(
-                          slots: _stationController.getRechargeStationbyId(current.id).slots,
-                          addres: _stationController.getRechargeStationbyId(current.id).address,
-                          connectionType: _stationController.getRechargeStationbyId(current.id).connectionType,
-                          liked: UserController().currentUser.isFavouriteRechargeStationIndex(current.id.toString()),
-                          charger: _stationController.getRechargeStationbyId(current.id),
-                        );
-                    });
-                  }
-              ));
+          _markers.add(Marker(
+              markerId: MarkerId("R-${current.id}"),
+              position: current.coords,
+              icon: chargerMarker,
+              onTap: () {
+                setState(() {
+                  info = InfoChargeStationWindow(
+                    slots: _stationController
+                        .getRechargeStationbyId(current.id)
+                        .slots,
+                    addres: _stationController
+                        .getRechargeStationbyId(current.id)
+                        .address,
+                    connectionType: _stationController
+                        .getRechargeStationbyId(current.id)
+                        .connectionType,
+                    liked: UserController()
+                        .currentUser
+                        .isFavouriteRechargeStationIndex(current.id.toString()),
+                    charger:
+                        _stationController.getRechargeStationbyId(current.id),
+                  );
+                });
+              }));
         });
 
         i++;
-
-
-
       }
-
     });
   }
 
