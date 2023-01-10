@@ -155,6 +155,7 @@ class _ReservationFormState extends State<ReservationForm> {
 
                       if (pickedTime != null) {
                         DateTime parsedTime = DateFormat.jm().parse(
+                            // ignore: use_build_context_synchronously
                             pickedTime.format(context).toString());
 
                         booking.setStartTime(parsedTime);
@@ -209,6 +210,7 @@ class _ReservationFormState extends State<ReservationForm> {
                       if (pickedTime != null) {
                         //print(pickedTime.format(context)); //output 10:51 PM
                         DateTime parsedTime = DateFormat.jm().parse(
+                            // ignore: use_build_context_synchronously
                             pickedTime.format(context).toString());
                         booking.setEndTime(parsedTime);
 

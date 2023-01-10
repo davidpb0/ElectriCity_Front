@@ -234,11 +234,7 @@ class StationController {
     Response res = await _apiService.putData(data, "/comments/${comment.id}");
 
     if (res.statusCode == 200) {
-      /*print(comment.bicing.toString());
-      print(comment.bicing?.id.toString());
-      print(comment.bicing?.commentsBicing.length.toString());
-      print(comment.bicing?.address.toString());*/
-      comment.bicing?.editComment(comment.id, text);
+     comment.bicing?.editComment(comment.id, text);
 
       return true;
     } else {
@@ -316,10 +312,6 @@ class StationController {
     Response res = await _apiService.putData(data, "/comments/${comment.id}");
 
     if (res.statusCode == 200) {
-      /*print(comment.bicing.toString());
-      print(comment.bicing?.id.toString());
-      print(comment.bicing?.commentsBicing.length.toString());
-      print(comment.bicing?.address.toString());*/
       comment.charger?.editComment(comment.id, text);
 
       return true;
