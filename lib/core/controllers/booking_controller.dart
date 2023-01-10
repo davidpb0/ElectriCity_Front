@@ -78,6 +78,8 @@ class BookingController {
 
 
   Future<bool> tryBooking(BuildContext ctext) async {
+    await _apiService.deleteData('/reservations/actualization');
+    
     var data = {
       "dataIni": '$_date ${DateFormat('HH:mm:ss').format(_starttime)}',
       "dataFi": '$_date ${DateFormat('HH:mm:ss').format(_endtime)}',
@@ -86,8 +88,9 @@ class BookingController {
     //print(data);
 
     Response res = await _apiService.postData(data, '/reservations');
+    print(res.statusCode);
     var body = json.decode(res.body);
-    //print(body);
+    print(body);
     if (res.statusCode == 201) {
       return true;
     } else {

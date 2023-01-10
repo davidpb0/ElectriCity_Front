@@ -27,10 +27,10 @@ class _BicingPreviewState extends State<BicingPreview> {
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       child: Container(
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          color: Colors.white60,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          boxShadow: [
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          boxShadow: const [
             BoxShadow(
               offset: Offset(0, 2),
               blurRadius: 1,

@@ -18,6 +18,7 @@ class SplashScreen extends StatelessWidget {
       splashTransition: SplashTransition.fadeTransition,
       pageTransitionType: PageTransitionType.rightToLeft,
       nextScreen: const LoginPage(),
+      duration: 6000,
     );
   }
 }

@@ -14,6 +14,7 @@ void main() {
       "email": "example@email.com",
       "id": 1,
       "favouriteLocations": [],
+      "electryCoins": 100
     };
     final user = User.fromJson(json);
 
