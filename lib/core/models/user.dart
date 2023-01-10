@@ -29,7 +29,7 @@ class User {
     _username = json['username'];
     _id = json['id'];
     _email = json['email'];
-    _electricoins = json['electrycoins'];
+    _electricoins = json['electryCoins'];
     _theme = json['skinPalette'] ?? 0;
     _avatar = json['skinAvatar'] ?? 0;
     if (json['favouriteLocations'] != null) {
