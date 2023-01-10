@@ -189,7 +189,7 @@ class _RechargePreviewState extends State<RechargePreview> {
                               });
 
                             },
-                            icon: Icon((faved) ? Icons.favorite_outline : Icons.favorite),
+                            icon: Icon((faved) ? Icons.favorite : Icons.favorite_outline),
                           ),
 
                           IconButton(onPressed: () async {

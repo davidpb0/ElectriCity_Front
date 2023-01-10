@@ -1,13 +1,16 @@
-
 import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:electricity_front/ui/components/bicing_preview.dart';
 import 'package:electricity_front/ui/components/default_header.dart';
 import 'package:electricity_front/ui/views/editprofile.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../core/controllers/user_controller.dart';
 import '../components/personal_ubi_preview.dart';
 import '../components/recharge_preview.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../components/social_button.dart';
 
 // ignore: must_be_immutable
 class ProfilePage extends StatefulWidget {
@@ -67,25 +70,20 @@ class _ProfilePageState extends State<ProfilePage> {
                                   style: const TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
-                                      fontWeight: FontWeight.bold
-                                  )
-                              ),
+                                      fontWeight: FontWeight.bold)),
                             ),
                             const SizedBox(width: 20),
                             const Icon(Icons.account_circle,
-                                size: 60, color: Colors.white
-                            )
+                                size: 60, color: Colors.white)
                           ],
-                        )
-                    ),
+                        )),
                     const SizedBox(height: 16),
-
                     Container(
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
                         color: Colors.green.shade700,
-                        borderRadius: const BorderRadius.all(
-                            Radius.circular(8)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
                         boxShadow: const [
                           BoxShadow(
                             offset: Offset(0, 2),
@@ -95,11 +93,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       ),
                       child: TextButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  EditProfile(notifyParent: refresh,)));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => EditProfile(
+                                    notifyParent: refresh,
+                                  )));
                         },
                         child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
                                 AppLocalizations.of(context).editprofile_text,
@@ -111,13 +111,10 @@ class _ProfilePageState extends State<ProfilePage> {
                               const SizedBox(width: 16),
                               const Icon(Icons.edit,
                                   size: 28, color: Colors.white)
-                            ]
-                        ),
+                            ]),
                       ),
                     ),
-                  ])
-              ),
-
+                  ])),
               Padding(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
@@ -150,7 +147,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               },
                               child: Row(children: [
                                 Text(
-                                  AppLocalizations.of(context).profile_personallocations,
+                                  AppLocalizations.of(context)
+                                      .profile_personallocations,
                                   style: const TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
@@ -166,8 +164,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         size: 28, color: Colors.white);
                                   }
                                 }),
-                              ])
-                          ),
+                              ])),
                           Visibility(
                               visible: visiblePersonalList,
                               child: Container(
@@ -183,11 +180,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     child: Builder(builder: (context) {
                                       return listaPersonalUbi();
                                     }),
-                                  )
-                              )
-                          )
-                        ])
-                    ),
+                                  )))
+                        ])),
 
                     const SizedBox(height: 40),
 
@@ -217,7 +211,8 @@ class _ProfilePageState extends State<ProfilePage> {
                               },
                               child: Row(children: [
                                 Text(
-                                  AppLocalizations.of(context).profile_favouritestations,
+                                  AppLocalizations.of(context)
+                                      .profile_favouritestations,
                                   style: const TextStyle(
                                       fontSize: 20,
                                       color: Colors.white,
@@ -233,8 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         size: 28, color: Colors.white);
                                   }
                                 }),
-                              ])
-                          ),
+                              ])),
                           Visibility(
                               visible: visibleFavouriteList,
                               child: Container(
@@ -250,11 +244,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                     child: Builder(builder: (context) {
                                       return listaFavStations();
                                     }),
-                                  )
-                              )
-                          ),
-                        ])
-                    ),
+                                  ))),
+                        ])),
 
                     const SizedBox(height: 40),
 
@@ -285,7 +276,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          AppLocalizations.of(context).profile_logout,
+                                          AppLocalizations.of(context)
+                                              .profile_logout,
                                           style: const TextStyle(
                                               fontSize: 16,
                                               color: Colors.white,
@@ -316,9 +308,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                     showDialog(
                                       context: context,
                                       builder: (ctx) => AlertDialog(
-                                        title: Text(AppLocalizations.of(context).profile_delete),
+                                        title: Text(AppLocalizations.of(context)
+                                            .profile_delete),
                                         content: Text(
-                                            AppLocalizations.of(context).profile_checkdelete),
+                                            AppLocalizations.of(context)
+                                                .profile_checkdelete),
                                         actions: <Widget>[
                                           TextButton(
                                             onPressed: () async {
@@ -347,7 +341,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          AppLocalizations.of(context).profile_delete,
+                                          AppLocalizations.of(context)
+                                              .profile_delete,
                                           style: const TextStyle(
                                               fontSize: 16,
                                               color: Colors.white,
@@ -356,16 +351,24 @@ class _ProfilePageState extends State<ProfilePage> {
                                         const SizedBox(width: 16),
                                         const Icon(Icons.delete_forever,
                                             size: 28, color: Colors.white)
-                                      ]
-                                  ),
+                                      ]),
                                 ),
                               ),
                             ],
                           )),
                       const Expanded(flex: 4, child: SizedBox())
                     ]),
-                  ])
-              )
+                    const SizedBox(height: 20),
+                    SocialButton(
+                        icon: FontAwesomeIcons.twitter,
+                        color: const Color(0xFF1da1F2),
+                        onClicked: () => share(SocialMedia.twitter)),
+                    const SizedBox(height: 20),
+                    SocialButton(
+                        icon: FontAwesomeIcons.facebook,
+                        color: const Color(0xff0c74b4),
+                        onClicked: () => share(SocialMedia.facebook))
+                  ]))
             ],
           ),
         ),
@@ -389,21 +392,51 @@ class _ProfilePageState extends State<ProfilePage> {
                 "No favourite stations found",
                 style: TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
-              )
-          )
-      );
+              )));
     }
     return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      itemCount: userCtrl.currentUser.getFavouriteBicingStations().length + userCtrl.currentUser.getFavouriteRechargeStations().length,
-      itemBuilder: (context, index) {
-        while (index < userCtrl.currentUser
-            .getFavouriteBicingStations()
-            .length) {
-          int item = int.parse(
-              userCtrl.currentUser.getFavouriteBicingStations().elementAt(
-                  index));
+        physics: const NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: userCtrl.currentUser.getFavouriteBicingStations().length +
+            userCtrl.currentUser.getFavouriteRechargeStations().length,
+        itemBuilder: (context, index) {
+          while (index <
+              userCtrl.currentUser.getFavouriteBicingStations().length) {
+            int item = int.parse(userCtrl.currentUser
+                .getFavouriteBicingStations()
+                .elementAt(index));
+            return Dismissible(
+              background: Container(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(children: const [
+                    Icon(
+                      Icons.delete_forever,
+                      size: 60,
+                      color: Colors.red,
+                      textDirection: TextDirection.ltr,
+                    ),
+                    Expanded(child: SizedBox())
+                  ])),
+              key: UniqueKey(),
+              onDismissed: (DismissDirection direction) async {
+                await userCtrl.deleteFavBicingBD(item.toString());
+                setState(() {});
+              },
+              child: Padding(
+                  padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
+                  child: Material(
+                      color: Colors.transparent,
+                      child: BicingPreview(
+                          info:
+                              StationController().getBicingStationbyId(item)))),
+            );
+          }
+
+          ///End while Bicing Stations
+          int item = int.parse(userCtrl.currentUser
+              .getFavouriteRechargeStations()
+              .elementAt(index -
+                  userCtrl.currentUser.getFavouriteRechargeStations().length));
           return Dismissible(
             background: Container(
                 padding: const EdgeInsets.all(20),
@@ -415,68 +448,31 @@ class _ProfilePageState extends State<ProfilePage> {
                     textDirection: TextDirection.ltr,
                   ),
                   Expanded(child: SizedBox())
-                ])
-            ),
+                ])),
             key: UniqueKey(),
             onDismissed: (DismissDirection direction) async {
-              await userCtrl.deleteFavBicingBD(item.toString());
+              await userCtrl.deleteFavChargerBD(item.toString());
               setState(() {});
             },
             child: Padding(
                 padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
-                child: Material(
-                    color: Colors.transparent,
-                    child: BicingPreview(
-                        info: StationController().getBicingStationbyId(item)
-                    )
-                )
-            ),
+                child: RechargePreview(
+                    info: StationController().getRechargeStation(item))),
           );
-        } ///End while Bicing Stations
-        int item = int.parse(
-            userCtrl.currentUser.getFavouriteRechargeStations().elementAt(
-                index-userCtrl.currentUser.getFavouriteRechargeStations().length));
-        return Dismissible(
-          background: Container(
-              padding: const EdgeInsets.all(20),
-              child: Row(children: const [
-                Icon(
-                  Icons.delete_forever,
-                  size: 60,
-                  color: Colors.red,
-                  textDirection: TextDirection.ltr,
-                ),
-                Expanded(child: SizedBox())
-              ])
-          ),
-          key: UniqueKey(),
-          onDismissed: (DismissDirection direction) async {
-            await userCtrl.deleteFavChargerBD(item.toString());
-            setState(() {});
-          },
-          child: Padding(
-              padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
-              child: RechargePreview(
-                  info: StationController().getRechargeStation(item)
-              )
-          ),
-        );
-      });
+        });
   }
 
   Widget listaPersonalUbi() {
     if (userCtrl.currentUser.getPersonalUbi().isEmpty) {
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        child: Material(
-            color: Colors.transparent,
-            child: Text(
-              AppLocalizations.of(context).profile_nolocations,
-              style: const TextStyle(fontSize: 20),
-              textAlign: TextAlign.center,
-            )
-          )
-      );
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          child: Material(
+              color: Colors.transparent,
+              child: Text(
+                AppLocalizations.of(context).profile_nolocations,
+                style: const TextStyle(fontSize: 20),
+                textAlign: TextAlign.center,
+              )));
     }
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
@@ -503,9 +499,9 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Padding(
                 padding: const EdgeInsets.only(top: 6.0, bottom: 1.0),
                 child: PersonalUbiPreview(
-                    info: userCtrl.currentUser.getPersonalUbi().elementAt(index)
-                )
-            ),
+                    info: userCtrl.currentUser
+                        .getPersonalUbi()
+                        .elementAt(index))),
           );
         });
   }
@@ -522,7 +518,8 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Row(
                 children: [
                   Text(
-                    userCtrl.currentUser.getPersonalUbi()
+                    userCtrl.currentUser
+                        .getPersonalUbi()
                         .elementAt(index)
                         .infoWindow
                         .title
@@ -542,8 +539,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       icon: const Icon(Icons.delete,
                           size: 24, color: Colors.black))
                 ],
-              )
-          );
+              ));
         });
   }
 
@@ -555,5 +551,24 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void delete(int index) async {
     await userCtrl.deletePersonalUbiEveryWhere(index);
+  }
+
+  Future share(SocialMedia socialPlatform) async {
+    //const subject = "ElectriCity best app";
+    const text = "Hey i'm using ElectriCity";
+    final urlShare =
+        Uri.encodeComponent('https://electricityfibupc.wordpress.com/');
+    final urls = {
+      SocialMedia.twitter:
+          'https://twitter.com/intent/tweet?url=$urlShare&text=$text',
+      SocialMedia.facebook:
+          'https://www.facebook.com/sharer/sharer.php?u=$urlShare&t=$text'
+    };
+
+    final url = urls[socialPlatform]!;
+
+    if (await canLaunchUrl(Uri.parse(url))) {
+      await launchUrl(Uri.parse(url));
+    }
   }
 }
