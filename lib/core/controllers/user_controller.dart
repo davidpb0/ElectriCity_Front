@@ -196,14 +196,14 @@ class UserController {
     List<ChatMessage> enviats = <ChatMessage>[];
     List<ChatMessage> chatMessage = <ChatMessage>[];
 
-    for (int i = 0; i < json['enviats'].length; ++i) {
+    for (int i = json['enviats'].length - 1; i >= 0; --i) {
       enviats.add(
           ChatMessage(id: json['enviats'][i]['id'],
               messageContent: json['enviats'][i]['text'].toString(),
               messageType: "sender")
       );
     }
-    for (int i = 0; i < json['rebuts'].length; ++i) {
+    for (int i = json['rebuts'].length - 1; i >= 0; --i) {
       rebuts.add(
           ChatMessage(id: json['rebuts'][i]['id'],
               messageContent: json['rebuts'][i]['text'].toString(),
@@ -214,7 +214,7 @@ class UserController {
     int i = 0;
     int j = 0;
     while (i < rebuts.length && j < enviats.length) {
-      if (rebuts[i].id < rebuts[j].id) {
+      if (rebuts[i].id > enviats[j].id) {
         chatMessage.add(rebuts[i]);
         ++i;
       }
