@@ -59,6 +59,20 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
             height: 64,
           );
           break;
+        case 3:
+          carita = Image.asset(
+            'assets/images/gasesMuyMal.png',
+            fit: BoxFit.contain,
+            height: 64,
+          );
+          break;
+        case 4:
+          carita = Image.asset(
+            'assets/images/gasesMuerte.png',
+            fit: BoxFit.contain,
+            height: 64,
+          );
+          break;
       }
     } else {
       rechargeStation = _stationController.getRechargeStationbyId(widget.index);
