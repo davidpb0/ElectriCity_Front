@@ -9,7 +9,7 @@ import '../../core/controllers/user_controller.dart';
 class PrizeController {
   final ApiService _apiService = ApiService();
   final CosmeticsController _cosmeticsController = CosmeticsController();
-  //UserController userCtrl = UserController();
+  UserController userCtrl = UserController();
   late List<ColorPrize> _colors;
   late List<bool> _colorsUnlocked;
   late int _currentColor;
@@ -147,12 +147,16 @@ class PrizeController {
   PrizeController._();
 
   void readPrizes() async {
-    _colorsUnlocked = _cosmeticsController.unlocked_themes;
-    _currentColor = _cosmeticsController.current_theme;
+    //_colorsUnlocked = _cosmeticsController.unlocked_themes;
+    //_currentColor = _cosmeticsController.current_theme;
+    _colorsUnlocked = userCtrl.currentUser.getUnlockedThemes();
+    _currentColor = userCtrl.currentUser.getTheme();
     _colors = _cosmeticsController.getAllThemes();
 
-    _avatarsUnlocked = _cosmeticsController.unlocked_avatars;
-    _currentAvatar = _cosmeticsController.current_avatar;
+    //_avatarsUnlocked = _cosmeticsController.unlocked_avatars;
+    //_currentAvatar = _cosmeticsController.current_avatar;
+    _avatarsUnlocked = userCtrl.currentUser.getUnlockedAvatars();
+    _currentAvatar = userCtrl.currentUser.getAvatar();
     _avatars = _cosmeticsController.getAllAvatars();
 
   }
@@ -229,7 +233,9 @@ class PrizeController {
     if (price > electricoins) {
       return false;
     }
+
     electricoins -= price;
+    userCtrl.currentUser.setElectricoins(electricoins);
     return true;
   }
   int getDailyPrize(){
@@ -239,6 +245,7 @@ class PrizeController {
   void claimPrize(){
     int prize = getDailyPrize();
     electricoins += prize;
+    userCtrl.currentUser.setElectricoins(electricoins);
     CosmeticsController().writeCounter();
   }
 

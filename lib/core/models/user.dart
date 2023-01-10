@@ -19,6 +19,8 @@ class User {
   int _electricoins = 0;
   int _theme = 0;
   int _avatar = 0;
+  List<bool> _themesUnlocked = [true, false, false, false, false, false, false, false];
+  List<bool> _avatarsUnlocked = [true, false, false, false, false, false, false, false, false, false, false, false];
 
 
   User();
@@ -27,6 +29,9 @@ class User {
     _username = json['username'];
     _id = json['id'];
     _email = json['email'];
+    _electricoins = json['electrycoins'];
+    _theme = json['skinPalette'] ?? 0;
+    _avatar = json['skinAvatar'] ?? 0;
     if (json['favouriteLocations'] != null) {
       _personalUbi = <Marker>[];
       for (int i = 0; i < json['favouriteLocations'].length; ++i) {
@@ -59,6 +64,19 @@ class User {
         _favouriteChargerStationIndex.add(id);
       }
     }
+
+    if (json['awards'] != null) {
+      for (int i = 0; i < json['awards'].length; ++i) {
+        String split = (json['awards'][i]['nameAward']).split('_');
+        if(split[0] == 'avatar'){
+          _avatarsUnlocked[int.parse(split[1])-1] = true;
+        }
+        else{
+          _themesUnlocked[int.parse(split[1])-1] = true;
+        }
+      }
+
+    }
   }
 
   getUserTkn() {
@@ -71,6 +89,9 @@ class User {
 
   getElectricoins() {
     return _electricoins;
+  }
+  setElectricoins(int value) {
+    _electricoins = value;
   }
 
   setUsername(String username) {
@@ -104,6 +125,38 @@ class User {
 
   getPersonalUbi() {
     return _personalUbi;
+  }
+
+  getUnlockedThemes() {
+    return _themesUnlocked;
+  }
+
+  getUnlockedAvatars() {
+    return _avatarsUnlocked;
+  }
+
+  getAvatar() {
+    return _avatar;
+  }
+
+  getTheme() {
+    return _theme;
+  }
+
+  void unlockAvatar(int index){
+    _avatarsUnlocked[index] = true;
+  }
+
+  void setAvatar(int index){
+    _avatar = index;
+  }
+
+  void unlockTheme(int index){
+    _themesUnlocked[index] = true;
+  }
+
+  void setTheme(int index){
+    _theme = index;
   }
 
   isFavouriteBicing(Station bicing) {
