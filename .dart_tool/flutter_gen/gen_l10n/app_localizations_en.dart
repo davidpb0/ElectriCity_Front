@@ -146,6 +146,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expandedStation_editComment => 'Edit Comment';
 
   @override
+  String get expandedStation_gases => 'Air pollution information';
+
+  @override
   String get editprofile_oldpassword => 'Current password';
 
   @override

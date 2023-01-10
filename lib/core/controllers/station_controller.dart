@@ -319,4 +319,5 @@ class StationController {
       throw Exception('Error en función deleteBicingComment');
     }
   }
+
 }
