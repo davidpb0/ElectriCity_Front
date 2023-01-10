@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class DropdownItem extends StatefulWidget {
 
-  DropdownItem({super.key});
+  late final Function catchValue;
+  DropdownItem({super.key, required this.catchValue});
 
   @override
   State<DropdownItem> createState() => _DropdownItemState();
@@ -37,7 +38,7 @@ class _DropdownItemState extends State<DropdownItem> {
             setState(() {
               selectedValue;
               //seteo el valor que quiero cojer desde routepage
-              widget.value = selectedValue;
+              widget.catchValue(selectedValue);
             });
           },
           value: selectedValue,

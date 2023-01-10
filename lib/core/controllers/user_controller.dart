@@ -223,6 +223,14 @@ class UserController {
         ++j;
       }
     }
+    while (i < rebuts.length) {
+      chatMessage.add(rebuts[i]);
+      ++i;
+    }
+    while (j < enviats.length) {
+      chatMessage.add(enviats[j]);
+      ++j;
+    }
     return chatMessage;
   }
 

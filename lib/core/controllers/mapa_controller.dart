@@ -223,7 +223,7 @@ class MapaController {
     }
   }
 
-  routePainting(PointLatLng origin, PointLatLng destination, stations) async {
+  routePainting(PointLatLng origin, PointLatLng destination, int stations) async {
     var data = {
       "latitudeA": origin.latitude,
       "longitudeA": origin.longitude,
