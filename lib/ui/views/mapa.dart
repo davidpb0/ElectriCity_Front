@@ -155,7 +155,7 @@ class GoogleMapaState extends State<GoogleMapa> {
 
   @override
   Widget build(BuildContext context) {
-    _mapaController.setGoogleMapaState(this);
+    if(mounted) _mapaController.setGoogleMapaState(this);
     return Stack(alignment: Alignment.topCenter, children: [
       Stack(children: [
         GoogleMap(
@@ -174,13 +174,16 @@ class GoogleMapaState extends State<GoogleMapa> {
             //Navigator.of(context).pushReplacementNamed('/form_ubi');
             Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  InfoPersonalUbiForm()));
             if (aux != _userController.currentUser.getPersonalUbi().length){
-              setState(() {
+              if (mounted) {
+                setState(() {
                 _markers.add((_userController.currentUser.getPersonalUbi()).last);
               });
+              }
             }
           },
           onTap: (latlang) {
-            setState(() {
+            if (mounted) {
+              setState(() {
               if (_polylines.isNotEmpty) {
                 deleteMarker('origin');
                 deleteMarker('destination');
@@ -191,6 +194,7 @@ class GoogleMapaState extends State<GoogleMapa> {
               _polylines.clear();
               polylineCoordinates.clear();
             });
+            }
           },
           markers: _markers,
         ),
@@ -206,10 +210,12 @@ class GoogleMapaState extends State<GoogleMapa> {
             label: const Text(""),
             icon: const Icon(Icons.turn_right_outlined),
             onPressed: () {
-              setState(() {
+              if (mounted) {
+                setState(() {
                 top = RoutePage(
                     height: MediaQuery.of(context).size.height * 0.25);
               });
+              }
             },
           ),
         ),
@@ -243,7 +249,7 @@ class GoogleMapaState extends State<GoogleMapa> {
                     markerId: const MarkerId("currentLocation"),
                     position: LatLng(position.latitude, position.longitude)));
 
-                setState(() {});
+                if (mounted) setState(() {});
               },
               child: const Icon(Icons.location_history),
             ),
@@ -262,18 +268,21 @@ class GoogleMapaState extends State<GoogleMapa> {
       for (var point in result.points) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       }
-      setState(() {
+      if (mounted) {
+        setState(() {
         _polylines.add(Polyline(
             width: 10,
             polylineId: const PolylineId('polyLine'),
             color: const Color(0xFF08A5CB),
             points: polylineCoordinates));
       });
+      }
     }
   }
 
   void setAuxStation(int id, bool bicing){
-    setState(() {
+    if (mounted) {
+      setState(() {
       if(bicing){
         info = InfoBicingStationWindow(
             belec: _stationController.getBicingStationbyId(id).electrical,
@@ -299,24 +308,29 @@ class GoogleMapaState extends State<GoogleMapa> {
 
       }
     });
+    }
   }
 
   void setMarker(LatLng location, String id) {
-    setState(() {
+    if (mounted) {
+      setState(() {
       _markers.add(Marker(
         markerId: MarkerId(id),
         position: location,
         icon: personalMarker,
       ));
     });
+    }
   }
 
   void deleteMarker(String id) {
     Marker marker =
         _markers.firstWhere((marker) => marker.markerId.value == id);
-    setState(() {
+    if (mounted) {
+      setState(() {
       _markers.remove(marker);
     });
+    }
   }
 
   Future<Position> _determinePosition() async {
@@ -348,7 +362,8 @@ class GoogleMapaState extends State<GoogleMapa> {
     await setCustomMarker(context);
     if (_stationController.bicisComplete){
       for(int i = 0; i < _stationController.getTotalBicingStations(); ++i ){
-        setState(() {
+        if (mounted) {
+          setState(() {
           _markers.add(
               Marker(
                   markerId: MarkerId("B-${i + 1}"),
@@ -359,6 +374,7 @@ class GoogleMapaState extends State<GoogleMapa> {
                   }
               ));
         });
+        }
       }
     }
     else{
@@ -366,7 +382,8 @@ class GoogleMapaState extends State<GoogleMapa> {
     }
     if (_stationController.chargersComplete){
       for(int i = 0; i < _stationController.getTotalRechargeStations(); ++i ){
-        setState(() {
+        if (mounted) {
+          setState(() {
           _markers.add(
               Marker(
                   markerId: MarkerId("R-${i + 1}"),
@@ -377,6 +394,7 @@ class GoogleMapaState extends State<GoogleMapa> {
                   }
               ));
         });
+        }
       }
 
 
@@ -395,14 +413,16 @@ class GoogleMapaState extends State<GoogleMapa> {
     _stationController.getBicingStationsStream().listen((value) {
       while(i<value && i<_stationController.getTotalBicingStations()){
         Station current = _stationController.getBicingStation(i);
-        setState(() {
+        if (mounted) {
+          setState(() {
           _markers.add(
               Marker(
                   markerId: MarkerId("B-${current.id}"),
                   position: current.coords,
                   icon: bicingMarker,
                   onTap: () {
-                    setState(() {
+                    if (mounted) {
+                      setState(() {
                         info = InfoBicingStationWindow(
                             belec: _stationController.getBicingStationbyId(current.id).electrical,
                             bmech: _stationController.getBicingStationbyId(current.id).mechanical,
@@ -413,9 +433,11 @@ class GoogleMapaState extends State<GoogleMapa> {
                         );
 
                     });
+                    }
                   }
               ));
         });
+        }
 
         i++;
 
@@ -429,14 +451,16 @@ class GoogleMapaState extends State<GoogleMapa> {
     _stationController.getRechargeStationsStream().listen((value) {
       while(i<value && i<_stationController.getTotalRechargeStations()){
         RechargeStation current = _stationController.getRechargeStation(i);
-        setState(() {
+        if (mounted) {
+          setState(() {
           _markers.add(
               Marker(
                   markerId: MarkerId("R-${current.id}"),
                   position: current.coords,
                   icon: chargerMarker,
                   onTap: () {
-                    setState(() {
+                    if (mounted) {
+                      setState(() {
                         info = InfoChargeStationWindow(
                           slots: _stationController.getRechargeStationbyId(current.id).slots,
                           addres: _stationController.getRechargeStationbyId(current.id).address,
@@ -445,9 +469,11 @@ class GoogleMapaState extends State<GoogleMapa> {
                           charger: _stationController.getRechargeStationbyId(current.id),
                         );
                     });
+                    }
                   }
               ));
         });
+        }
 
         i++;
 

@@ -1,5 +1,6 @@
 import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/ui/views/prizespage.dart';
+import 'package:electricity_front/ui/views/conversationlistview.dart';
 import 'package:electricity_front/ui/views/profilepage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,7 +21,8 @@ class BottomBarState extends State<BottomBar> {
     const ListPage(),
     //InfoPersonalUbiForm(),
     const PrizesPage(),
-    const ProfilePage(),
+    const ChatPage(),
+    const ProfilePage()
   ];
   var _selectedIndex = 2;
 
@@ -47,6 +49,7 @@ class BottomBarState extends State<BottomBar> {
           BottomNavigationBarItem(icon: const Icon(Icons.map), label: AppLocalizations.of(context).homepage_map),
           BottomNavigationBarItem(icon: const Icon(Icons.electric_car), label: AppLocalizations.of(context).homepage_stations),
           BottomNavigationBarItem(icon: const Icon(Icons.military_tech), label: AppLocalizations.of(context).homepage_prizes),
+          BottomNavigationBarItem(icon: const Icon(Icons.chat), label: AppLocalizations.of(context).homepage_chat),
           BottomNavigationBarItem(icon: const Icon(Icons.person), label: AppLocalizations.of(context).homepage_profile)
         ],
       ),

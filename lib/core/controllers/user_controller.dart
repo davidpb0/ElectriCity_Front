@@ -6,12 +6,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import '../models/prize_data.dart';
+import '../models/chatusers.dart';
+import '../models/chatmessagemodel.dart';
 import '../models/user.dart';
 
 class UserController {
   late User currentUser = User();
   late BitmapDescriptor personalMarker;
   late ColorPrize theme;
+  late List<ChatUsers> chat;
+  late List<ChatMessage> messages;
+  late List<String> userInfo;
 
   factory UserController() {
     return _this;
@@ -130,7 +135,7 @@ class UserController {
     }*/
 
     if (data.isNotEmpty) {
-      String urlTemp = "users/${currentUser.getUserId()}";
+      String urlTemp = "/users/${currentUser.getUserId()}";
       Response res = await ApiService().updateUserInfo(data, urlTemp);
       if (res.statusCode == 200) {
         if (username.isNotEmpty) currentUser.setUsername(username);
@@ -140,6 +145,117 @@ class UserController {
         throw Exception("Error while updating user profile");
       }
     }
+  }
+
+  sendMessage(String text, int idReceiver) async {
+    String urlTemp = "/users/${currentUser.getUserId()}/messages";
+    String time = DateTime.now().toString();
+    time = time.split(".")[0];
+    if (time[10] == 'T') {
+      time[10] == ' ';
+    }
+
+    var data = {
+      "text": text,
+      "idReceiver": idReceiver,
+      "data": time
+    };
+    Response res = await ApiService().sendNewMessage(urlTemp, data);
+    if (res.statusCode != 201) {
+      throw Exception("Error while sending a message");
+    }
+  }
+
+  Future<bool> getConversationWithOneUser(int idUserWithConversation) async {
+    String urlTemp = "/users/${currentUser.getUserId()}/messages/users/$idUserWithConversation";
+    Response res = await ApiService().getConversationBetweenUsers(urlTemp);
+    var body = json.decode(res.body);
+    if (res.statusCode == 201) {
+      messages = getMessages(body);
+      return true;
+    }
+    else {
+      throw Exception("Error while getting a conversation with a user");
+    }
+  }
+
+  Future<bool> getAllUserConversations() async {
+    String urlTemp = "/users/${currentUser.getUserId()}/conversations";
+    Response res = await ApiService().getUserConversations(urlTemp);
+    var body = json.decode(res.body);
+    if (res.statusCode == 201) {
+      chat = getInfoUsers(body);
+      return true;
+    }
+    else {
+      throw Exception("Error while getting user conversations");
+    }
+  }
+
+  getMessages(dynamic json) {
+    List<ChatMessage> rebuts = <ChatMessage>[];
+    List<ChatMessage> enviats = <ChatMessage>[];
+    List<ChatMessage> chatMessage = <ChatMessage>[];
+
+    for (int i = 0; i < json['enviats'].length; ++i) {
+      enviats.add(
+          ChatMessage(id: json['enviats'][i]['id'],
+              messageContent: json['enviats'][i]['text'].toString(),
+              messageType: "sender")
+      );
+    }
+    for (int i = 0; i < json['rebuts'].length; ++i) {
+      rebuts.add(
+          ChatMessage(id: json['rebuts'][i]['id'],
+              messageContent: json['rebuts'][i]['text'].toString(),
+              messageType: "receiver")
+      );
+    }
+    //return chatMessage.sort((a, b) => a.id.compareTo(b.id));
+    int i = 0;
+    int j = 0;
+    while (i < rebuts.length && j < enviats.length) {
+      if (rebuts[i].id < rebuts[j].id) {
+        chatMessage.add(rebuts[i]);
+        ++i;
+      }
+      else {
+        chatMessage.add(enviats[j]);
+        ++j;
+      }
+    }
+    while (i < rebuts.length) {
+      chatMessage.add(rebuts[i]);
+      ++i;
+    }
+    while (j < enviats.length) {
+      chatMessage.add(enviats[j]);
+      ++j;
+    }
+    return chatMessage;
+  }
+
+  List<ChatUsers> getInfoUsers(dynamic json) {
+    List<ChatUsers> chatUsers = <ChatUsers>[];
+    for (int i = 0; i < json['userWithConversation'].length; ++i) {
+      chatUsers.add(
+        ChatUsers(id: json['userWithConversation'][i]['id'], name: json['userWithConversation'][i]['username'].toString(), email: json['userWithConversation'][i]['email'].toString())
+      );
+    }
+    return chatUsers;
+  }
+
+  getUserInfo(var email) async {
+    String urlTemp = "/$email/user";
+    Response res = await ApiService().getUserInfo(urlTemp);
+    var body = json.decode(res.body);
+    List<String> info = <String>[];
+    if (res.statusCode == 200) {
+      info.add(body['id'].toString());
+      info.add(body['username'].toString());
+    }
+    userInfo = info;
+    return res.statusCode;
   }
 
 }

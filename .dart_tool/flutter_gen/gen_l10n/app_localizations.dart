@@ -177,6 +177,12 @@ abstract class AppLocalizations {
   /// **'Prizes'**
   String get homepage_prizes;
 
+  /// No description provided for @homepage_chat.
+  ///
+  /// In en, this message translates to:
+  /// **'Chat'**
+  String get homepage_chat;
+
   /// No description provided for @homepage_profile.
   ///
   /// In en, this message translates to:
@@ -369,6 +375,12 @@ abstract class AppLocalizations {
   /// **'Edit Comment'**
   String get expandedStation_editComment;
 
+  /// No description provided for @expandedStation_gases.
+  ///
+  /// In en, this message translates to:
+  /// **'Air pollution information'**
+  String get expandedStation_gases;
+
   /// No description provided for @editprofile_oldpassword.
   ///
   /// In en, this message translates to:
@@ -404,6 +416,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit account'**
   String get editprofile_text;
+
+  /// No description provided for @add_new_user.
+  ///
+  /// In en, this message translates to:
+  /// **'Add new user'**
+  String get add_new_user;
+
+  /// No description provided for @chatview_adduser.
+  ///
+  /// In en, this message translates to:
+  /// **'Add user'**
+  String get chatview_adduser;
+
+  /// No description provided for @new_message.
+  ///
+  /// In en, this message translates to:
+  /// **'New message'**
+  String get new_message;
 
 }
 

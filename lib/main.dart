@@ -11,7 +11,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 void main() async {
   runApp(const MyApp());
   HttpOverrides.global = MyHttpOverrides();
-
+  //await MapaController().initBD();
 }
 
 class MyApp extends StatelessWidget {

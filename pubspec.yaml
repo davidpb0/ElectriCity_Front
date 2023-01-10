@@ -51,11 +51,15 @@ dependencies:
   google_maps_webservice: ^0.0.20-nullsafety.5
   geolocator: ^8.0.1
   path_provider: ^2.0.11
+  wp_search_bar: ^0.0.7
+  url_launcher:
+  font_awesome_flutter:
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons:
 
   build_runner: ^2.3.0
   animated_splash_screen: ^1.3.0
@@ -67,6 +71,11 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/electriCity_iconApp.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

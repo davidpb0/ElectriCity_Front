@@ -189,11 +189,12 @@ class _RechargePreviewState extends State<RechargePreview> {
                               });
 
                             },
-                            icon: Icon((faved) ? Icons.favorite_outline : Icons.favorite),
+                            icon: Icon((faved) ? Icons.favorite : Icons.favorite_outline),
                           ),
 
                           IconButton(onPressed: () async {
                             await StationController().extractCommentsCharger(widget.info.id, widget.info);
+                            // ignore: use_build_context_synchronously
                             Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  ExpandedStationPage(index: widget.info.id, bicing: false)));
                           },
                             icon: const Icon(Icons.open_in_new),
