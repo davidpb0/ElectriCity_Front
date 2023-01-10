@@ -92,6 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             ),
+
             const SizedBox(height: 10),
 
             //Forget password
@@ -110,6 +111,7 @@ class _LoginPageState extends State<LoginPage> {
             //const SizedBox(height: 50),
 
             //SignIn Botton
+
             SizedBox(
               height: 80,
               width: 200,

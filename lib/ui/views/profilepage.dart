@@ -454,7 +454,7 @@ class _ProfilePageState extends State<ProfilePage> {
           int item = int.parse(userCtrl.currentUser
               .getFavouriteRechargeStations()
               .elementAt(index -
-                  userCtrl.currentUser.getFavouriteRechargeStations().length));
+                  userCtrl.currentUser.getFavouriteBicingStations().length));
           return Dismissible(
             background: Container(
                 padding: const EdgeInsets.all(20),
