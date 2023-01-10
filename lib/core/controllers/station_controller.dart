@@ -68,7 +68,6 @@ class StationController {
   Future<bool> fetchFirstRechargeStations() async {
     Response res = await _apiService.getData('/recharge_stations');
     var body = json.decode(res.body);
-    print(body.toString());
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
