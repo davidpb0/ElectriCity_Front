@@ -31,6 +31,7 @@ class LoginController {
       var body2 = json.decode(res2.body);
       print(res2.statusCode);
       if (res2.statusCode == 201) {
+        //await MapaController().initBD();
         Navigator.of(ctext).pushReplacementNamed('/home');
         User usr = User.fromJson(body2);
         usr.setToke(body['token']);

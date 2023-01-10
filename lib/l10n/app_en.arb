@@ -55,6 +55,7 @@
     "expandedStation_favButton":"Favourite",
     "expandedStation_addComment":"Add Comment",
     "expandedStation_editComment":"Edit Comment",
+    "expandedStation_gases":"Air quality",
 
     "editprofile_oldpassword": "Current password",
     "editprofile_newpassword": "New password",

@@ -1,12 +1,12 @@
 import 'package:electricity_front/core/controllers/booking_controller.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/station_list.dart';
-import 'package:electricity_front/core/services/api_service.dart';
 import 'package:electricity_front/ui/components/reservation_form.dart';
 import 'package:electricity_front/ui/components/station_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core/controllers/station_controller.dart';
+import '../../core/models/gas.dart';
 import '../../fonts/test_icons_icons.dart';
 import '../components/commentForm.dart';
 import '../components/default_header.dart';
@@ -27,6 +27,8 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
   late StationController _stationController;
   late Station bicingStation;
   late RechargeStation rechargeStation;
+  late Image carita;
+  late Gas gas;
 
   @override
   void initState() {
@@ -34,8 +36,56 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
     _stationController = StationController();
     if (widget.bicing) {
       bicingStation = _stationController.getBicingStationbyId(widget.index);
+      gas = bicingStation.gasAmount();
+      switch(bicingStation.polution){
+        case 0:
+          carita = Image.asset(
+            'assets/images/gasesBien.png',
+            fit: BoxFit.contain,
+            height: 64,
+          );
+          break;
+        case 1:
+          carita = Image.asset(
+            'assets/images/gasesRegular.png',
+            fit: BoxFit.contain,
+            height: 64,
+          );
+          break;
+        case 2:
+          carita = Image.asset(
+            'assets/images/gasesMal.png',
+            fit: BoxFit.contain,
+            height: 64,
+          );
+          break;
+      }
     } else {
       rechargeStation = _stationController.getRechargeStationbyId(widget.index);
+      gas = rechargeStation.gasAmount();
+      switch(rechargeStation.polution){
+        case 0:
+          carita = Image.asset(
+            'assets/images/gasesBien.png',
+            fit: BoxFit.contain,
+            height: 64,
+          );
+          break;
+        case 1:
+          carita = Image.asset(
+            'assets/images/gasesRegular.png',
+            fit: BoxFit.contain,
+            height: 64,
+          );
+          break;
+        case 2:
+          carita = Image.asset(
+            'assets/images/gasesMal.png',
+            fit: BoxFit.contain,
+            height: 64,
+          );
+          break;
+      }
     }
   }
 
@@ -66,7 +116,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                     ],
                   ),
                   child: Column(children: [
-                    const SizedBox(height: 112),
+                    const SizedBox(height: 150),
                     Padding(
                         padding: const EdgeInsets.all(12),
                         child: Row(
@@ -190,7 +240,6 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                                 color: Colors.black,
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
-
                                               ),
                                             ),
                                             Padding(
@@ -279,7 +328,6 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                 child: MaterialButton(
                                   onPressed: () async {
                                     await StationController().potusInfo();
-
                                   },
                                   minWidth: screensize.width / 3,
                                   color: Colors.grey[800],
@@ -316,6 +364,21 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                       )),
                                 ),
                               ),
+                              SizedBox(height: 15),
+                              Text(
+                                AppLocalizations.of(context)
+                                    .expandedStation_gases,
+                                style: TextStyle(fontSize: 15),
+                                textAlign: TextAlign.center,
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: carita,
+                              ),
+                              Text(
+                                gas.value.toString()
+                              ),
                             ],
                           ),
                         ])),
@@ -325,7 +388,9 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                     id: widget.index,
                     bicing: widget.bicing,
                     notifyParent: refresh),
-                (widget.bicing) ? listaCommentsBicing(refresh) : listaCommentsCharger(refresh),
+                (widget.bicing)
+                    ? listaCommentsBicing(refresh)
+                    : listaCommentsCharger(refresh),
               ]),
             ),
           ),
