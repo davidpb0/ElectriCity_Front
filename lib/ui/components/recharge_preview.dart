@@ -194,6 +194,7 @@ class _RechargePreviewState extends State<RechargePreview> {
 
                           IconButton(onPressed: () async {
                             await StationController().extractCommentsCharger(widget.info.id, widget.info);
+                            // ignore: use_build_context_synchronously
                             Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  ExpandedStationPage(index: widget.info.id, bicing: false)));
                           },
                             icon: const Icon(Icons.open_in_new),

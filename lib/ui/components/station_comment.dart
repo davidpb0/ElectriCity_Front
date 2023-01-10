@@ -42,7 +42,7 @@ class _StationCommentState extends State<StationComment> {
               b = await StationController().deleteBicingComment(widget.info);
               if (b) widget.notifyParent();
             },
-            icon: Icon(Icons.delete));
+            icon: const Icon(Icons.delete));
         modify = IconButton(
             onPressed: () async {
               /*bool b = false;
@@ -75,7 +75,7 @@ class _StationCommentState extends State<StationComment> {
                 );
               });
             },
-            icon: Icon(Icons.edit));
+            icon: const Icon(Icons.edit));
       } else {
         text = Text(widget.info.text);
       }
@@ -88,7 +88,7 @@ class _StationCommentState extends State<StationComment> {
               b = await StationController().deleteChargerComment(widget.info);
               if (b) widget.notifyParent();
             },
-            icon: Icon(Icons.delete));
+            icon: const Icon(Icons.delete));
         modify = IconButton(
             onPressed: () async {
               /*bool b = false;
@@ -121,7 +121,7 @@ class _StationCommentState extends State<StationComment> {
                 );
               });
             },
-            icon: Icon(Icons.edit));
+            icon: const Icon(Icons.edit));
       } else {
         text = Text(widget.info.text);
       }
@@ -183,7 +183,7 @@ class _StationCommentState extends State<StationComment> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            Expanded(
+                            const Expanded(
                               child: SizedBox(),
                             ),
                             modify,

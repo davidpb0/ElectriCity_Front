@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:electricity_front/core/models/user.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,6 @@ class LoginController {
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       ApiService().setToken(body['token']);
-      // ignore: use_build_context_synchronously
       Response res2 = await _apiService.getData('/profile');
       var body2 = json.decode(res2.body);
       if (res2.statusCode == 201) {
@@ -36,11 +37,9 @@ class LoginController {
         return usr;
       }
       else {
-        // ignore: use_build_context_synchronously
         showAlertDialog(ctext);
       }
     } else {
-      // ignore: use_build_context_synchronously
       showAlertDialog(ctext);
     }
   }

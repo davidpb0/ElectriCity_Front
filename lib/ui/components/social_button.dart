@@ -16,7 +16,7 @@ class SocialButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onClicked,
-      child: Container(
+      child: SizedBox(
         width: 64,
         height: 64,
         child: Center(

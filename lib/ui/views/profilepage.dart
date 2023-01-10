@@ -557,7 +557,7 @@ class _ProfilePageState extends State<ProfilePage> {
     //const subject = "ElectriCity best app";
     const text = "Hey i'm using ElectriCity";
     final urlShare =
-        Uri.encodeComponent('https://electricityfibupc.wordpress.com/');
+        Uri.encodeComponent('https://electricity-download.w3spaces.com/index.html');
     final urls = {
       SocialMedia.twitter:
           'https://twitter.com/intent/tweet?url=$urlShare&text=$text',

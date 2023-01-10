@@ -8,7 +8,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core/controllers/station_controller.dart';
 import '../../core/models/gas.dart';
 import '../../fonts/test_icons_icons.dart';
-import '../components/commentForm.dart';
+import '../components/comment_form.dart';
 import '../components/default_header.dart';
 
 class ExpandedStationPage extends StatefulWidget {
