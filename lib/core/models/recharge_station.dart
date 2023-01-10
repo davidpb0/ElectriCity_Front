@@ -74,7 +74,6 @@ class RechargeStation {
   }
 
   void editComment(int id, String txt) {
-    print("El texto es: " + txt);
     Comment comment = commentsCharger.firstWhere((element) => element.id == id);
     comment.text = txt;
 
