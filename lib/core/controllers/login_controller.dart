@@ -23,14 +23,13 @@ class LoginController {
 
     Response res = await _apiService.login(data, '/login');
     var body = json.decode(res.body);
-    print(body);
     if (res.statusCode == 200) {
       ApiService().setToken(body['token']);
       // ignore: use_build_context_synchronously
       Response res2 = await _apiService.getData('/profile');
       var body2 = json.decode(res2.body);
-      print(res2.statusCode);
       if (res2.statusCode == 201) {
+        // ignore: use_build_context_synchronously
         Navigator.of(ctext).pushReplacementNamed('/home');
         User usr = User.fromJson(body2);
         usr.setToke(body['token']);

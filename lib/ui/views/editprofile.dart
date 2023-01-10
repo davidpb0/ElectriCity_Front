@@ -6,10 +6,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../components/default_header.dart';
 
 class EditProfile extends StatefulWidget {
-
-
   final Function() notifyParent;
-
   const EditProfile({
     Key? key,
     required this.notifyParent,
@@ -21,7 +18,6 @@ class EditProfile extends StatefulWidget {
 class _EditProfileState extends State<EditProfile> {
 
   final UserController userController = UserController();
-
   final TextEditingController usernameTextController = TextEditingController();
   final TextEditingController emailTextController = TextEditingController();
   final TextEditingController oldPasswordTextController = TextEditingController();
@@ -280,5 +276,4 @@ class _EditProfileState extends State<EditProfile> {
       ),
     );
   }
-
 }

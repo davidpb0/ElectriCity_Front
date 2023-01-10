@@ -47,6 +47,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get homepage_prizes => 'Premios';
 
   @override
+  String get homepage_chat => 'Chat';
+
+  @override
   String get homepage_profile => 'Perfil';
 
   @override
@@ -142,6 +145,7 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get expandedStation_editComment => 'Edita el comentario';
 
+  @override
   String get editprofile_oldpassword => 'Contraseña actual';
 
   @override
@@ -159,4 +163,12 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get editprofile_text => 'Editar mi cuenta';
 
+  @override
+  String get add_new_user => 'Añadir nuevo usuario';
+
+  @override
+  String get chatview_adduser => 'Añadir usuario';
+
+  @override
+  String get new_message => 'Mensaje nuevo';
 }

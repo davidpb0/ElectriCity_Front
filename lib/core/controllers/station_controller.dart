@@ -68,7 +68,6 @@ class StationController {
   Future<bool> fetchFirstRechargeStations() async {
     Response res = await _apiService.getData('/recharge_stations');
     var body = json.decode(res.body);
-    print(body.toString());
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
@@ -222,8 +221,6 @@ class StationController {
   deleteBicingComment(Comment comment) async {
     Response res = await _apiService.deleteData(
         "/users/${UserController().currentUser.getUserId()}/comments/${comment.id}");
-    print(res.statusCode);
-    print(res.body);
     if (res.statusCode == 200) {
       comment.bicing?.deleteComment(comment.id);
       return true;
@@ -233,16 +230,11 @@ class StationController {
   }
 
   editBicingComment(Comment comment, String text) async {
-    print("El texto antes es:" + text);
     var data = {"message": text};
     Response res = await _apiService.putData(data, "/comments/${comment.id}");
 
     if (res.statusCode == 200) {
-      /*print(comment.bicing.toString());
-      print(comment.bicing?.id.toString());
-      print(comment.bicing?.commentsBicing.length.toString());
-      print(comment.bicing?.address.toString());*/
-      comment.bicing?.editComment(comment.id, text);
+     comment.bicing?.editComment(comment.id, text);
 
       return true;
     } else {
@@ -308,8 +300,6 @@ class StationController {
   deleteChargerComment(Comment comment) async {
     Response res = await _apiService.deleteData(
         "/users/${UserController().currentUser.getUserId()}/comments/${comment.id}");
-    print(res.statusCode);
-    print(res.body);
     if (res.statusCode == 200) {
       comment.charger?.deleteComment(comment.id);
       return true;
@@ -318,15 +308,10 @@ class StationController {
     }
   }
   editChargerComment(Comment comment, String text) async {
-    print("El texto antes es:" + text);
     var data = {"message": text};
     Response res = await _apiService.putData(data, "/comments/${comment.id}");
 
     if (res.statusCode == 200) {
-      /*print(comment.bicing.toString());
-      print(comment.bicing?.id.toString());
-      print(comment.bicing?.commentsBicing.length.toString());
-      print(comment.bicing?.address.toString());*/
       comment.charger?.editComment(comment.id, text);
 
       return true;

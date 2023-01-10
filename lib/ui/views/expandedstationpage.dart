@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core/controllers/station_controller.dart';
 import '../../fonts/test_icons_icons.dart';
-import '../components/commentForm.dart';
+import '../components/comment_form.dart';
 import '../components/default_header.dart';
 
 class ExpandedStationPage extends StatefulWidget {
@@ -112,7 +112,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                             child: Column(
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.only(top: 12),
+                                  padding: const EdgeInsets.only(top: 12),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -163,7 +163,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 12),
+                                  padding: const EdgeInsets.only(top: 12),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -216,7 +216,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                   ),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 12),
+                                  padding: const EdgeInsets.only(top: 12),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -270,7 +270,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                               ],
                             ),
                           ),
-                          VerticalDivider(),
+                          const VerticalDivider(),
                           Column(
                             children: [
                               Padding(
@@ -315,8 +315,8 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                             ],
                           ),
                         ])),
-                Divider(),
-                Container(child: Text("Comments")),
+                const Divider(),
+                const Text("Comments"),
                 StationCommentForm(
                     id: widget.index,
                     bicing: widget.bicing,
@@ -349,12 +349,12 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
   Widget listaCommentsBicing(dynamic ref) {
     if (bicingStation.commentsBicing.isEmpty) {
       return Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Material(
               color: Colors.transparent,
               child: Text(
                 AppLocalizations.of(context).expandedStation_noComments,
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               )));
     }
@@ -393,12 +393,12 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
   Widget listaCommentsCharger(dynamic ref) {
     if (rechargeStation.commentsCharger.isEmpty) {
       return Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Material(
               color: Colors.transparent,
               child: Text(
                 AppLocalizations.of(context).expandedStation_noComments,
-                style: TextStyle(fontSize: 20),
+                style: const TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               )));
     }
