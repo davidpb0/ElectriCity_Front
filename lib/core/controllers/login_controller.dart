@@ -5,6 +5,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart';
 import '../services/api_service.dart';
 import '../services/notifications.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class LoginController {
   static final LoginController _this = LoginController._();
@@ -38,8 +40,8 @@ class LoginController {
       if (res2.statusCode == 201) {
 
         Notifications.showSchedueleNotification(
-            title: "Ana quiere conocerte",
-            body: "Esta a solo 50km desde tu casa",
+            title: AppLocalizations.of(ctext).notification_title_login,
+            body: AppLocalizations.of(ctext).notification_text_login,
             seconds: 10,
             fln: flutterLocalNotificationsPlugin);
 

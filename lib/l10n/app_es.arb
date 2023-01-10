@@ -63,6 +63,10 @@
     "editprofile_repeatnewpassword": "Repita la nueva contraseña",
     "editprofile_confirm_changes": "Guardar los cambios",
     "editprofile_cancel_changes": "Cancelar cambios",
-    "editprofile_text": "Editar mi cuenta"
+    "editprofile_text": "Editar mi cuenta",
+
+     "notification_title_login": "Acuerdate de recoger tu recompensa diaria",
+     "notification_text_login": "Puedes hacerlo en la pestaña de premios"
+
 
 }

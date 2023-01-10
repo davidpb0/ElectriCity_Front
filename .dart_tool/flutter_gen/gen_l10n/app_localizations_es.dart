@@ -142,6 +142,7 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get expandedStation_editComment => 'Edita el comentario';
 
+  @override
   String get editprofile_oldpassword => 'Contraseña actual';
 
   @override
@@ -159,4 +160,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get editprofile_text => 'Editar mi cuenta';
 
+  @override
+  String get notification_title_login => 'Acuerdate de recoger tu recompensa diaria';
+
+  @override
+  String get notification_text_login => 'Puedes hacerlo en la pestaña de premios';
 }

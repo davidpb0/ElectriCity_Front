@@ -61,6 +61,9 @@
     "editprofile_repeatnewpassword": "Repeat new password",
     "editprofile_confirm_changes": "Confirm new changes",
     "editprofile_cancel_changes": "Cancel changes",
-    "editprofile_text": "Edit account"
+    "editprofile_text": "Edit account",
+
+    "notification_title_login": "Remember to claim you daily reward",
+    "notification_text_login": "You can do it on the prize tab"
 
 }
