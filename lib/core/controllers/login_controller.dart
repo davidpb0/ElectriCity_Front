@@ -29,7 +29,7 @@ class LoginController {
       // ignore: use_build_context_synchronously
       Response res2 = await _apiService.getData('/profile');
       var body2 = json.decode(res2.body);
-      print(res2.statusCode);
+      print(body2);
       if (res2.statusCode == 201) {
         Navigator.of(ctext).pushReplacementNamed('/home');
         User usr = User.fromJson(body2);

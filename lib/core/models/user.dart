@@ -16,6 +16,11 @@ class User {
   String _email = "";
   int _id = 0;
 
+  int _electricoins = 0;
+  int _theme = 0;
+  int _avatar = 0;
+
+
   User();
 
   User.fromJson(dynamic json) {
@@ -62,6 +67,10 @@ class User {
 
   getUsername() {
     return _username;
+  }
+
+  getElectricoins() {
+    return _electricoins;
   }
 
   setUsername(String username) {

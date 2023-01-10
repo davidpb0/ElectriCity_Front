@@ -5,6 +5,7 @@ import 'package:electricity_front/ui/components/default_header.dart';
 import 'package:electricity_front/ui/views/editprofile.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/cosmetics_controller.dart';
+import '../../core/controllers/prize_controller.dart';
 import '../../core/controllers/user_controller.dart';
 import '../components/personal_ubi_preview.dart';
 import '../components/recharge_preview.dart';
@@ -75,9 +76,10 @@ class _ProfilePageState extends State<ProfilePage> {
                                           )
                                       ),
                                     const SizedBox(width: 20),
-                                    Icon(Icons.account_circle,
-                                        size: 60, color: Color(cosmeticsController.getCurrentTheme().textcolorlight)
-                                    )
+                                    SizedBox(
+                                      height: 64,
+                                      child:Image.asset(PrizeController().getAvatarsAsset(PrizeController().getCurrentAvatar()), fit: BoxFit.contain,),
+                                    ),
                                   ],
                                 )
                             ),

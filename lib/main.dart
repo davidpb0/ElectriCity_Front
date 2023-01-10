@@ -21,6 +21,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     CosmeticsController().readThemes();
+    CosmeticsController().readAvatars();
+    CosmeticsController().readCounter();
     return MaterialApp(
       title: 'Flutter Demo',
       localizationsDelegates: const [

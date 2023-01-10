@@ -105,9 +105,6 @@ flutter:
       fonts:
         - asset: fonts/TestIcons.ttf
 
-    - family: Coins
-      fonts:
-          - asset: fonts/Coins.ttf
 
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic

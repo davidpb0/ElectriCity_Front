@@ -1,3 +1,4 @@
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/ui/views/prizespage.dart';
 import 'package:electricity_front/ui/views/profilepage.dart';
 import 'package:flutter/material.dart';
@@ -36,10 +37,11 @@ class BottomBarState extends State<BottomBar> {
         child: _widgetOptions[_selectedIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Color(CosmeticsController().getCurrentTheme().textfieldcolor) ,
         onTap: _onItemTapped,
         elevation: 10,
-        selectedItemColor: Colors.green,
-        unselectedItemColor: const Color(0xFF526480),
+        selectedItemColor: Color(CosmeticsController().getCurrentTheme().accentcolor),
+        unselectedItemColor: Color(CosmeticsController().getCurrentTheme().elementcolor),
         currentIndex: _selectedIndex,
         items:  [
           BottomNavigationBarItem(icon: const Icon(Icons.map), label: AppLocalizations.of(context).homepage_map),

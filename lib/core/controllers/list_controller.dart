@@ -153,4 +153,7 @@ class ListController {
   RechargeStation getRechargeStationbyId(int id) {
     return _rechargelist.singleWhere((o) => o.id == id);
   }
+  void filterSlots(){}
+  void filterManBikes(){}
+
 }

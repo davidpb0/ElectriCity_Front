@@ -1,6 +1,7 @@
 
 import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/core/services/api_service.dart';
+import 'package:http/http.dart';
 import '../../core/models/prize_data.dart';
 
 import '../../core/controllers/user_controller.dart';
@@ -12,7 +13,12 @@ class PrizeController {
   late List<ColorPrize> _colors;
   late List<bool> _colorsUnlocked;
   late int _currentColor;
-  int electricoins = 50000;
+
+  late List<AvatarPrize> _avatars;
+  late List<bool> _avatarsUnlocked;
+  late int _currentAvatar;
+  int electricoins = UserController().currentUser.getElectricoins();
+
   /*final List<ColorPrize> _colors = [
     ColorPrize(0,250,'assets/images/prizes/colores_1.png',
       0XFFE0E0E0, // background color: grey[200]
@@ -140,10 +146,14 @@ class PrizeController {
 
   PrizeController._();
 
-  void readColors() async {
-    _colorsUnlocked = _cosmeticsController.unlocked;
-    _currentColor = _cosmeticsController.current;
+  void readPrizes() async {
+    _colorsUnlocked = _cosmeticsController.unlocked_themes;
+    _currentColor = _cosmeticsController.current_theme;
     _colors = _cosmeticsController.getAllThemes();
+
+    _avatarsUnlocked = _cosmeticsController.unlocked_avatars;
+    _currentAvatar = _cosmeticsController.current_avatar;
+    _avatars = _cosmeticsController.getAllAvatars();
 
   }
 
@@ -151,33 +161,68 @@ class PrizeController {
     return _colorsUnlocked;
   }
 
+  List<bool> getAvatarAvailability(){
+    return _avatarsUnlocked;
+  }
+
   String getColorsAsset (int index){
     return _colors[index].asset;
+  }
+
+  String getAvatarsAsset (int index){
+    return _avatars[index].asset;
   }
 
   int getColorsCost (int index){
     return _colors[index].cost;
   }
 
+  int getAvatarsCost (int index){
+    return _avatars[index].cost;
+  }
+
   int getTotalColors(){
     return _colors.length;
+  }
+
+  int getTotalAvatars(){
+    return _avatars.length;
   }
 
   bool getColorsUnlocked (int index){
     return _colorsUnlocked[index];
   }
 
+  bool getAvatarsUnlocked (int index){
+    return _avatarsUnlocked[index];
+  }
+
   int getCurrentColor() {
     return _currentColor;
   }
 
+  int getCurrentAvatar() {
+    return _currentAvatar;
+  }
+
   void unlockColor(int index){
     _colorsUnlocked[index] = true;
+    _cosmeticsController.unlockColor(index);
+  }
+
+  void unlockAvatar(int index){
+    _avatarsUnlocked[index] = true;
+    _cosmeticsController.unlockAvatar(index);
   }
 
   void setColor(int index){
     _currentColor = index;
-    _cosmeticsController.current = index;
+    _cosmeticsController.selectColor(index);
+  }
+
+  void setAvatar(int index){
+    _currentAvatar = index;
+    _cosmeticsController.selectAvatar(index);
   }
 
   bool spendCoins(int price){
@@ -187,6 +232,16 @@ class PrizeController {
     electricoins -= price;
     return true;
   }
+  int getDailyPrize(){
+    return 100 + (CosmeticsController().streak*50);
+  }
+
+  void claimPrize(){
+    int prize = getDailyPrize();
+    electricoins += prize;
+    CosmeticsController().writeCounter();
+  }
+
 
 
 
