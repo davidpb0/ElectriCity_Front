@@ -26,7 +26,6 @@ class _StationCommentState extends State<StationComment> {
   void initState() {
     super.initState();
     isFromActualUSer();
-    print(widget.info.text);
   }
 
   Widget delete = Container();

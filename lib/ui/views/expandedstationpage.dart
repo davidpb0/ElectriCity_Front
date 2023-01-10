@@ -326,8 +326,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 12),
                                 child: MaterialButton(
-                                  onPressed: () async {
-                                    await StationController().potusInfo();
+                                  onPressed: () {
                                   },
                                   minWidth: screensize.width / 3,
                                   color: Colors.grey[800],

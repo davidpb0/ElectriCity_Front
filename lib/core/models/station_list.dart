@@ -137,7 +137,6 @@ class Station {
       other is Station && other.runtimeType == runtimeType && other.id == id;
 
   void editComment(int id, String txt) {
-    print("El texto es: " + txt);
     Comment comment = commentsBicing.firstWhere((element) => element.id == id);
     comment.text = txt;
   }
