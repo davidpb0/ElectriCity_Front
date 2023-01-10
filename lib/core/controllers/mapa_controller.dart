@@ -223,13 +223,13 @@ class MapaController {
     }
   }
 
-  routePainting(PointLatLng origin, PointLatLng destination) async {
+  routePainting(PointLatLng origin, PointLatLng destination, stations) async {
     var data = {
       "latitudeA": origin.latitude,
       "longitudeA": origin.longitude,
       "latitudeB": destination.latitude,
       "longitudeB": destination.longitude,
-      "numStations": 1
+      "numStations": stations
     };
 
     Response res = await _apiService.routePainting(data, '/route/station');

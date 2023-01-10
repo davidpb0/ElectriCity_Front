@@ -7,7 +7,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'DropdownItem.dart';
+import '../../fonts/test_icons_icons.dart';
+import 'dropdown_item.dart';
 import 'mapa.dart';
 
 class RoutePage extends StatefulWidget implements PreferredSizeWidget {
@@ -33,6 +34,8 @@ class _RoutePageState extends State<RoutePage> {
   late var originToCoordinates;
   // ignore: prefer_typing_uninitialized_variables
   late var destinationToCoordinates;
+  // ignore: prefer_typing_uninitialized_variables
+  late var value;
 
   TextStyle style = const TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
   OutlineInputBorder textFieldBorder = OutlineInputBorder(
@@ -63,12 +66,16 @@ class _RoutePageState extends State<RoutePage> {
           ]),
       child: Stack(
         children: <Widget>[
-              Positioned(
-                left: 0,
-                top: 30,
-                child:
-                const DropdownItem().createState().build(context),
-              ),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 40),
+            child: Icon(TestIcons.eCharger, size: 20, color: Colors.white,),
+          ),
+          Positioned(
+            left: 0,
+            top: 58,
+            //quiero cojer el valor de dropdownItem
+            child: DropdownItem()
+          ),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 Container(
                     padding: const EdgeInsets.all(2.0),
@@ -98,11 +105,15 @@ class _RoutePageState extends State<RoutePage> {
                   ],
                 ),
               ),
+              const SizedBox(
+                width: 20,
+              ),
               Positioned(
               //search input bar
-                top: 25,
+                top: 30,
+                left: 21,
                 child: SizedBox(
-                  width: 375,
+                  width: 358,
                   child: InkWell(
                     onTap: () async {
                       var place = await PlacesAutocomplete.show(
@@ -145,7 +156,7 @@ class _RoutePageState extends State<RoutePage> {
                         .setMarker(newlatlang, "origin");
 
                     if (destination.isNotEmpty) {
-                      List<PointLatLng> points = await MapaController().routePainting(originToCoordinates, destinationToCoordinates);
+                      List<PointLatLng> points = await MapaController().routePainting(originToCoordinates, destinationToCoordinates, DropdownItem().value);
                       GoogleMapaState googleMapa = MapaController().getGoogleMapa();
                       googleMapa.setPolylines(originToCoordinates, PointLatLng(points[0].latitude, points[0].longitude), true);
                       for (int i = 1; i < points.length; ++i) {
@@ -194,82 +205,88 @@ class _RoutePageState extends State<RoutePage> {
                   ],
                 ),
               ),
+              const SizedBox(
+                width: 20,
+              ),
               Positioned(
                   //search input bar
                   top: 105,
-                  child: InkWell(
-                      onTap: () async {
-                        var place = await PlacesAutocomplete.show(
-                            context: context,
-                            apiKey: googleApikey,
-                            mode: Mode.overlay,
-                            types: [],
-                            strictbounds: false,
-                            components: [Component(Component.country, 'es')],
-                            //google_map_webservice package
-                            onError: (err) {
-                              Text(err.toString());
+                  left: 21,
+                  child: SizedBox(
+                    width: 358,
+                    child: InkWell(
+                        onTap: () async {
+                          var place = await PlacesAutocomplete.show(
+                              context: context,
+                              apiKey: googleApikey,
+                              mode: Mode.overlay,
+                              types: [],
+                              strictbounds: false,
+                              components: [Component(Component.country, 'es')],
+                              //google_map_webservice package
+                              onError: (err) {
+                                Text(err.toString());
+                              });
+
+                            if (place != null) {
+                              setState(() {
+                              destination = place.description.toString();
                             });
 
-                          if (place != null) {
-                            setState(() {
-                            destination = place.description.toString();
-                          });
+                            //from google_maps_webservice package
+                            final plist = GoogleMapsPlaces(
+                              apiKey: googleApikey,
+                              apiHeaders: await const GoogleApiHeaders().getHeaders(),
+                              //from google_api_headers package
+                            );
+                            String placeid = place.placeId ?? "0";
+                            final detail = await plist.getDetailsByPlaceId(placeid);
+                            final geometry = detail.result.geometry!;
+                            final lat = geometry.location.lat;
+                            final lang = geometry.location.lng;
+                            var newlatlang = LatLng(lat, lang);
+                            destinationToCoordinates = PointLatLng(lat, lang);
 
-                          //from google_maps_webservice package
-                          final plist = GoogleMapsPlaces(
-                            apiKey: googleApikey,
-                            apiHeaders: await const GoogleApiHeaders().getHeaders(),
-                            //from google_api_headers package
-                          );
-                          String placeid = place.placeId ?? "0";
-                          final detail = await plist.getDetailsByPlaceId(placeid);
-                          final geometry = detail.result.geometry!;
-                          final lat = geometry.location.lat;
-                          final lang = geometry.location.lng;
-                          var newlatlang = LatLng(lat, lang);
-                          destinationToCoordinates = PointLatLng(lat, lang);
+                            MapaController().getGoogleMapa().mc.moveCamera(
+                                CameraUpdate.newCameraPosition(
+                                    CameraPosition(target: newlatlang, zoom: 16)));
+                            MapaController()
+                                .getGoogleMapa()
+                                .setMarker(newlatlang, "destination");
 
-                          MapaController().getGoogleMapa().mc.moveCamera(
-                              CameraUpdate.newCameraPosition(
-                                  CameraPosition(target: newlatlang, zoom: 16)));
-                          MapaController()
-                              .getGoogleMapa()
-                              .setMarker(newlatlang, "destination");
+                            if (origin.isNotEmpty) {
+                              List<PointLatLng> points = await MapaController().routePainting(originToCoordinates, destinationToCoordinates, DropdownItem().value);
 
-                          if (origin.isNotEmpty) {
-                            ///TODO
-                            List<PointLatLng> points = await MapaController().routePainting(originToCoordinates, destinationToCoordinates);
+                              GoogleMapaState googleMapa = MapaController().getGoogleMapa();
+                              googleMapa.setPolylines(originToCoordinates, PointLatLng(points[0].latitude, points[0].longitude), true);
 
-                            GoogleMapaState googleMapa = MapaController().getGoogleMapa();
-                            googleMapa.setPolylines(originToCoordinates, PointLatLng(points[0].latitude, points[0].longitude), true);
-
-                            for (int i = 1; i < points.length; ++i) {
-                              googleMapa.setPolylines(PointLatLng(points[i-1].latitude, points[i-1].longitude),
-                                  PointLatLng(points[i].latitude, points[i].longitude), false);
+                              for (int i = 1; i < points.length; ++i) {
+                                googleMapa.setPolylines(PointLatLng(points[i-1].latitude, points[i-1].longitude),
+                                    PointLatLng(points[i].latitude, points[i].longitude), false);
+                              }
+                              googleMapa.setPolylines(PointLatLng(points[points.length-1].latitude, points[points.length-1].longitude),
+                                  destinationToCoordinates, false);
                             }
-                            googleMapa.setPolylines(PointLatLng(points[points.length-1].latitude, points[points.length-1].longitude),
-                                destinationToCoordinates, false);
                           }
-                        }
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 42),
-                        child: Card(
-                          child: Container(
-                              padding: const EdgeInsets.all(0),
-                              width: MediaQuery.of(context).size.width - 40,
-                              child: ListTile(
-                                title: Text(
-                                  destination,
-                                  style: const TextStyle(fontSize: 14),
-                                ),
-                                trailing: const Icon(Icons.search),
-                                dense: true,
-                              )
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 42),
+                          child: Card(
+                            child: Container(
+                                padding: const EdgeInsets.all(0),
+                                width: MediaQuery.of(context).size.width - 40,
+                                child: ListTile(
+                                  title: Text(
+                                    destination,
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                  trailing: const Icon(Icons.search),
+                                  dense: true,
+                                )
+                            ),
                           ),
-                        ),
-                      )
+                        )
+                    ),
                   )
               ),
             ]
