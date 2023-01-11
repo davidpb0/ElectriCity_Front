@@ -130,7 +130,6 @@ class UserController {
       };
     }
 
-    //TODO: verify user old Password
     /*if (oldPassword == currentUser.getPassword() && newPassword != "" && newPassword == repeatPassword) {
 
     }*/
