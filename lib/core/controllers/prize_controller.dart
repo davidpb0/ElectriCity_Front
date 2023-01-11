@@ -155,11 +155,13 @@ class PrizeController {
     //_colorsUnlocked = _cosmeticsController.unlocked_themes;
     //_currentColor = _cosmeticsController.current_theme;
     _colorsUnlocked = userCtrl.currentUser.getUnlockedThemes();
+    print(_colorsUnlocked);
     _colors = _cosmeticsController.getAllThemes();
 
     //_avatarsUnlocked = _cosmeticsController.unlocked_avatars;
     //_currentAvatar = _cosmeticsController.current_avatar;
     _avatarsUnlocked = userCtrl.currentUser.getUnlockedAvatars();
+    print(_avatarsUnlocked);
     _avatars = _cosmeticsController.getAllAvatars();
 
     fetchPrizes();
@@ -223,7 +225,7 @@ class PrizeController {
 
   void unlockAvatar(int index){
     _avatarsUnlocked[index] = true;
-    updateAwards(true, index);
+    updateAwards(false, index);
     unlockPrizeUpdate();
     _cosmeticsController.unlockAvatar(index);
   }
@@ -250,7 +252,7 @@ class PrizeController {
   }
 
   int getDailyPrize(){
-    return 100 + (CosmeticsController().streak*50);
+    return 1000 + (CosmeticsController().streak*50);
   }
 
   void claimPrize(){
@@ -285,10 +287,10 @@ class PrizeController {
   void updateAwards(bool color, int index) async{
     var data = UserController().currentUser.getRawAwards();
     if(color){
-      data.add(_jsonAwards[index]);
+      data.add("/awards/${index+1}");
     }
     else{
-      data.add(_jsonAwards[index+8]);
+      data.add("/awards/${index+9}");
     }
     print(data);
     UserController().currentUser.setRawAwards(data);
@@ -298,14 +300,17 @@ class PrizeController {
 
 
   void unlockPrizeUpdate() async{
+    print("unlock");
     var awards = UserController().currentUser.getRawAwards();
     print(awards);
     var data = {
       "electryCoins" : electricoins,
       "awards" : awards
     };
+    print(data);
     String urlTemp = "/users/${UserController().currentUser.getUserId()}";
     Response res = await ApiService().updateUserInfo(data, urlTemp);
+    print(res.statusCode);
     if (res.statusCode == 200) {
     }
     else {
@@ -315,8 +320,8 @@ class PrizeController {
 
   void currentPrizeUpdate() async{
     var data = {
-    'skinPalette' : UserController().currentUser.getTheme(),
-    'skinAvatar' : UserController().currentUser.getAvatar()
+    'skinPalette' : UserController().currentUser.getTheme().toString(),
+    'skinAvatar' : UserController().currentUser.getAvatar().toString()
     };
     String urlTemp = "/users/${UserController().currentUser.getUserId()}";
     Response res = await ApiService().updateUserInfo(data, urlTemp);
@@ -331,12 +336,15 @@ class PrizeController {
     Response res = await ApiService().getData("/awards");
     var _json = json.decode(res.body);
     _jsonAwards = _json['hydra:member'];
-    print(_jsonAwards);
-    if (UserController().currentUser.getRawAwards() == null){
+    //print(_jsonAwards);
+    print(UserController().currentUser.getRawAwards());
+    if (UserController().currentUser.getRawAwards() == []){
+      print("refill");
       var awards = {
-        [_jsonAwards[0], _jsonAwards[8] ]
+        ['/awards/1', '/awards/9']
       };
       UserController().currentUser.setRawAwards(awards);
+      print(UserController().currentUser.getRawAwards());
 
     }
   }

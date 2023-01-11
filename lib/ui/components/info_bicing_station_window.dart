@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
 import '../../core/models/station_list.dart';
@@ -26,7 +27,8 @@ class InfoBicingStationWindow extends StatefulWidget {
 }
 
 class _InfoBicingStationWindowState extends State<InfoBicingStationWindow> {
-  Icon like = const Icon(Icons.favorite_border_outlined);
+  CosmeticsController cosmeticsController = CosmeticsController();
+  Icon like = Icon(Icons.favorite_border_outlined, color: Color(CosmeticsController().getCurrentTheme().textcolorlight));
 
   @override
   Widget build(BuildContext context) {
@@ -40,24 +42,24 @@ class _InfoBicingStationWindowState extends State<InfoBicingStationWindow> {
                 blurRadius: 1,
               )
             ],
-            border: Border.all(color: Colors.white),
+            border: Border.all(color: Color(cosmeticsController.getCurrentTheme().textfieldcolor)),
             borderRadius: BorderRadius.circular(12),
-            color: Colors.white),
+            color: Color(cosmeticsController.getCurrentTheme().textfieldcolor)),
         child: Column(children: [
           Container(
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(12),
                     topRight: Radius.circular(12)),
-                color: Colors.blue),
+                color: Color(cosmeticsController.getCurrentTheme().elementcolorbicing)),
             width: MediaQuery.of(context).size.width,
             child: Row(children: [
               Expanded(
                 child: Text(
                   widget.addres,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Colors.white,
+                  style: TextStyle(
+                    color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                     fontSize: 20,
                   ),
                 ),
@@ -81,42 +83,42 @@ class _InfoBicingStationWindowState extends State<InfoBicingStationWindow> {
                   },
                   icon: Icon((widget.liked)
                       ? Icons.favorite
-                      : Icons.favorite_border_outlined))
+                      : Icons.favorite_border_outlined), color: Color(cosmeticsController.getCurrentTheme().textcolorlight))
             ]),
           ),
           Container(
-              color: Colors.white,
+              color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
               child: Column(
                 //padding
                 children: [
                   Row(
                     children: [
-                      const Padding(
+                      Padding(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          child: Icon(TestIcons.ebike, size: 20)),
-                      const Text("Bicicletes elèctriques disponibles: "),
-                      Text(widget.belec.toString())
+                              const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          child: Icon(TestIcons.ebike, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark),)),
+                      Text("Bicicletes elèctriques disponibles: ", style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark))),
+                      Text(widget.belec.toString(), style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),)
                     ],
                   ),
                   Row(
                     children: [
-                      const Padding(
+                      Padding(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          child: Icon(TestIcons.bike, size: 20)),
-                      const Text("Bicicletes mecàniques disponibles: "),
-                      Text(widget.bmech.toString())
+                              const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          child: Icon(TestIcons.bike, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark), )),
+                      Text("Bicicletes mecàniques disponibles: ", style: TextStyle(color:  Color(cosmeticsController.getCurrentTheme().textcolordark)),),
+                      Text(widget.bmech.toString(), style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),)
                     ],
                   ),
                   Row(
                     children: [
-                      const Padding(
+                      Padding(
                           padding:
                               EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          child: Icon(TestIcons.bicingParking, size: 20)),
-                      const Text("Espais disponibles: "),
-                      Text(widget.slots.toString())
+                          child: Icon(TestIcons.bicingParking, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark))),
+                      Text("Espais disponibles: ", style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),),
+                      Text(widget.slots.toString(), style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),)
                     ],
                   )
                 ],

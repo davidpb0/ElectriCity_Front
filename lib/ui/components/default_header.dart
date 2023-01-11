@@ -30,13 +30,13 @@ class DefaultHeader extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          const Padding(
+           Padding(
             padding: EdgeInsets.symmetric(horizontal: 8),
             child: Text(
               "ElectriCity",
               textAlign: TextAlign.left,
               style: TextStyle(
-                color: Colors.white,
+                color: Color(CosmeticsController().getCurrentTheme().textcolorlight),
                 fontSize: 24,
               ),
             ),

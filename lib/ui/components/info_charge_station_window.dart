@@ -2,6 +2,7 @@ import 'dart:core';
 import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:flutter/material.dart';
+import '../../core/controllers/cosmetics_controller.dart';
 import '../../fonts/test_icons_icons.dart';
 
 // ignore: must_be_immutable
@@ -25,7 +26,8 @@ class InfoChargeStationWindow extends StatefulWidget {
 }
 
 class _InfoChargeStationWindow extends State<InfoChargeStationWindow> {
-  Icon like = const Icon(Icons.favorite_border_outlined);
+  CosmeticsController cosmeticsController = CosmeticsController();
+  Icon like = Icon(Icons.favorite_border_outlined, color: Color(CosmeticsController().getCurrentTheme().textcolordark),);
 
   @override
   Widget build(BuildContext context) {
@@ -39,16 +41,16 @@ class _InfoChargeStationWindow extends State<InfoChargeStationWindow> {
                 blurRadius: 1,
               )
             ],
-            border: Border.all(color: Colors.white),
+            border: Border.all(color: Color(cosmeticsController.getCurrentTheme().textfieldcolor)),
             borderRadius: BorderRadius.circular(12),
-            color: Colors.white),
+            color: Color(cosmeticsController.getCurrentTheme().textfieldcolor)),
         child: Column(children: [
           Container(
-            decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(12),
                     topRight: Radius.circular(12)),
-                color: Colors.green),
+                color: Color(cosmeticsController.getCurrentTheme().elementcolorcharger)),
             width: MediaQuery.of(context).size.width,
             child: Row(
               children: [
@@ -56,8 +58,8 @@ class _InfoChargeStationWindow extends State<InfoChargeStationWindow> {
                   child: Text(
                     widget.addres,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                       fontSize: 20,
                     ),
                   ),
@@ -81,33 +83,33 @@ class _InfoChargeStationWindow extends State<InfoChargeStationWindow> {
                     },
                     icon: Icon((widget.liked)
                         ? Icons.favorite
-                        : Icons.favorite_border_outlined))
+                        : Icons.favorite_border_outlined), color: Color(cosmeticsController.getCurrentTheme().textcolorlight),)
               ],
             ),
           ),
           Container(
-              color: Colors.white,
+              color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
               child: Column(
                 //padding
                 children: [
                   Row(
                     children: [
-                      const Padding(
+                      Padding(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          child: Icon(TestIcons.eCar, size: 20)),
-                      const Text("Tipus de connexió: "),
-                      Text(widget.connectionType.toString())
+                              const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          child: Icon(TestIcons.eCar, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark),)),
+                      Text("Tipus de connexió: ", style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),),
+                      Text(widget.connectionType.toString(), style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),)
                     ],
                   ),
                   Row(
                     children: [
-                      const Padding(
+                      Padding(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          child: Icon(TestIcons.eCharger, size: 20)),
-                      const Text("Espais disponibles: "),
-                      Text(widget.slots.toString())
+                              const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                          child: Icon(TestIcons.eCharger, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark))),
+                      Text("Espais disponibles: ", style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),),
+                      Text(widget.slots.toString(), style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),)
                     ],
                   )
                 ],

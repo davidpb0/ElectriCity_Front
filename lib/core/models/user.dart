@@ -20,8 +20,8 @@ class User {
   int _theme = 0;
   int _avatar = 0;
   var _rawAwards;
-  final List<bool> _themesUnlocked = [true, false, false, false, false, false, false, false];
-  final List<bool> _avatarsUnlocked = [true, false, false, false, false, false, false, false, false, false, false, false];
+  List<bool> _themesUnlocked = [true, false, false, false, false, false, false, false];
+  List<bool> _avatarsUnlocked = [true, false, false, false, false, false, false, false, false, false, false, false];
 
 
   User();
@@ -70,9 +70,9 @@ class User {
 
     if (json['awards'] != null) {
       for (int i = 0; i < json['awards'].length; ++i) {
-        String split = (json['awards'][i]['nameAward']).split('_');
-        if(split[0] == 'avatar'){
-          _avatarsUnlocked[int.parse(split[1])-1] = true;
+        String split = (json['awards'][i].split('/'));
+        if(int.parse(split[1]) > 8){
+          _avatarsUnlocked[int.parse(split[1])-9] = true;
         }
         else{
           _themesUnlocked[int.parse(split[1])-1] = true;
@@ -80,6 +80,7 @@ class User {
       }
 
     }
+    print(json['awards']);
   }
 
   getUserTkn() {

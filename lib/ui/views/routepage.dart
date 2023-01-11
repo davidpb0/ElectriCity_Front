@@ -1,3 +1,4 @@
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/core/controllers/mapa_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_google_places_hoc081098/flutter_google_places_hoc081098.dart';
@@ -55,16 +56,17 @@ class _RoutePageState extends State<RoutePage> {
   Widget build(BuildContext context) {
     origin = AppLocalizations.of(context).route_searchorigin;
     destination = AppLocalizations.of(context).route_searchdestination;
+    CosmeticsController cosmeticsController = CosmeticsController();
     return SizedBox(
         child: Container(
       padding: const EdgeInsets.only(left: 25, right: 25, top: 30),
-      height: MediaQuery.of(context).size.height * 0.25,
-      decoration: const BoxDecoration(
-          color: Colors.green,
-          borderRadius: BorderRadius.only(
+      height: MediaQuery.of(context).size.height * 0.30,
+      decoration: BoxDecoration(
+          color: Color(cosmeticsController.getCurrentTheme().accentcolor),
+          borderRadius: const BorderRadius.only(
               bottomRight: Radius.circular(36),
               bottomLeft: Radius.circular(36)),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               offset: Offset(0, 1),
               blurRadius: 10,
@@ -72,9 +74,9 @@ class _RoutePageState extends State<RoutePage> {
           ]),
       child: Stack(
         children: <Widget>[
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 40),
-            child: Icon(TestIcons.eCharger, size: 20, color: Colors.white,),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 40),
+            child: Icon(TestIcons.eCharger, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolorlight),),
           ),
           Positioned(
             left: 0,
@@ -85,9 +87,9 @@ class _RoutePageState extends State<RoutePage> {
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             Container(
                 padding: const EdgeInsets.all(2.0),
-                child: const Text(
+                child: Text(
                   'ElectriCity',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolorlight)),
                 )),
             Image.asset(
               'assets/images/title_logo_car.png',
@@ -103,8 +105,8 @@ class _RoutePageState extends State<RoutePage> {
                   padding: EdgeInsets.symmetric(vertical: 4, horizontal: 23),
                 ),
                 Text(AppLocalizations.of(context).route_origin,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                       fontSize: 14,
                     )
                 ),
@@ -220,8 +222,8 @@ class _RoutePageState extends State<RoutePage> {
                   padding: EdgeInsets.symmetric(vertical: 4, horizontal: 23),
                 ),
                 Text(AppLocalizations.of(context).route_destination,
-                    style: const TextStyle(
-                      color: Colors.white,
+                    style: TextStyle(
+                      color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                       fontSize: 14,
                     )
                 ),

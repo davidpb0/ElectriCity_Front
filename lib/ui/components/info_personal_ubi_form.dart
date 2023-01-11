@@ -1,4 +1,5 @@
 import 'dart:core';
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/core/controllers/mapa_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -12,23 +13,24 @@ class InfoPersonalUbiForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    CosmeticsController cosmeticsController = CosmeticsController();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.yellow,
+        backgroundColor: Color(cosmeticsController.getCurrentTheme().elementcolorubi),
         title: Text(
           AppLocalizations.of(context).personallocation_header,
-          style: const TextStyle(fontSize: 20, color: Colors.black),
+          style: TextStyle(fontSize: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
         ),
         automaticallyImplyLeading: false,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new),
+          icon: Icon(Icons.arrow_back_ios_new, color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
           onPressed: () {
             Navigator.of(context).pop(context);
           },
         ),
       ),
-      backgroundColor: Colors.grey[200],
+      backgroundColor: Color(cosmeticsController.getCurrentTheme().backgroundcolor),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -54,15 +56,15 @@ class InfoPersonalUbiForm extends StatelessWidget {
                       blurRadius: 1,
                     ),
                   ],
-                  color: Colors.white,
-                  border: Border.all(color: Colors.white),
+                  color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                  border: Border.all(color: Color(cosmeticsController.getCurrentTheme().textfieldcolor)),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 width: 350,
                 child: TextField(
                   controller: titolTextController,
                   decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.maps_home_work),
+                      prefixIcon:  Icon(Icons.maps_home_work, color: Color(cosmeticsController.getCurrentTheme().elementcolor)),
                       border: InputBorder.none,
                       hintText: AppLocalizations.of(context).personallocation_title),
                 ),
@@ -87,16 +89,17 @@ class InfoPersonalUbiForm extends StatelessWidget {
                       offset: Offset(0, 2),
                       blurRadius: 1,
                     ),
+
                   ],
-                  color: Colors.white,
-                  border: Border.all(color: Colors.white),
+                  color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                  border: Border.all(color: Color(cosmeticsController.getCurrentTheme().textfieldcolor)),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 width: 350,
                 child: TextField(
                   controller: telefTextController,
                   decoration:  InputDecoration(
-                      prefixIcon: const Icon(Icons.location_on),
+                      prefixIcon: Icon(Icons.location_on, color: Color(cosmeticsController.getCurrentTheme().elementcolor)),
                       border: InputBorder.none,
                       hintText: AppLocalizations.of(context).personallocation_description),
                 ),
@@ -123,14 +126,14 @@ class InfoPersonalUbiForm extends StatelessWidget {
                             blurRadius: 5,
                           ),
                         ],
-                        color: Colors.yellow,
+                        color: Color(cosmeticsController.getCurrentTheme().elementcolorubi),
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child:  Center(
                           child: Text(
                             AppLocalizations.of(context).personallocation_submit,
-                        style: const TextStyle(
-                          color: Colors.black,
+                        style: TextStyle(
+                          color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),
