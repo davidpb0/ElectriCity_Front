@@ -7,7 +7,7 @@ class Notifications {
       FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin) async {
     tz.initializeTimeZones();
     var androidInitialize =
-        const AndroidInitializationSettings('mipmap/ic_launcher');
+        const AndroidInitializationSettings('@mipmap/ic_launcher');
     var iOSInitialize = const DarwinInitializationSettings(
         requestAlertPermission: true,
         requestBadgePermission: true,
