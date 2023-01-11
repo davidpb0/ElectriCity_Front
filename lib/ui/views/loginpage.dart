@@ -108,7 +108,7 @@ class _LoginPageState extends State<LoginPage> {
                 )
               ],
             ),
-            //const SizedBox(height: 50),
+            const SizedBox(height: 50),
 
             //SignIn Botton
 
@@ -149,38 +149,6 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
             //const SizedBox(height: 30),
-
-            //Sign with
-            Text(AppLocalizations.of(context).login_signinwith),
-
-            //Google botton
-            SizedBox(
-              width: 100,
-              height: 100,
-              child: TextButton(
-                  onPressed: () {
-                    //Navigator.of(context).pushReplacementNamed('/home');
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: const BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            offset: Offset(0, 2),
-                            blurRadius: 5,
-                          )
-                        ],
-                        color: Color(0xFFEEEEEE),
-                      ),
-                      child: Center(
-                          child: Image.asset('assets/images/googleIcon.png')),
-                    ),
-                  )
-              ),
-            ),
-
             const SizedBox(height: 40),
             //SignUp
             Row(

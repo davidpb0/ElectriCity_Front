@@ -42,10 +42,10 @@ class ColorPrize {
 
   factory ColorPrize.fromString(int id, String data){
     final splitted = data.split(",");
-    print(splitted.length);
     return ColorPrize(id, int.parse(splitted[0]), splitted[1], int.parse(splitted[2]), int.parse(splitted[3]), int.parse(splitted[4]), int.parse(splitted[5]), int.parse(splitted[6]), int.parse(splitted[7]), int.parse(splitted[8]), int.parse(splitted[9]), int.parse(splitted[10]), int.parse(splitted[11]), int.parse(splitted[12]), int.parse(splitted[13]), int.parse(splitted[14]));
   }
 
+  @override
   String toString(){
     return '$cost,$asset,$backgroundcolor,$textfieldcolor,$elementcolor,$elementcolordark,$elementcoloralt,$elementcolorbicing,$elementcolorcharger,$elementcolorubi,$elementcolordelete,$accentcolor,$accentcoloralt,$textcolorlight,$textcolordark';
   }
@@ -70,6 +70,7 @@ class AvatarPrize {
     return AvatarPrize(id, int.parse(splitted[0]), splitted[1]);
   }
 
+  @override
   String toString(){
     return '$cost,$asset';
   }

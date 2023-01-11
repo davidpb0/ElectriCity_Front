@@ -88,9 +88,7 @@ class BookingController {
     //print(data);
 
     Response res = await _apiService.postData(data, '/reservations');
-    print(res.statusCode);
     var body = json.decode(res.body);
-    print(body);
     if (res.statusCode == 201) {
       return true;
     } else {

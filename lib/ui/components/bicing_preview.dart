@@ -187,6 +187,7 @@ class _BicingPreviewState extends State<BicingPreview> {
                               IconButton(onPressed: () async {
 
                                 await StationController().extractCommentsBicing(widget.info.id, widget.info);
+                                await StationController().airQualityBicing(widget.info, widget.info.latitude, widget.info.longitude);
                                 // ignore: use_build_context_synchronously
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  ExpandedStationPage(index: widget.info.id, bicing: true)));
                               },

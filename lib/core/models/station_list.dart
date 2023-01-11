@@ -99,11 +99,6 @@ class Station {
     coords = LatLng(latitude, longitude);
     status = json['status'];
     address = json['address'];
-    polution = json['polution'];
-    for (int i = 0; i < json['dangerousGases'].length; ++i){
-      Gas aux = Gas(json['dangerousGases'][i]['name'], json['dangerousGases'][i]['dangerLevel'], (json['dangerousGases'][i]['value']).toDouble() );
-      gasesBicing.add(aux);
-    }
   }
 
   gasAmount(){
@@ -115,7 +110,13 @@ class Station {
         pos = i;
       }
     }
-    return gasesBicing.elementAt(pos);
+    Gas devuelto;
+    if (gasesBicing.isNotEmpty) {
+      devuelto = gasesBicing.elementAt(pos);
+    } else{
+      devuelto = Gas("No hay gases nocivos", "-", 0);
+    }
+    return devuelto;
   }
 
   Map<String, dynamic> toJson() {

@@ -24,7 +24,7 @@ class BottomBarState extends State<BottomBar> {
     const ChatPage(),
     const ProfilePage()
   ];
-  var _selectedIndex = 2;
+  var _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     setState(() {

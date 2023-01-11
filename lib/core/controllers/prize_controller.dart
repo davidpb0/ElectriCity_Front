@@ -1,13 +1,8 @@
-
 import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
-import 'package:electricity_front/core/services/api_service.dart';
-import 'package:http/http.dart';
 import '../../core/models/prize_data.dart';
-
 import '../../core/controllers/user_controller.dart';
 
 class PrizeController {
-  final ApiService _apiService = ApiService();
   final CosmeticsController _cosmeticsController = CosmeticsController();
   UserController userCtrl = UserController();
   late List<ColorPrize> _colors;

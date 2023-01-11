@@ -205,7 +205,7 @@ class _ListPageState extends State<ListPage> {
                   ),
                 ],
               ),
-              child: Text('Available Slots')
+              child: const Text('Available Slots')
           ),
       ),
       TextButton(
@@ -224,7 +224,7 @@ class _ListPageState extends State<ListPage> {
                 ),
               ],
             ),
-            child: Text('Available Bikes')
+            child: const Text('Available Bikes')
         ),
       ),
     ],

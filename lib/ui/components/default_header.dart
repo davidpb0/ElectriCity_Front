@@ -11,12 +11,12 @@ class DefaultHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    CosmeticsController _cc = CosmeticsController();
+    CosmeticsController cc = CosmeticsController();
     return Container(
       padding: const EdgeInsets.only(top: 24),
       height: size.height,
       decoration: BoxDecoration(
-          color: Color(_cc.getCurrentTheme().accentcolor),
+          color: Color(cc.getCurrentTheme().accentcolor),
           borderRadius: const BorderRadius.only(
               bottomRight: Radius.circular(36),
               bottomLeft: Radius.circular(36)),

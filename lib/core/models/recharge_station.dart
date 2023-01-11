@@ -116,12 +116,6 @@ class RechargeStation {
     coords = LatLng(latitude.toDouble(), longitude);
     status = json['status'];
     address = json['address'];
-    polution = json['polution'];
-    for (int i = 0; i < json['dangerousGases'].length; ++i){
-      Gas aux = Gas(json['dangerousGases'][i]['name'], json['dangerousGases'][i]['dangerLevel'], (json['dangerousGases'][i]['value'])?.toDouble());
-      gasesCharger.add(aux);
-    }
-
   }
 
   Map<String, dynamic> toJson() {

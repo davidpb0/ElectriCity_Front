@@ -2,10 +2,6 @@ import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/core/controllers/prize_controller.dart';
 import 'package:electricity_front/ui/components/default_header.dart';
 import 'package:flutter/material.dart';
-import '../../core/controllers/user_controller.dart';
-
-
-
 import '../components/prize_preview.dart';
 //import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -51,7 +47,6 @@ class _PrizesPageState extends State<PrizesPage> {
       currentAvatar = prizeCtrl.getCurrentAvatar();
       claimPrize = (DateTime.now().difference(DateTime.parse(CosmeticsController().dailytimer)).inHours) < 24;
     });
-    print("refresh");
   }
 
 
@@ -872,7 +867,7 @@ Widget battlePass(bool available, Function refresh ){
           DateTime timer = DateTime.parse(CosmeticsController().dailytimer);
           if (DateTime.now().difference(timer).inHours < 24) {
             return Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Color(CosmeticsController()
                       .getCurrentTheme()
@@ -943,7 +938,7 @@ Widget battlePass(bool available, Function refresh ){
           }
           else{
             return Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: Color(CosmeticsController()
                     .getCurrentTheme()

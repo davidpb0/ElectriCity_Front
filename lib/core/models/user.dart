@@ -19,8 +19,8 @@ class User {
   int _electricoins = 0;
   int _theme = 0;
   int _avatar = 0;
-  List<bool> _themesUnlocked = [true, false, false, false, false, false, false, false];
-  List<bool> _avatarsUnlocked = [true, false, false, false, false, false, false, false, false, false, false, false];
+  final List<bool> _themesUnlocked = [true, false, false, false, false, false, false, false];
+  final List<bool> _avatarsUnlocked = [true, false, false, false, false, false, false, false, false, false, false, false];
 
 
   User();

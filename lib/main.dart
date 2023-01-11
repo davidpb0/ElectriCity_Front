@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
     CosmeticsController().readAvatars();
     CosmeticsController().readCounter();
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'ElectriCity',
       localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
