@@ -35,7 +35,7 @@ class Notifications {
 
     var not = NotificationDetails(
         android: androidPlatformChannelSpecifics,
-        iOS: DarwinNotificationDetails());
+        iOS: const DarwinNotificationDetails());
 
     await fln.show(0, title, body, not);
   }
@@ -59,7 +59,7 @@ class Notifications {
 
     var not = NotificationDetails(
         android: androidPlatformChannelSpecifics,
-        iOS: DarwinNotificationDetails());
+        iOS: const DarwinNotificationDetails());
 
     await fln.zonedSchedule(
       0,
