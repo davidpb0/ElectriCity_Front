@@ -378,7 +378,7 @@ abstract class AppLocalizations {
   /// No description provided for @expandedStation_gases.
   ///
   /// In en, this message translates to:
-  /// **'Air pollution information'**
+  /// **'Air quality'**
   String get expandedStation_gases;
 
   /// No description provided for @editprofile_oldpassword.
@@ -417,7 +417,6 @@ abstract class AppLocalizations {
   /// **'Edit account'**
   String get editprofile_text;
 
-
   /// No description provided for @notification_title_login.
   ///
   /// In en, this message translates to:
@@ -447,8 +446,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New message'**
   String get new_message;
-
-
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
