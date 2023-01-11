@@ -70,6 +70,7 @@ class StationController {
     Response res = await _apiService.getData('/recharge_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
+      _rechargelist.clear();
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
       chargersStarted = true;
@@ -360,32 +361,14 @@ class StationController {
     }
   }
 
-  Future<List<RechargeStation>> filterRechargeStation(
-      speedType, connectionType, currentType) async {
-    var queryParams = {
-      "connectionType": connectionType,
-      "speedType": speedType,
-      "currentType": currentType
-    };
-    Response res = await _apiService.getRechargeStationsWithFilter(
-        '/recharge_stations', queryParams);
-    var body = json.decode(res.body);
 
-    ///TODO
-    if (res.statusCode == 200) {
-      RechargeStationList rcSt = RechargeStationList.fromJson(body);
-      _rechargelist = rcSt.getChargerStations();
-      return _rechargelist;
-    } else {
-      throw Exception('Error en función filterRechargeStation');
-    }
-  }
 
   filterEverythingRechargeStation(String valueSpeedType, String valueCurrentType, String valueConnectionType) async {
     Response res = await _apiService
         .getData("/recharge_stations?speedType=$valueSpeedType&currentType=$valueCurrentType&connectionType=$valueConnectionType");
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
+      _rechargelist.clear();
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
       return _rechargelist;
@@ -399,6 +382,7 @@ class StationController {
         .getData("/recharge_stations?speedType=$valueSpeedType&currentType=$valueCurrentType");
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
+      _rechargelist.clear();
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
       return _rechargelist;
@@ -412,6 +396,7 @@ class StationController {
         .getData("/recharge_stations?currentType=$valueCurrentType&connectionType=$valueConnectionType");
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
+      _rechargelist.clear();
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
       return _rechargelist;
@@ -425,6 +410,7 @@ class StationController {
         .getData("/recharge_stations?speedType=$valueSpeedType&connectionType=$valueConnectionType");
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
+      _rechargelist.clear();
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
       return _rechargelist;
@@ -438,6 +424,7 @@ class StationController {
         .getData("/recharge_stations?currentType=$valueCurrentType");
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
+      _rechargelist.clear();
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
       return _rechargelist;
@@ -451,6 +438,7 @@ class StationController {
         .getData("/recharge_stations?speedType=$valueSpeedType");
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
+      _rechargelist.clear();
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
       return _rechargelist;
@@ -464,6 +452,7 @@ class StationController {
         .getData("/recharge_stations?connectionType=$valueConnectionType");
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
+      _rechargelist.clear();
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
       return _rechargelist;

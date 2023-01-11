@@ -35,6 +35,7 @@ class _ListPageState extends State<ListPage> {
   late String valueSpeedType = "None";
 
   catchCurrentTypeValue(String newValue) {
+    print(newValue);
     setState(() {
       valueCurrentType = newValue;
       getStations();
@@ -44,8 +45,12 @@ class _ListPageState extends State<ListPage> {
   catchSpeedTypeValue(String newValue) {
     setState(() {
       valueSpeedType = newValue;
-      getStations();
     });
+    getStations();
+  }
+
+  refresh() {
+    setState(() {});
   }
 
   catchConnectionTypeValue(String newValue) {
@@ -55,31 +60,38 @@ class _ListPageState extends State<ListPage> {
     });
   }
 
-  getStations() {
-    if (valueCurrentType != "None" && valueSpeedType != "None" && valueConnectionType != "None") {
-      stationCtrl.filterEverythingRechargeStation(valueSpeedType, valueCurrentType, valueConnectionType);
-    }
-    else if (valueCurrentType != "None" && valueSpeedType != "None") {
-      stationCtrl.filterSpeedAndCurrentTypeRechargeStation(valueSpeedType, valueCurrentType);
-    }
-    else if (valueCurrentType != "None" && valueConnectionType != "None") {
-      stationCtrl.filterCurrentAndConnectionTypeRechargeStation(valueCurrentType, valueConnectionType);
-    }
-    else if (valueSpeedType != "None" && valueConnectionType != "None") {
-      stationCtrl.filterSpeedAndConnectionTypeRechargeStation(valueSpeedType, valueConnectionType);
-    }
-    else if (valueCurrentType != "None") {
-      stationCtrl.filterCurrentTypeRechargeStation(valueCurrentType);
-    }
-    else if (valueSpeedType != "None") {
-      stationCtrl.filterSpeedTypeRechargeStation(valueCurrentType);
-    }
-    else if (valueConnectionType != "None") {
-      stationCtrl.filterConnectionRechargeStation(valueCurrentType);
-    }
-    else {
-      stationCtrl.fetchFirstRechargeStations();
+  getStations() async {
+    if (valueCurrentType != "None" &&
+        valueSpeedType != "None" &&
+        valueConnectionType != "None") {
+      await stationCtrl.filterEverythingRechargeStation(
+          valueSpeedType, valueCurrentType, valueConnectionType);
+      refresh();
+    } else if (valueCurrentType != "None" && valueSpeedType != "None") {
+      await stationCtrl.filterSpeedAndCurrentTypeRechargeStation(
+          valueSpeedType, valueCurrentType);
+      refresh();
+    } else if (valueCurrentType != "None" && valueConnectionType != "None") {
+      await stationCtrl.filterCurrentAndConnectionTypeRechargeStation(
+          valueCurrentType, valueConnectionType);
+      refresh();
+    } else if (valueSpeedType != "None" && valueConnectionType != "None") {
+      await stationCtrl.filterSpeedAndConnectionTypeRechargeStation(
+          valueSpeedType, valueConnectionType);
+      refresh();
+    } else if (valueCurrentType != "None") {
+      await stationCtrl.filterCurrentTypeRechargeStation(valueCurrentType);
+      refresh();
+    } else if (valueSpeedType != "None") {
+      await stationCtrl.filterSpeedTypeRechargeStation(valueSpeedType);
+      refresh();
+    } else if (valueConnectionType != "None") {
+      await stationCtrl.filterConnectionRechargeStation(valueConnectionType);
+      refresh();
+    } else {
+      await stationCtrl.fetchFirstRechargeStations();
       stationCtrl.streamRechargeStations();
+      refresh();
     }
   }
 
