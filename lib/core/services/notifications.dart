@@ -28,7 +28,6 @@ class Notifications {
       'channel_1',
       'channel_name',
       playSound: true,
-      sound: RawResourceAndroidNotificationSound('notification'),
       importance: Importance.max,
       priority: Priority.high,
     );
@@ -52,7 +51,6 @@ class Notifications {
       'channel_1',
       'channel_name',
       playSound: true,
-      sound: RawResourceAndroidNotificationSound('notification'),
       importance: Importance.max,
       priority: Priority.high,
     );
