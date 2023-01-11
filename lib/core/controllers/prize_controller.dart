@@ -1,6 +1,8 @@
 import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
+import 'package:http/http.dart';
 import '../../core/models/prize_data.dart';
 import '../../core/controllers/user_controller.dart';
+import '../services/api_service.dart';
 
 class PrizeController {
   final CosmeticsController _cosmeticsController = CosmeticsController();
@@ -244,7 +246,50 @@ class PrizeController {
     CosmeticsController().writeCounter();
   }
 
+  void claimCustomPrize(int coins){
+    electricoins += coins;
+    userCtrl.currentUser.setElectricoins(electricoins);
+  }
+
+  void updateElectricoins() async{
+    var data = {
+      "electryCoins" : electricoins
+    };
+
+    String urlTemp = "/users/${UserController().currentUser.getUserId()}";
+      Response res = await ApiService().updateUserInfo(data, urlTemp);
+      if (res.statusCode == 200) {
+
+      }
+      else {
+        throw Exception("Error while updating user profile");
+      }
+  }
 
 
+  void unlockPrizeUpdate() async{
+    var data = {
+      "electryCoins" : electricoins,
+      "awards" : []
+    };
 
+    String urlTemp = "/users/${UserController().currentUser.getUserId()}";
+    Response res = await ApiService().updateUserInfo(data, urlTemp);
+    if (res.statusCode == 200) {
+
+    }
+    else {
+      throw Exception("Error while updating user profile");
+    }
+  }
+
+  Future<void> printPrizes() async {
+    Response res = await ApiService().getData("/awards");
+    print(res.body);
+  }
 }
+
+
+
+
+

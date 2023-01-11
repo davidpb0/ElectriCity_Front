@@ -1,3 +1,4 @@
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
@@ -23,12 +24,13 @@ class _BicingPreviewState extends State<BicingPreview> {
   @override
   Widget build(BuildContext context) {
     bool faved = UserController().currentUser.isFavouriteBicingStationIndex(widget.info.id.toString());
+    CosmeticsController cosmeticsController = CosmeticsController();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Colors.grey[200],
+          color: Color(cosmeticsController.getCurrentTheme().elementcolordark),
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           boxShadow: const [
             BoxShadow(
@@ -46,7 +48,7 @@ class _BicingPreviewState extends State<BicingPreview> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                 decoration: ShapeDecoration(
-                  color: Colors.blue.shade800,
+                  color: Color(cosmeticsController.getCurrentTheme().elementcolorbicing),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.zero,
@@ -61,8 +63,8 @@ class _BicingPreviewState extends State<BicingPreview> {
                       child: Text(
                         widget.info.address,
                         textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                           fontSize: 20,
                         ),
                       ),
@@ -71,8 +73,8 @@ class _BicingPreviewState extends State<BicingPreview> {
                       child: Text(
                         widget.info.id.toString(),
                         textAlign: TextAlign.right,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -84,9 +86,9 @@ class _BicingPreviewState extends State<BicingPreview> {
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-                decoration: const ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
+                decoration: ShapeDecoration(
+                    color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(8),
                           topLeft: Radius.zero,
@@ -102,17 +104,17 @@ class _BicingPreviewState extends State<BicingPreview> {
                       children: [
                         Row(
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 6),
-                              child: Icon(TestIcons.bike, size: 20),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 6),
+                              child: Icon(TestIcons.bike, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(6),
                               child: Text(
                                 widget.info.mechanical.toString(),
                                 textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -121,17 +123,17 @@ class _BicingPreviewState extends State<BicingPreview> {
                           ],
                         ),
                         Row(children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 6),
-                            child: Icon(TestIcons.ebike, size: 20),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: Icon(TestIcons.ebike, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(6),
                             child: Text(
                               widget.info.electrical.toString(),
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.black,
+                              style: TextStyle(
+                                color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -140,17 +142,17 @@ class _BicingPreviewState extends State<BicingPreview> {
                         ]),
                         Row(// TEXT
                             children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 6),
-                            child: Icon(TestIcons.bicingParking, size: 20),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: Icon(TestIcons.bicingParking, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(6),
                             child: Text(
                               widget.info.availableSlots.toString(),
                               textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                color: Colors.black,
+                              style: TextStyle(
+                                color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -181,7 +183,7 @@ class _BicingPreviewState extends State<BicingPreview> {
                                   }
                                 });
                               },
-                                icon: Icon((faved) ? Icons.favorite : Icons.favorite_outline),
+                                icon: Icon((faved) ? Icons.favorite : Icons.favorite_outline, color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                               ),
 
                               IconButton(onPressed: () async {
@@ -191,7 +193,7 @@ class _BicingPreviewState extends State<BicingPreview> {
                                 // ignore: use_build_context_synchronously
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  ExpandedStationPage(index: widget.info.id, bicing: true)));
                               },
-                                icon: const Icon(Icons.open_in_new),
+                                icon: Icon(Icons.open_in_new, color: Color(cosmeticsController.getCurrentTheme().textcolordark),),
                               )
 
                             ]

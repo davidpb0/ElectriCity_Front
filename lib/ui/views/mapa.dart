@@ -11,6 +11,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../core/controllers/cosmetics_controller.dart';
 import '../components/default_header.dart';
 import '../components/info_personal_ubi_form.dart';
 
@@ -203,17 +204,17 @@ class GoogleMapaState extends State<GoogleMapa> {
           margin: EdgeInsets.only(
               top: MediaQuery.of(context).size.height * 0.75,
               left: MediaQuery.of(context).size.width * 0.82),
-          decoration: const BoxDecoration(
-            color: Colors.green,
+          decoration: BoxDecoration(
+            color: Color(CosmeticsController().getCurrentTheme().accentcolor),
             shape: BoxShape.circle,
           ),
           child: SizedBox.fromSize(
             size: const Size(56, 56), // button width and height
             child: ClipOval(
               child: Material(
-                color: Colors.green, // button color
+                color: Color(CosmeticsController().getCurrentTheme().accentcolor), // button color
                 child: InkWell(
-                  splashColor: Colors.greenAccent, // splash color
+                  splashColor: Color(CosmeticsController().getCurrentTheme().accentcoloralt), // splash color
                   onTap: () {
                     if (mounted) {
                       setState(() {

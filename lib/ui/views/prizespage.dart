@@ -32,6 +32,7 @@ class _PrizesPageState extends State<PrizesPage> {
   void initState(){
     super.initState();
     prizeCtrl.readPrizes();
+    prizeCtrl.printPrizes();
     colors = prizeCtrl.getColorAvailability();
     currentColor = prizeCtrl.getCurrentColor();
     avatars = prizeCtrl.getAvatarAvailability();
@@ -910,19 +911,20 @@ Widget battlePass(bool available, Function refresh ){
                                 ),)
                             ]
                         ),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text('Available to claim in ',
                               style: TextStyle(
                                   color: Color(CosmeticsController().getCurrentTheme().textcolorlight),
-                                  fontSize: 24,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold
                               ),),
                             Text('${CosmeticsController().cooldown()}h',
                               style: TextStyle(
                                   color: Color(CosmeticsController().getCurrentTheme().textcolorlight),
-                                  fontSize: 24,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.bold
                               ),)
                           ],
