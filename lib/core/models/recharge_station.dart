@@ -106,6 +106,7 @@ class RechargeStation {
     speedType = json['speedType'];
     connectionType = json['connectionType'];
     slots = json['slots'];
+    if (slots == 0) slots = 1;
     id = json['id'];
     String obj = json['latitude'].toString();
     if (obj[2] != '.') {
