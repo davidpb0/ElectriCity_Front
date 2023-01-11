@@ -109,6 +109,7 @@ class ApiService {
   getData(apiUrl) async {
     var fullUrl = _url + apiUrl;
     return await http.get(Uri.parse(fullUrl), headers: {
+      "Content-type": "application/json",
       "Authorization": "Bearer $token",
     });
   }

@@ -385,8 +385,6 @@ class StationController {
     Response res = await _apiService
         .getData("/recharge_stations?speedType=$valueSpeedType&currentType=$valueCurrentType&connectionType=$valueConnectionType");
     var body = json.decode(res.body);
-    print(res.statusCode.toString());
-    print(body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
@@ -400,8 +398,6 @@ class StationController {
     Response res = await _apiService
         .getData("/recharge_stations?speedType=$valueSpeedType&currentType=$valueCurrentType");
     var body = json.decode(res.body);
-    print(res.statusCode.toString());
-    print(body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
@@ -415,8 +411,6 @@ class StationController {
     Response res = await _apiService
         .getData("/recharge_stations?currentType=$valueCurrentType&connectionType=$valueConnectionType");
     var body = json.decode(res.body);
-    print(res.statusCode.toString());
-    print(body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
@@ -430,8 +424,6 @@ class StationController {
     Response res = await _apiService
         .getData("/recharge_stations?speedType=$valueSpeedType&connectionType=$valueConnectionType");
     var body = json.decode(res.body);
-    print(res.statusCode.toString());
-    print(body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
@@ -445,8 +437,6 @@ class StationController {
     Response res = await _apiService
         .getData("/recharge_stations?currentType=$valueCurrentType");
     var body = json.decode(res.body);
-    print(res.statusCode.toString());
-    print(body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
@@ -460,8 +450,6 @@ class StationController {
     Response res = await _apiService
         .getData("/recharge_stations?speedType=$valueSpeedType");
     var body = json.decode(res.body);
-    print(res.statusCode.toString());
-    print(body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
@@ -475,8 +463,6 @@ class StationController {
     Response res = await _apiService
         .getData("/recharge_stations?connectionType=$valueConnectionType");
     var body = json.decode(res.body);
-    print(res.statusCode.toString());
-    print(body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
       _rechargelist = rcSt.getChargerStations();
