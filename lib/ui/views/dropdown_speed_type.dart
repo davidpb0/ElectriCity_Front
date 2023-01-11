@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class DropdownCurrentType extends StatefulWidget {
+class DropdownSpeedType extends StatefulWidget {
 
   late final Function catchValue;
-  DropdownCurrentType({super.key, required this.catchValue});
+  DropdownSpeedType({super.key, required this.catchValue});
 
   @override
-  State<DropdownCurrentType> createState() => _DropdownCurrentTypeState();
+  State<DropdownSpeedType> createState() => _DropdownSpeedTypeState();
   String value = "None";
 
 }
 
-class _DropdownCurrentTypeState extends State<DropdownCurrentType> {
+class _DropdownSpeedTypeState extends State<DropdownSpeedType> {
   String selectedValue = "None";
 
   List<DropdownMenuItem<String>> get dropdownItems{
     List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(value: "None", child: Text("Current", style: TextStyle(color: Colors.black, fontSize: 15),)),
-      const DropdownMenuItem(value: "AC", child: Text("AC", style: TextStyle(color: Colors.black, fontSize: 15))),
-      const DropdownMenuItem(value: "DC", child: Text("DC", style: TextStyle(color: Colors.black, fontSize: 15))),
+      const DropdownMenuItem(value: "None", child: Text("Speed", style: TextStyle(color: Colors.black, fontSize: 15),)),
+      const DropdownMenuItem(value: "RAPID", child: Text("RAPID", style: TextStyle(color: Colors.black, fontSize: 15),)),
+      const DropdownMenuItem(value: "semiRAPID", child: Text("semiRAPID", style: TextStyle(color: Colors.black, fontSize: 15),)),
+      const DropdownMenuItem(value: "NORMAL", child: Text("NORMAL", style: TextStyle(color: Colors.black, fontSize: 15),)),
     ];
     return menuItems;
   }

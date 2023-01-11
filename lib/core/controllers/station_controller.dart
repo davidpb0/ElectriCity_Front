@@ -381,22 +381,109 @@ class StationController {
     }
   }
 
-  filterCurrentTypeRechargeStation(String valueSpeedType) async {
-    if (valueSpeedType != "None") {
-      Response res = await _apiService
-          .getData("/recharge_stations?speedType=$valueSpeedType");
-      var body = json.decode(res.body);
-      print(res.statusCode.toString());
-      print(body);
-      if (res.statusCode == 200) {
-        RechargeStationList rcSt = RechargeStationList.fromJson(body);
-        _rechargelist = rcSt.getChargerStations();
-        return _rechargelist;
-      } else {
-        throw Exception('Error en función filterSpeedTypeRechargeStation');
-      }
+  filterEverythingRechargeStation(String valueSpeedType, String valueCurrentType, String valueConnectionType) async {
+    Response res = await _apiService
+        .getData("/recharge_stations?speedType=$valueSpeedType&currentType=$valueCurrentType&connectionType=$valueConnectionType");
+    var body = json.decode(res.body);
+    print(res.statusCode.toString());
+    print(body);
+    if (res.statusCode == 200) {
+      RechargeStationList rcSt = RechargeStationList.fromJson(body);
+      _rechargelist = rcSt.getChargerStations();
+      return _rechargelist;
+    } else {
+      throw Exception('Error en función filterEverythingRechargeStation');
     }
+  }
 
+  filterSpeedAndCurrentTypeRechargeStation(String valueSpeedType, String valueCurrentType) async {
+    Response res = await _apiService
+        .getData("/recharge_stations?speedType=$valueSpeedType&currentType=$valueCurrentType");
+    var body = json.decode(res.body);
+    print(res.statusCode.toString());
+    print(body);
+    if (res.statusCode == 200) {
+      RechargeStationList rcSt = RechargeStationList.fromJson(body);
+      _rechargelist = rcSt.getChargerStations();
+      return _rechargelist;
+    } else {
+      throw Exception('Error en función filterCurrentTypeRechargeStation');
+    }
+  }
+
+  filterCurrentAndConnectionTypeRechargeStation(String valueCurrentType, String valueConnectionType) async {
+    Response res = await _apiService
+        .getData("/recharge_stations?currentType=$valueCurrentType&connectionType=$valueConnectionType");
+    var body = json.decode(res.body);
+    print(res.statusCode.toString());
+    print(body);
+    if (res.statusCode == 200) {
+      RechargeStationList rcSt = RechargeStationList.fromJson(body);
+      _rechargelist = rcSt.getChargerStations();
+      return _rechargelist;
+    } else {
+      throw Exception('Error en función filterCurrentTypeRechargeStation');
+    }
+  }
+
+  filterSpeedAndConnectionTypeRechargeStation(String valueSpeedType, String valueConnectionType) async {
+    Response res = await _apiService
+        .getData("/recharge_stations?speedType=$valueSpeedType&connectionType=$valueConnectionType");
+    var body = json.decode(res.body);
+    print(res.statusCode.toString());
+    print(body);
+    if (res.statusCode == 200) {
+      RechargeStationList rcSt = RechargeStationList.fromJson(body);
+      _rechargelist = rcSt.getChargerStations();
+      return _rechargelist;
+    } else {
+      throw Exception('Error en función filterCurrentTypeRechargeStation');
+    }
+  }
+
+  filterCurrentTypeRechargeStation(String valueCurrentType) async {
+    Response res = await _apiService
+        .getData("/recharge_stations?currentType=$valueCurrentType");
+    var body = json.decode(res.body);
+    print(res.statusCode.toString());
+    print(body);
+    if (res.statusCode == 200) {
+      RechargeStationList rcSt = RechargeStationList.fromJson(body);
+      _rechargelist = rcSt.getChargerStations();
+      return _rechargelist;
+    } else {
+      throw Exception('Error en función filterCurrentTypeRechargeStation');
+    }
+  }
+
+  filterSpeedTypeRechargeStation(String valueSpeedType) async {
+    Response res = await _apiService
+        .getData("/recharge_stations?speedType=$valueSpeedType");
+    var body = json.decode(res.body);
+    print(res.statusCode.toString());
+    print(body);
+    if (res.statusCode == 200) {
+      RechargeStationList rcSt = RechargeStationList.fromJson(body);
+      _rechargelist = rcSt.getChargerStations();
+      return _rechargelist;
+    } else {
+      throw Exception('Error en función filterCurrentTypeRechargeStation');
+    }
+  }
+
+  filterConnectionRechargeStation(String valueConnectionType) async {
+    Response res = await _apiService
+        .getData("/recharge_stations?connectionType=$valueConnectionType");
+    var body = json.decode(res.body);
+    print(res.statusCode.toString());
+    print(body);
+    if (res.statusCode == 200) {
+      RechargeStationList rcSt = RechargeStationList.fromJson(body);
+      _rechargelist = rcSt.getChargerStations();
+      return _rechargelist;
+    } else {
+      throw Exception('Error en función filterConnectionRechargeStation');
+    }
   }
 
 }

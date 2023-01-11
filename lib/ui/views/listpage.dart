@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import '../../core/controllers/station_controller.dart';
 import '../../fonts/test_icons_icons.dart';
 import '../components/default_header.dart';
+import 'dropdown_connection_type.dart';
+import 'dropdown_speed_type.dart';
 
 class ListPage extends StatefulWidget {
   const ListPage({Key? key}) : super(key: key);
@@ -32,30 +34,53 @@ class _ListPageState extends State<ListPage> {
   late String valueConnectionType = "None";
   late String valueSpeedType = "None";
 
-  static final List<String> _speedTypes = ["RAPID", "semiRAPID", "NORMAL"];
-
-  static final List<String> _connectionTypes = [
-    "MENNEKES",
-    "MENNEKES.M",
-    "MENNEKES.F",
-    "MENNEKES.TESLA",
-    "TESLA",
-    "CSS Combo2",
-    "Schuko",
-    "ChadeMO"
-  ];
-
   catchCurrentTypeValue(String newValue) {
     setState(() {
       valueCurrentType = newValue;
-      if (valueCurrentType != "None") {
-        stationCtrl.filterCurrentTypeRechargeStation(valueCurrentType);
-      }
-      else{
-        stationCtrl.fetchFirstRechargeStations();
-        stationCtrl.streamRechargeStations();
-      }
+      getStations();
     });
+  }
+
+  catchSpeedTypeValue(String newValue) {
+    setState(() {
+      valueSpeedType = newValue;
+      getStations();
+    });
+  }
+
+  catchConnectionTypeValue(String newValue) {
+    setState(() {
+      valueConnectionType = newValue;
+      getStations();
+    });
+  }
+
+  getStations() {
+    if (valueCurrentType != "None" && valueSpeedType != "None" && valueConnectionType != "None") {
+      stationCtrl.filterEverythingRechargeStation(valueSpeedType, valueCurrentType, valueConnectionType);
+    }
+    else if (valueCurrentType != "None" && valueSpeedType != "None") {
+      stationCtrl.filterSpeedAndCurrentTypeRechargeStation(valueSpeedType, valueCurrentType);
+    }
+    else if (valueCurrentType != "None" && valueConnectionType != "None") {
+      stationCtrl.filterCurrentAndConnectionTypeRechargeStation(valueCurrentType, valueConnectionType);
+    }
+    else if (valueSpeedType != "None" && valueConnectionType != "None") {
+      stationCtrl.filterSpeedAndConnectionTypeRechargeStation(valueSpeedType, valueConnectionType);
+    }
+    else if (valueCurrentType != "None") {
+      stationCtrl.filterCurrentTypeRechargeStation(valueCurrentType);
+    }
+    else if (valueSpeedType != "None") {
+      stationCtrl.filterSpeedTypeRechargeStation(valueCurrentType);
+    }
+    else if (valueConnectionType != "None") {
+      stationCtrl.filterConnectionRechargeStation(valueCurrentType);
+    }
+    else {
+      stationCtrl.fetchFirstRechargeStations();
+      stationCtrl.streamRechargeStations();
+    }
   }
 
   @override
@@ -80,35 +105,15 @@ class _ListPageState extends State<ListPage> {
           if (!bicing) {
             return Row(
               children: [
-                const Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
+                const Padding(padding: EdgeInsets.symmetric(horizontal: 8)),
                 // filter Speed type
                 DropdownCurrentType(catchValue: catchCurrentTypeValue),
                 const Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
+                // filter Speed type
+                DropdownSpeedType(catchValue: catchSpeedTypeValue),
+                const Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
                 // filter Connection type
-                /*MultiSelectBottomSheetField<String?>(
-                    initialChildSize: 0.4,
-                    buttonIcon: const Icon(TestIcons.eCharger, size: 22.0,),
-                    searchable: true,
-                    buttonText: const Text("Connection type", style: TextStyle(fontSize: 12.4),),
-                    items: connectionTypesItems,
-                    onConfirm: (values) {
-                      _selectedConnectionTypes = values;
-                    },
-                    chipDisplay: MultiSelectChipDisplay.none(),
-                  ),
-                  const Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
-                  // filter Current type
-                  MultiSelectBottomSheetField<String?>(
-                    initialChildSize: 0.4,
-                    buttonIcon: const Icon(Icons.electric_meter, size: 22.0,),
-                    searchable: true,
-                    buttonText: const Text("Current type", style: TextStyle(fontSize: 12.4),),
-                    items: currentTypesItems,
-                    onConfirm: (values) {
-                      _selectedCurrentTypes = values;
-                    },
-                    chipDisplay: MultiSelectChipDisplay.none(),
-                  ),*/
+                DropdownConnectionType(catchValue: catchConnectionTypeValue),
                 const Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
               ],
             );
