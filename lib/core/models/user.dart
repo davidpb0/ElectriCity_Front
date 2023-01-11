@@ -19,6 +19,7 @@ class User {
   int _electricoins = 0;
   int _theme = 0;
   int _avatar = 0;
+  var _rawAwards;
   final List<bool> _themesUnlocked = [true, false, false, false, false, false, false, false];
   final List<bool> _avatarsUnlocked = [true, false, false, false, false, false, false, false, false, false, false, false];
 
@@ -32,6 +33,7 @@ class User {
     _electricoins = json['electryCoins'];
     _theme = json['skinPalette'] ?? 0;
     _avatar = json['skinAvatar'] ?? 0;
+    _rawAwards = json['awards'];
     if (json['favouriteLocations'] != null) {
       _personalUbi = <Marker>[];
       for (int i = 0; i < json['favouriteLocations'].length; ++i) {
@@ -64,6 +66,7 @@ class User {
         _favouriteChargerStationIndex.add(id);
       }
     }
+
 
     if (json['awards'] != null) {
       for (int i = 0; i < json['awards'].length; ++i) {
@@ -141,6 +144,10 @@ class User {
 
   getTheme() {
     return _theme;
+  }
+
+  getRawAwards(){
+    return _rawAwards;
   }
 
   void unlockAvatar(int index){

@@ -32,7 +32,7 @@ class _PrizesPageState extends State<PrizesPage> {
   void initState(){
     super.initState();
     prizeCtrl.readPrizes();
-    prizeCtrl.printPrizes();
+    prizeCtrl.fetchPrizes();
     colors = prizeCtrl.getColorAvailability();
     currentColor = prizeCtrl.getCurrentColor();
     avatars = prizeCtrl.getAvatarAvailability();

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:http/http.dart';
 import '../../core/models/prize_data.dart';
@@ -10,10 +12,12 @@ class PrizeController {
   late List<ColorPrize> _colors;
   late List<bool> _colorsUnlocked;
   late int _currentColor;
+  late var _jsonAwards;
 
   late List<AvatarPrize> _avatars;
   late List<bool> _avatarsUnlocked;
   late int _currentAvatar;
+
   int electricoins = UserController().currentUser.getElectricoins();
 
   /*final List<ColorPrize> _colors = [
@@ -144,6 +148,8 @@ class PrizeController {
   PrizeController._();
 
   void readPrizes() async {
+
+
     _currentColor = userCtrl.currentUser.getTheme();
     _currentAvatar = userCtrl.currentUser.getAvatar();
     //_colorsUnlocked = _cosmeticsController.unlocked_themes;
@@ -155,6 +161,8 @@ class PrizeController {
     //_currentAvatar = _cosmeticsController.current_avatar;
     _avatarsUnlocked = userCtrl.currentUser.getUnlockedAvatars();
     _avatars = _cosmeticsController.getAllAvatars();
+
+    fetchPrizes();
 
   }
 
@@ -266,26 +274,30 @@ class PrizeController {
       }
   }
 
+  //void updateAw
+
 
   void unlockPrizeUpdate() async{
+    var awards = UserController().currentUser.getRawAwards();
+    print(awards);
     var data = {
       "electryCoins" : electricoins,
-      "awards" : []
+      "awards" : awards
     };
-
     String urlTemp = "/users/${UserController().currentUser.getUserId()}";
     Response res = await ApiService().updateUserInfo(data, urlTemp);
     if (res.statusCode == 200) {
-
     }
     else {
       throw Exception("Error while updating user profile");
     }
   }
 
-  Future<void> printPrizes() async {
+  Future<void> fetchPrizes() async {
     Response res = await ApiService().getData("/awards");
-    print(res.body);
+    var _json = json.decode(res.body);
+    _jsonAwards = _json['hydra:member'];
+    print(_jsonAwards);
   }
 }
 

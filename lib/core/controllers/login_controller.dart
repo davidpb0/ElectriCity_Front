@@ -32,6 +32,8 @@ class LoginController {
       if (res2.statusCode == 201) {
         Navigator.of(ctext).pushReplacementNamed('/home');
         User usr = User.fromJson(body2);
+        print(body['token']);
+
         usr.setToke(body['token']);
         return usr;
       }
