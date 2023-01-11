@@ -15,6 +15,7 @@ class ListController {
   List<Station> filterBicinglistBikes = [];
   List<Station> filterBicinglistEbikes = [];
   late List<RechargeStation> _filterRechargelist;
+
   bool bici = true;
   bool bicisStarted = false;
   bool chargersStarted = false;

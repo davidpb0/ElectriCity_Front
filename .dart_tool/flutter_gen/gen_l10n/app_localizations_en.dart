@@ -146,7 +146,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get expandedStation_editComment => 'Edit Comment';
 
   @override
-  String get expandedStation_gases => 'Air pollution information';
+  String get expandedStation_gases => 'Air quality';
 
   @override
   String get editprofile_oldpassword => 'Current password';
@@ -180,5 +180,4 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get new_message => 'New message';
-
 }

@@ -180,5 +180,4 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get new_message => 'Mensaje nuevo';
-
 }
