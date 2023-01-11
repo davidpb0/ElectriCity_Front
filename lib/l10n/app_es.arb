@@ -68,6 +68,9 @@
     "editprofile_cancel_changes": "Cancelar cambios",
     "editprofile_text": "Editar mi cuenta",
 
+     "notification_title_login": "Acuerdate de recoger tu recompensa diaria",
+     "notification_text_login": "Puedes hacerlo en la pestaña de premios",
+
     "add_new_user": "Añadir nuevo usuario",
     "chatview_adduser": "Añadir usuario",
     "new_message": "Mensaje nuevo"
