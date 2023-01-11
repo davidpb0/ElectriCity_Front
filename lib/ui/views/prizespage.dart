@@ -865,7 +865,7 @@ Widget battlePass(bool available, Function refresh ){
       child: Builder(
         builder: (context) {
           DateTime timer = DateTime.parse(CosmeticsController().dailytimer);
-          if (DateTime.now().difference(timer).inHours < 24) {
+          if (DateTime.now().difference(timer).inHours < 6) {
             return Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(

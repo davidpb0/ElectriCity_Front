@@ -142,16 +142,16 @@ class PrizeController {
   PrizeController._();
 
   void readPrizes() async {
+    _currentColor = userCtrl.currentUser.getTheme();
+    _currentAvatar = userCtrl.currentUser.getAvatar();
     //_colorsUnlocked = _cosmeticsController.unlocked_themes;
     //_currentColor = _cosmeticsController.current_theme;
     _colorsUnlocked = userCtrl.currentUser.getUnlockedThemes();
-    _currentColor = userCtrl.currentUser.getTheme();
     _colors = _cosmeticsController.getAllThemes();
 
     //_avatarsUnlocked = _cosmeticsController.unlocked_avatars;
     //_currentAvatar = _cosmeticsController.current_avatar;
     _avatarsUnlocked = userCtrl.currentUser.getUnlockedAvatars();
-    _currentAvatar = userCtrl.currentUser.getAvatar();
     _avatars = _cosmeticsController.getAllAvatars();
 
   }

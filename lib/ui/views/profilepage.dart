@@ -82,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     const SizedBox(width: 20),
                                     SizedBox(
                                       height: 64,
-                                      child:Image.asset(PrizeController().getAvatarsAsset(PrizeController().getCurrentAvatar()), fit: BoxFit.contain,),
+                                      child:Image.asset(CosmeticsController().getCurrentAvatar().asset, fit: BoxFit.contain,),
                                     ),
                                   ],
                                 )

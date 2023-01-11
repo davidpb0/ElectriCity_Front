@@ -165,7 +165,7 @@ class CosmeticsController {
     final splitted = contents.split("//");
     dailytimer = splitted[0];
     streak = int.parse(splitted[1]);
-    if (DateTime.now().difference(DateTime.parse(CosmeticsController().dailytimer)).inHours > 48){
+    if (DateTime.now().difference(DateTime.parse(CosmeticsController().dailytimer)).inHours > 24){
       streak = 0;
     }
 
@@ -223,6 +223,6 @@ class CosmeticsController {
   }
 
   int cooldown(){
-    return 24 - (DateTime.now().difference(DateTime.parse(CosmeticsController().dailytimer)).inHours);
+    return 6 - (DateTime.now().difference(DateTime.parse(CosmeticsController().dailytimer)).inHours);
   }
 }
