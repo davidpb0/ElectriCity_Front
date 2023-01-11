@@ -216,11 +216,15 @@ class PrizeController {
 
   void unlockColor(int index){
     _colorsUnlocked[index] = true;
+    updateAwards(true, index);
+    unlockPrizeUpdate();
     _cosmeticsController.unlockColor(index);
   }
 
   void unlockAvatar(int index){
     _avatarsUnlocked[index] = true;
+    updateAwards(true, index);
+    unlockPrizeUpdate();
     _cosmeticsController.unlockAvatar(index);
   }
 
@@ -241,8 +245,10 @@ class PrizeController {
 
     electricoins -= price;
     userCtrl.currentUser.setElectricoins(electricoins);
+    updateElectricoins();
     return true;
   }
+
   int getDailyPrize(){
     return 100 + (CosmeticsController().streak*50);
   }
@@ -252,11 +258,13 @@ class PrizeController {
     electricoins += prize;
     userCtrl.currentUser.setElectricoins(electricoins);
     CosmeticsController().writeCounter();
+    updateElectricoins();
   }
 
   void claimCustomPrize(int coins){
     electricoins += coins;
     userCtrl.currentUser.setElectricoins(electricoins);
+    updateElectricoins();
   }
 
   void updateElectricoins() async{
@@ -274,7 +282,19 @@ class PrizeController {
       }
   }
 
-  //void updateAw
+  void updateAwards(bool color, int index) async{
+    var data = UserController().currentUser.getRawAwards();
+    if(color){
+      data.add(_jsonAwards[index]);
+    }
+    else{
+      data.add(_jsonAwards[index+8]);
+    }
+    print(data);
+    UserController().currentUser.setRawAwards(data);
+
+
+  }
 
 
   void unlockPrizeUpdate() async{
@@ -293,11 +313,32 @@ class PrizeController {
     }
   }
 
+  void currentPrizeUpdate() async{
+    var data = {
+    'skinPalette' : UserController().currentUser.getTheme(),
+    'skinAvatar' : UserController().currentUser.getAvatar()
+    };
+    String urlTemp = "/users/${UserController().currentUser.getUserId()}";
+    Response res = await ApiService().updateUserInfo(data, urlTemp);
+    if (res.statusCode == 200) {
+    }
+    else {
+      throw Exception("Error while updating user profile");
+    }
+  }
+
   Future<void> fetchPrizes() async {
     Response res = await ApiService().getData("/awards");
     var _json = json.decode(res.body);
     _jsonAwards = _json['hydra:member'];
     print(_jsonAwards);
+    if (UserController().currentUser.getRawAwards() == null){
+      var awards = {
+        [_jsonAwards[0], _jsonAwards[8] ]
+      };
+      UserController().currentUser.setRawAwards(awards);
+
+    }
   }
 }
 

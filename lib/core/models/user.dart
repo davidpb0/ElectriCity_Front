@@ -158,6 +158,10 @@ class User {
     _avatar = index;
   }
 
+  void setRawAwards(var awards){
+    _rawAwards = awards;
+  }
+
   void unlockTheme(int index){
     _themesUnlocked[index] = true;
   }
