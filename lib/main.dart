@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/routes/routes.dart';
 import 'package:electricity_front/ui/views/splashscreen.dart';
@@ -7,11 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'core/controllers/mapa_controller.dart';
+
+
 
 void main() async {
   runApp(const MyApp());
   HttpOverrides.global = MyHttpOverrides();
-  //await MapaController().initBD();
+  MapaController().initBD();
 }
 
 class MyApp extends StatelessWidget {

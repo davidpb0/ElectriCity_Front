@@ -11,6 +11,9 @@ import GoogleMaps
   //Google Maps API KEY
     GMSServices.provideAPIKey("AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM")
     GeneratedPluginRegistrant.register(with: self)
+    if #available(iOS 10.0, *) {
+      UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+    }
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
 }

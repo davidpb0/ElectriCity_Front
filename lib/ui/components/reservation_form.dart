@@ -2,8 +2,10 @@
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import '../../core/controllers/booking_controller.dart';
+import '../../core/services/notifications.dart';
 
 
 class ReservationForm extends StatefulWidget {
@@ -27,6 +29,8 @@ class _ReservationFormState extends State<ReservationForm> {
   TextEditingController dateinput = TextEditingController();
   TextEditingController starttimeinput = TextEditingController();
   TextEditingController endtimeinput = TextEditingController();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
   @override
   void initState() {
@@ -254,6 +258,11 @@ class _ReservationFormState extends State<ReservationForm> {
                             Future<bool> success = booking.tryBooking(context);
                             if (await success) {
                               completedBooking = true;
+                              Notifications.showSchedueleNotification(
+                                  title: "Se ha reservado una estación",
+                                  body: "La estación ${BookingController().gettStationId()} se ha reservado correctamente",
+                                  seconds: 2,
+                                  fln: flutterLocalNotificationsPlugin);
 
                             }
 

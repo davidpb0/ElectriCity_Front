@@ -65,6 +65,9 @@
     "editprofile_cancel_changes": "Cancel changes",
     "editprofile_text": "Edit account",
 
+    "notification_title_login": "Remember to claim you daily reward",
+    "notification_text_login": "You can do it on the prize tab",
+
     "add_new_user": "Add new user",
     "chatview_adduser": "Add user",
     "new_message": "New message"

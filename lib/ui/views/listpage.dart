@@ -337,9 +337,41 @@ class _ListPageState extends State<ListPage> {
                                   ]).createShader(bounds);
                             },
                             blendMode: BlendMode.dstOut,
-                            child: Builder(builder: (context) {
-                              if (ListController().filterSlots) {
-                                return ListView.builder(
+
+                            child: Builder(
+                              builder: (context) {
+                                if (ListController().filterSlots){
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: ListController().filterBicinglistSlots.length,
+                                    itemBuilder: (context, index) {
+                                      return BicingPreview(
+                                          info: stationCtrl.getBicingStationbyId(ListController().filterBicinglistSlots[index].id));
+                                    },
+                                  );
+                                }
+                                else if (ListController().filterBikes){
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: ListController().filterBicinglistBikes.length,
+                                    itemBuilder: (context, index) {
+                                      return BicingPreview(
+                                          info: stationCtrl.getBicingStationbyId(ListController().filterBicinglistBikes[index].id));
+                                    },
+                                  );
+                                }
+                                else if (ListController().filterEBikes){
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: ListController().filterBicinglistEbikes.length,
+                                    itemBuilder: (context, index) {
+                                      return BicingPreview(
+                                          info: stationCtrl.getBicingStationbyId(ListController().filterBicinglistEbikes[index].id));
+                                    },
+                                  );
+                                }
+                                else {
+                                  return ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: ListController()
                                       .filterBicinglist_slots
