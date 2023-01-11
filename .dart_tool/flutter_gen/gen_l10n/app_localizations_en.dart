@@ -167,6 +167,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get editprofile_text => 'Edit account';
 
   @override
+  String get notification_title_login => 'Remember to claim you daily reward';
+
+  @override
+  String get notification_text_login => 'You can do it on the prize tab';
+
+  @override
   String get add_new_user => 'Add new user';
 
   @override
@@ -174,4 +180,5 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get new_message => 'New message';
+
 }

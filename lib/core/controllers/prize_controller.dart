@@ -244,6 +244,11 @@ class PrizeController {
     CosmeticsController().writeCounter();
   }
 
+  void claimCustomPrize(int coins){
+    electricoins += coins;
+    userCtrl.currentUser.setElectricoins(electricoins);
+  }
+
 
 
 

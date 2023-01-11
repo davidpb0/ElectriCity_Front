@@ -45,6 +45,9 @@ class BookingController {
   void setStationId(String id) {
     _stationid = id;
   }
+   gettStationId() {
+    return _stationid;
+  }
 
   void setDate(String date) {
     _date = date;

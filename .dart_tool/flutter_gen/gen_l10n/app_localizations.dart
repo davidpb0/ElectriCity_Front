@@ -417,6 +417,19 @@ abstract class AppLocalizations {
   /// **'Edit account'**
   String get editprofile_text;
 
+
+  /// No description provided for @notification_title_login.
+  ///
+  /// In en, this message translates to:
+  /// **'Remember to claim you daily reward'**
+  String get notification_title_login;
+
+  /// No description provided for @notification_text_login.
+  ///
+  /// In en, this message translates to:
+  /// **'You can do it on the prize tab'**
+  String get notification_text_login;
+
   /// No description provided for @add_new_user.
   ///
   /// In en, this message translates to:
@@ -434,6 +447,7 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'New message'**
   String get new_message;
+
 
 }
 
