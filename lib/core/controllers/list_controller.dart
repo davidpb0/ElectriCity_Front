@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import '../models/station_list.dart';
 import 'package:http/http.dart';
@@ -9,8 +10,11 @@ import '../services/api_service.dart';
 
 class ListController {
   final ApiService _apiService = ApiService();
-  late List<Station> _bicinglist;
-  late List<RechargeStation> _rechargelist;
+  late List<Station> _filterBicinglist;
+  List<Station> filterBicinglist_slots = [];
+  List<Station> filterBicinglist_bikes = [];
+  List<Station> filterBicinglist_ebikes = [];
+  late List<RechargeStation> _filterRechargelist;
   bool bici = true;
   bool bicisStarted = false;
   bool chargersStarted = false;
@@ -19,10 +23,16 @@ class ListController {
   int bicisIterator = 2;
   int chargersIterator = 2;
 
+  // FILTERS BICING
+  bool filterSlots = false;
+  bool filterBikes = false;
+  bool filterEBikes = false;
+
+
+  // filter recharge station
+
   StreamController<List<RechargeStation>> rechargeStationStreamController =
-      StreamController<List<RechargeStation>>.broadcast();
-  StreamController<List<Station>> bicingStationStreamController =
-      StreamController<List<Station>>.broadcast();
+  StreamController<List<RechargeStation>>.broadcast();
 
   factory ListController() {
     return _this;
@@ -32,24 +42,80 @@ class ListController {
 
   ListController._();
 
+  // filter bicing stations fetch
+
+  //SLOTS
+
+  void initFilters() {
+    filterBicingStationsSlots();
+    filterBicingStationsBikes();
+    filterBicingStationsEbikes();
+  }
+
+  void filterBicingStationsSlots() {
+    for (int i = 0; i < StationController().getTotalBicingStations(); ++i){
+      if (StationController().getBicingStation(i).availableSlots > 0){
+        filterBicinglist_slots.add(StationController().getBicingStation(i));
+      }
+    }
+  }
+
+  void filterBicingStationsBikes() {
+    for (int i = 0; i < StationController().getTotalBicingStations(); ++i){
+      if (StationController().getBicingStation(i).mechanical > 0){
+        filterBicinglist_bikes.add(StationController().getBicingStation(i));
+      }
+    }
+  }
+
+  void filterBicingStationsEbikes() {
+    for (int i = 0; i < StationController().getTotalBicingStations(); ++i){
+      if (StationController().getBicingStation(i).electrical > 0){
+        filterBicinglist_ebikes.add(StationController().getBicingStation(i));
+      }
+    }
+  }
+
+  void streamBicingStations() async {
+    while (!bicisComplete) {
+      Response res =
+      await _apiService.getData('/bicing_stations?page=$bicisIterator');
+      var body = json.decode(res.body);
+      if (res.statusCode == 200) {
+        StationList estaciones = StationList.fromJson(body);
+        if (estaciones.listMember.isEmpty) {
+          bicisComplete = true;
+        } else {
+          //bicingStationStreamController.add(estaciones.listMember);
+          _filterBicinglist.addAll(estaciones.listMember);
+          bicisIterator++;
+        }
+      } else {
+        throw Exception('Error en función streamBicingStations');
+      }
+    }
+  }
+  /*
   Future<List<Station>> fetchBicingStations() async {
     Response res = await _apiService.getData('/bicing_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
-      _bicinglist = estaciones.getBicingStations();
-      return _bicinglist;
+      _filterBicinglist = estaciones.getBicingStations();
+      return _filterBicinglist;
     } else {
       throw Exception('Error en función fetchBicingStations');
     }
   }
+
+   */
 
   void fetchFirstBicingStations() async {
     Response res = await _apiService.getData('/bicing_stations');
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       StationList estaciones = StationList.fromJson(body);
-      _bicinglist = estaciones.getBicingStations();
+      _filterBicinglist = estaciones.getBicingStations();
       bicisStarted = true;
     } else {
       throw Exception('Error en función fetchFirstBicingStations');
@@ -61,13 +127,13 @@ class ListController {
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
-      _rechargelist = rcSt.getChargerStations();
+      _filterRechargelist = rcSt.getChargerStations();
       chargersStarted = true;
     } else {
       throw Exception('Error en función fetchFirstRechargeStations');
     }
   }
-
+/*
   void streamBicingStations() async {
     while (!bicisComplete) {
       Response res =
@@ -79,7 +145,7 @@ class ListController {
           bicisComplete = true;
         } else {
           bicingStationStreamController.add(estaciones.listMember);
-          _bicinglist.addAll(estaciones.listMember);
+          _filterBicinglist.addAll(estaciones.listMember);
           bicisIterator++;
         }
       } else {
@@ -87,6 +153,8 @@ class ListController {
       }
     }
   }
+
+ */
 
   void streamRechargeStations() async {
     while (!chargersComplete) {
@@ -99,7 +167,7 @@ class ListController {
           chargersComplete = true;
         } else {
           rechargeStationStreamController.add(estaciones.chargeStation);
-          _rechargelist.addAll(estaciones.chargeStation);
+          _filterRechargelist.addAll(estaciones.chargeStation);
           chargersIterator++;
         }
       } else {
@@ -113,8 +181,8 @@ class ListController {
     var body = json.decode(res.body);
     if (res.statusCode == 200) {
       RechargeStationList rcSt = RechargeStationList.fromJson(body);
-      _rechargelist = rcSt.getChargerStations();
-      return _rechargelist;
+      _filterRechargelist = rcSt.getChargerStations();
+      return _filterRechargelist;
     } else {
       throw Exception('Error en función fetchRechargeStations');
     }
@@ -123,37 +191,71 @@ class ListController {
   Stream<List<RechargeStation>> getRechargeStationsStream() {
     return rechargeStationStreamController.stream;
   }
-
+/*
   Stream<List<Station>> getBicingStationsStream() {
     return bicingStationStreamController.stream;
   }
 
+ */
+
   int getTotalBicingStations() {
     if (!bicisStarted) return 0;
-    return _bicinglist.length;
+    return _filterBicinglist.length;
   }
 
   int getTotalRechargeStations() {
     if (!chargersStarted) return 0;
-    return _rechargelist.length;
+    return _filterRechargelist.length;
   }
 
   Station getBicingStation(int index) {
-    return _bicinglist.elementAt(index);
+    return _filterBicinglist.elementAt(index);
   }
 
   Station getBicingStationbyId(int id) {
-    return _bicinglist.singleWhere((o) => o.id == id);
+    return _filterBicinglist.singleWhere((o) => o.id == id);
   }
 
   RechargeStation getRechargeStation(int index) {
-    return _rechargelist.elementAt(index);
+    return _filterRechargelist.elementAt(index);
   }
 
   RechargeStation getRechargeStationbyId(int id) {
-    return _rechargelist.singleWhere((o) => o.id == id);
+    return _filterRechargelist.singleWhere((o) => o.id == id);
   }
-  void filterSlots(){}
-  void filterManBikes(){}
+
+  void filterBicingStations(String filter){
+    if (filter == "slots"){
+      if (filterSlots){
+        filterSlots = false;
+      }
+      else {
+        filterSlots = true;
+        filterEBikes = false;
+        filterBikes = false;
+      }
+    }
+    if (filter == "bikes"){
+      if (filterBikes){
+        filterBikes = false;
+      }
+      else {
+        filterBikes = true;
+        filterEBikes = false;
+        filterSlots = false;
+      }
+    }
+    if (filter == "ebikes"){
+      if (filterEBikes){
+        filterEBikes = false;
+      }
+      else {
+        filterEBikes = true;
+        filterBikes = false;
+        filterSlots = false;
+      }
+    }
+  }
+
 
 }
