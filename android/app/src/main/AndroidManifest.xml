@@ -12,7 +12,6 @@
         android:label="ElectriCity"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
-        android:label="electricity_front"
         android:showWhenLocked="true"
         android:turnScreenOn="true"
         android:usesCleartextTraffic="true">
