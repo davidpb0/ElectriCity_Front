@@ -35,7 +35,6 @@ class _ListPageState extends State<ListPage> {
   late String valueSpeedType = "None";
 
   catchCurrentTypeValue(String newValue) {
-    print(newValue);
     setState(() {
       valueCurrentType = newValue;
       getStations();
