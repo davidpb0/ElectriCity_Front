@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -97,7 +99,7 @@ class _ReservationFormState extends State<ReservationForm> {
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: DateTime.now(),
-                          lastDate: DateTime.now().add(const Duration(days: 60)));
+                          lastDate: DateTime.now().add(const Duration(hours: 24)));
 
                       if (pickedDate != null) {
                         String formattedDate = DateFormat('yyyy-MM-dd').format(

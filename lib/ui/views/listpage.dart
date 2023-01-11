@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
+import 'package:electricity_front/core/controllers/list_controller.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/ui/components/bicing_preview.dart';
@@ -22,12 +24,16 @@ class _ListPageState extends State<ListPage> {
   late Future<List<Station>> futureBicing;
   late Future<List<RechargeStation>> futureRecharge;
   StationController stationCtrl = StationController();
+  CosmeticsController cosmeticsController = CosmeticsController();
   bool bicing = true;
+  int f_bicing = 0;
+  int f_recharge = 0;
 
   @override
   void initState() {
     super.initState();
     Timer(const Duration(seconds: 1), () => build(context));
+    ListController().initFilters();
   }
 
   @override
@@ -36,26 +42,151 @@ class _ListPageState extends State<ListPage> {
     Size screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Color(cosmeticsController.getCurrentTheme().backgroundcolor),
       appBar: DefaultHeader(
-          size: Size(screenSize.width, (screenSize.height * 0.1))),
+          size: Size(screenSize.width, (screenSize.height * 0.15))),
       body: Column(children: [
+        Builder(
+          builder: (context) {
+            if(!bicing){
+              return Row(
+                children: [
+                  TextButton(
+                    onPressed:(){
+                      ListController().filterBicingStations("chargers");
+                      setState(() {
+
+                      });
+                    } ,
+                    child: Container(
+                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Color(CosmeticsController().getCurrentTheme().elementcolordark),
+                          borderRadius: const BorderRadius.all(Radius.circular(8)),
+                          boxShadow: const [
+                            BoxShadow(
+                              offset: Offset(0, 2),
+                              blurRadius: 1,
+                            ),
+                          ],
+                        ),
+                        child: Text('Available chargers')
+                    ),
+                  ),
+
+                ],
+              );
+            }
+            else{
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed:(){
+                      ListController().filterBicingStations("slots");
+                      setState(() {
+
+                      });
+                    } ,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: (ListController().filterSlots) ? Color(CosmeticsController().getCurrentTheme().elementcolorbicing) : Color(CosmeticsController().getCurrentTheme().elementcolordark),
+                        borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        boxShadow: const [
+                          BoxShadow(
+                            offset: Offset(0, 2),
+                            blurRadius: 1,
+                          ),
+                        ],
+                      ),
+                      child: Text('Available Slots',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Color(CosmeticsController().getCurrentTheme().textcolorlight),
+                        ),
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed:(){
+                      ListController().filterBicingStations("bikes");
+                      setState(() {
+
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: (ListController().filterBikes) ? Color(CosmeticsController().getCurrentTheme().elementcolorbicing) : Color(CosmeticsController().getCurrentTheme().elementcolordark),
+                        borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        boxShadow: const [
+                          BoxShadow(
+                            offset: Offset(0, 2),
+                            blurRadius: 1,
+                          ),
+                        ],
+                      ),
+                      child: Text('Available Bikes',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Color(CosmeticsController().getCurrentTheme().textcolorlight),
+                        ),
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed:(){
+                      ListController().filterBicingStations("ebikes");
+                      setState(() {
+
+                      });
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: (ListController().filterEBikes) ? Color(CosmeticsController().getCurrentTheme().elementcolorbicing) : Color(CosmeticsController().getCurrentTheme().elementcolordark),
+                        borderRadius: const BorderRadius.all(Radius.circular(8)),
+                        boxShadow: const [
+                          BoxShadow(
+                            offset: Offset(0, 2),
+                            blurRadius: 1,
+                          ),
+                        ],
+                      ),
+                      child: Text('Available E-Bikes',
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Color(CosmeticsController().getCurrentTheme().textcolorlight),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              );
+            }
+          }
+        ),
         Container(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.all(4),
           child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             //icon eCar
             Builder(builder: (context) {
               if (bicing) {
-                return const Icon(TestIcons.eCar, size: 20, color: Colors.grey);
+                return Icon(TestIcons.eCar, size: 20, color: Color(cosmeticsController.getCurrentTheme().elementcolor));
               }
-              return const Icon(TestIcons.eCar, size: 20, color: Colors.green);
+              return Icon(TestIcons.eCar, size: 20, color: Color(cosmeticsController.getCurrentTheme().elementcolorcharger));
             }),
             Switch(
               // This bool value toggles the switch.
               value: bicing,
-              activeColor: Colors.blue,
-              inactiveThumbColor: Colors.green,
-              inactiveTrackColor: Colors.green.shade400,
+              activeColor: Color(cosmeticsController.getCurrentTheme().elementcolorbicing),
+              inactiveThumbColor: Color(cosmeticsController.getCurrentTheme().elementcolorcharger),
+              inactiveTrackColor: Color(cosmeticsController.getCurrentTheme().elementcolorcharger - 0x80000000),
               onChanged: (bool value) {
                 // This is called when the user toggles the switch.
                 setState(() {
@@ -65,9 +196,9 @@ class _ListPageState extends State<ListPage> {
             ),
             Builder(builder: (context) {
               if (bicing) {
-                return const Icon(TestIcons.bike, size: 20, color: Colors.blue);
+                return Icon(TestIcons.bike, size: 20, color: Color(cosmeticsController.getCurrentTheme().elementcolorbicing));
               }
-              return const Icon(TestIcons.bike, size: 20, color: Colors.grey);
+              return Icon(TestIcons.bike, size: 20, color: Color(cosmeticsController.getCurrentTheme().elementcolor));
             }),
           ]),
         ),
@@ -98,10 +229,10 @@ class _ListPageState extends State<ListPage> {
                                   begin: Alignment.topCenter,
                                   end: Alignment.bottomCenter,
                                   colors: <Color>[
-                                    Colors.grey.shade300,
+                                    Color(cosmeticsController.getCurrentTheme().backgroundcolor),
                                     Colors.transparent,
                                     Colors.transparent,
-                                    Colors.grey.shade300
+                                    Color(cosmeticsController.getCurrentTheme().backgroundcolor)
                                   ],
                                   stops: const [
                                     0.0,
@@ -111,13 +242,49 @@ class _ListPageState extends State<ListPage> {
                                   ]).createShader(bounds);
                             },
                             blendMode: BlendMode.dstOut,
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: stationCtrl.getTotalBicingStations(),
-                              itemBuilder: (context, index) {
-                                return BicingPreview(
-                                    info: stationCtrl.getBicingStation(index));
-                              },
+                            child: Builder(
+                              builder: (context) {
+                                if (ListController().filterSlots){
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: ListController().filterBicinglist_slots.length,
+                                    itemBuilder: (context, index) {
+                                      return BicingPreview(
+                                          info: stationCtrl.getBicingStationbyId(ListController().filterBicinglist_slots[index].id));
+                                    },
+                                  );
+                                }
+                                else if (ListController().filterBikes){
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: ListController().filterBicinglist_bikes.length,
+                                    itemBuilder: (context, index) {
+                                      return BicingPreview(
+                                          info: stationCtrl.getBicingStationbyId(ListController().filterBicinglist_bikes[index].id));
+                                    },
+                                  );
+                                }
+                                else if (ListController().filterEBikes){
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: ListController().filterBicinglist_ebikes.length,
+                                    itemBuilder: (context, index) {
+                                      return BicingPreview(
+                                          info: stationCtrl.getBicingStationbyId(ListController().filterBicinglist_ebikes[index].id));
+                                    },
+                                  );
+                                }
+                                else {
+                                  return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: stationCtrl.getTotalBicingStations(),
+                                  itemBuilder: (context, index) {
+                                    return BicingPreview(
+                                        info: stationCtrl.getBicingStation(index));
+                                  },
+                                );
+                                }
+                              }
                             )
                         );
                       }
@@ -152,10 +319,10 @@ class _ListPageState extends State<ListPage> {
                                 begin: Alignment.topCenter,
                                 end: Alignment.bottomCenter,
                                 colors: <Color>[
-                                  Colors.grey.shade300,
+                                  Color(cosmeticsController.getCurrentTheme().backgroundcolor),
                                   Colors.transparent,
                                   Colors.transparent,
-                                  Colors.grey.shade300
+                                  Color(cosmeticsController.getCurrentTheme().backgroundcolor),
                                 ],
                                 stops: const [
                                   0.0,
@@ -182,3 +349,47 @@ class _ListPageState extends State<ListPage> {
     );
   }
 }
+ Widget filters(){
+  return Row(
+    children: [
+      TextButton(
+          onPressed:(){
+            //ListController().filterSlots();
+          } ,
+          child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Color(CosmeticsController().getCurrentTheme().elementcolordark),
+                borderRadius: const BorderRadius.all(Radius.circular(8)),
+                boxShadow: const [
+                  BoxShadow(
+                    offset: Offset(0, 2),
+                    blurRadius: 1,
+                  ),
+                ],
+              ),
+              child: const Text('Available Slots')
+          ),
+      ),
+      TextButton(
+        onPressed:(){
+          //ListController().filterSlots();
+        },
+        child: Container(
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Color(CosmeticsController().getCurrentTheme().elementcolordark),
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              boxShadow: const [
+                BoxShadow(
+                  offset: Offset(0, 2),
+                  blurRadius: 1,
+                ),
+              ],
+            ),
+            child: const Text('Available Bikes')
+        ),
+      ),
+    ],
+  );
+ }

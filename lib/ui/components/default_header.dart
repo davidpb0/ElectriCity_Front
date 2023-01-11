@@ -1,3 +1,4 @@
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:flutter/material.dart';
 
 class DefaultHeader extends StatelessWidget implements PreferredSizeWidget {
@@ -10,15 +11,16 @@ class DefaultHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    CosmeticsController cc = CosmeticsController();
     return Container(
       padding: const EdgeInsets.only(top: 24),
       height: size.height,
-      decoration: const BoxDecoration(
-          color: Colors.green,
-          borderRadius: BorderRadius.only(
+      decoration: BoxDecoration(
+          color: Color(cc.getCurrentTheme().accentcolor),
+          borderRadius: const BorderRadius.only(
               bottomRight: Radius.circular(36),
               bottomLeft: Radius.circular(36)),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               offset: Offset(0, 1),
               blurRadius: 10,
@@ -53,6 +55,5 @@ class DefaultHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  // TODO: implement preferredSize
   Size get preferredSize => size;
 }

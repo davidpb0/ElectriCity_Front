@@ -16,6 +16,7 @@
     "homepage_map": "Mapa",
     "homepage_stations": "Estaciones",
     "homepage_prizes": "Premios",
+    "homepage_chat": "Chat",
     "homepage_profile": "Perfil",
 
     "route_origin": "Orígen",
@@ -56,6 +57,8 @@
     "expandedStation_favButton":"Favorito",
     "expandedStation_addComment":"Añade un comentario",
     "expandedStation_editComment":"Edita el comentario",
+    "expandedStation_gases":"Calidad del aire",
+
 
 
     "editprofile_oldpassword": "Contraseña actual",
@@ -66,7 +69,9 @@
     "editprofile_text": "Editar mi cuenta",
 
      "notification_title_login": "Acuerdate de recoger tu recompensa diaria",
-     "notification_text_login": "Puedes hacerlo en la pestaña de premios"
+     "notification_text_login": "Puedes hacerlo en la pestaña de premios",
 
-
+    "add_new_user": "Añadir nuevo usuario",
+    "chatview_adduser": "Añadir usuario",
+    "new_message": "Mensaje nuevo"
 }

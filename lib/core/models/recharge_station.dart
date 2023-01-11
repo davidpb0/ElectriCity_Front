@@ -2,6 +2,8 @@ import 'package:electricity_front/core/models/comment.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
+import 'gas.dart';
+
 class RechargeStationList {
   late List<RechargeStation> chargeStation;
   late int totalItems;
@@ -59,6 +61,8 @@ class RechargeStation {
   late bool status;
   late String address;
   List<Comment> commentsCharger = [];
+  List<Gas> gasesCharger = [];
+  late int ?polution;
 
   addComment(int id, String ctext, String creator) {
     DateTime now = DateTime.now();
@@ -74,7 +78,6 @@ class RechargeStation {
   }
 
   void editComment(int id, String txt) {
-    print("El texto es: " + txt);
     Comment comment = commentsCharger.firstWhere((element) => element.id == id);
     comment.text = txt;
 
@@ -82,6 +85,23 @@ class RechargeStation {
 
   RechargeStation();
 
+  gasAmount(){
+    double aux = 0.0;
+    int pos = 0;
+    for(int i = 0; i < gasesCharger.length; i++){
+      if (gasesCharger[i].value > aux){
+        aux = gasesCharger[i].value;
+        pos = i;
+      }
+    }
+    Gas devuelto;
+    if (gasesCharger.isNotEmpty) {
+      devuelto = gasesCharger.elementAt(pos);
+    } else{
+      devuelto = Gas("No hay gases nocivos", "-", 0);
+    }
+    return devuelto;
+  }
   RechargeStation.fromJson(Map<String, dynamic> json) {
     speedType = json['speedType'];
     connectionType = json['connectionType'];

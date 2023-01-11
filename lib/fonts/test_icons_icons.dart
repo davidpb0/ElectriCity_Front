@@ -10,6 +10,7 @@
 ///    - family:  TestIcons
 ///      fonts:
 ///       - asset: fonts/TestIcons.ttf
+
 ///
 ///
 ///
@@ -19,6 +20,8 @@ class TestIcons {
   TestIcons._();
 
   static const _kFontFam = 'TestIcons';
+
+
   static const String? _kFontPkg = null;
 
   static const IconData bicingParking =
@@ -33,4 +36,5 @@ class TestIcons {
       IconData(0xe23d, fontFamily: 'MaterialIcons', fontPackage: _kFontPkg);
   static const IconData speedType =
       IconData(0xf079c, fontFamily: 'MaterialIcons', fontPackage: _kFontPkg);
+
 }

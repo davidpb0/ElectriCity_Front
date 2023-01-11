@@ -27,10 +27,10 @@ class _BicingPreviewState extends State<BicingPreview> {
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       child: Container(
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          color: Colors.white60,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          boxShadow: [
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          boxShadow: const [
             BoxShadow(
               offset: Offset(0, 2),
               blurRadius: 1,
@@ -187,6 +187,8 @@ class _BicingPreviewState extends State<BicingPreview> {
                               IconButton(onPressed: () async {
 
                                 await StationController().extractCommentsBicing(widget.info.id, widget.info);
+                                await StationController().airQualityBicing(widget.info, widget.info.latitude, widget.info.longitude);
+                                // ignore: use_build_context_synchronously
                                 Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  ExpandedStationPage(index: widget.info.id, bicing: true)));
                               },
                                 icon: const Icon(Icons.open_in_new),

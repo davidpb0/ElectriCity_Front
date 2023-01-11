@@ -2,6 +2,8 @@ import 'package:electricity_front/core/models/comment.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
+import 'gas.dart';
+
 class StationList {
   late List<Station> listMember;
   late int totalItems;
@@ -52,6 +54,7 @@ class StationList {
   }
 }
 
+
 class Station {
   late int capacity;
   late int mechanical;
@@ -65,6 +68,8 @@ class Station {
   late String address;
   bool favorite = false;
   List<Comment> commentsBicing = [];
+  List<Gas> gasesBicing = [];
+  late int ?polution;
 
   addComment(int id, String ctext, String creator) {
     DateTime now = DateTime.now();
@@ -77,7 +82,7 @@ class Station {
     commentsBicing = comments;
   }
 
-  deleteComment(int id){
+  deleteComment(int id) {
     commentsBicing.removeWhere((element) => element.id == id);
   }
 
@@ -96,6 +101,24 @@ class Station {
     address = json['address'];
   }
 
+  gasAmount(){
+    double aux = 0.0;
+    int pos = 0;
+    for(int i = 0; i < gasesBicing.length; i++){
+      if (gasesBicing[i].value > aux){
+        aux = gasesBicing[i].value;
+        pos = i;
+      }
+    }
+    Gas devuelto;
+    if (gasesBicing.isNotEmpty) {
+      devuelto = gasesBicing.elementAt(pos);
+    } else{
+      devuelto = Gas("No hay gases nocivos", "-", 0);
+    }
+    return devuelto;
+  }
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['capacity'] = capacity;
@@ -112,15 +135,11 @@ class Station {
 
   @override
   bool operator ==(Object other) =>
-      other is Station &&
-      other.runtimeType == runtimeType &&
-      other.id == id;
+      other is Station && other.runtimeType == runtimeType && other.id == id;
 
   void editComment(int id, String txt) {
-    print("El texto es: " + txt);
     Comment comment = commentsBicing.firstWhere((element) => element.id == id);
     comment.text = txt;
-
   }
 
   @override

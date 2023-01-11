@@ -7,7 +7,9 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <application
+
+   <application
+        android:label="ElectriCity"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         android:label="electricity_front"
