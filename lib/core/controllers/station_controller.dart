@@ -358,6 +358,25 @@ class StationController {
       throw Exception('Error en función airQualityCharger');
     }
   }
+
+  Future<List<RechargeStation>> filterRechargeStation(speedType, connectionType, currentType) async {
+    var queryParams = {
+      "connectionType": connectionType,
+      "speedType": speedType,
+      "currentType": currentType
+    };
+    Response res = await _apiService.getRechargeStationsWithFilter('/recharge_stations', queryParams);
+    var body = json.decode(res.body);
+    ///TODO
+    if (res.statusCode == 200) {
+      RechargeStationList rcSt = RechargeStationList.fromJson(body);
+      _rechargelist = rcSt.getChargerStations();
+      return _rechargelist;
+    } else {
+      throw Exception('Error en función filterRechargeStation');
+    }
+  }
+
 }
 
 

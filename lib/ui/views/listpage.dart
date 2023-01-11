@@ -6,6 +6,7 @@ import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/ui/components/bicing_preview.dart';
 import 'package:electricity_front/ui/components/recharge_preview.dart';
+import 'package:electricity_front/ui/views/dropdown_current_type.dart';
 import 'package:flutter/material.dart';
 
 
@@ -26,8 +27,35 @@ class _ListPageState extends State<ListPage> {
   StationController stationCtrl = StationController();
   CosmeticsController cosmeticsController = CosmeticsController();
   bool bicing = true;
-  int f_bicing = 0;
-  int f_recharge = 0;
+  int fBicing = 0;
+  int fRecharge = 0;
+  late String valueCurrentType = "None";
+  late String valueConnectionType = "None";
+  late String valueSpeedType = "None";
+
+  static final List<String> _speedTypes = [
+    "RAPID",
+    "semiRAPID",
+    "NORMAL"
+  ];
+
+  static final List<String> _connectionTypes = [
+    "MENNEKES",
+    "MENNEKES.M",
+    "MENNEKES.F",
+    "MENNEKES.TESLA",
+    "TESLA",
+    "CSS Combo2",
+    "Schuko",
+    "ChadeMO"
+  ];
+
+  catchCurrentTypeValue(String newValue) {
+    setState(() {
+      valueCurrentType = newValue;
+      stationCtrl.filterRechargeStation(valueSpeedType, valueConnectionType, valueCurrentType);
+    });
+  }
 
   @override
   void initState() {
@@ -51,30 +79,36 @@ class _ListPageState extends State<ListPage> {
             if(!bicing){
               return Row(
                 children: [
-                  TextButton(
-                    onPressed:(){
-                      ListController().filterBicingStations("chargers");
-                      setState(() {
-
-                      });
-                    } ,
-                    child: Container(
-                        padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          color: Color(CosmeticsController().getCurrentTheme().elementcolordark),
-                          borderRadius: const BorderRadius.all(Radius.circular(8)),
-                          boxShadow: const [
-                            BoxShadow(
-                              offset: Offset(0, 2),
-                              blurRadius: 1,
-                            ),
-                          ],
-                        ),
-                        child: Text('Available chargers')
-                    ),
+                  const Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
+                  // filter Speed type
+                  DropdownCurrentType(catchValue: catchCurrentTypeValue),
+                  const Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
+                  // filter Connection type
+                  /*MultiSelectBottomSheetField<String?>(
+                    initialChildSize: 0.4,
+                    buttonIcon: const Icon(TestIcons.eCharger, size: 22.0,),
+                    searchable: true,
+                    buttonText: const Text("Connection type", style: TextStyle(fontSize: 12.4),),
+                    items: connectionTypesItems,
+                    onConfirm: (values) {
+                      _selectedConnectionTypes = values;
+                    },
+                    chipDisplay: MultiSelectChipDisplay.none(),
                   ),
-
+                  const Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
+                  // filter Current type
+                  MultiSelectBottomSheetField<String?>(
+                    initialChildSize: 0.4,
+                    buttonIcon: const Icon(Icons.electric_meter, size: 22.0,),
+                    searchable: true,
+                    buttonText: const Text("Current type", style: TextStyle(fontSize: 12.4),),
+                    items: currentTypesItems,
+                    onConfirm: (values) {
+                      _selectedCurrentTypes = values;
+                    },
+                    chipDisplay: MultiSelectChipDisplay.none(),
+                  ),*/
+                  const Padding(padding: EdgeInsets.symmetric(horizontal: 2)),
                 ],
               );
             }
@@ -332,13 +366,17 @@ class _ListPageState extends State<ListPage> {
                                 ]).createShader(bounds);
                           },
                           blendMode: BlendMode.dstOut,
-                          child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: stationCtrl.getTotalRechargeStations(),
-                            itemBuilder: (context, index) {
-                              return RechargePreview(
-                                  info: stationCtrl.getRechargeStation(index));
-                            },
+                          child: Builder(
+                            builder: (context) {
+                              return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: stationCtrl.getTotalRechargeStations(),
+                                itemBuilder: (context, index) {
+                                  return RechargePreview(
+                                      info: stationCtrl.getRechargeStation(index));
+                                },
+                              );
+                            }
                           )
                       );
                     }

@@ -206,4 +206,17 @@ class ApiService {
       },
     );
   }
+
+  getRechargeStationsWithFilter(apiUrl, queryParameters) async {
+    final uri = Uri.https(_url, apiUrl, queryParameters);
+    return await http.get(
+      uri,
+      headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $token"
+      }
+    );
+  }
+
 }

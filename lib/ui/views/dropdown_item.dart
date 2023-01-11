@@ -8,7 +8,6 @@ class DropdownItem extends StatefulWidget {
 
   @override
   State<DropdownItem> createState() => _DropdownItemState();
-  //el valor que quiero cojer desde routepage
   String value = "0";
 
 }
@@ -37,7 +36,6 @@ class _DropdownItemState extends State<DropdownItem> {
             selectedValue = newValue!;
             setState(() {
               selectedValue;
-              //seteo el valor que quiero cojer desde routepage
               widget.catchValue(selectedValue);
             });
           },
