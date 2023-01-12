@@ -29,9 +29,9 @@ class User {
     _username = json['username'];
     _id = json['id'];
     _email = json['email'];
-    _electricoins = json['electryCoins'];
-    _theme = json['skinPalette'] ?? 0;
-    _avatar = json['skinAvatar'] ?? 0;
+    //_electricoins = json['electryCoins'];
+    //_theme = json['skinPalette'] ?? 0;
+    //_avatar = json['skinAvatar'] ?? 0;
     if (json['favouriteLocations'] != null) {
       _personalUbi = <Marker>[];
       for (int i = 0; i < json['favouriteLocations'].length; ++i) {
@@ -65,7 +65,7 @@ class User {
       }
     }
 
-    if (json['awards'] != null) {
+    /*if (json['awards'] != null) {
       for (int i = 0; i < json['awards'].length; ++i) {
         String split = (json['awards'][i]['nameAward']).split('_');
         if(split[0] == 'avatar'){
@@ -76,7 +76,7 @@ class User {
         }
       }
 
-    }
+    }*/
   }
 
   getUserTkn() {

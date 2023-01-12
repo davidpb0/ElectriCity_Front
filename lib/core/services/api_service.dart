@@ -109,6 +109,7 @@ class ApiService {
   getData(apiUrl) async {
     var fullUrl = _url + apiUrl;
     return await http.get(Uri.parse(fullUrl), headers: {
+      "Content-type": "application/json",
       "Authorization": "Bearer $token",
     });
   }
@@ -206,4 +207,17 @@ class ApiService {
       },
     );
   }
+
+  getRechargeStationsWithFilter(apiUrl, queryParameters) async {
+    final uri = Uri.https(_url, apiUrl, queryParameters);
+    return await http.get(
+      uri,
+      headers: {
+        "Content-type": "application/json",
+        "Accept": "application/json",
+        "Authorization": "Bearer $token"
+      }
+    );
+  }
+
 }
