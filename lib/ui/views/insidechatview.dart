@@ -150,7 +150,7 @@ class _InsideChatViewState extends State<InsideChatView> {
                                   child: CircularProgressIndicator(),
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(top: 16),
+                                  padding: const EdgeInsets.only(top: 16),
                                   child: Text(AppLocalizations.of(context).insidechat_loading, style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().elementcolor)),),
                                 )
                               ]
