@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:http/http.dart';
@@ -12,7 +11,6 @@ class PrizeController {
   late List<ColorPrize> _colors;
   late List<bool> _colorsUnlocked;
   late int _currentColor;
-  late var _jsonAwards;
 
   late List<AvatarPrize> _avatars;
   late List<bool> _avatarsUnlocked;
@@ -155,13 +153,12 @@ class PrizeController {
     //_colorsUnlocked = _cosmeticsController.unlocked_themes;
     //_currentColor = _cosmeticsController.current_theme;
     _colorsUnlocked = userCtrl.currentUser.getUnlockedThemes();
-    print(_colorsUnlocked);
+
     _colors = _cosmeticsController.getAllThemes();
 
     //_avatarsUnlocked = _cosmeticsController.unlocked_avatars;
     //_currentAvatar = _cosmeticsController.current_avatar;
     _avatarsUnlocked = userCtrl.currentUser.getUnlockedAvatars();
-    print(_avatarsUnlocked);
     _avatars = _cosmeticsController.getAllAvatars();
 
     fetchPrizes();
@@ -233,11 +230,15 @@ class PrizeController {
   void setColor(int index){
     _currentColor = index;
     _cosmeticsController.selectColor(index);
+    UserController().currentUser.setTheme(index);
+    currentPrizeUpdate();
   }
 
   void setAvatar(int index){
     _currentAvatar = index;
     _cosmeticsController.selectAvatar(index);
+    UserController().currentUser.setAvatar(index);
+    currentPrizeUpdate();
   }
 
   bool spendCoins(int price){
@@ -292,7 +293,6 @@ class PrizeController {
     else{
       data.add("/awards/${index+9}");
     }
-    print(data);
     UserController().currentUser.setRawAwards(data);
 
 
@@ -300,17 +300,13 @@ class PrizeController {
 
 
   void unlockPrizeUpdate() async{
-    print("unlock");
     var awards = UserController().currentUser.getRawAwards();
-    print(awards);
     var data = {
       "electryCoins" : electricoins,
       "awards" : awards
     };
-    print(data);
     String urlTemp = "/users/${UserController().currentUser.getUserId()}";
     Response res = await ApiService().updateUserInfo(data, urlTemp);
-    print(res.statusCode);
     if (res.statusCode == 200) {
     }
     else {
@@ -333,19 +329,12 @@ class PrizeController {
   }
 
   Future<void> fetchPrizes() async {
-    Response res = await ApiService().getData("/awards");
-    var _json = json.decode(res.body);
-    _jsonAwards = _json['hydra:member'];
-    //print(_jsonAwards);
-    print(UserController().currentUser.getRawAwards());
     if (UserController().currentUser.getRawAwards() == []){
       print("refill");
       var awards = {
         ['/awards/1', '/awards/9']
       };
       UserController().currentUser.setRawAwards(awards);
-      print(UserController().currentUser.getRawAwards());
-
     }
   }
 }

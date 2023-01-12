@@ -19,9 +19,9 @@ class User {
   int _electricoins = 0;
   int _theme = 0;
   int _avatar = 0;
-  var _rawAwards;
-  List<bool> _themesUnlocked = [true, false, false, false, false, false, false, false];
-  List<bool> _avatarsUnlocked = [true, false, false, false, false, false, false, false, false, false, false, false];
+  dynamic _rawAwards;
+  final List<bool> _themesUnlocked = [true, false, false, false, false, false, false, false];
+  final List<bool> _avatarsUnlocked = [true, false, false, false, false, false, false, false, false, false, false, false];
 
 
   User();
@@ -31,8 +31,8 @@ class User {
     _id = json['id'];
     _email = json['email'];
     _electricoins = json['electryCoins'];
-    _theme = json['skinPalette'] ?? 0;
-    _avatar = json['skinAvatar'] ?? 0;
+    _theme = int.parse(json['skinPalette'] ?? 0);
+    _avatar = int.parse(json['skinAvatar'] ?? 0);
     _rawAwards = json['awards'];
     if (json['favouriteLocations'] != null) {
       _personalUbi = <Marker>[];
@@ -69,18 +69,21 @@ class User {
 
 
     if (json['awards'] != null) {
+
       for (int i = 0; i < json['awards'].length; ++i) {
-        String split = (json['awards'][i].split('/'));
-        if(int.parse(split[1]) > 8){
-          _avatarsUnlocked[int.parse(split[1])-9] = true;
+
+        var split = (json['awards'][i].split('/'));
+
+        if(int.parse(split[2]) > 8){
+          _avatarsUnlocked[int.parse(split[2])-9] = true;
         }
         else{
-          _themesUnlocked[int.parse(split[1])-1] = true;
+          _themesUnlocked[int.parse(split[2])-1] = true;
         }
       }
 
     }
-    print(json['awards']);
+
   }
 
   getUserTkn() {

@@ -31,7 +31,7 @@ class DefaultHeader extends StatelessWidget implements PreferredSizeWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
            Padding(
-            padding: EdgeInsets.symmetric(horizontal: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Text(
               "ElectriCity",
               textAlign: TextAlign.left,

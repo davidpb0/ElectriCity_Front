@@ -115,7 +115,7 @@ class _InfoBicingStationWindowState extends State<InfoBicingStationWindow> {
                     children: [
                       Padding(
                           padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                              const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.bicingParking, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark))),
                       Text("Espais disponibles: ", style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),),
                       Text(widget.slots.toString(), style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),)

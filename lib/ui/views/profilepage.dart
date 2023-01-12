@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/controllers/cosmetics_controller.dart';
-import '../../core/controllers/prize_controller.dart';
 import '../../core/controllers/user_controller.dart';
 import '../components/personal_ubi_preview.dart';
 import '../components/recharge_preview.dart';

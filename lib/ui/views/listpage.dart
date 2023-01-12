@@ -26,8 +26,6 @@ class _ListPageState extends State<ListPage> {
   StationController stationCtrl = StationController();
   CosmeticsController cosmeticsController = CosmeticsController();
   bool bicing = true;
-  int f_bicing = 0;
-  int f_recharge = 0;
 
   @override
   void initState() {
@@ -71,7 +69,7 @@ class _ListPageState extends State<ListPage> {
                             ),
                           ],
                         ),
-                        child: Text('Available chargers')
+                        child: const Text('Available chargers')
                     ),
                   ),
 
@@ -247,30 +245,30 @@ class _ListPageState extends State<ListPage> {
                                 if (ListController().filterSlots){
                                   return ListView.builder(
                                     shrinkWrap: true,
-                                    itemCount: ListController().filterBicinglist_slots.length,
+                                    itemCount: ListController().filterBicingListSlots.length,
                                     itemBuilder: (context, index) {
                                       return BicingPreview(
-                                          info: stationCtrl.getBicingStationbyId(ListController().filterBicinglist_slots[index].id));
+                                          info: stationCtrl.getBicingStationbyId(ListController().filterBicingListSlots[index].id));
                                     },
                                   );
                                 }
                                 else if (ListController().filterBikes){
                                   return ListView.builder(
                                     shrinkWrap: true,
-                                    itemCount: ListController().filterBicinglist_bikes.length,
+                                    itemCount: ListController().filterBicingListBikes.length,
                                     itemBuilder: (context, index) {
                                       return BicingPreview(
-                                          info: stationCtrl.getBicingStationbyId(ListController().filterBicinglist_bikes[index].id));
+                                          info: stationCtrl.getBicingStationbyId(ListController().filterBicingListBikes[index].id));
                                     },
                                   );
                                 }
                                 else if (ListController().filterEBikes){
                                   return ListView.builder(
                                     shrinkWrap: true,
-                                    itemCount: ListController().filterBicinglist_ebikes.length,
+                                    itemCount: ListController().filterBicingListEbikes.length,
                                     itemBuilder: (context, index) {
                                       return BicingPreview(
-                                          info: stationCtrl.getBicingStationbyId(ListController().filterBicinglist_ebikes[index].id));
+                                          info: stationCtrl.getBicingStationbyId(ListController().filterBicingListEbikes[index].id));
                                     },
                                   );
                                 }
