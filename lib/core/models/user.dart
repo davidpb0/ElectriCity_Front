@@ -31,8 +31,8 @@ class User {
     _id = json['id'];
     _email = json['email'];
     _electricoins = json['electryCoins'];
-    _theme = int.parse(json['skinPalette'] ?? 0);
-    _avatar = int.parse(json['skinAvatar'] ?? 0);
+    _theme = int.parse(json['skinPalette'] ?? '0');
+    _avatar = int.parse(json['skinAvatar'] ?? '0');
     _rawAwards = json['awards'];
     if (json['favouriteLocations'] != null) {
       _personalUbi = <Marker>[];
