@@ -37,6 +37,7 @@ class _ThemePreviewState extends State<ThemePreview> {
 
   @override
   Widget build(BuildContext context) {
+    CosmeticsController cosmeticsController = CosmeticsController();
     Size screensize = MediaQuery
         .of(context).size;
     return Dialog(
@@ -44,7 +45,7 @@ class _ThemePreviewState extends State<ThemePreview> {
         insetPadding: EdgeInsets.symmetric(vertical: screensize.height*0.25, horizontal: screensize.width*0.15),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey[300],
+            color: Color(cosmeticsController.getCurrentTheme().backgroundcolor),
             borderRadius: const BorderRadius.all(
                 Radius.circular(16)),
           ),
@@ -55,9 +56,9 @@ class _ThemePreviewState extends State<ThemePreview> {
             children: [
               Container(
                   width: screensize.width*0.25,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
+                  decoration: BoxDecoration(
+                    color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
+                    borderRadius: const BorderRadius.all(
                         Radius.circular(16)),
                   ),
                   child: Stack(
@@ -88,9 +89,9 @@ class _ThemePreviewState extends State<ThemePreview> {
                     Expanded(
                       flex: 4,
                       child: Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
+                          decoration: BoxDecoration(
+                            color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                            borderRadius: const BorderRadius.all(
                                 Radius.circular(16)),
                           ),
                           padding: const EdgeInsets.all(8),
@@ -139,18 +140,18 @@ class _ThemePreviewState extends State<ThemePreview> {
                   },
                   child: Container(
                       padding: const EdgeInsets.all(16),
-                      decoration: const BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.all(
+                      decoration: BoxDecoration(
+                        color: Color(cosmeticsController.getCurrentTheme().accentcolor),
+                        borderRadius: const BorderRadius.all(
                             Radius.circular(16)),
                       ),
                       child:  Text(
                         (locked)? 'Unlock' : 'Select',
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white
+                            color: Color(cosmeticsController.getCurrentTheme().textcolorlight)
                         ),
                       )
                   ),
@@ -195,6 +196,7 @@ class _AvatarPreviewState extends State<AvatarPreview> {
 
   @override
   Widget build(BuildContext context) {
+    CosmeticsController cosmeticsController = CosmeticsController();
     Size screensize = MediaQuery
         .of(context).size;
     return Dialog(
@@ -202,7 +204,7 @@ class _AvatarPreviewState extends State<AvatarPreview> {
         insetPadding: EdgeInsets.symmetric(vertical: screensize.height*0.25, horizontal: screensize.width*0.15),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey[300],
+            color: Color(cosmeticsController.getCurrentTheme().backgroundcolor),
             borderRadius: const BorderRadius.all(
                 Radius.circular(16)),
           ),
@@ -213,9 +215,9 @@ class _AvatarPreviewState extends State<AvatarPreview> {
             children: [
               Container(
                   width: screensize.width*0.25,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
+                  decoration: BoxDecoration(
+                    color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                    borderRadius: const BorderRadius.all(
                         Radius.circular(16)),
                   ),
                   child: Stack(
@@ -246,9 +248,9 @@ class _AvatarPreviewState extends State<AvatarPreview> {
                     Expanded(
                       flex: 4,
                       child: Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.all(
+                          decoration: BoxDecoration(
+                            color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                            borderRadius: const BorderRadius.all(
                                 Radius.circular(16)),
                           ),
                           padding: const EdgeInsets.all(8),
@@ -297,18 +299,18 @@ class _AvatarPreviewState extends State<AvatarPreview> {
                   },
                   child: Container(
                       padding: const EdgeInsets.all(16),
-                      decoration: const BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.all(
+                      decoration: BoxDecoration(
+                        color: Color(cosmeticsController.getCurrentTheme().accentcolor),
+                        borderRadius: const BorderRadius.all(
                             Radius.circular(16)),
                       ),
                       child:  Text(
                         (locked)? 'Unlock' : 'Select',
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
+                        style:  TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
-                            color: Colors.white
+                            color: Color(cosmeticsController.getCurrentTheme().textcolorlight)
                         ),
                       )
                   ),

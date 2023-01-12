@@ -1,6 +1,9 @@
+
 import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
+import 'package:http/http.dart';
 import '../../core/models/prize_data.dart';
 import '../../core/controllers/user_controller.dart';
+import '../services/api_service.dart';
 
 class PrizeController {
   final CosmeticsController _cosmeticsController = CosmeticsController();
@@ -12,6 +15,7 @@ class PrizeController {
   late List<AvatarPrize> _avatars;
   late List<bool> _avatarsUnlocked;
   late int _currentAvatar;
+
   int electricoins = UserController().currentUser.getElectricoins();
 
   /*final List<ColorPrize> _colors = [
@@ -142,17 +146,22 @@ class PrizeController {
   PrizeController._();
 
   void readPrizes() async {
+
+
     _currentColor = userCtrl.currentUser.getTheme();
     _currentAvatar = userCtrl.currentUser.getAvatar();
     //_colorsUnlocked = _cosmeticsController.unlocked_themes;
     //_currentColor = _cosmeticsController.current_theme;
     _colorsUnlocked = userCtrl.currentUser.getUnlockedThemes();
+
     _colors = _cosmeticsController.getAllThemes();
 
     //_avatarsUnlocked = _cosmeticsController.unlocked_avatars;
     //_currentAvatar = _cosmeticsController.current_avatar;
     _avatarsUnlocked = userCtrl.currentUser.getUnlockedAvatars();
     _avatars = _cosmeticsController.getAllAvatars();
+
+    fetchPrizes();
 
   }
 
@@ -206,22 +215,30 @@ class PrizeController {
 
   void unlockColor(int index){
     _colorsUnlocked[index] = true;
+    updateAwards(true, index);
+    unlockPrizeUpdate();
     _cosmeticsController.unlockColor(index);
   }
 
   void unlockAvatar(int index){
     _avatarsUnlocked[index] = true;
+    updateAwards(false, index);
+    unlockPrizeUpdate();
     _cosmeticsController.unlockAvatar(index);
   }
 
   void setColor(int index){
     _currentColor = index;
     _cosmeticsController.selectColor(index);
+    UserController().currentUser.setTheme(index);
+    currentPrizeUpdate();
   }
 
   void setAvatar(int index){
     _currentAvatar = index;
     _cosmeticsController.selectAvatar(index);
+    UserController().currentUser.setAvatar(index);
+    currentPrizeUpdate();
   }
 
   bool spendCoins(int price){
@@ -231,10 +248,12 @@ class PrizeController {
 
     electricoins -= price;
     userCtrl.currentUser.setElectricoins(electricoins);
+    updateElectricoins();
     return true;
   }
+
   int getDailyPrize(){
-    return 100 + (CosmeticsController().streak*50);
+    return 1000 + (CosmeticsController().streak*50);
   }
 
   void claimPrize(){
@@ -242,14 +261,85 @@ class PrizeController {
     electricoins += prize;
     userCtrl.currentUser.setElectricoins(electricoins);
     CosmeticsController().writeCounter();
+    updateElectricoins();
   }
 
   void claimCustomPrize(int coins){
     electricoins += coins;
     userCtrl.currentUser.setElectricoins(electricoins);
+    updateElectricoins();
+  }
+
+  void updateElectricoins() async{
+    var data = {
+      "electryCoins" : electricoins
+    };
+
+    String urlTemp = "/users/${UserController().currentUser.getUserId()}";
+      Response res = await ApiService().updateUserInfo(data, urlTemp);
+      if (res.statusCode == 200) {
+
+      }
+      else {
+        throw Exception("Error while updating user profile");
+      }
+  }
+
+  void updateAwards(bool color, int index) async{
+    var data = UserController().currentUser.getRawAwards();
+    if(color){
+      data.add("/awards/${index+1}");
+    }
+    else{
+      data.add("/awards/${index+9}");
+    }
+    UserController().currentUser.setRawAwards(data);
+
+
   }
 
 
 
+  void unlockPrizeUpdate() async{
+    var awards = UserController().currentUser.getRawAwards();
+    var data = {
+      "electryCoins" : electricoins,
+      "awards" : awards
+    };
+    String urlTemp = "/users/${UserController().currentUser.getUserId()}";
+    Response res = await ApiService().updateUserInfo(data, urlTemp);
+    if (res.statusCode == 200) {
+    }
+    else {
+      throw Exception("Error while updating user profile");
+    }
+  }
 
+  void currentPrizeUpdate() async{
+    var data = {
+    'skinPalette' : UserController().currentUser.getTheme().toString(),
+    'skinAvatar' : UserController().currentUser.getAvatar().toString()
+    };
+    String urlTemp = "/users/${UserController().currentUser.getUserId()}";
+    Response res = await ApiService().updateUserInfo(data, urlTemp);
+    if (res.statusCode == 200) {
+    }
+    else {
+      throw Exception("Error while updating user profile");
+    }
+  }
+
+  Future<void> fetchPrizes() async {
+    if (UserController().currentUser.getRawAwards() == []){
+      var awards = {
+        ['/awards/1', '/awards/9']
+      };
+      UserController().currentUser.setRawAwards(awards);
+    }
+  }
 }
+
+
+
+
+

@@ -28,6 +28,7 @@ class _ListPageState extends State<ListPage> {
   StationController stationCtrl = StationController();
   CosmeticsController cosmeticsController = CosmeticsController();
   bool bicing = true;
+
   int fBicing = 0;
   int fRecharge = 0;
   late String valueCurrentType = "None";
@@ -94,6 +95,7 @@ class _ListPageState extends State<ListPage> {
     }
   }
 
+
   @override
   void initState() {
     super.initState();
@@ -155,6 +157,7 @@ class _ListPageState extends State<ListPage> {
                           offset: Offset(0, 2),
                           blurRadius: 1,
                         ),
+
                       ],
                     ),
                     child: Text(
@@ -337,18 +340,20 @@ class _ListPageState extends State<ListPage> {
                                   ]).createShader(bounds);
                             },
                             blendMode: BlendMode.dstOut,
+
                             child: Builder(builder: (context) {
                               if (ListController().filterSlots) {
                                 return ListView.builder(
+
                                   shrinkWrap: true,
                                   itemCount: ListController()
-                                      .filterBicinglistSlots
+                                      .filterBicingListSlots
                                       .length,
                                   itemBuilder: (context, index) {
                                     return BicingPreview(
                                         info: stationCtrl.getBicingStationbyId(
                                             ListController()
-                                                .filterBicinglistSlots[index]
+                                                .filterBicingListSlots[index]
                                                 .id));
                                   },
                                 );
@@ -356,13 +361,13 @@ class _ListPageState extends State<ListPage> {
                                 return ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: ListController()
-                                      .filterBicinglistBikes
+                                      .filterBicingListBikes
                                       .length,
                                   itemBuilder: (context, index) {
                                     return BicingPreview(
                                         info: stationCtrl.getBicingStationbyId(
                                             ListController()
-                                                .filterBicinglistBikes[index]
+                                                .filterBicingListBikes[index]
                                                 .id));
                                   },
                                 );
@@ -370,13 +375,13 @@ class _ListPageState extends State<ListPage> {
                                 return ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: ListController()
-                                      .filterBicinglistEbikes
+                                      .filterBicingListEbikes
                                       .length,
                                   itemBuilder: (context, index) {
                                     return BicingPreview(
                                         info: stationCtrl.getBicingStationbyId(
                                             ListController()
-                                                .filterBicinglistEbikes[index]
+                                                .filterBicingListEbikes[index]
                                                 .id));
                                   },
                                 );

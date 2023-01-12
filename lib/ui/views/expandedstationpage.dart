@@ -1,4 +1,5 @@
 import 'package:electricity_front/core/controllers/booking_controller.dart';
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:electricity_front/core/models/station_list.dart';
 import 'package:electricity_front/ui/components/reservation_form.dart';
@@ -6,6 +7,7 @@ import 'package:electricity_front/ui/components/station_comment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core/controllers/station_controller.dart';
+import '../../core/controllers/user_controller.dart';
 import '../../core/models/gas.dart';
 import '../../fonts/test_icons_icons.dart';
 import '../components/comment_form.dart';
@@ -25,10 +27,12 @@ class ExpandedStationPage extends StatefulWidget {
 
 class _ExpandedStationPageState extends State<ExpandedStationPage> {
   late StationController _stationController;
+  late bool faved;
   late Station bicingStation;
   late RechargeStation rechargeStation;
   late Image carita;
   late Gas gas;
+  bool booked = false;
 
   @override
   void initState() {
@@ -36,6 +40,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
     _stationController = StationController();
     if (widget.bicing) {
       bicingStation = _stationController.getBicingStationbyId(widget.index);
+      faved = UserController().currentUser.isFavouriteBicingStationIndex(bicingStation.id.toString());
       gas = bicingStation.gasAmount();
       switch (bicingStation.polution) {
         case 0:
@@ -76,6 +81,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
       }
     } else {
       rechargeStation = _stationController.getRechargeStationbyId(widget.index);
+      faved = UserController().currentUser.isFavouriteRechargeStationIndex(rechargeStation.id.toString());
       gas = rechargeStation.gasAmount();
       switch (rechargeStation.polution) {
         case 0:
@@ -107,12 +113,13 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
   Widget build(BuildContext context) {
     //Da la altura y el ancho total de la pantalla
     Size screensize = MediaQuery.of(context).size;
+    CosmeticsController cosmeticsController = CosmeticsController();
     refresh() {
       setState(() {});
     }
 
     return Scaffold(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Color(cosmeticsController.getCurrentTheme().backgroundcolor),
         body: Stack(children: [
           Material(
             color: Colors.transparent,
@@ -120,9 +127,9 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
               child: Column(children: [
                 Container(
                   width: screensize.width,
-                  decoration: const BoxDecoration(
-                    color: Colors.grey,
-                    boxShadow: [
+                  decoration: BoxDecoration(
+                    color: Color(cosmeticsController.getCurrentTheme().elementcolor),
+                    boxShadow: const [
                       BoxShadow(
                         offset: Offset(0, 3),
                         blurRadius: 2,
@@ -143,25 +150,25 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                     (widget.bicing)
                                         ? bicingStation.address
                                         : rechargeStation.address,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                         fontSize: 20,
-                                        color: Colors.white,
+                                        color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                                         fontWeight: FontWeight.bold))),
                             Expanded(
                                 flex: 1,
                                 child: Container(
                                     height: 80,
-                                    decoration: const BoxDecoration(
-                                        color: Colors.white,
+                                    decoration: BoxDecoration(
+                                        color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                                         shape: BoxShape.circle),
                                     alignment: Alignment.center,
                                     child: Text(
                                         (widget.bicing)
                                             ? bicingStation.id.toString()
                                             : rechargeStation.id.toString(),
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             fontSize: 28,
-                                            color: Colors.grey,
+                                            color: Color(cosmeticsController.getCurrentTheme().elementcolor),
                                             fontWeight: FontWeight.bold))))
                           ],
                         )),
@@ -187,7 +194,9 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                             (widget.bicing)
                                                 ? TestIcons.bike
                                                 : TestIcons.speedType,
-                                            size: 60),
+                                            size: 60,
+                                            color: Color(cosmeticsController.getCurrentTheme().textcolordark),
+                                        ),
                                       ),
                                       Expanded(
                                         child: Column(
@@ -199,8 +208,8 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                                   : AppLocalizations.of(context)
                                                       .rechargestation_speed,
                                               textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                color: Colors.black,
+                                              style: TextStyle(
+                                                color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -215,8 +224,8 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                                     : rechargeStation.speedType
                                                         .toString(),
                                                 textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                  color: Colors.black,
+                                                style: TextStyle(
+                                                  color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                                                   fontSize: 18,
                                                 ),
                                               ),
@@ -238,7 +247,9 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                             (widget.bicing)
                                                 ? TestIcons.ebike
                                                 : TestIcons.eCharger,
-                                            size: 60),
+                                            size: 60,
+                                            color: Color(cosmeticsController.getCurrentTheme().textcolordark)
+                                        ),
                                       ),
                                       Expanded(
                                         child: Column(
@@ -250,8 +261,8 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                                   : AppLocalizations.of(context)
                                                       .rechargestation_connection,
                                               textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                color: Colors.black,
+                                              style: TextStyle(
+                                                color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -267,8 +278,8 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                                         .connectionType
                                                         .toString(),
                                                 textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                  color: Colors.black,
+                                                style: TextStyle(
+                                                  color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                                                   fontSize: 18,
                                                 ),
                                               ),
@@ -290,7 +301,9 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                             (widget.bicing)
                                                 ? TestIcons.bicingParking
                                                 : TestIcons.eCar,
-                                            size: 60),
+                                            size: 60,
+                                            color: Color(cosmeticsController.getCurrentTheme().textcolordark)
+                                        ),
                                       ),
                                       Expanded(
                                         child: Column(
@@ -302,8 +315,8 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                                   : AppLocalizations.of(context)
                                                       .rechargestation_slots,
                                               textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                color: Colors.black,
+                                              style: TextStyle(
+                                                color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -319,8 +332,8 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                                     : rechargeStation.slots
                                                         .toString(),
                                                 textAlign: TextAlign.center,
-                                                style: const TextStyle(
-                                                  color: Colors.black,
+                                                style: TextStyle(
+                                                  color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                                                   fontSize: 18,
                                                 ),
                                               ),
@@ -340,48 +353,78 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                               Padding(
                                 padding: const EdgeInsets.only(top: 12),
                                 child: MaterialButton(
-                                  onPressed: () {
+                                  onPressed: () async {
+                                    if (widget.bicing){
+                                      if (faved) {
+                                        await UserController().deleteFavBicingBD(
+                                            bicingStation.id.toString());
+                                      } else {
+                                        await UserController()
+                                            .addFavBicingBD(bicingStation.id);
+                                      }
+                                    }
+                                    else{
+                                      if (faved) {
+                                        await UserController().deleteFavChargerBD(
+                                            rechargeStation.id.toString());
+                                      } else {
+                                        await UserController()
+                                            .addFavChargerBD(RechargeStation().id);
+                                      }
+                                    }
+                                    setState(() {
+                                      if (faved) {
+                                        faved = false;
+                                      } else {
+                                        faved = true;
+                                      }
+
+                                    });
                                   },
                                   minWidth: screensize.width / 3,
-                                  color: Colors.grey[800],
-                                  disabledColor: Colors.grey[800],
-                                  child: const Text("Favourite",
+                                  color: (faved)? Color(cosmeticsController.getCurrentTheme().elementcolorcharger) : Color(cosmeticsController.getCurrentTheme().elementcolordark),
+                                  child: Text((faved)? "Unfavourite" : "Favourite",
                                       style: TextStyle(
                                         fontSize: 20,
-                                        color: Colors.white,
+                                        color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                                       )),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 12),
-                                child: MaterialButton(
-                                  onPressed: () {
-                                    showDialog(
-                                        context: context,
-                                        builder: (context) {
-                                          BookingController booking =
-                                              BookingController();
-                                          booking.wipe();
-                                          booking.setStationId(
-                                              rechargeStation.id.toString());
-                                          return const ReservationForm();
-                                        });
-                                  },
-                                  minWidth: screensize.width / 3,
-                                  color: Colors.grey[800],
-                                  disabledColor: Colors.grey[800],
-                                  child: const Text("Book a slot",
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                      )),
+                              Visibility(
+                                visible: !(widget.bicing),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 12),
+                                  child: MaterialButton(
+                                    onPressed: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            BookingController booking =
+                                                BookingController();
+                                            booking.wipe();
+                                            booking.setStationId(
+                                                rechargeStation.id.toString());
+                                            return const ReservationForm();
+                                          });
+                                    },
+                                    minWidth: screensize.width / 3,
+                                    color: Color(cosmeticsController.getCurrentTheme().elementcolorcharger),
+                                    disabledColor: Color(cosmeticsController.getCurrentTheme().elementcolordark),
+                                    child: Text("Book a slot",
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
+                                        )),
+                                  ),
                                 ),
                               ),
                               const SizedBox(height: 15),
                               Text(
                                 AppLocalizations.of(context)
                                     .expandedStation_gases,
-                                style: const TextStyle(fontSize: 15),
+                                style: TextStyle(fontSize: 15,
+                                    color: Color(cosmeticsController.getCurrentTheme().textcolordark)
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                               Padding(
@@ -427,10 +470,10 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                       onPressed: () {
                         Navigator.of(context).pop(context);
                       },
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.arrow_back,
                         size: 24,
-                        color: Colors.white,
+                        color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                       ))))
         ]));
   }
@@ -455,14 +498,14 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
           return Dismissible(
             background: Container(
                 padding: const EdgeInsets.all(20),
-                child: Row(children: const [
+                child: Row(children: [
                   Icon(
                     Icons.delete_forever,
                     size: 60,
-                    color: Colors.red,
+                    color: Color(CosmeticsController().getCurrentTheme().elementcolordelete),
                     textDirection: TextDirection.ltr,
                   ),
-                  Expanded(child: SizedBox())
+                  const Expanded(child: SizedBox())
                 ])),
             key: UniqueKey(),
             onDismissed: (DismissDirection direction) async {
@@ -499,14 +542,14 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
           return Dismissible(
             background: Container(
                 padding: const EdgeInsets.all(20),
-                child: Row(children: const [
+                child: Row(children: [
                   Icon(
                     Icons.delete_forever,
                     size: 60,
-                    color: Colors.red,
+                    color: Color(CosmeticsController().getCurrentTheme().elementcolordelete),
                     textDirection: TextDirection.ltr,
                   ),
-                  Expanded(child: SizedBox())
+                  const Expanded(child: SizedBox())
                 ])),
             key: UniqueKey(),
             onDismissed: (DismissDirection direction) async {

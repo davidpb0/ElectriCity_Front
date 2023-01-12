@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/station_controller.dart';
@@ -130,14 +131,15 @@ class _StationCommentState extends State<StationComment> {
 
   @override
   Widget build(BuildContext context) {
+    CosmeticsController cosmeticsController = CosmeticsController();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       child: Container(
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          color: Colors.white60,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          boxShadow: [
+        decoration: BoxDecoration(
+          color: Color(cosmeticsController.getCurrentTheme().elementcolor),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          boxShadow: const [
             BoxShadow(
               offset: Offset(0, 2),
               blurRadius: 1,
@@ -177,8 +179,8 @@ class _StationCommentState extends State<StationComment> {
                             Text(
                               widget.info.creator,
                               textAlign: TextAlign.right,
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -199,9 +201,9 @@ class _StationCommentState extends State<StationComment> {
                           child: Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 24),
-                              decoration: const ShapeDecoration(
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(
+                              decoration: ShapeDecoration(
+                                  color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                                  shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(8),
                                         topLeft: Radius.zero,
@@ -222,9 +224,10 @@ class _StationCommentState extends State<StationComment> {
                                     const SizedBox(height: 20),
                                     Text(
                                       widget.info.timestamp,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                           fontWeight: FontWeight.w200,
-                                          fontSize: 10),
+                                          fontSize: 10,
+                                          color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                                     ),
                                   ]))),
                         ),
@@ -237,7 +240,7 @@ class _StationCommentState extends State<StationComment> {
                   height: 52,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.grey[300],
+                    color: Color(cosmeticsController.getCurrentTheme().elementcolor),
                   ),
                   child: const Icon(
                     Icons.account_circle,

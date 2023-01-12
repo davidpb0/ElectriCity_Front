@@ -11,9 +11,11 @@ import '../services/api_service.dart';
 class ListController {
   final ApiService _apiService = ApiService();
   late List<Station> _filterBicinglist;
-  List<Station> filterBicinglistSlots = [];
-  List<Station> filterBicinglistBikes = [];
-  List<Station> filterBicinglistEbikes = [];
+
+  List<Station> filterBicingListSlots = [];
+  List<Station> filterBicingListBikes = [];
+  List<Station> filterBicingListEbikes = [];
+
   late List<RechargeStation> _filterRechargelist;
 
   bool bici = true;
@@ -56,7 +58,7 @@ class ListController {
   void filterBicingStationsSlots() {
     for (int i = 0; i < StationController().getTotalBicingStations(); ++i){
       if (StationController().getBicingStation(i).availableSlots > 0){
-        filterBicinglistSlots.add(StationController().getBicingStation(i));
+        filterBicingListSlots.add(StationController().getBicingStation(i));
       }
     }
   }
@@ -64,7 +66,7 @@ class ListController {
   void filterBicingStationsBikes() {
     for (int i = 0; i < StationController().getTotalBicingStations(); ++i){
       if (StationController().getBicingStation(i).mechanical > 0){
-        filterBicinglistBikes.add(StationController().getBicingStation(i));
+        filterBicingListBikes.add(StationController().getBicingStation(i));
       }
     }
   }
@@ -72,7 +74,7 @@ class ListController {
   void filterBicingStationsEbikes() {
     for (int i = 0; i < StationController().getTotalBicingStations(); ++i){
       if (StationController().getBicingStation(i).electrical > 0){
-        filterBicinglistEbikes.add(StationController().getBicingStation(i));
+        filterBicingListEbikes.add(StationController().getBicingStation(i));
       }
     }
   }

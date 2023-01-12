@@ -1,4 +1,5 @@
 
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/ui/views/expandedstationpage.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/station_controller.dart';
@@ -24,14 +25,15 @@ class _RechargePreviewState extends State<RechargePreview> {
   @override
   Widget build(BuildContext context) {
     bool faved = UserController().currentUser.isFavouriteRechargeStationIndex(widget.info.id.toString());
+    CosmeticsController cosmeticsController = CosmeticsController();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       child: Container(
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          color: Colors.white60,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          boxShadow: [
+        decoration: BoxDecoration(
+          color: Color(cosmeticsController.getCurrentTheme().backgroundcolor),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          boxShadow: const [
             BoxShadow(
               offset: Offset(0, 2),
               blurRadius: 1,
@@ -47,7 +49,7 @@ class _RechargePreviewState extends State<RechargePreview> {
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
                 decoration: ShapeDecoration(
-                  color: Colors.green.shade800,
+                  color: Color(cosmeticsController.getCurrentTheme().elementcolorcharger),
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         bottomLeft: Radius.zero,
@@ -62,8 +64,8 @@ class _RechargePreviewState extends State<RechargePreview> {
                       child: Text(
                         widget.info.address,
                         textAlign: TextAlign.left,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                           fontSize: 20,
                         ),
                       ),
@@ -72,8 +74,8 @@ class _RechargePreviewState extends State<RechargePreview> {
                       child: Text(
                         widget.info.id.toString(),
                         textAlign: TextAlign.right,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
@@ -85,9 +87,9 @@ class _RechargePreviewState extends State<RechargePreview> {
               Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-                decoration: const ShapeDecoration(
-                    color: Colors.white,
-                    shape: RoundedRectangleBorder(
+                decoration: ShapeDecoration(
+                    color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                    shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(8),
                           topLeft: Radius.zero,
@@ -102,9 +104,9 @@ class _RechargePreviewState extends State<RechargePreview> {
                       children: [
                         Row(
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 6),
-                              child: Icon(TestIcons.speedType, size: 20),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 6),
+                              child: Icon(TestIcons.speedType, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                             ),
                             Expanded(
                               child: Padding(
@@ -112,8 +114,8 @@ class _RechargePreviewState extends State<RechargePreview> {
                                 child: Text(
                                   widget. info.speedType.toString(),
                                   textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Colors.black,
+                                  style: TextStyle(
+                                    color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                                     fontSize: 16,
                                     fontWeight: FontWeight.bold,
                                   ),
@@ -123,9 +125,9 @@ class _RechargePreviewState extends State<RechargePreview> {
                           ],
                         ),
                         Row(children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 6),
-                            child: Icon(TestIcons.eCharger, size: 20),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: Icon(TestIcons.eCharger, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                           ),
                           Expanded(
                             child: Padding(
@@ -133,8 +135,8 @@ class _RechargePreviewState extends State<RechargePreview> {
                               child: Text(
                                 widget.info.connectionType.toString(),
                                 textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -144,9 +146,9 @@ class _RechargePreviewState extends State<RechargePreview> {
                         ]),
                         Row(// TEXT
                             children: [
-                          const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 6),
-                            child: Icon(TestIcons.eCar, size: 20),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 6),
+                            child: Icon(TestIcons.eCar, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                           ),
                           Expanded(
                             child: Padding(
@@ -154,8 +156,8 @@ class _RechargePreviewState extends State<RechargePreview> {
                               child: Text(
                                 widget.info.slots.toString(),
                                 textAlign: TextAlign.center,
-                                style: const TextStyle(
-                                  color: Colors.black,
+                                style: TextStyle(
+                                  color: Color(cosmeticsController.getCurrentTheme().textcolordark),
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -189,7 +191,7 @@ class _RechargePreviewState extends State<RechargePreview> {
                               });
 
                             },
-                            icon: Icon((faved) ? Icons.favorite : Icons.favorite_outline),
+                            icon: Icon((faved) ? Icons.favorite : Icons.favorite_outline, color: Color(cosmeticsController.getCurrentTheme().textcolordark),),
                           ),
 
                           IconButton(onPressed: () async {
@@ -199,7 +201,7 @@ class _RechargePreviewState extends State<RechargePreview> {
                             // ignore: use_build_context_synchronously
                             Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  ExpandedStationPage(index: widget.info.id, bicing: false)));
                           },
-                            icon: const Icon(Icons.open_in_new),
+                            icon: Icon(Icons.open_in_new, color: Color(cosmeticsController.getCurrentTheme().textcolordark),),
                           )
 
                         ]

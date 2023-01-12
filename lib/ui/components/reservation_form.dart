@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -42,6 +43,7 @@ class _ReservationFormState extends State<ReservationForm> {
 
   @override
   Widget build(BuildContext context) {
+    CosmeticsController cosmeticsController = CosmeticsController();
     if (completedBooking){
       return AlertDialog(
         content: Padding(
@@ -52,7 +54,7 @@ class _ReservationFormState extends State<ReservationForm> {
                 style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
-                    color: Colors.green[900]),
+                    color: Color(cosmeticsController.getCurrentTheme().accentcoloralt)),
               ),
             )
         ),
@@ -63,12 +65,12 @@ class _ReservationFormState extends State<ReservationForm> {
             },
             child: Center(
               child: Container(
-                color: Colors.green,
+                color: Color(cosmeticsController.getCurrentTheme().accentcolor),
                 padding: const EdgeInsets.all(14),
-                child: const Text(
+                child: Text(
                   "Close",
                   style: TextStyle(
-                      color: Colors.white,
+                      color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                       fontSize: 20,
                       fontWeight:
                       FontWeight.bold),
@@ -130,9 +132,9 @@ class _ReservationFormState extends State<ReservationForm> {
                           top: 8),
                       child: Text(
                         dateError,
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 16,
-                            color: Colors.red),
+                            color: Color(cosmeticsController.getCurrentTheme().elementcolordelete)),
                       ),
                     ),
                   ),
@@ -183,9 +185,9 @@ class _ReservationFormState extends State<ReservationForm> {
                           top: 8),
                       child: Text(
                         startTimeError,
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 16,
-                            color: Colors.red),
+                            color: Color(cosmeticsController.getCurrentTheme().elementcolordelete)),
                       ),
                     ),
                   ),
@@ -236,9 +238,9 @@ class _ReservationFormState extends State<ReservationForm> {
                           top: 8),
                       child: Text(
                         endTimeError,
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 16,
-                            color: Colors.red),
+                            color: Color(cosmeticsController.getCurrentTheme().elementcolordelete)),
                       ),
                     ),
                   ),
@@ -280,13 +282,13 @@ class _ReservationFormState extends State<ReservationForm> {
                         }
                       },
                       child: Container(
-                        color: Colors.green,
+                        color: Color(cosmeticsController.getCurrentTheme().accentcolor),
                         padding:
                         const EdgeInsets.all(14),
-                        child: const Text(
+                        child: Text(
                           "Request booking",
                           style: TextStyle(
-                              color: Colors.white,
+                              color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                               fontSize: 20,
                               fontWeight:
                               FontWeight.bold),

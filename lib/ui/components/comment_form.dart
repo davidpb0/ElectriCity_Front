@@ -1,3 +1,4 @@
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/core/controllers/station_controller.dart';
 import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:flutter/material.dart';
@@ -38,14 +39,15 @@ class _StationCommentFormState extends State<StationCommentForm> {
 
   @override
   Widget build(BuildContext context) {
+    CosmeticsController cosmeticsController = CosmeticsController();
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 12),
       child: Container(
         alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          color: Colors.white60,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          boxShadow: [
+        decoration: BoxDecoration(
+          color: Color(cosmeticsController.getCurrentTheme().elementcolor),
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          boxShadow: const [
             BoxShadow(
               offset: Offset(0, 2),
               blurRadius: 1,
@@ -64,9 +66,9 @@ class _StationCommentFormState extends State<StationCommentForm> {
                           child: Container(
                         padding: const EdgeInsets.symmetric(
                             vertical: 8, horizontal: 24),
-                        decoration: const ShapeDecoration(
-                          color: Colors.black,
-                          shape: RoundedRectangleBorder(
+                        decoration: ShapeDecoration(
+                          color: Color(cosmeticsController.getCurrentTheme().elementcolordark),
+                          shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.zero,
                                 topLeft: Radius.circular(8),
@@ -82,8 +84,8 @@ class _StationCommentFormState extends State<StationCommentForm> {
                             Text(
                               UserController().currentUser.getUsername(),
                               textAlign: TextAlign.right,
-                              style: const TextStyle(
-                                color: Colors.white,
+                              style: TextStyle(
+                                color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -99,9 +101,9 @@ class _StationCommentFormState extends State<StationCommentForm> {
                           child: Container(
                               padding: const EdgeInsets.symmetric(
                                   vertical: 8, horizontal: 24),
-                              decoration: const ShapeDecoration(
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(
+                              decoration: ShapeDecoration(
+                                  color: Color(cosmeticsController.getCurrentTheme().textfieldcolor),
+                                  shape: const RoundedRectangleBorder(
                                     borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(8),
                                         topLeft: Radius.zero,
@@ -118,7 +120,7 @@ class _StationCommentFormState extends State<StationCommentForm> {
                                           child: TextField(
                                             controller: commentTextController,
                                             decoration: InputDecoration(
-                                              prefixIcon: const Icon(Icons.comment),
+                                              prefixIcon: Icon(Icons.comment, color: Color(cosmeticsController.getCurrentTheme().elementcolor)),
                                               border: InputBorder.none,
                                               hintText: AppLocalizations.of(
                                                       context)
@@ -145,7 +147,7 @@ class _StationCommentFormState extends State<StationCommentForm> {
                                               });
                                               widget.notifyParent();
                                             },
-                                            icon: const Icon(Icons.send))
+                                            icon: Icon(Icons.send, color: Color(cosmeticsController.getCurrentTheme().textcolordark),))
                                       ],
                                     ),
                                   ]))),
@@ -159,12 +161,11 @@ class _StationCommentFormState extends State<StationCommentForm> {
                   height: 52,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Colors.grey[300],
+                    color: Color(cosmeticsController.getCurrentTheme().elementcolordark),
                   ),
-                  child: const Icon(
-                    Icons.account_circle,
-                    size: 24,
-                    color: Colors.pink,
+                  child: SizedBox(
+                    height: 32,
+                    child:Image.asset(CosmeticsController().getCurrentAvatar().asset, fit: BoxFit.contain,),
                   ),
                 )
               ],
