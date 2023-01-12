@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../core/controllers/station_controller.dart';
 import '../../core/controllers/user_controller.dart';
-import '../../core/models/gas.dart';
 import '../../fonts/test_icons_icons.dart';
 import '../components/comment_form.dart';
 import '../components/default_header.dart';
@@ -30,8 +29,11 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
   late bool faved;
   late Station bicingStation;
   late RechargeStation rechargeStation;
-  late Image carita;
-  late Gas gas;
+  late Image carita = Image.asset(
+    'assets/images/gasesMuerte.png',
+    fit: BoxFit.contain,
+    height: 64,);
+  //late Gas gas;
   bool booked = false;
 
   @override
@@ -41,6 +43,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
     if (widget.bicing) {
       bicingStation = _stationController.getBicingStationbyId(widget.index);
       faved = UserController().currentUser.isFavouriteBicingStationIndex(bicingStation.id.toString());
+      /*
       gas = bicingStation.gasAmount();
       switch (bicingStation.polution) {
         case 0:
@@ -79,9 +82,12 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
           );
           break;
       }
+
+       */
     } else {
       rechargeStation = _stationController.getRechargeStationbyId(widget.index);
       faved = UserController().currentUser.isFavouriteRechargeStationIndex(rechargeStation.id.toString());
+      /*
       gas = rechargeStation.gasAmount();
       switch (rechargeStation.polution) {
         case 0:
@@ -106,7 +112,11 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
           );
           break;
       }
+      */
+
     }
+
+
   }
 
   @override
@@ -432,16 +442,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                     const EdgeInsets.symmetric(horizontal: 8),
                                 child: carita,
                               ),
-                              gas.value != 0.0
-                                  ? Text(
-                                      "${gas.name} ${gas.value}",
-                                      style:  TextStyle(color: Color(CosmeticsController().getCurrentTheme().elementcolordelete)),
-                                    )
-                                  : Text(
-                                      gas.name,
-                                      style:
-                                           TextStyle(color: Color(CosmeticsController().getCurrentTheme().accentcolor)),
-                                    ),
+                              Text("Conexión fallida con POTUS", style:  TextStyle(color: Color(CosmeticsController().getCurrentTheme().elementcolordelete))),
                             ],
                           ),
                         ])),

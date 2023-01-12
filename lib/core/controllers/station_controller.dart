@@ -4,7 +4,6 @@ import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:intl/intl.dart';
 import '../models/comment.dart';
-import '../models/gas.dart';
 import '../models/station_list.dart';
 import 'package:http/http.dart';
 import '../services/api_service.dart';
@@ -323,7 +322,7 @@ class StationController {
       throw Exception('Error en función deleteBicingComment');
     }
   }
-
+  /*
   airQualityBicing(Station bicingS, double latitude, double longitude) async {
     Response res = await _apiService
         .getData("/airQuality?latitude=$latitude&longitude=$longitude");
@@ -360,6 +359,8 @@ class StationController {
       throw Exception('Error en función airQualityCharger');
     }
   }
+
+   */
 
 
 

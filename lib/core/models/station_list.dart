@@ -2,7 +2,6 @@ import 'package:electricity_front/core/models/comment.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 
-import 'gas.dart';
 
 class StationList {
   late List<Station> listMember;
@@ -68,8 +67,8 @@ class Station {
   late String address;
   bool favorite = false;
   List<Comment> commentsBicing = [];
-  List<Gas> gasesBicing = [];
-  late int ?polution;
+  //List<Gas> gasesBicing = [];
+  //late int ?polution;
 
   addComment(int id, String ctext, String creator) {
     DateTime now = DateTime.now();
@@ -100,7 +99,7 @@ class Station {
     status = json['status'];
     address = json['address'];
   }
-
+  /*
   gasAmount(){
     double aux = 0.0;
     int pos = 0;
@@ -118,6 +117,8 @@ class Station {
     }
     return devuelto;
   }
+
+   */
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
