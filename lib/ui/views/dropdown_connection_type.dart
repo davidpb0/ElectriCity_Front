@@ -1,4 +1,6 @@
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class DropdownConnectionType extends StatefulWidget {
@@ -13,18 +15,19 @@ class DropdownConnectionType extends StatefulWidget {
 }
 
 class _DropdownConnectionTypeState extends State<DropdownConnectionType> {
+  CosmeticsController cosmeticsController = CosmeticsController();
   String selectedValue = "None";
 
   List<DropdownMenuItem<String>> get dropdownItems{
     List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(value: "None", child: Text("Connection", style: TextStyle(color: Colors.black, fontSize: 15),)),
-      const DropdownMenuItem(value: "MENNEKES", child: Text("MENNEKES", style: TextStyle(color: Colors.black, fontSize: 15),)),
-      const DropdownMenuItem(value: "MENNEKES.F", child: Text("MENNEKES.F", style: TextStyle(color: Colors.black, fontSize: 15),)),
-      const DropdownMenuItem(value: "MENNEKES.TESLA", child: Text("MENNEKES.TESLA", style: TextStyle(color: Colors.black, fontSize: 15),)),
-      const DropdownMenuItem(value: "TESLA", child: Text("TESLA", style: TextStyle(color: Colors.black, fontSize: 15),)),
-      const DropdownMenuItem(value: "CSS Combo2", child: Text("CSS Combo2", style: TextStyle(color: Colors.black, fontSize: 15),)),
-      const DropdownMenuItem(value: "Schuko", child: Text("Schuko", style: TextStyle(color: Colors.black, fontSize: 15),)),
-      const DropdownMenuItem(value: "ChadeMO", child: Text("ChadeMO", style: TextStyle(color: Colors.black, fontSize: 15),)),
+      DropdownMenuItem(value: "None", child: Text(AppLocalizations.of(context).filtercharger_connection, style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
+      DropdownMenuItem(value: "MENNEKES", child: Text("MENNEKES", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
+      DropdownMenuItem(value: "MENNEKES.F", child: Text("MENNEKES.F", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
+      DropdownMenuItem(value: "MENNEKES.TESLA", child: Text("MENNEKES.TESLA", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
+      DropdownMenuItem(value: "TESLA", child: Text("TESLA", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
+      DropdownMenuItem(value: "CSS Combo2", child: Text("CSS Combo2", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
+      DropdownMenuItem(value: "Schuko", child: Text("Schuko", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
+      DropdownMenuItem(value: "ChadeMO", child: Text("ChadeMO", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
     ];
     return menuItems;
   }
@@ -34,8 +37,8 @@ class _DropdownConnectionTypeState extends State<DropdownConnectionType> {
     return StatefulBuilder(
         builder: (context, setState) {
           return DropdownButton(
-            iconEnabledColor: Colors.black,
-            dropdownColor: Colors.green,
+            iconEnabledColor: Color(CosmeticsController().getCurrentTheme().textcolordark),
+            dropdownColor: Color(CosmeticsController().getCurrentTheme().accentcolor),
             onChanged: (String? newValue) {
               selectedValue = newValue!;
               setState(() {

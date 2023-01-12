@@ -1,4 +1,6 @@
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class DropdownCurrentType extends StatefulWidget {
@@ -14,12 +16,13 @@ class DropdownCurrentType extends StatefulWidget {
 
 class _DropdownCurrentTypeState extends State<DropdownCurrentType> {
   String selectedValue = "None";
+  CosmeticsController cosmeticsController = CosmeticsController();
 
   List<DropdownMenuItem<String>> get dropdownItems{
     List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(value: "None", child: Text("Current", style: TextStyle(color: Colors.black, fontSize: 15),)),
-      const DropdownMenuItem(value: "AC", child: Text("AC", style: TextStyle(color: Colors.black, fontSize: 15))),
-      const DropdownMenuItem(value: "DC", child: Text("DC", style: TextStyle(color: Colors.black, fontSize: 15))),
+      DropdownMenuItem(value: "None", child: Text(AppLocalizations.of(context).filtercharger_current, style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
+      DropdownMenuItem(value: "AC", child: Text("AC", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15))),
+      DropdownMenuItem(value: "DC", child: Text("DC", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15))),
     ];
     return menuItems;
   }
@@ -29,8 +32,8 @@ class _DropdownCurrentTypeState extends State<DropdownCurrentType> {
     return StatefulBuilder(
         builder: (context, setState) {
           return DropdownButton(
-            iconEnabledColor: Colors.black,
-            dropdownColor: Colors.green,
+            iconEnabledColor: Color(cosmeticsController.getCurrentTheme().textcolordark),
+            dropdownColor: Color(cosmeticsController.getCurrentTheme().accentcolor),
             onChanged: (String? newValue) {
               selectedValue = newValue!;
               setState(() {

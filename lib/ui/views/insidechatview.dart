@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import '../../core/controllers/cosmetics_controller.dart';
 import '../../core/controllers/user_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class InsideChatView extends StatefulWidget {
   final String receiverId;
@@ -39,7 +41,7 @@ class _InsideChatViewState extends State<InsideChatView> {
       appBar: AppBar(
         elevation: 0,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(CosmeticsController().getCurrentTheme().backgroundcolor),
         flexibleSpace: SafeArea(
           child: Container(
             padding: const EdgeInsets.only(right: 16),
@@ -49,7 +51,7 @@ class _InsideChatViewState extends State<InsideChatView> {
                   onPressed: () {
                     Navigator.pop(context);
                   },
-                  icon: const Icon(Icons.arrow_back, color: Colors.black,),
+                  icon: Icon(Icons.arrow_back, color: Color(CosmeticsController().getCurrentTheme().textcolordark)),
                 ),
                 const SizedBox(width: 2,),
                 /*const CircleAvatar(
@@ -62,11 +64,11 @@ class _InsideChatViewState extends State<InsideChatView> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Text(widget.name, style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w600),),
+                      Text(widget.name, style: TextStyle(
+                          fontSize: 16, fontWeight: FontWeight.w600, color: Color(CosmeticsController().getCurrentTheme().textcolordark)),),
                       const SizedBox(height: 6,),
                       Text(widget.email, style: TextStyle(
-                          color: Colors.grey.shade600, fontSize: 13),),
+                          color: Color(CosmeticsController().getCurrentTheme().elementcoloralt), fontSize: 13),),
                     ],
                   ),
                 ),
@@ -107,13 +109,13 @@ class _InsideChatViewState extends State<InsideChatView> {
                                   borderRadius: BorderRadius.circular(20),
                                   color: (UserController().messages[index]
                                       .messageType == "receiver"
-                                      ? Colors.grey.shade200
-                                      : Colors.blue[200]),
+                                      ? Color(CosmeticsController().getCurrentTheme().elementcolor - 0x80000000)
+                                      : Color(CosmeticsController().getCurrentTheme().accentcoloralt - 0x80000000)),
                                 ),
                                 padding: const EdgeInsets.all(16),
                                 child: Text(UserController().messages[index]
                                     .messageContent,
-                                  style: const TextStyle(fontSize: 15),),
+                                  style: TextStyle(fontSize: 15, color: Color(CosmeticsController().getCurrentTheme().textcolordark)),),
                               ),
                             ),
                           );
@@ -141,15 +143,15 @@ class _InsideChatViewState extends State<InsideChatView> {
                       return Center(
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                SizedBox(
+                              children: [
+                                const SizedBox(
                                   width: 60,
                                   height: 60,
                                   child: CircularProgressIndicator(),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(top: 16),
-                                  child: Text('Loading...'),
+                                  child: Text(AppLocalizations.of(context).insidechat_loading, style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().elementcolor)),),
                                 )
                               ]
                           )
@@ -162,16 +164,17 @@ class _InsideChatViewState extends State<InsideChatView> {
             padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
             height: 60,
             width: double.infinity,
-            color: Colors.white,
+            color: Color(CosmeticsController().getCurrentTheme().textfieldcolor),
             child: Row(
               children: <Widget>[
                 const SizedBox(width: 15,),
                 Expanded(
                   child: TextField(
                     controller: messageTextController,
-                    decoration: const InputDecoration(
-                      hintText: "Write message...",
-                      hintStyle: TextStyle(color: Colors.black54),
+                    style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark)),
+                    decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context).insidechat_write,
+                      hintStyle: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark - 0x80000000)),
                       border: InputBorder.none,
                     ),
                   ),
@@ -186,9 +189,9 @@ class _InsideChatViewState extends State<InsideChatView> {
                       refresh();
                     }
                   },
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Color(CosmeticsController().getCurrentTheme().elementcoloralt),
                   elevation: 0,
-                  child: const Icon(Icons.send, color: Colors.white, size: 18,),
+                  child: Icon(Icons.send, color: Color(CosmeticsController().getCurrentTheme().textcolorlight), size: 18,),
                 ),
               ],
             ),

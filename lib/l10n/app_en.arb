@@ -11,6 +11,8 @@
     "signup_password": "Password",
     "signup_repeatpassword": "Repeat password",
     "signup_createaccount": "Create account",
+    "signup_emptyfield": "Please enter some text",
+
 
     "homepage_map": "Map",
     "homepage_stations": "Stations",
@@ -29,6 +31,21 @@
     "personallocation_adddescription": "Add a description to your location",
     "personallocation_description": "Description",
     "personallocation_submit": "Add location",
+
+    "filterbike_slots": "Available slots",
+    "filterbike_bikes": "Available bikes",
+    "filterbike_ebikes": "Available e-bikes",
+
+    "filtercharger_connection": "Connection",
+    "filtercharger_current": "Current",
+    "filtercharger_speed": "Speed",
+
+    "infobikes_bikes": "Available bikes: ",
+    "infobikes_ebikes": "Available E-bikes: ",
+    "infobikes_slots": "Available slots: ",
+
+    "infocharger_connection": "Connection type: ",
+    "infocharger_slots": "Available slots: ",
 
     "reservation_title": "Book a charging slot",
     "reservation_date": "Date",
@@ -51,9 +68,27 @@
     "profile_delete": "Delete account",
     "profile_checkdelete": "Are you sure you want to delete your account?",
 
+    "prizepreview_unlock": "Unlock",
+    "prizepreview_select": "Select",
+
+    "prizepage_themes": "Color themes",
+    "prizepage_avatars": "Avatar images",
+    "prizepage_daily": "Daily reward: ",
+    "prizepage_cooldown": "Available again in ",
+    "prizepage_available": "Click to claim",
+
+    "booking_successful": "Booking successful",
+    "booking_close": "Close",
+    "booking_dateempty": "Please select a date",
+    "booking_starttimeempty": "Please select a starting time",
+    "booking_endtimeempty": "Please select an ending time",
+    "booking_request": "Request booking",
+
 
     "expandedStation_noComments":"There's no comments yet",
     "expandedStation_favButton":"Favourite",
+    "expandedStation_unfavButton":"Unfavourite",
+    "expandedStation_booking":"Book a slot",
     "expandedStation_addComment":"Add Comment",
     "expandedStation_editComment":"Edit Comment",
     "expandedStation_gases":"Air quality",
@@ -68,7 +103,20 @@
     "notification_title_login": "Remember to claim you daily reward",
     "notification_text_login": "You can do it on the prize tab",
 
-    "add_new_user": "Add new user",
-    "chatview_adduser": "Add user",
-    "new_message": "New message"
+    "notification_booking_title": "The slot has been booked",
+    "notification_booking_body1": "You've successfully booked a spot at ",
+    "notification_booking_body2": "",
+
+    "notification_share_title": "Share to earn prizes",
+    "notification_share_body": "Use twitter on facebook to earn ElectriCoins",
+
+    "messagesmenu_title": "Messages",
+    "messagesmenu_add": "Add",
+
+    "addfriend_title": "Add new user",
+    "addfriend_message": "New message",
+    "addfriend_send": "Add user",
+
+    "insidechat_loading": "Loading...",
+    "insidechat_write": "Write message..."
 }

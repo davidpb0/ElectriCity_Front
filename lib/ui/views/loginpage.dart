@@ -52,10 +52,12 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.only(left: 5.0),
                   child: TextField(
                     controller: emailTextController,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.email),
+                    style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.email, color: Color(cosmeticsController.getCurrentTheme().textcolordark),),
                       border: InputBorder.none,
                       hintText: 'Email',
+                      hintStyle: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark))
                     ),
                   ),
                 ),
@@ -83,10 +85,12 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                     controller: _passwdTextController,
                     obscureText: true,
+                    style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.lock),
+                      prefixIcon: Icon(Icons.lock, color: Color(cosmeticsController.getCurrentTheme().textcolordark),),
                       border: InputBorder.none,
                       hintText: AppLocalizations.of(context).signup_password,
+                      hintStyle: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark))
                     ),
                   ),
                 ),
@@ -99,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("${AppLocalizations.of(context).login_forgotpassword} ") ,
+                Text("${AppLocalizations.of(context).login_forgotpassword} ", style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),) ,
                 Text(
                   AppLocalizations.of(context).login_clickhere,
                   style:  TextStyle(
@@ -154,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(AppLocalizations.of(context).login_notamember),
+                Text(AppLocalizations.of(context).login_notamember, style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),),
                 SizedBox(
                   child: TextButton(
                     onPressed: () {

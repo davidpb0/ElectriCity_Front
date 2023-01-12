@@ -9,6 +9,8 @@ import 'package:electricity_front/ui/components/recharge_preview.dart';
 import 'package:electricity_front/ui/views/dropdown_current_type.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import '../../core/controllers/station_controller.dart';
 import '../../fonts/test_icons_icons.dart';
 import '../components/default_header.dart';
@@ -161,7 +163,7 @@ class _ListPageState extends State<ListPage> {
                       ],
                     ),
                     child: Text(
-                      'Available Slots',
+                      AppLocalizations.of(context).bicingstation_slots,
                       style: TextStyle(
                         fontSize: 12,
                         color: Color(CosmeticsController()

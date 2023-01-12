@@ -30,7 +30,7 @@ class _BicingPreviewState extends State<BicingPreview> {
       child: Container(
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          color: Color(cosmeticsController.getCurrentTheme().elementcolordark),
+          color: Color(cosmeticsController.getCurrentTheme().backgroundcolor),
           borderRadius: const BorderRadius.all(Radius.circular(8)),
           boxShadow: const [
             BoxShadow(

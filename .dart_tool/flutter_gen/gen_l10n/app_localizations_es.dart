@@ -38,6 +38,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get signup_createaccount => 'Crea tu cuenta';
 
   @override
+  String get signup_emptyfield => 'Introduzca texto aquí';
+
+  @override
   String get homepage_map => 'Mapa';
 
   @override
@@ -81,6 +84,39 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get personallocation_submit => 'Añadir ubicación';
+
+  @override
+  String get filterbike_slots => 'Anclajes libres';
+
+  @override
+  String get filterbike_bikes => 'Bicicletas libres';
+
+  @override
+  String get filterbike_ebikes => 'E-Bikes libres';
+
+  @override
+  String get filtercharger_connection => 'Conexión';
+
+  @override
+  String get filtercharger_current => 'Corriente';
+
+  @override
+  String get filtercharger_speed => 'Velocidad';
+
+  @override
+  String get infobikes_bikes => 'Bicicletas mecánicas disponibles: ';
+
+  @override
+  String get infobikes_ebikes => 'Bicicletas eléctricas disponibles: ';
+
+  @override
+  String get infobikes_slots => 'Anclajes disponibles: ';
+
+  @override
+  String get infocharger_connection => 'Tipo de conexión: ';
+
+  @override
+  String get infocharger_slots => 'Cargadores disponibles: ';
 
   @override
   String get reservation_title => 'Reserva una plaza';
@@ -134,10 +170,55 @@ class AppLocalizationsEs extends AppLocalizations {
   String get profile_checkdelete => '¿Está seguro de querer borrar su cuenta?';
 
   @override
+  String get prizepreview_unlock => 'Desbloquear';
+
+  @override
+  String get prizepreview_select => 'Selecccionar';
+
+  @override
+  String get prizepage_themes => 'Paletas de colores';
+
+  @override
+  String get prizepage_avatars => 'Avatares personales';
+
+  @override
+  String get prizepage_daily => 'Recompensa diaria: ';
+
+  @override
+  String get prizepage_cooldown => 'Disponible en  ';
+
+  @override
+  String get prizepage_available => 'Canjea aquí';
+
+  @override
+  String get booking_successful => 'Booking successful';
+
+  @override
+  String get booking_close => 'Close';
+
+  @override
+  String get booking_dateempty => 'Please select a date';
+
+  @override
+  String get booking_starttimeempty => 'Please select a starting time';
+
+  @override
+  String get booking_endtimeempty => 'Please select an ending time';
+
+  @override
+  String get booking_request => 'Request booking';
+
+  @override
   String get expandedStation_noComments => 'Todavía no hay comentarios';
 
   @override
   String get expandedStation_favButton => 'Favorito';
+
+  @override
+  String get expandedStation_unfavButton => 'No favorito';
+
+  @override
+  String get expandedStation_booking => 'Reservar plaza';
 
   @override
   String get expandedStation_addComment => 'Añade un comentario';
@@ -173,11 +254,38 @@ class AppLocalizationsEs extends AppLocalizations {
   String get notification_text_login => 'Puedes hacerlo en la pestaña de premios';
 
   @override
-  String get add_new_user => 'Añadir nuevo usuario';
+  String get notification_booking_title => 'Se ha reservado una estación';
 
   @override
-  String get chatview_adduser => 'Añadir usuario';
+  String get notification_booking_body1 => 'La estación ';
 
   @override
-  String get new_message => 'Mensaje nuevo';
+  String get notification_booking_body2 => ' se ha reservado correctamente';
+
+  @override
+  String get notification_share_title => 'Comparte para ganar monedas';
+
+  @override
+  String get notification_share_body => 'Utiliza facebook o twitter para ganar ElectriCoins';
+
+  @override
+  String get messagesmenu_title => 'Mensajes';
+
+  @override
+  String get messagesmenu_add => 'Añadir';
+
+  @override
+  String get addfriend_title => 'Añadir nuevo usuario';
+
+  @override
+  String get addfriend_message => 'Mensaje nuevo';
+
+  @override
+  String get addfriend_send => 'Añadir usuario';
+
+  @override
+  String get insidechat_loading => 'Cargando...';
+
+  @override
+  String get insidechat_write => 'Escribir mensaje...';
 }

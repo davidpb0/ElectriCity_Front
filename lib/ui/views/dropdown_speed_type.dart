@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../../core/controllers/cosmetics_controller.dart';
 
 // ignore: must_be_immutable
 class DropdownSpeedType extends StatefulWidget {
@@ -17,10 +20,10 @@ class _DropdownSpeedTypeState extends State<DropdownSpeedType> {
 
   List<DropdownMenuItem<String>> get dropdownItems{
     List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(value: "None", child: Text("Speed", style: TextStyle(color: Colors.black, fontSize: 15),)),
-      const DropdownMenuItem(value: "RAPID", child: Text("RAPID", style: TextStyle(color: Colors.black, fontSize: 15),)),
-      const DropdownMenuItem(value: "semiRAPID", child: Text("semiRAPID", style: TextStyle(color: Colors.black, fontSize: 15),)),
-      const DropdownMenuItem(value: "NORMAL", child: Text("NORMAL", style: TextStyle(color: Colors.black, fontSize: 15),)),
+      DropdownMenuItem(value: "None", child: Text(AppLocalizations.of(context).filtercharger_speed, style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
+      DropdownMenuItem(value: "RAPID", child: Text("RAPID", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
+      DropdownMenuItem(value: "semiRAPID", child: Text("semiRAPID", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
+      DropdownMenuItem(value: "NORMAL", child: Text("NORMAL", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark), fontSize: 15),)),
     ];
     return menuItems;
   }
@@ -30,8 +33,8 @@ class _DropdownSpeedTypeState extends State<DropdownSpeedType> {
     return StatefulBuilder(
         builder: (context, setState) {
           return DropdownButton(
-            iconEnabledColor: Colors.black,
-            dropdownColor: Colors.green,
+            iconEnabledColor: Color(CosmeticsController().getCurrentTheme().textcolordark),
+            dropdownColor: Color(CosmeticsController().getCurrentTheme().accentcolor),
             onChanged: (String? newValue) {
               selectedValue = newValue!;
               setState(() {

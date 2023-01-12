@@ -159,6 +159,12 @@ abstract class AppLocalizations {
   /// **'Create account'**
   String get signup_createaccount;
 
+  /// No description provided for @signup_emptyfield.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter some text'**
+  String get signup_emptyfield;
+
   /// No description provided for @homepage_map.
   ///
   /// In en, this message translates to:
@@ -248,6 +254,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add location'**
   String get personallocation_submit;
+
+  /// No description provided for @filterbike_slots.
+  ///
+  /// In en, this message translates to:
+  /// **'Available slots'**
+  String get filterbike_slots;
+
+  /// No description provided for @filterbike_bikes.
+  ///
+  /// In en, this message translates to:
+  /// **'Available bikes'**
+  String get filterbike_bikes;
+
+  /// No description provided for @filterbike_ebikes.
+  ///
+  /// In en, this message translates to:
+  /// **'Available e-bikes'**
+  String get filterbike_ebikes;
+
+  /// No description provided for @filtercharger_connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection'**
+  String get filtercharger_connection;
+
+  /// No description provided for @filtercharger_current.
+  ///
+  /// In en, this message translates to:
+  /// **'Current'**
+  String get filtercharger_current;
+
+  /// No description provided for @filtercharger_speed.
+  ///
+  /// In en, this message translates to:
+  /// **'Speed'**
+  String get filtercharger_speed;
+
+  /// No description provided for @infobikes_bikes.
+  ///
+  /// In en, this message translates to:
+  /// **'Available bikes: '**
+  String get infobikes_bikes;
+
+  /// No description provided for @infobikes_ebikes.
+  ///
+  /// In en, this message translates to:
+  /// **'Available E-bikes: '**
+  String get infobikes_ebikes;
+
+  /// No description provided for @infobikes_slots.
+  ///
+  /// In en, this message translates to:
+  /// **'Available slots: '**
+  String get infobikes_slots;
+
+  /// No description provided for @infocharger_connection.
+  ///
+  /// In en, this message translates to:
+  /// **'Connection type: '**
+  String get infocharger_connection;
+
+  /// No description provided for @infocharger_slots.
+  ///
+  /// In en, this message translates to:
+  /// **'Available slots: '**
+  String get infocharger_slots;
 
   /// No description provided for @reservation_title.
   ///
@@ -351,6 +423,84 @@ abstract class AppLocalizations {
   /// **'Are you sure you want to delete your account?'**
   String get profile_checkdelete;
 
+  /// No description provided for @prizepreview_unlock.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock'**
+  String get prizepreview_unlock;
+
+  /// No description provided for @prizepreview_select.
+  ///
+  /// In en, this message translates to:
+  /// **'Select'**
+  String get prizepreview_select;
+
+  /// No description provided for @prizepage_themes.
+  ///
+  /// In en, this message translates to:
+  /// **'Color themes'**
+  String get prizepage_themes;
+
+  /// No description provided for @prizepage_avatars.
+  ///
+  /// In en, this message translates to:
+  /// **'Avatar images'**
+  String get prizepage_avatars;
+
+  /// No description provided for @prizepage_daily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reward: '**
+  String get prizepage_daily;
+
+  /// No description provided for @prizepage_cooldown.
+  ///
+  /// In en, this message translates to:
+  /// **'Available again in '**
+  String get prizepage_cooldown;
+
+  /// No description provided for @prizepage_available.
+  ///
+  /// In en, this message translates to:
+  /// **'Click to claim'**
+  String get prizepage_available;
+
+  /// No description provided for @booking_successful.
+  ///
+  /// In en, this message translates to:
+  /// **'Booking successful'**
+  String get booking_successful;
+
+  /// No description provided for @booking_close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get booking_close;
+
+  /// No description provided for @booking_dateempty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a date'**
+  String get booking_dateempty;
+
+  /// No description provided for @booking_starttimeempty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select a starting time'**
+  String get booking_starttimeempty;
+
+  /// No description provided for @booking_endtimeempty.
+  ///
+  /// In en, this message translates to:
+  /// **'Please select an ending time'**
+  String get booking_endtimeempty;
+
+  /// No description provided for @booking_request.
+  ///
+  /// In en, this message translates to:
+  /// **'Request booking'**
+  String get booking_request;
+
   /// No description provided for @expandedStation_noComments.
   ///
   /// In en, this message translates to:
@@ -362,6 +512,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Favourite'**
   String get expandedStation_favButton;
+
+  /// No description provided for @expandedStation_unfavButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Unfavourite'**
+  String get expandedStation_unfavButton;
+
+  /// No description provided for @expandedStation_booking.
+  ///
+  /// In en, this message translates to:
+  /// **'Book a slot'**
+  String get expandedStation_booking;
 
   /// No description provided for @expandedStation_addComment.
   ///
@@ -429,23 +591,77 @@ abstract class AppLocalizations {
   /// **'You can do it on the prize tab'**
   String get notification_text_login;
 
-  /// No description provided for @add_new_user.
+  /// No description provided for @notification_booking_title.
+  ///
+  /// In en, this message translates to:
+  /// **'The slot has been booked'**
+  String get notification_booking_title;
+
+  /// No description provided for @notification_booking_body1.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve successfully booked a spot at '**
+  String get notification_booking_body1;
+
+  /// No description provided for @notification_booking_body2.
+  ///
+  /// In en, this message translates to:
+  /// **''**
+  String get notification_booking_body2;
+
+  /// No description provided for @notification_share_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Share to earn prizes'**
+  String get notification_share_title;
+
+  /// No description provided for @notification_share_body.
+  ///
+  /// In en, this message translates to:
+  /// **'Use twitter on facebook to earn ElectriCoins'**
+  String get notification_share_body;
+
+  /// No description provided for @messagesmenu_title.
+  ///
+  /// In en, this message translates to:
+  /// **'Messages'**
+  String get messagesmenu_title;
+
+  /// No description provided for @messagesmenu_add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get messagesmenu_add;
+
+  /// No description provided for @addfriend_title.
   ///
   /// In en, this message translates to:
   /// **'Add new user'**
-  String get add_new_user;
+  String get addfriend_title;
 
-  /// No description provided for @chatview_adduser.
-  ///
-  /// In en, this message translates to:
-  /// **'Add user'**
-  String get chatview_adduser;
-
-  /// No description provided for @new_message.
+  /// No description provided for @addfriend_message.
   ///
   /// In en, this message translates to:
   /// **'New message'**
-  String get new_message;
+  String get addfriend_message;
+
+  /// No description provided for @addfriend_send.
+  ///
+  /// In en, this message translates to:
+  /// **'Add user'**
+  String get addfriend_send;
+
+  /// No description provided for @insidechat_loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get insidechat_loading;
+
+  /// No description provided for @insidechat_write.
+  ///
+  /// In en, this message translates to:
+  /// **'Write message...'**
+  String get insidechat_write;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

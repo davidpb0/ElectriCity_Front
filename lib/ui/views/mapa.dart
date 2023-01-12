@@ -259,9 +259,11 @@ class GoogleMapaState extends State<GoogleMapa> {
           visible: Theme.of(context).platform != TargetPlatform.iOS,
           child: Container(
             margin: EdgeInsets.only(
-                top: MediaQuery.of(context).size.height * 0.81,
+                top: MediaQuery.of(context).size.height * 0.83,
                 left: MediaQuery.of(context).size.width * 0.8),
             child: FloatingActionButton(
+              foregroundColor: Color(CosmeticsController().getCurrentTheme().accentcolor),
+              backgroundColor: Color(CosmeticsController().getCurrentTheme().accentcolor),
               heroTag: "btn2",
               onPressed: () async {
                 Position position = await _determinePosition();
@@ -275,7 +277,7 @@ class GoogleMapaState extends State<GoogleMapa> {
 
                 if (mounted) setState(() {});
               },
-              child: const Icon(Icons.location_history),
+              child:  Icon(Icons.location_history, color: Color(CosmeticsController().getCurrentTheme().textcolorlight),),
             ),
           ))
     ]);

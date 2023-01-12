@@ -70,14 +70,16 @@ class _SignupPageState extends State<SignupPage> {
                         padding: const EdgeInsets.only(left: 5.0),
                         child: TextFormField(
                           controller: usernameTextController,
+                          style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                           decoration:  InputDecoration(
-                            prefixIcon: const Icon(Icons.account_circle),
+                            prefixIcon: Icon(Icons.account_circle, color: Color(cosmeticsController.getCurrentTheme().textcolordark),),
                             border: InputBorder.none,
                             hintText: AppLocalizations.of(context).signup_username,
+                            hintStyle: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark))
                           ),
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                              return AppLocalizations.of(context).signup_emptyfield;
                             }
                             if (signupCtrl.usernameError() != '') {
                               return signupCtrl.usernameError();
@@ -109,14 +111,16 @@ class _SignupPageState extends State<SignupPage> {
                         padding: const EdgeInsets.only(left: 5.0),
                         child: TextFormField(
                           controller: emailTextController,
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(Icons.email),
+                          style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.email, color: Color(cosmeticsController.getCurrentTheme().textcolordark),),
                             border: InputBorder.none,
                             hintText: 'Email',
+                            hintStyle: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark))
                           ),
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                              return AppLocalizations.of(context).signup_emptyfield;
                             }
                             if (signupCtrl.emailError() != '') {
                               return signupCtrl.emailError();
@@ -149,14 +153,16 @@ class _SignupPageState extends State<SignupPage> {
                         child: TextFormField(
                           controller: _passwdTextController,
                           obscureText: true,
+                          style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                           decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.lock),
+                            prefixIcon: Icon(Icons.lock, color: Color(cosmeticsController.getCurrentTheme().textcolordark),),
                             border: InputBorder.none,
                             hintText: AppLocalizations.of(context).signup_password,
+                            hintStyle: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark))
                           ),
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                              return AppLocalizations.of(context).signup_emptyfield;
                             }
                             if (signupCtrl.pwdError() != '') {
                               return signupCtrl.pwdError();
@@ -189,15 +195,17 @@ class _SignupPageState extends State<SignupPage> {
                         child: TextFormField(
                           controller: _passwdValidTextController,
                           obscureText: true,
+                          style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                           decoration: InputDecoration(
-                            prefixIcon: const Icon(Icons.lock),
+                            prefixIcon: Icon(Icons.lock, color: Color(cosmeticsController.getCurrentTheme().textcolordark),),
                             border: InputBorder.none,
                             hintText: AppLocalizations.of(context).signup_repeatpassword,
+                            hintStyle: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),
                             errorText: signupCtrl.pwdError(),
                           ),
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter some text';
+                              return AppLocalizations.of(context).signup_emptyfield;
                             }
                             if (signupCtrl.pwdError() != '') {
                               return signupCtrl.pwdError();

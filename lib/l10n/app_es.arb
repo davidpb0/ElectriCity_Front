@@ -12,6 +12,7 @@
     "signup_password": "Contraseña",
     "signup_repeatpassword": "Repetir contraseña",
     "signup_createaccount": "Crea tu cuenta",
+    "signup_emptyfield": "Introduzca texto aquí",
 
     "homepage_map": "Mapa",
     "homepage_stations": "Estaciones",
@@ -30,6 +31,21 @@
     "personallocation_adddescription": "Añadir una descripción a la ubicación personal",
     "personallocation_description": "Descripción",
     "personallocation_submit": "Añadir ubicación",
+
+    "filterbike_slots": "Anclajes libres",
+    "filterbike_bikes": "Bicicletas libres",
+    "filterbike_ebikes": "E-Bikes libres",
+
+    "filtercharger_connection": "Conexión",
+    "filtercharger_current": "Corriente",
+    "filtercharger_speed": "Velocidad",
+
+    "infobikes_bikes": "Bicicletas mecánicas disponibles: ",
+    "infobikes_ebikes": "Bicicletas eléctricas disponibles: ",
+    "infobikes_slots": "Anclajes disponibles: ",
+
+    "infocharger_connection": "Tipo de conexión: ",
+    "infocharger_slots": "Cargadores disponibles: ",
 
     "reservation_title": "Reserva una plaza",
     "reservation_date": "Fecha",
@@ -52,13 +68,22 @@
     "profile_delete": "Borrar cuenta",
     "profile_checkdelete": "¿Está seguro de querer borrar su cuenta?",
 
+    "prizepreview_unlock": "Desbloquear",
+    "prizepreview_select": "Selecccionar",
+
+    "prizepage_themes": "Paletas de colores",
+    "prizepage_avatars": "Avatares personales",
+    "prizepage_daily": "Recompensa diaria: ",
+    "prizepage_cooldown": "Disponible en  ",
+    "prizepage_available": "Canjea aquí",
 
     "expandedStation_noComments":"Todavía no hay comentarios",
     "expandedStation_favButton":"Favorito",
+    "expandedStation_unfavButton":"No favorito",
+    "expandedStation_booking":"Reservar plaza",
     "expandedStation_addComment":"Añade un comentario",
     "expandedStation_editComment":"Edita el comentario",
     "expandedStation_gases":"Calidad del aire",
-
 
 
     "editprofile_oldpassword": "Contraseña actual",
@@ -71,7 +96,21 @@
      "notification_title_login": "Acuerdate de recoger tu recompensa diaria",
      "notification_text_login": "Puedes hacerlo en la pestaña de premios",
 
-    "add_new_user": "Añadir nuevo usuario",
-    "chatview_adduser": "Añadir usuario",
-    "new_message": "Mensaje nuevo"
+    "notification_booking_title": "Se ha reservado una estación",
+    "notification_booking_body1": "La estación ",
+    "notification_booking_body2": " se ha reservado correctamente",
+
+    "notification_share_title": "Comparte para ganar monedas",
+    "notification_share_body": "Utiliza facebook o twitter para ganar ElectriCoins",
+
+    "messagesmenu_title": "Mensajes",
+    "messagesmenu_add": "Añadir",
+
+    "addfriend_title": "Añadir nuevo usuario",
+    "addfriend_message": "Mensaje nuevo",
+    "addfriend_send": "Añadir usuario",
+
+    "insidechat_loading": "Cargando...",
+    "insidechat_write": "Escribir mensaje..."
+
 }

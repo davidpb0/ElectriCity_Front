@@ -36,14 +36,14 @@ class _StationCommentState extends State<StationComment> {
   isFromActualUSer() {
     if (widget.info.bicing != null) {
       if (widget.info.creator == UserController().currentUser.getUsername()) {
-        text = Text(widget.info.text);
+        text = Text(widget.info.text, style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark)),);
         delete = IconButton(
             onPressed: () async {
               bool b = false;
               b = await StationController().deleteBicingComment(widget.info);
               if (b) widget.notifyParent();
             },
-            icon: const Icon(Icons.delete));
+            icon: Icon(Icons.delete, color: Color(CosmeticsController().getCurrentTheme().textcolordark),));
         modify = IconButton(
             onPressed: () async {
               /*bool b = false;
@@ -61,6 +61,7 @@ class _StationCommentState extends State<StationComment> {
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)
                               .expandedStation_editComment,
+                          hintStyle: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark))
                         ),
                       ),
                     ),
@@ -71,18 +72,18 @@ class _StationCommentState extends State<StationComment> {
                               widget.info, commentTextController.text);
                           if (b) widget.notifyParent();
                         },
-                        icon: const Icon(Icons.send))
+                        icon: Icon(Icons.send, color: Color(CosmeticsController().getCurrentTheme().textcolordark),))
                   ],
                 );
               });
             },
             icon: const Icon(Icons.edit));
       } else {
-        text = Text(widget.info.text);
+        text = Text(widget.info.text, style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark)),);
       }
     } else {
       if (widget.info.creator == UserController().currentUser.getUsername()) {
-        text = Text(widget.info.text);
+        text = Text(widget.info.text, style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark)),);
         delete = IconButton(
             onPressed: () async {
               bool b = false;
@@ -107,6 +108,7 @@ class _StationCommentState extends State<StationComment> {
                           border: InputBorder.none,
                           hintText: AppLocalizations.of(context)
                               .expandedStation_editComment,
+                          hintStyle: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark))
                         ),
                       ),
                     ),
@@ -117,12 +119,12 @@ class _StationCommentState extends State<StationComment> {
                               widget.info, commentTextController.text);
                           if (b) widget.notifyParent();
                         },
-                        icon: const Icon(Icons.send))
+                        icon: Icon(Icons.send, color: Color(CosmeticsController().getCurrentTheme().textcolordark),))
                   ],
                 );
               });
             },
-            icon: const Icon(Icons.edit));
+            icon: Icon(Icons.edit, color: Color(CosmeticsController().getCurrentTheme().textcolordark),));
       } else {
         text = Text(widget.info.text);
       }
@@ -242,10 +244,10 @@ class _StationCommentState extends State<StationComment> {
                     shape: BoxShape.circle,
                     color: Color(cosmeticsController.getCurrentTheme().elementcolor),
                   ),
-                  child: const Icon(
+                  child: Icon(
                     Icons.account_circle,
                     size: 24,
-                    color: Colors.pink,
+                    color: Color(CosmeticsController().getCurrentTheme().accentcoloralt),
                   ),
                 )
               ],

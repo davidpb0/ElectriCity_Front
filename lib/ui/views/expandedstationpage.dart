@@ -383,7 +383,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                   },
                                   minWidth: screensize.width / 3,
                                   color: (faved)? Color(cosmeticsController.getCurrentTheme().elementcolorcharger) : Color(cosmeticsController.getCurrentTheme().elementcolordark),
-                                  child: Text((faved)? "Unfavourite" : "Favourite",
+                                  child: Text((faved)? AppLocalizations.of(context).expandedStation_favButton : AppLocalizations.of(context).expandedStation_unfavButton,
                                       style: TextStyle(
                                         fontSize: 20,
                                         color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
@@ -410,7 +410,7 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                                     minWidth: screensize.width / 3,
                                     color: Color(cosmeticsController.getCurrentTheme().elementcolorcharger),
                                     disabledColor: Color(cosmeticsController.getCurrentTheme().elementcolordark),
-                                    child: Text("Book a slot",
+                                    child: Text(AppLocalizations.of(context).expandedStation_booking,
                                         style: TextStyle(
                                           fontSize: 20,
                                           color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
@@ -435,12 +435,12 @@ class _ExpandedStationPageState extends State<ExpandedStationPage> {
                               gas.value != 0.0
                                   ? Text(
                                       "${gas.name} ${gas.value}",
-                                      style: const TextStyle(color: Colors.red),
+                                      style:  TextStyle(color: Color(CosmeticsController().getCurrentTheme().elementcolordelete)),
                                     )
                                   : Text(
                                       gas.name,
                                       style:
-                                          const TextStyle(color: Colors.green),
+                                           TextStyle(color: Color(CosmeticsController().getCurrentTheme().accentcolor)),
                                     ),
                             ],
                           ),

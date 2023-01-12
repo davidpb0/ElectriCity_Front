@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../core/controllers/user_controller.dart';
 import '../../core/models/station_list.dart';
 import '../../fonts/test_icons_icons.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class InfoBicingStationWindow extends StatefulWidget {
@@ -97,7 +98,7 @@ class _InfoBicingStationWindowState extends State<InfoBicingStationWindow> {
                           padding:
                               const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.ebike, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark),)),
-                      Text("Bicicletes elèctriques disponibles: ", style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark))),
+                      Text(AppLocalizations.of(context).infobikes_bikes, style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark))),
                       Text(widget.belec.toString(), style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),)
                     ],
                   ),
@@ -107,7 +108,7 @@ class _InfoBicingStationWindowState extends State<InfoBicingStationWindow> {
                           padding:
                               const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.bike, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark), )),
-                      Text("Bicicletes mecàniques disponibles: ", style: TextStyle(color:  Color(cosmeticsController.getCurrentTheme().textcolordark)),),
+                      Text(AppLocalizations.of(context).infobikes_ebikes, style: TextStyle(color:  Color(cosmeticsController.getCurrentTheme().textcolordark)),),
                       Text(widget.bmech.toString(), style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),)
                     ],
                   ),
@@ -117,7 +118,7 @@ class _InfoBicingStationWindowState extends State<InfoBicingStationWindow> {
                           padding:
                               const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.bicingParking, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark))),
-                      Text("Espais disponibles: ", style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),),
+                      Text(AppLocalizations.of(context).infobikes_slots, style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),),
                       Text(widget.slots.toString(), style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),)
                     ],
                   )

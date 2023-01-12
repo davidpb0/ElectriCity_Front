@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../core/controllers/cosmetics_controller.dart';
 import '../../core/controllers/user_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -68,14 +69,14 @@ class NewConversationView extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(32.0)),
         ),
         insetPadding: EdgeInsets.only(top: screensize.height*0.13),
-        backgroundColor: Colors.green[400],
+        backgroundColor: Color(CosmeticsController().getCurrentTheme().accentcolor),
         title: Center(
           child: Row(
             children: [
               const Padding(padding: EdgeInsets.symmetric(horizontal: 0.0)),
-              const Icon(Icons.person_add),
+              Icon(Icons.person_add,color: Color(CosmeticsController().getCurrentTheme().textcolorlight)),
               const Padding(padding: EdgeInsets.symmetric(horizontal: 5.0)),
-              Text(AppLocalizations.of(context).add_new_user),
+              Text(AppLocalizations.of(context).addfriend_title, style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolorlight)),),
             ]
           )
         ),
@@ -91,18 +92,19 @@ class NewConversationView extends StatelessWidget {
                       blurRadius: 1,
                     ),
                   ],
-                  color: Colors.grey[200],
-                  border: Border.all(color: Colors.white),
+                  color: Color(CosmeticsController().getCurrentTheme().backgroundcolor),
+                  border: Border.all(color: Color(CosmeticsController().getCurrentTheme().textfieldcolor)),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 5.0),
                   child: TextField(
                     controller: emailTextController,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.email),
+                    decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.email, color: Color(CosmeticsController().getCurrentTheme().textcolordark - 0x80000000),),
                       border: InputBorder.none,
                       hintText: "Email",
+                      hintStyle: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark - 0x80000000))
                     ),
                   ),
                 ),
@@ -116,8 +118,8 @@ class NewConversationView extends StatelessWidget {
                       blurRadius: 1,
                     ),
                   ],
-                  color: Colors.grey[200],
-                  border: Border.all(color: Colors.white),
+                  color: Color(CosmeticsController().getCurrentTheme().backgroundcolor),
+                  border: Border.all(color: Color(CosmeticsController().getCurrentTheme().textfieldcolor)),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Padding(
@@ -125,9 +127,10 @@ class NewConversationView extends StatelessWidget {
                   child: TextField(
                     controller: messageTextController,
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.send),
+                      prefixIcon: Icon(Icons.send, color: Color(CosmeticsController().getCurrentTheme().textcolordark - 0x80000000),),
                       border: InputBorder.none,
-                      hintText: AppLocalizations.of(context).new_message,
+                      hintText: AppLocalizations.of(context).addfriend_message,
+                      hintStyle: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark - 0x80000000))
                     ),
                   ),
                 ),
@@ -180,14 +183,14 @@ class NewConversationView extends StatelessWidget {
                       blurRadius: 5,
                     ),
                   ],
-                  color: Colors.grey[350],
+                  color: Color(CosmeticsController().getCurrentTheme().elementcolor),
                   borderRadius: BorderRadius.circular(30),
                 ),
                 child: Center(
                     child: Text(
-                      AppLocalizations.of(context).chatview_adduser,
-                      style: const TextStyle(
-                      color: Colors.black,
+                      AppLocalizations.of(context).addfriend_send,
+                      style: TextStyle(
+                      color: Color(CosmeticsController().getCurrentTheme().textcolordark),
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),

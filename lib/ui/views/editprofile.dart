@@ -1,3 +1,4 @@
+import 'package:electricity_front/core/controllers/cosmetics_controller.dart';
 import 'package:electricity_front/core/controllers/user_controller.dart';
 import 'package:electricity_front/ui/views/profilepage.dart';
 import 'package:flutter/material.dart';
@@ -38,9 +39,10 @@ class _EditProfileState extends State<EditProfile> {
     Size screenSize = MediaQuery.of(context).size;
     final String userEmail = userController.currentUser.getEmail();
     final String userName = userController.currentUser.getUsername();
+    CosmeticsController cosmeticsController = CosmeticsController();
 
     return Scaffold (
-      backgroundColor: Colors.grey[350],
+      backgroundColor: Color(cosmeticsController.getCurrentTheme().backgroundcolor),
       appBar: DefaultHeader(
         size: Size(screenSize.width, (screenSize.height * 0.1))
       ),
@@ -58,14 +60,15 @@ class _EditProfileState extends State<EditProfile> {
                     blurRadius: 1,
                   ),
                 ],
-                color: Colors.grey[200],
-                border: Border.all(color: Colors.white),
+                color: Color(CosmeticsController().getCurrentTheme().textfieldcolor),
+                border: Border.all(color: Color(CosmeticsController().getCurrentTheme().backgroundcolor)),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: TextField(
                   controller: usernameTextController,
+                  style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark)),
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.account_circle),
                     border: InputBorder.none,
@@ -88,14 +91,15 @@ class _EditProfileState extends State<EditProfile> {
                     blurRadius: 1,
                   ),
                 ],
-                color: Colors.grey[200],
-                border: Border.all(color: Colors.white),
+                color: Color(CosmeticsController().getCurrentTheme().textfieldcolor),
+                border: Border.all(color: Color(CosmeticsController().getCurrentTheme().backgroundcolor)),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: TextField(
                   controller: emailTextController,
+                  style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark)),
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.email),
@@ -119,14 +123,15 @@ class _EditProfileState extends State<EditProfile> {
                     blurRadius: 1,
                   ),
                 ],
-                color: Colors.grey[200],
-                border: Border.all(color: Colors.white),
+                color: Color(CosmeticsController().getCurrentTheme().textfieldcolor),
+                border: Border.all(color: Color(CosmeticsController().getCurrentTheme().backgroundcolor)),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: TextField(
                   controller: oldPasswordTextController,
+                  style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark)),
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
@@ -150,14 +155,15 @@ class _EditProfileState extends State<EditProfile> {
                     blurRadius: 1,
                   ),
                 ],
-                color: Colors.grey[200],
-                border: Border.all(color: Colors.white),
+                color: Color(CosmeticsController().getCurrentTheme().textfieldcolor),
+                border: Border.all(color: Color(CosmeticsController().getCurrentTheme().backgroundcolor)),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: TextField(
                   controller: newPasswordTextController,
+                  style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark)),
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock),
@@ -181,14 +187,15 @@ class _EditProfileState extends State<EditProfile> {
                     blurRadius: 1,
                   ),
                 ],
-                color: Colors.grey[200],
-                border: Border.all(color: Colors.white),
+                color: Color(CosmeticsController().getCurrentTheme().textfieldcolor),
+                border: Border.all(color: Color(CosmeticsController().getCurrentTheme().backgroundcolor)),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Padding(
                 padding: const EdgeInsets.only(left: 5.0),
                 child: TextField(
                   controller: repeatPasswordTextController,
+                  style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolordark)),
                   obscureText: true,
                   decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.lock_reset),
@@ -220,14 +227,14 @@ class _EditProfileState extends State<EditProfile> {
                         blurRadius: 5,
                       ),
                     ],
-                    color: Colors.green,
+                    color: Color(CosmeticsController().getCurrentTheme().elementcolor),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Center(
                     child: Text(
                       AppLocalizations.of(context).editprofile_confirm_changes,
-                      style: const TextStyle(
-                        color: Colors.white,
+                      style: TextStyle(
+                        color: Color(CosmeticsController().getCurrentTheme().textcolorlight),
                         fontWeight: FontWeight.bold,
                         fontSize: 18,
                       ),
@@ -255,14 +262,14 @@ class _EditProfileState extends State<EditProfile> {
                         blurRadius: 5,
                       ),
                     ],
-                    color: Colors.red,
+                    color: Color(CosmeticsController().getCurrentTheme().elementcolordelete),
                     borderRadius: BorderRadius.circular(30),
                   ),
                   child: Center(
                       child: Text(
                         AppLocalizations.of(context).editprofile_cancel_changes,
-                        style: const TextStyle(
-                          color: Colors.white,
+                        style: TextStyle(
+                          color: Color(CosmeticsController().getCurrentTheme().textcolorlight),
                           fontWeight: FontWeight.bold,
                           fontSize: 18,
                         ),

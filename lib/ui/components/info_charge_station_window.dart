@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'package:electricity_front/core/controllers/user_controller.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:electricity_front/core/models/recharge_station.dart';
 import 'package:flutter/material.dart';
 import '../../core/controllers/cosmetics_controller.dart';
@@ -98,7 +99,7 @@ class _InfoChargeStationWindow extends State<InfoChargeStationWindow> {
                           padding:
                               const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.eCar, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark),)),
-                      Text("Tipus de connexió: ", style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),),
+                      Text(AppLocalizations.of(context).infocharger_connection, style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),),
                       Text(widget.connectionType.toString(), style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),)
                     ],
                   ),
@@ -108,7 +109,7 @@ class _InfoChargeStationWindow extends State<InfoChargeStationWindow> {
                           padding:
                               const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           child: Icon(TestIcons.eCharger, size: 20, color: Color(cosmeticsController.getCurrentTheme().textcolordark))),
-                      Text("Espais disponibles: ", style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),),
+                      Text(AppLocalizations.of(context).infocharger_slots, style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),),
                       Text(widget.slots.toString(), style: TextStyle(color: Color(cosmeticsController.getCurrentTheme().textcolordark)),)
                     ],
                   )

@@ -1,5 +1,6 @@
 import 'package:electricity_front/core/controllers/prize_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../core/controllers/cosmetics_controller.dart';
 
@@ -134,6 +135,7 @@ class _ThemePreviewState extends State<ThemePreview> {
                       _prizeController.setColor(widget.id);
                       setState(() {
                         using = true;
+                        costColor = Color(CosmeticsController().getCurrentTheme().textcolordark);
                       });
                       widget.refreshParent();
                     }
@@ -293,6 +295,7 @@ class _AvatarPreviewState extends State<AvatarPreview> {
                       _prizeController.setAvatar(widget.id);
                       setState(() {
                         using = true;
+                        costColor = Color(CosmeticsController().getCurrentTheme().textcolordark);
                       });
                       widget.refreshParent();
                     }
@@ -305,7 +308,7 @@ class _AvatarPreviewState extends State<AvatarPreview> {
                             Radius.circular(16)),
                       ),
                       child:  Text(
-                        (locked)? 'Unlock' : 'Select',
+                        (locked)? AppLocalizations.of(context).prizepreview_unlock : AppLocalizations.of(context).prizepreview_select,
                         textAlign: TextAlign.center,
                         style:  TextStyle(
                             fontSize: 20,

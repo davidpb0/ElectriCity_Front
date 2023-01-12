@@ -253,7 +253,7 @@ class PrizeController {
   }
 
   int getDailyPrize(){
-    return 1000 + (CosmeticsController().streak*50);
+    return 100 + (CosmeticsController().streak*50);
   }
 
   void claimPrize(){

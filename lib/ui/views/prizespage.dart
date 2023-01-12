@@ -3,7 +3,7 @@ import 'package:electricity_front/core/controllers/prize_controller.dart';
 import 'package:electricity_front/ui/components/default_header.dart';
 import 'package:flutter/material.dart';
 import '../components/prize_preview.dart';
-//import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // ignore: must_be_immutable
 class PrizesPage extends StatefulWidget {
@@ -98,7 +98,7 @@ class _PrizesPageState extends State<PrizesPage> {
                             },
                             child: Row(children: [
                               Text(
-                                "Color themes",
+                                AppLocalizations.of(context).prizepage_themes,
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
@@ -158,7 +158,7 @@ class _PrizesPageState extends State<PrizesPage> {
                             },
                             child: Row(children: [
                               Text(
-                                "Avatars",
+                                AppLocalizations.of(context).prizepage_avatars,
                                 style: TextStyle(
                                     fontSize: 20,
                                     color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
@@ -898,7 +898,7 @@ Widget battlePass(bool available, Function refresh ){
                         Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('Daily reward: ',
+                              Text(AppLocalizations.of(context).prizepage_daily,
                                 style: TextStyle(
                                   color: Color(CosmeticsController().getCurrentTheme().textcolorlight),
                                   fontSize: 20,
@@ -915,7 +915,7 @@ Widget battlePass(bool available, Function refresh ){
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Available to claim in ',
+                            Text(AppLocalizations.of(context).prizepage_cooldown,
                               style: TextStyle(
                                   color: Color(CosmeticsController().getCurrentTheme().textcolorlight),
                                   fontSize: 20,
@@ -945,7 +945,7 @@ Widget battlePass(bool available, Function refresh ){
                 color: Color(CosmeticsController()
                     .getCurrentTheme()
                     .accentcolor),
-                border: Border.all(color: Color(CosmeticsController().getCurrentTheme().accentcolor+ 0x00404040), width: 4),
+                border: Border.all(color: Color(CosmeticsController().getCurrentTheme().accentcolor + 0x00202020), width: 4),
                 borderRadius: const BorderRadius.all(
                     Radius.circular(16)),
               ),
@@ -975,7 +975,7 @@ Widget battlePass(bool available, Function refresh ){
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('Daily reward: ',
+                              Text(AppLocalizations.of(context).prizepage_daily,
                                 style: TextStyle(
                                   color: Color(CosmeticsController().getCurrentTheme().textcolorlight),
                                   fontSize: 20,
@@ -991,7 +991,7 @@ Widget battlePass(bool available, Function refresh ){
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text('Click to claim',
+                            Text(AppLocalizations.of(context).prizepage_available,
                               style: TextStyle(
                                   color: Color(CosmeticsController().getCurrentTheme().textcolorlight),
                                   fontSize: 28,

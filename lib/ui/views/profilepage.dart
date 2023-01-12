@@ -36,11 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    Notifications.showSchedueleNotification(
-        title: "Comparte para ganar monedas",
-        body: "Utiliza facebook o twitter para ganar ElectriCoins",
-        seconds: 5,
-        fln: flutterLocalNotificationsPlugin);
+
   }
 
   refresh() {
@@ -50,6 +46,11 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+    Notifications.showSchedueleNotification(
+        title: AppLocalizations.of(context).notification_share_title,
+        body: AppLocalizations.of(context).notification_share_body,
+        seconds: 5,
+        fln: flutterLocalNotificationsPlugin);
     return Material(
       color: Color(cosmeticsController.getCurrentTheme().backgroundcolor),
       child: Stack(children: [
@@ -471,13 +472,14 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget listaFavStations() {
     if (userCtrl.currentUser.getFavouriteBicingStations().isEmpty &&
         userCtrl.currentUser.getFavouriteRechargeStations().isEmpty) {
-      return const Padding(
-          padding: EdgeInsets.symmetric(vertical: 16),
+      return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Material(
               color: Colors.transparent,
               child: Text(
-                "No favourite stations found",
-                style: TextStyle(fontSize: 20),
+                AppLocalizations.of(context)
+                    .profile_nostations,
+                style: const TextStyle(fontSize: 20),
                 textAlign: TextAlign.center,
               )));
     }

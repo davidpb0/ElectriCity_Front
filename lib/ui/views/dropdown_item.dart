@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../core/controllers/cosmetics_controller.dart';
+
 // ignore: must_be_immutable
 class DropdownItem extends StatefulWidget {
 
@@ -17,10 +19,10 @@ class _DropdownItemState extends State<DropdownItem> {
 
   List<DropdownMenuItem<String>> get dropdownItems{
     List<DropdownMenuItem<String>> menuItems = [
-      const DropdownMenuItem(value: "0", child: Text("0", style: TextStyle(color: Colors.white),)),
-      const DropdownMenuItem(value: "1", child: Text("1", style: TextStyle(color: Colors.white),)),
-      const DropdownMenuItem(value: "2", child: Text("2", style: TextStyle(color: Colors.white),)),
-      const DropdownMenuItem(value: "3", child: Text("3", style: TextStyle(color: Colors.white),)),
+      DropdownMenuItem(value: "0", child: Text("0", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolorlight)),)),
+      DropdownMenuItem(value: "1", child: Text("1", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolorlight)),)),
+      DropdownMenuItem(value: "2", child: Text("2", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolorlight)),)),
+      DropdownMenuItem(value: "3", child: Text("3", style: TextStyle(color: Color(CosmeticsController().getCurrentTheme().textcolorlight)),)),
     ];
     return menuItems;
   }
@@ -30,8 +32,8 @@ class _DropdownItemState extends State<DropdownItem> {
     return StatefulBuilder(
       builder: (context, setState) {
         return DropdownButton(
-          iconEnabledColor: Colors.white,
-          dropdownColor: Colors.green,
+          iconEnabledColor: Color(CosmeticsController().getCurrentTheme().textcolorlight),
+          dropdownColor: Color(CosmeticsController().getCurrentTheme().accentcolor),
           onChanged: (String? newValue) {
             selectedValue = newValue!;
             setState(() {

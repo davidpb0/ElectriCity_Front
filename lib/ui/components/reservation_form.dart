@@ -50,7 +50,7 @@ class _ReservationFormState extends State<ReservationForm> {
             padding: const EdgeInsets.all(16),
             child: Center(
               child: Text(
-                "Booking successful",
+                AppLocalizations.of(context).booking_successful,
                 style: TextStyle(
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -68,7 +68,7 @@ class _ReservationFormState extends State<ReservationForm> {
                 color: Color(cosmeticsController.getCurrentTheme().accentcolor),
                 padding: const EdgeInsets.all(14),
                 child: Text(
-                  "Close",
+                  AppLocalizations.of(context).booking_close,
                   style: TextStyle(
                       color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                       fontSize: 20,
@@ -120,7 +120,7 @@ class _ReservationFormState extends State<ReservationForm> {
                       } else {
                         //print("Date is not selected");
                         setState(() {
-                          dateError = "Please select a date";
+                          dateError = AppLocalizations.of(context).booking_dateempty;
                         });
                       }
                     },
@@ -160,7 +160,7 @@ class _ReservationFormState extends State<ReservationForm> {
                       );
 
                       if (pickedTime != null) {
-                        DateTime parsedTime = DateFormat.jm().parse(
+                        DateTime parsedTime = DateFormat("HH:mm").parse(
                             pickedTime.format(context).toString());
 
                         booking.setStartTime(parsedTime);
@@ -173,7 +173,7 @@ class _ReservationFormState extends State<ReservationForm> {
                         //print("Time is not selected");
 
                         setState(() {
-                          startTimeError = "Please select a starting time";
+                          startTimeError = AppLocalizations.of(context).booking_starttimeempty;
                         });
                       }
                     },
@@ -214,7 +214,7 @@ class _ReservationFormState extends State<ReservationForm> {
 
                       if (pickedTime != null) {
                         //print(pickedTime.format(context)); //output 10:51 PM
-                        DateTime parsedTime = DateFormat.jm().parse(
+                        DateTime parsedTime = DateFormat("HH:mm").parse(
                             pickedTime.format(context).toString());
                         booking.setEndTime(parsedTime);
 
@@ -226,7 +226,7 @@ class _ReservationFormState extends State<ReservationForm> {
                       } else {
                         //print("Time is not selected");
                         setState(() {
-                          endTimeError = "Please select an ending time";
+                          endTimeError = AppLocalizations.of(context).booking_endtimeempty;
                         });
                       }
                     },
@@ -261,8 +261,8 @@ class _ReservationFormState extends State<ReservationForm> {
                             if (await success) {
                               completedBooking = true;
                               Notifications.showSchedueleNotification(
-                                  title: "Se ha reservado una estación",
-                                  body: "La estación ${BookingController().gettStationId()} se ha reservado correctamente",
+                                  title: AppLocalizations.of(context).notification_booking_title,
+                                  body: AppLocalizations.of(context).notification_booking_body1 + BookingController().gettStationId() + AppLocalizations.of(context).notification_booking_body2,
                                   seconds: 2,
                                   fln: flutterLocalNotificationsPlugin);
 
@@ -286,7 +286,7 @@ class _ReservationFormState extends State<ReservationForm> {
                         padding:
                         const EdgeInsets.all(14),
                         child: Text(
-                          "Request booking",
+                          AppLocalizations.of(context).booking_request,
                           style: TextStyle(
                               color: Color(cosmeticsController.getCurrentTheme().textcolorlight),
                               fontSize: 20,
