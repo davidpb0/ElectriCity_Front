@@ -12,7 +12,7 @@ import '../services/api_service.dart';
 class StationController {
   final ApiService _apiService = ApiService();
   late List<Station> _bicinglist;
-  late List<RechargeStation> _rechargelist;
+  late List<RechargeStation> _rechargelist = [];
   bool bici = true;
   bool bicisStarted = false;
   bool chargersStarted = false;
