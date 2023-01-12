@@ -18,6 +18,7 @@ class UserController {
   late List<ChatUsers> chat;
   late List<ChatMessage> messages;
   late List<String> userInfo;
+  bool shared = false;
 
   factory UserController() {
     return _this;
@@ -130,7 +131,6 @@ class UserController {
       };
     }
 
-    //TODO: verify user old Password
     /*if (oldPassword == currentUser.getPassword() && newPassword != "" && newPassword == repeatPassword) {
 
     }*/

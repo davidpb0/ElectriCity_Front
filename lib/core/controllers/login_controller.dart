@@ -3,13 +3,19 @@
 import 'dart:convert';
 import 'package:electricity_front/core/models/user.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:http/http.dart';
 import '../services/api_service.dart';
+import '../services/notifications.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class LoginController {
   static final LoginController _this = LoginController._();
 
   final ApiService _apiService = ApiService();
+  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
   factory LoginController() {
     return _this;
@@ -18,6 +24,7 @@ class LoginController {
   LoginController._();
 
   logIn(String mail, String pwd, BuildContext ctext) async {
+    Notifications.initialize(flutterLocalNotificationsPlugin);
     var data = {
       "email": mail,
       "password": pwd,
@@ -30,6 +37,13 @@ class LoginController {
       Response res2 = await _apiService.getData('/profile');
       var body2 = json.decode(res2.body);
       if (res2.statusCode == 201) {
+
+        Notifications.showSchedueleNotification(
+            title: AppLocalizations.of(ctext).notification_title_login,
+            body: AppLocalizations.of(ctext).notification_text_login,
+            seconds: 10,
+            fln: flutterLocalNotificationsPlugin);
+
         Navigator.of(ctext).pushReplacementNamed('/home');
         User usr = User.fromJson(body2);
         usr.setToke(body['token']);

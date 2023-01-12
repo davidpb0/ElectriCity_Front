@@ -30,10 +30,12 @@ class User {
     _username = json['username'];
     _id = json['id'];
     _email = json['email'];
+
     _electricoins = json['electryCoins'];
     _theme = int.parse(json['skinPalette'] ?? '0');
     _avatar = int.parse(json['skinAvatar'] ?? '0');
     _rawAwards = json['awards'];
+
     if (json['favouriteLocations'] != null) {
       _personalUbi = <Marker>[];
       for (int i = 0; i < json['favouriteLocations'].length; ++i) {
@@ -68,6 +70,7 @@ class User {
     }
 
 
+
     if (json['awards'] != null) {
 
       for (int i = 0; i < json['awards'].length; ++i) {
@@ -82,7 +85,9 @@ class User {
         }
       }
 
+
     }
+
 
   }
 
