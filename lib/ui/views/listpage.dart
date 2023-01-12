@@ -347,13 +347,13 @@ class _ListPageState extends State<ListPage> {
 
                                   shrinkWrap: true,
                                   itemCount: ListController()
-                                      .filterBicinglistSlots
+                                      .filterBicingListSlots
                                       .length,
                                   itemBuilder: (context, index) {
                                     return BicingPreview(
                                         info: stationCtrl.getBicingStationbyId(
                                             ListController()
-                                                .filterBicinglistSlots[index]
+                                                .filterBicingListSlots[index]
                                                 .id));
                                   },
                                 );
@@ -361,13 +361,13 @@ class _ListPageState extends State<ListPage> {
                                 return ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: ListController()
-                                      .filterBicinglistBikes
+                                      .filterBicingListBikes
                                       .length,
                                   itemBuilder: (context, index) {
                                     return BicingPreview(
                                         info: stationCtrl.getBicingStationbyId(
                                             ListController()
-                                                .filterBicinglistBikes[index]
+                                                .filterBicingListBikes[index]
                                                 .id));
                                   },
                                 );
@@ -375,13 +375,13 @@ class _ListPageState extends State<ListPage> {
                                 return ListView.builder(
                                   shrinkWrap: true,
                                   itemCount: ListController()
-                                      .filterBicinglistEbikes
+                                      .filterBicingListEbikes
                                       .length,
                                   itemBuilder: (context, index) {
                                     return BicingPreview(
                                         info: stationCtrl.getBicingStationbyId(
                                             ListController()
-                                                .filterBicinglistEbikes[index]
+                                                .filterBicingListEbikes[index]
                                                 .id));
                                   },
                                 );

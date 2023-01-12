@@ -298,10 +298,6 @@ class PrizeController {
 
   }
 
-  void claimCustomPrize(int coins){
-    electricoins += coins;
-    userCtrl.currentUser.setElectricoins(electricoins);
-  }
 
 
   void unlockPrizeUpdate() async{
@@ -335,7 +331,6 @@ class PrizeController {
 
   Future<void> fetchPrizes() async {
     if (UserController().currentUser.getRawAwards() == []){
-      print("refill");
       var awards = {
         ['/awards/1', '/awards/9']
       };
