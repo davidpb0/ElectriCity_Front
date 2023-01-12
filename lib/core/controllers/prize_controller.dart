@@ -298,6 +298,11 @@ class PrizeController {
 
   }
 
+  void claimCustomPrize(int coins){
+    electricoins += coins;
+    userCtrl.currentUser.setElectricoins(electricoins);
+  }
+
 
   void unlockPrizeUpdate() async{
     var awards = UserController().currentUser.getRawAwards();

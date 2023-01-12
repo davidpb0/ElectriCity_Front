@@ -11,10 +11,13 @@ import '../services/api_service.dart';
 class ListController {
   final ApiService _apiService = ApiService();
   late List<Station> _filterBicinglist;
+
   List<Station> filterBicingListSlots = [];
   List<Station> filterBicingListBikes = [];
   List<Station> filterBicingListEbikes = [];
+
   late List<RechargeStation> _filterRechargelist;
+
   bool bici = true;
   bool bicisStarted = false;
   bool chargersStarted = false;

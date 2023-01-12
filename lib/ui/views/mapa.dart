@@ -286,7 +286,8 @@ class GoogleMapaState extends State<GoogleMapa> {
     polylinePoints = PolylinePoints();
     if (newPaint) polylineCoordinates.clear();
     PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
-        "AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM", punto1, punto2);
+        "AIzaSyCDg_4vAv_MQQyRHTc94dBLngBqqmdO3ZM", punto1, punto2,
+        travelMode: TravelMode.driving);
 
     if (result.status == 'OK') {
       for (var point in result.points) {
@@ -305,6 +306,7 @@ class GoogleMapaState extends State<GoogleMapa> {
   }
 
   void setAuxStation(int id, bool bicing) {
+
     if (mounted) {
       setState(() {
         if (bicing) {
@@ -383,6 +385,7 @@ class GoogleMapaState extends State<GoogleMapa> {
     await setCustomMarker(context);
     if (_stationController.bicisComplete) {
       for (int i = 0; i < _stationController.getTotalBicingStations(); ++i) {
+
         if (mounted) {
           setState(() {
             _markers.add(Marker(
@@ -401,6 +404,7 @@ class GoogleMapaState extends State<GoogleMapa> {
     }
     if (_stationController.chargersComplete) {
       for (int i = 0; i < _stationController.getTotalRechargeStations(); ++i) {
+
         if (mounted) {
           setState(() {
             _markers.add(Marker(
@@ -428,6 +432,7 @@ class GoogleMapaState extends State<GoogleMapa> {
     _stationController.getBicingStationsStream().listen((value) {
       while (i < value && i < _stationController.getTotalBicingStations()) {
         Station current = _stationController.getBicingStation(i);
+
         if (mounted) {
           setState(() {
             _markers.add(Marker(
@@ -461,7 +466,6 @@ class GoogleMapaState extends State<GoogleMapa> {
                 }));
           });
         }
-
         i++;
       }
     });
@@ -472,6 +476,7 @@ class GoogleMapaState extends State<GoogleMapa> {
     _stationController.getRechargeStationsStream().listen((value) {
       while (i < value && i < _stationController.getTotalRechargeStations()) {
         RechargeStation current = _stationController.getRechargeStation(i);
+
         if (mounted) {
           setState(() {
             _markers.add(Marker(
@@ -503,7 +508,6 @@ class GoogleMapaState extends State<GoogleMapa> {
                 }));
           });
         }
-
         i++;
       }
     });
