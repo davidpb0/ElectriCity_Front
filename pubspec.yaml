@@ -57,6 +57,7 @@ dependencies:
   wp_search_bar: ^0.0.7
   url_launcher:
   font_awesome_flutter:
+  multi_select_flutter: ^4.1.3
 
 
 
